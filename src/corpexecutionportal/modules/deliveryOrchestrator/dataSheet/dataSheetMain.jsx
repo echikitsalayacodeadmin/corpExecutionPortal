@@ -81,6 +81,7 @@ const RowComp = ({ item, handleChange, corpId }) => {
                     });
                     return filteredItem;
                   });
+                  downloadCsv(filteredData, `${item.itemId}.csv`);
                 } else if (
                   item.itemId === "copyDefectExecution" ||
                   item.itemId === "copyDefectUpload"
@@ -180,7 +181,13 @@ const DataSheetMain = () => {
 
   const newDataSheet2 = newDataSheet.map((item, index) => ({
     ...item,
-    sheetDefects: defects.empReportDefectsDetailVMS,
+    sheetDefects: defects.empReportDefectsDetailVMS.filter((obj, index) =>
+      item.itemId === "copyDefectExecution"
+        ? obj.exeDefect === true
+        : item.itemId === "copyDefectUpload"
+        ? obj.uploadDefect === true
+        : []
+    ),
     masterData: masterData,
     fields:
       item.itemId === "copySmdToggle"
@@ -199,6 +206,19 @@ const DataSheetMain = () => {
             "urineToggle",
           ]
         : item.itemId === "copySmdUpload"
+        ? [
+            "empId",
+            "name",
+            "age",
+            "gender",
+            "tokenNumber",
+            "packageName",
+            "pftStatus",
+            "audiometryStatus",
+            "bloodStatus",
+            "ecgStatus",
+          ]
+        : item.itemId === "copySmdFinal"
         ? [
             "empId",
             "name",
