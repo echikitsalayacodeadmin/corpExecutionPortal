@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   Stack,
   TextField,
   Typography,
@@ -17,14 +18,51 @@ import {
   CustomTypography,
   CustomTypographyBold,
 } from "../../../../assets/customTypography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteSequenceModal from "./subComp/deleteSequenceModal";
 import MarkStatusBtn from "../subComp/markStatusBtn";
 import MasterPdfComp from "./subComp/masterPdfComp";
 import SequenceComp from "./subComp/sequenceComp";
 import { fetchAllTaskList } from "../../../services/deliveryOrchestratorServices";
-import { sortDataByDateTime } from "../../../../assets/utils";
+import { downloadCsv, sortDataByDateTime } from "../../../../assets/utils";
 import Form21Index from "./subComp/form21Index";
 import { useParams } from "react-router-dom";
+
+const generateSummaryCSV = (data) => {
+  let csvContent = `Test Name,Problems(count),Done,Expected,Tech Done\n`;
+  for (const testName in data) {
+    const testData = data[testName];
+    csvContent += `${testName},${testData.problems.length},${testData.done},${testData.expected},${testData.techDone}\n`;
+  }
+  return csvContent;
+};
+
+const generateProblemsCSV = (data) => {
+  let csvContent = "";
+
+  for (const [testName, testData] of Object.entries(data)) {
+    // Destructuring
+    if (testData.problems.length > 0) {
+      csvContent += `${testName}\n`;
+      csvContent += `empId,name,token\n`;
+      csvContent += testData.problems
+        .map((problem) => `${problem.empId},${problem.name},${problem.token}\n`)
+        .join("");
+      csvContent += "\n"; // Add newline for separation
+    }
+  }
+
+  return csvContent;
+};
+
+const generateCombinedCSV = (data) => {
+  const summaryContent = generateSummaryCSV(data);
+  const problemsContent = generateProblemsCSV(data);
+  let combinedContent = `${summaryContent}\n\n`; // Add two newlines for spacing
+  combinedContent += problemsContent;
+  return combinedContent;
+};
 
 const ReportingMain = () => {
   let { itemId } = useParams();
@@ -88,6 +126,27 @@ const ReportingMain = () => {
       fetchAllTaskList(corpId, setIsLoading, setReportingTaskList, "REPORTING");
     }
   };
+
+  const [manualQcReport, setManualQcReport] = useState([]);
+  const fetchManualQC = async () => {
+    const url = BASE_URL + "org/reporting/manualQcReport?corpId=" + corpId;
+    const result = await getData(url);
+    if (result.data) {
+      setManualQcReport(result.data.qcMap);
+    } else {
+      setManualQcReport([]);
+    }
+  };
+  useEffect(() => {
+    fetchManualQC();
+  }, []);
+
+  const [showResult, setShowResult] = useState({
+    achorSeq: false,
+    outsideAnchorSeq: false,
+    coverendInAchorSeq: false,
+    form21: false,
+  });
 
   return (
     <Fragment>
@@ -180,9 +239,32 @@ const ReportingMain = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontWeight: "bold" }}>
-                      Covered in Anchor Sequence : -
-                    </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <IconButton
+                        sx={{
+                          marginRight: "15px",
+                          backgroundColor: "#127DDD",
+                          ":hover": {
+                            backgroundColor: "#1f63a1",
+                          },
+                        }}
+                        onClick={() => {
+                          setShowResult({
+                            ...showResult,
+                            coverendInAchorSeq: !showResult.coverendInAchorSeq,
+                          });
+                        }}
+                      >
+                        {showResult.coverendInAchorSeq === false ? (
+                          <ExpandMoreIcon style={{ color: "#FFF" }} />
+                        ) : (
+                          <ExpandLessIcon style={{ color: "#FFF" }} />
+                        )}
+                      </IconButton>
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        Covered in Anchor Sequence : -
+                      </Typography>
+                    </Box>
                     <MarkStatusBtn
                       selectedStatus={
                         reportingTaskList.find(
@@ -199,10 +281,12 @@ const ReportingMain = () => {
                       }}
                     />
                   </Stack>
-                  <MasterPdfComp
-                    isAnchorSequence={true}
-                    masterPdfList={masterPdfList}
-                  />
+                  {showResult.coverendInAchorSeq === true && (
+                    <MasterPdfComp
+                      isAnchorSequence={true}
+                      masterPdfList={masterPdfList}
+                    />
+                  )}
                 </Grid>
                 <Grid item xs={12} lg={12}>
                   <Stack
@@ -213,9 +297,32 @@ const ReportingMain = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontWeight: "bold" }}>
-                      Outside Anchor Sequence : -
-                    </Typography>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <IconButton
+                        sx={{
+                          marginRight: "15px",
+                          backgroundColor: "#127DDD",
+                          ":hover": {
+                            backgroundColor: "#1f63a1",
+                          },
+                        }}
+                        onClick={() => {
+                          setShowResult({
+                            ...showResult,
+                            outsideAnchorSeq: !showResult.outsideAnchorSeq,
+                          });
+                        }}
+                      >
+                        {showResult.outsideAnchorSeq === false ? (
+                          <ExpandMoreIcon style={{ color: "#FFF" }} />
+                        ) : (
+                          <ExpandLessIcon style={{ color: "#FFF" }} />
+                        )}
+                      </IconButton>
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        Outside Anchor Sequence : -
+                      </Typography>
+                    </Box>
                     <MarkStatusBtn
                       selectedStatus={
                         reportingTaskList.find(
@@ -232,11 +339,12 @@ const ReportingMain = () => {
                       }}
                     />
                   </Stack>
-
-                  <MasterPdfComp
-                    isAnchorSequence={false}
-                    masterPdfList={masterPdfList}
-                  />
+                  {showResult.outsideAnchorSeq === true && (
+                    <MasterPdfComp
+                      isAnchorSequence={false}
+                      masterPdfList={masterPdfList}
+                    />
+                  )}
                 </Grid>
                 <Grid item xs={12} lg={12}>
                   <Stack
@@ -247,7 +355,32 @@ const ReportingMain = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Typography sx={{ fontWeight: "bold" }}>Form 21</Typography>
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <IconButton
+                        sx={{
+                          marginRight: "15px",
+                          backgroundColor: "#127DDD",
+                          ":hover": {
+                            backgroundColor: "#1f63a1",
+                          },
+                        }}
+                        onClick={() => {
+                          setShowResult({
+                            ...showResult,
+                            form21: !showResult.form21,
+                          });
+                        }}
+                      >
+                        {showResult.form21 === false ? (
+                          <ExpandMoreIcon style={{ color: "#FFF" }} />
+                        ) : (
+                          <ExpandLessIcon style={{ color: "#FFF" }} />
+                        )}
+                      </IconButton>
+                      <Typography sx={{ fontWeight: "bold" }}>
+                        Form 21
+                      </Typography>
+                    </Box>
                     <MarkStatusBtn
                       selectedStatus={
                         reportingTaskList.find(
@@ -264,8 +397,7 @@ const ReportingMain = () => {
                       }}
                     />
                   </Stack>
-
-                  <Form21Index />
+                  {showResult.form21 === true && <Form21Index />}
                 </Grid>
               </Grid>
             </Box>
@@ -352,6 +484,18 @@ const ReportingMain = () => {
                 </Grid>
                 <Grid item xs={12} lg={4}>
                   <Button
+                    onClick={() => {
+                      const combinedCsv = generateCombinedCSV(manualQcReport);
+                      const csvData = new Blob([combinedCsv], {
+                        type: "text/csv",
+                      });
+                      const csvUrl = window.URL.createObjectURL(csvData);
+                      const hiddenElement = document.createElement("a");
+                      hiddenElement.href = csvUrl;
+                      hiddenElement.target = "_blank";
+                      hiddenElement.download = `test_result.csv`;
+                      hiddenElement.click();
+                    }}
                     sx={{ width: "150px" }}
                     variant="contained"
                     size="small"

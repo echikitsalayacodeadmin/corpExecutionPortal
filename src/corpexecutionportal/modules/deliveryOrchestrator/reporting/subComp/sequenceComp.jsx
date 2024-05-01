@@ -145,11 +145,11 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
     fetchMasterPdfList();
   }, []);
 
-  useEffect(() => {
-    if (sequenceList) {
-      setShowSequence(true);
-    }
-  }, [sequenceList]);
+  // useEffect(() => {
+  //   if (sequenceList) {
+  //     setShowSequence(true);
+  //   }
+  // }, [sequenceList]);
 
   return (
     <Fragment>

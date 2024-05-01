@@ -100,7 +100,8 @@ const RowComp = ({ item, handleChange, corpId }) => {
                   downloadCsv(filteredData, `${item.itemId}.csv`);
                 } else if (
                   item.itemId === "copyDefectExecution" ||
-                  item.itemId === "copyDefectUpload"
+                  item.itemId === "copyDefectUpload" ||
+                  item.itemId === "copyDefectFinal"
                 ) {
                   let csvContent = "";
                   csvContent = `Overall Stats\n\n${generateCSVContent(
@@ -214,26 +215,54 @@ const DataSheetMain = () => {
       {
         TestName: "PFT",
         TotalRequiredtest: defects?.reportDefectsCountVM?.pftTestRequired,
-        TotalToggleOn: defects?.reportDefectsCountVM?.pftToggle,
-        TotalReportUploaded: defects?.reportDefectsCountVM?.pftReportUploaded,
+        ...((item.itemId === "copyDefectExecution" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalToggleNotOn:
+            parseInt(defects?.reportDefectsCountVM?.pftTestRequired) -
+            parseInt(defects?.reportDefectsCountVM?.pftToggle),
+        }),
+        ...((item.itemId === "copyDefectExecution" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalReportNotUploaded:
+            parseInt(defects?.reportDefectsCountVM?.pftToggle) -
+            parseInt(defects?.reportDefectsCountVM?.pftReportUploaded),
+        }),
+      },
+      {
+        TestName: "AUDIOMETRY",
+        TotalRequiredtest:
+          defects?.reportDefectsCountVM?.audiometryTestRequired,
+        TotalToggleNotOn:
+          parseInt(defects?.reportDefectsCountVM?.audiometryTestRequired) -
+          parseInt(defects?.reportDefectsCountVM?.audiometryToggle),
+        TotalReportNotUploaded:
+          defects?.reportDefectsCountVM?.audiometryReportUploaded,
       },
       {
         TestName: "BLOODTEST",
         TotalRequiredtest: defects?.reportDefectsCountVM?.bloodTestRequired,
-        TotalToggleOn: defects?.reportDefectsCountVM?.bloodToggle,
-        TotalReportUploaded: defects?.reportDefectsCountVM?.bloodReportUploaded,
+        TotalToggleNotOn:
+          parseInt(defects?.reportDefectsCountVM?.bloodTestRequired) -
+          parseInt(defects?.reportDefectsCountVM?.bloodToggle),
+        TotalReportNotUploaded:
+          defects?.reportDefectsCountVM?.bloodReportUploaded,
       },
       {
         TestName: "ECG",
         TotalRequiredtest: defects?.reportDefectsCountVM?.ecgTestRequired,
-        TotalToggleOn: defects?.reportDefectsCountVM?.ecgToggle,
-        TotalReportUploaded: defects?.reportDefectsCountVM?.ecgReportUploaded,
+        TotalToggleNotOn:
+          parseInt(defects?.reportDefectsCountVM?.ecgTestRequired) -
+          parseInt(defects?.reportDefectsCountVM?.ecgToggle),
+        TotalReportNotUploaded:
+          defects?.reportDefectsCountVM?.ecgReportUploaded,
       },
       {
         TestName: "XRAY",
-        xrayTotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired,
-        xrayTotalToggleOn: defects?.reportDefectsCountVM?.xrayToggle,
-        xrayTotalReportUploaded:
+        TotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired,
+        TotalToggleNotOn:
+          parseInt(defects?.reportDefectsCountVM?.xrayTestRequired) -
+          parseInt(defects?.reportDefectsCountVM?.xrayToggle),
+        TotalReportNotUploaded:
           defects?.reportDefectsCountVM?.xrayReportUploaded,
       },
     ],

@@ -35,38 +35,28 @@ const Form21Index = () => {
   return (
     <Fragment>
       <Box sx={{ marginBlock: 1 }}>
-        <Paper
-          sx={{
-            borderRadius: 5,
-            paddingInline: 3,
-            boxShadow: 3,
-            height: "78vh",
-            paddingBlock: 3,
-          }}
-        >
-          <Box sx={{ width: "100%" }}>
-            <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <TabList
-                  onChange={handleChange}
-                  aria-label="lab API tabs example"
-                >
-                  <Tab label="Get Form 21 Data" value="1" />
+        <Box sx={{ width: "100%" }}>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+              >
+                <Tab label="Get Form 21 Data" value="1" />
 
-                  <Tab label="Upload Form 21" value="2" />
-                </TabList>
-              </Box>
+                <Tab label="Upload Form 21" value="2" />
+              </TabList>
+            </Box>
 
-              <TabPanel value="1" sx={{ p: 0 }}>
-                <Form21Data />
-              </TabPanel>
+            <TabPanel value="1" sx={{ p: 0 }}>
+              <Form21Data />
+            </TabPanel>
 
-              <TabPanel value="2" sx={{ p: 0 }}>
-                <Form21Upload />
-              </TabPanel>
-            </TabContext>
-          </Box>
-        </Paper>
+            <TabPanel value="2" sx={{ p: 0 }}>
+              <Form21Upload />
+            </TabPanel>
+          </TabContext>
+        </Box>
       </Box>
     </Fragment>
   );

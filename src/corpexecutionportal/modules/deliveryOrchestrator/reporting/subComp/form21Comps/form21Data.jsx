@@ -116,7 +116,7 @@ const Form21Data = () => {
     },
   ];
 
-  const [medicalDateNotEmpty, setMedicalDateNotEmpty] = useState(false);
+  const [medicalDateNotEmpty, setMedicalDateNotEmpty] = useState(true);
   const handleMedicalDateNotEmpty = (event) => {
     setMedicalDateNotEmpty(event.target.checked);
   };
