@@ -181,7 +181,7 @@ const DataSheetMain = () => {
 
   const newDataSheet2 = newDataSheet.map((item, index) => ({
     ...item,
-    sheetDefects: defects.empReportDefectsDetailVMS.filter((obj, index) =>
+    sheetDefects: defects.empReportDefectsDetailVMS?.filter((obj, index) =>
       item.itemId === "copyDefectExecution"
         ? obj.exeDefect === true
         : item.itemId === "copyDefectUpload"

@@ -107,16 +107,35 @@ const FileTypeUpload = ({
 
     switch (params.field) {
       case "uploaded":
+        return renderClickableTypography(params.row.uploaded, "UPLOADED");
       case "matchedNames":
+        return renderClickableTypography(
+          params.row.matchedWithName,
+          "MATCHING"
+        );
       case "unmatchedNames":
+        return renderClickableTypography(
+          params.row.unmatchedNames,
+          "NAME_NOT_MATCHING"
+        );
       case "duplicateFiles":
+        return renderClickableTypography(
+          params.row.duplicateFiles,
+          "DUPLICATE_FILE"
+        );
       case "tokenNotFound":
+        return renderClickableTypography(
+          params.row.tokenNotFound,
+          "TOKEN_NOT_FOUND"
+        );
       case "failed":
+        return renderClickableTypography(params.row.failed, "FAILED");
       case "processed":
+        return renderClickableTypography(params.row.processed, "PROCESSED");
       case "alreadyExistsInDB":
         return renderClickableTypography(
-          params.row[params.field],
-          params.field.toUpperCase()
+          params.row.alreadyExistsInDB,
+          "ALREADY_EXISTS_DB"
         );
       default:
         return <RenderExpandableCells {...params} />;
@@ -687,13 +706,10 @@ const UploadMain = () => {
       item.itemId === itemId ? { ...item, status: newValue } : item
     );
     setReportingTask(updateReportingTask);
-
     const itemIndex = reportingTask.findIndex((item) => item.itemId === itemId);
-
     const updatedItem = { ...updateReportingTask[itemIndex], status: newValue };
     const url = BASE_URL + `task/item`;
     const response = await updateData(url, updatedItem);
-
     if (response.error) {
       enqueueSnackbar("An Error Occurred!", { variant: "error" });
     } else {
