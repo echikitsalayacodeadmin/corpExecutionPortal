@@ -17,6 +17,7 @@ import { getData, updateData, uploadFile } from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
 import RenderExpandableCells from "../../../../assets/globalDataGridLayout/renderExpandableCells";
 import {
+  downloadCsv,
   formatColumnName,
   sortArrayByDateTime,
 } from "../../../../assets/utils";
@@ -27,9 +28,13 @@ import { useSnackbar } from "notistack";
 import ViewFilesModal from "./subComp/viewFilesModal";
 import DetailedUploadedFileViewModal from "./subComp/detailedUploadedFileViewModal";
 import MarkStatusBtn from "../subComp/markStatusBtn";
-import { fetchAllTaskList } from "../../../services/deliveryOrchestratorServices";
+import {
+  fetchAllTaskList,
+  fetchSuperMasterData,
+} from "../../../services/deliveryOrchestratorServices";
 import { isDesktop, isMobile } from "react-device-detect";
 import { useParams } from "react-router-dom";
+import Papa from "papaparse";
 
 const FileTypeUpload = ({
   data,
@@ -411,6 +416,46 @@ const FileTypeUpload = ({
               )}
             </IconButton>
             <Button
+              onClick={() => {
+                let csvContent = "";
+
+                // Get fileTypeData based on the provided fileType
+                const fileTypeData = data?.[`${fileType.toLowerCase()}Defect`];
+
+                // Check if fileTypeData exists
+                if (fileTypeData) {
+                  // Add audiometryDefectStats column and value
+                  csvContent += `${fileType.toLowerCase()}DefectStats\n`;
+
+                  csvContent +=
+                    fileTypeData?.[`${fileType.toLowerCase()}DefectStats`] +
+                    "\n\n";
+                  // Add audiometryDefectEmpStats column headers
+                  csvContent += `${fileType.toLowerCase()}DefectEmpStats\n`;
+
+                  const empStats =
+                    fileTypeData?.[`${fileType.toLowerCase()}DefectEmpStats`];
+                  if (empStats && empStats.length > 0) {
+                    csvContent += Papa.unparse(empStats);
+                    // const keys = Object.keys(empStats[0]);
+                    // csvContent += keys.join("\t") + "\n";
+
+                    // // Add audiometryDefectEmpStats data rows
+                    // empStats.forEach((emp) => {
+                    //   const values = keys.map((key) => emp[key]);
+                    //   csvContent += values.join("\t") + "\n";
+                    // });
+                  }
+                }
+
+                const csvData = new Blob([csvContent], { type: "text/csv" });
+                const csvUrl = window.URL.createObjectURL(csvData);
+                const hiddenElement = document.createElement("a");
+                hiddenElement.href = csvUrl;
+                hiddenElement.target = "_blank";
+                hiddenElement.download = `${fileType.toLowerCase()}Defect.csv`;
+                hiddenElement.click();
+              }}
               variant="contained"
               size="small"
               sx={{ borderRadius: "15px", height: "40px", marginLeft: "15px" }}
@@ -512,6 +557,17 @@ const UploadMain = () => {
     );
   }, []);
 
+  const [defects, setDefects] = useState([]);
+  const fetchDefects = async () => {
+    const url = BASE_URL + "task/defects?corpId=" + corpId;
+    const result = await getData(url);
+    if (result.data) {
+      setDefects(result.data);
+    } else {
+      setDefects([]);
+    }
+  };
+
   const fetchInstantList = async () => {
     setIsLoading(true);
     const url = `https://apitest.uno.care/api/task/uploadfilesstatustracker?corpId=${corpId}`;
@@ -542,11 +598,122 @@ const UploadMain = () => {
     }
   };
 
+  const [superMasterData, setSuperMasterData] = useState([]);
+
   useEffect(() => {
+    fetchSuperMasterData(corpId, setIsLoading, setSuperMasterData);
     fetchInstantList();
   }, []);
 
-  console.log({ selectedFiles });
+  const reportingTaskNew = reportingTask.map((item, index) => ({
+    ...item,
+    pftDefect: {
+      pftDefectStats: superMasterData.filter(
+        (item) => item.pftToggle === true && item.pftStatus === "NOT_UPLOADED"
+      ).length,
+      pftDefectEmpStats: superMasterData
+        .filter(
+          (item) => item.pftToggle === true && item.pftStatus === "NOT_UPLOADED"
+        )
+        .map((item, index) => ({
+          empId: item.empId,
+          name: item.name,
+          age: item.age,
+          gender: item.gender,
+          tokenNumber: item.tokenNumber,
+          packageName: item.packageName,
+          pftToggle: item.pftToggle,
+          pftStatus: item.pftStatus,
+        })),
+    },
+
+    audiometryDefect: {
+      audiometryDefectStats: superMasterData.filter(
+        (item) =>
+          item.audiometryToggle === true &&
+          item.audiometryStatus === "NOT_UPLOADED"
+      ).length,
+      audiometryDefectEmpStats: superMasterData
+        .filter(
+          (item) =>
+            item.audiometryToggle === true &&
+            item.audiometryStatus === "NOT_UPLOADED"
+        )
+        .map((item, index) => ({
+          empId: item.empId,
+          name: item.name,
+          age: item.age,
+          gender: item.gender,
+          tokenNumber: item.tokenNumber,
+          packageName: item.packageName,
+          audiometryToggle: item.audiometryToggle,
+          audiometryStatus: item.audiometryStatus,
+        })),
+    },
+
+    ecgDefect: {
+      ecgDefectStats: superMasterData.filter(
+        (item) => item.ecgToggle === true && item.ecgStatus === "NOT_UPLOADED"
+      ).length,
+      ecgDefectEmpStats: superMasterData
+        .filter(
+          (item) => item.ecgToggle === true && item.ecgStatus === "NOT_UPLOADED"
+        )
+        .map((item, index) => ({
+          empId: item.empId,
+          name: item.name,
+          age: item.age,
+          gender: item.gender,
+          tokenNumber: item.tokenNumber,
+          packageName: item.packageName,
+          ecgToggle: item.ecgToggle,
+          ecgStatus: item.ecgStatus,
+        })),
+    },
+
+    bloodtestDefect: {
+      bloodtestDefectStats: superMasterData.filter(
+        (item) =>
+          item.bloodToggle === true && item.bloodStatus === "NOT_UPLOADED"
+      ).length,
+      bloodtestDefectEmpStats: superMasterData
+        .filter(
+          (item) =>
+            item.bloodToggle === true && item.bloodStatus === "NOT_UPLOADED"
+        )
+        .map((item, index) => ({
+          empId: item.empId,
+          name: item.name,
+          age: item.age,
+          gender: item.gender,
+          tokenNumber: item.tokenNumber,
+          packageName: item.packageName,
+          bloodToggle: item.bloodToggle,
+          bloodStatus: item.bloodStatus,
+        })),
+    },
+
+    xrayDefect: {
+      xrayDefectStats: superMasterData.filter(
+        (item) => item.xrayToggle === true && item.srayStatus === "NOT_UPLOADED"
+      ).length,
+      xrayDefectEmpStats: superMasterData
+        .filter(
+          (item) =>
+            item.xrayToggle === true && item.xrayStatus === "NOT_UPLOADED"
+        )
+        .map((item, index) => ({
+          empId: item.empId,
+          name: item.name,
+          age: item.age,
+          gender: item.gender,
+          tokenNumber: item.tokenNumber,
+          packageName: item.packageName,
+          xrayToggle: item.xrayToggle,
+          xrayStatus: item.xrayStatus,
+        })),
+    },
+  }));
 
   const handleSubmitFiles = async (fileType, machineNo, processField) => {
     const campCycleId = "138858";
@@ -629,10 +796,11 @@ const UploadMain = () => {
           }}
         >
           <Box sx={{ p: 2 }}>
-            {reportingTask
+            {reportingTaskNew
               .filter((val) => val.itemId !== "printStatus")
               .map((obj, index) => (
                 <FileTypeUpload
+                  key={index}
                   data={obj}
                   fileType={obj.itemName
                     ?.replace(/\s/g, "")
