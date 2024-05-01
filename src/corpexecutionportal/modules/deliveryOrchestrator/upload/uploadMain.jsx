@@ -555,6 +555,7 @@ const UploadMain = () => {
   useEffect(() => {
     fetchSuperMasterData(corpId, setIsLoading, setSuperMasterData);
     fetchInstantList();
+    fetchDefects();
   }, []);
 
   const reportingTaskNew = reportingTask.map((item, index) => ({
@@ -563,6 +564,9 @@ const UploadMain = () => {
       pftDefectStats: superMasterData.filter(
         (item) => item.pftToggle === true && item.pftStatus === "NOT_UPLOADED"
       ).length,
+      pftTotalRequiredtest: defects?.reportDefectsCountVM?.pftTestRequired,
+      pftTotalToggleOn: defects?.reportDefectsCountVM?.pftToggle,
+      pftTotalReportUploaded: defects?.reportDefectsCountVM?.pftReportUploaded,
       pftDefectEmpStats: superMasterData
         .filter(
           (item) => item.pftToggle === true && item.pftStatus === "NOT_UPLOADED"
@@ -585,6 +589,11 @@ const UploadMain = () => {
           item.audiometryToggle === true &&
           item.audiometryStatus === "NOT_UPLOADED"
       ).length,
+      audiometryTotalRequiredtest:
+        defects?.reportDefectsCountVM?.audiometryTestRequired,
+      audiometryTotalToggleOn: defects?.reportDefectsCountVM?.audiometryToggle,
+      audiometryTotalReportUploaded:
+        defects?.reportDefectsCountVM?.audiometryReportUploaded,
       audiometryDefectEmpStats: superMasterData
         .filter(
           (item) =>
@@ -607,6 +616,9 @@ const UploadMain = () => {
       ecgDefectStats: superMasterData.filter(
         (item) => item.ecgToggle === true && item.ecgStatus === "NOT_UPLOADED"
       ).length,
+      ecgTotalRequiredtest: defects?.reportDefectsCountVM?.ecgTestRequired,
+      ecgTotalToggleOn: defects?.reportDefectsCountVM?.ecgToggle,
+      ecgTotalReportUploaded: defects?.reportDefectsCountVM?.ecgReportUploaded,
       ecgDefectEmpStats: superMasterData
         .filter(
           (item) => item.ecgToggle === true && item.ecgStatus === "NOT_UPLOADED"
@@ -628,6 +640,11 @@ const UploadMain = () => {
         (item) =>
           item.bloodToggle === true && item.bloodStatus === "NOT_UPLOADED"
       ).length,
+      bloodtestTotalRequiredtest:
+        defects?.reportDefectsCountVM?.bloodtestTestRequired,
+      bloodtestTotalToggleOn: defects?.reportDefectsCountVM?.bloodtestToggle,
+      bloodtestTotalReportUploaded:
+        defects?.reportDefectsCountVM?.bloodtestReportUploaded,
       bloodtestDefectEmpStats: superMasterData
         .filter(
           (item) =>
@@ -649,6 +666,10 @@ const UploadMain = () => {
       xrayDefectStats: superMasterData.filter(
         (item) => item.xrayToggle === true && item.srayStatus === "NOT_UPLOADED"
       ).length,
+      xrayTotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired,
+      xrayTotalToggleOn: defects?.reportDefectsCountVM?.xrayToggle,
+      xrayTotalReportUploaded:
+        defects?.reportDefectsCountVM?.xrayReportUploaded,
       xrayDefectEmpStats: superMasterData
         .filter(
           (item) =>

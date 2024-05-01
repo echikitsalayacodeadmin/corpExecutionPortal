@@ -24,6 +24,22 @@ import { BASE_URL } from "../../../../assets/constants";
 import { downloadCsv } from "../../../../assets/utils";
 import { useParams } from "react-router-dom";
 
+const generateCSVContent = (data) => {
+  const headers = Object.keys(data[0]);
+  const csvRows = data.map((row) => {
+    const escapedValues = headers.map((header) => {
+      if (typeof row[header] === "string") {
+        return `"${row[header].replace(/"/g, '""') || ""}"`;
+      } else {
+        return `"${row[header]?.toString() || ""}"`;
+      }
+    });
+    return escapedValues.join(",");
+  });
+  csvRows.unshift(headers.join(","));
+  return csvRows.join("\n");
+};
+
 const RowComp = ({ item, handleChange, corpId }) => {
   return (
     <Fragment>
@@ -86,7 +102,20 @@ const RowComp = ({ item, handleChange, corpId }) => {
                   item.itemId === "copyDefectExecution" ||
                   item.itemId === "copyDefectUpload"
                 ) {
-                  downloadCsv(item.sheetDefects, `${item.itemId}.csv`);
+                  let csvContent = "";
+                  csvContent = `Overall Stats\n\n${generateCSVContent(
+                    item.overallStats
+                  )}\n\n`;
+                  csvContent += `Detailed Stats\n\n${generateCSVContent(
+                    item.sheetDefects
+                  )}`;
+                  const csvData = new Blob([csvContent], { type: "text/csv" });
+                  const csvUrl = window.URL.createObjectURL(csvData);
+                  const hiddenElement = document.createElement("a");
+                  hiddenElement.href = csvUrl;
+                  hiddenElement.target = "_blank";
+                  hiddenElement.download = item.itemId;
+                  hiddenElement.click();
                 }
               }}
               size="small"
@@ -181,13 +210,60 @@ const DataSheetMain = () => {
 
   const newDataSheet2 = newDataSheet.map((item, index) => ({
     ...item,
-    sheetDefects: defects.empReportDefectsDetailVMS?.filter((obj, index) =>
-      item.itemId === "copyDefectExecution"
-        ? obj.exeDefect === true
-        : item.itemId === "copyDefectUpload"
-        ? obj.uploadDefect === true
-        : []
-    ),
+    overallStats: [
+      {
+        TestName: "PFT",
+        TotalRequiredtest: defects?.reportDefectsCountVM?.pftTestRequired,
+        TotalToggleOn: defects?.reportDefectsCountVM?.pftToggle,
+        TotalReportUploaded: defects?.reportDefectsCountVM?.pftReportUploaded,
+      },
+      {
+        TestName: "BLOODTEST",
+        TotalRequiredtest: defects?.reportDefectsCountVM?.bloodTestRequired,
+        TotalToggleOn: defects?.reportDefectsCountVM?.bloodToggle,
+        TotalReportUploaded: defects?.reportDefectsCountVM?.bloodReportUploaded,
+      },
+      {
+        TestName: "ECG",
+        TotalRequiredtest: defects?.reportDefectsCountVM?.ecgTestRequired,
+        TotalToggleOn: defects?.reportDefectsCountVM?.ecgToggle,
+        TotalReportUploaded: defects?.reportDefectsCountVM?.ecgReportUploaded,
+      },
+      {
+        TestName: "XRAY",
+        xrayTotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired,
+        xrayTotalToggleOn: defects?.reportDefectsCountVM?.xrayToggle,
+        xrayTotalReportUploaded:
+          defects?.reportDefectsCountVM?.xrayReportUploaded,
+      },
+    ],
+
+    sheetDefects: defects.empReportDefectsDetailVMS
+      ?.filter((obj, index) =>
+        item.itemId === "copyDefectExecution"
+          ? obj.exeDefect === true
+          : item.itemId === "copyDefectUpload"
+          ? obj.uploadDefect === true
+          : []
+      )
+      .map((val, index) =>
+        item.itemId === "copyDefectExecution"
+          ? {
+              empName: val.empName,
+              empId: val.empId,
+              testsRequired: val.testsRequired,
+              toggleOn: val.toggleOn,
+              missingTests: val.missingTests,
+            }
+          : item.itemId === "copyDefectUpload"
+          ? {
+              empName: val.empName,
+              empId: val.empId,
+              toggleOn: val.toggleOn,
+              missingReports: val.missingReports,
+            }
+          : val
+      ),
     masterData: masterData,
     fields:
       item.itemId === "copySmdToggle"
