@@ -221,7 +221,7 @@ const DataSheetMain = () => {
             parseInt(defects?.reportDefectsCountVM?.pftTestRequired) -
             parseInt(defects?.reportDefectsCountVM?.pftToggle),
         }),
-        ...((item.itemId === "copyDefectExecution" ||
+        ...((item.itemId === "copyDefectUpload" ||
           item.itemId === "copyDefectFinal") && {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.pftToggle) -
