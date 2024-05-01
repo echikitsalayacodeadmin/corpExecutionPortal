@@ -52,13 +52,13 @@ const FileTypeUpload = ({
   const [showSelectedFiles, setShowSelectedFiles] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedField, setSelectedField] = useState("");
-  // const [masterDataConsize, setMasterDataConsize] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMachine, setSelectedMachine] = useState({
     value: "",
     label: "",
   });
   const [processField, setProcessField] = useState({ label: "", value: "" });
+
   const handleProcessReport = (event, newValue, reason) => {
     setProcessField(newValue);
     if (reason === "clear") {
@@ -67,29 +67,26 @@ const FileTypeUpload = ({
   };
 
   const handleDeleteFile = (fileType, name) => {
-    setSelectedFiles((prevSelectedFiles) => {
-      const updatedFiles = prevSelectedFiles[fileType.toUpperCase()].filter(
-        (file) => file.name !== name
-      );
-      return {
-        ...prevSelectedFiles,
-        [fileType.toUpperCase()]: updatedFiles,
-      };
-    });
+    setSelectedFiles((prevSelectedFiles) => ({
+      ...prevSelectedFiles,
+      [fileType.toUpperCase()]: prevSelectedFiles[
+        fileType.toUpperCase()
+      ].filter((file) => file.name !== name),
+    }));
   };
 
   const [masterData, setMasterData] = useState([]);
+
   const getAllFilesWithFilter = async (uploadId) => {
     setIsLoading(true);
     const url = `https://apitest.uno.care/api/org/reporting/upload/reports?corpId=${corpId}&campCycleId=138858`;
     const response = await getData(url);
-    if (response.data) {
-      setIsLoading(false);
-      setMasterData(response.data.filter((item) => item.uploadId === uploadId));
-    } else {
-      setIsLoading(false);
-      setMasterData([]);
-    }
+    setIsLoading(false);
+    setMasterData(
+      response.data
+        ? response.data.filter((item) => item.uploadId === uploadId)
+        : []
+    );
   };
 
   const renderCell = (params) => {
@@ -110,35 +107,16 @@ const FileTypeUpload = ({
 
     switch (params.field) {
       case "uploaded":
-        return renderClickableTypography(params.row.uploaded, "UPLOADED");
       case "matchedNames":
-        return renderClickableTypography(
-          params.row.matchedWithName,
-          "MATCHING"
-        );
       case "unmatchedNames":
-        return renderClickableTypography(
-          params.row.unmatchedNames,
-          "NAME_NOT_MATCHING"
-        );
       case "duplicateFiles":
-        return renderClickableTypography(
-          params.row.duplicateFiles,
-          "DUPLICATE_FILE"
-        );
       case "tokenNotFound":
-        return renderClickableTypography(
-          params.row.tokenNotFound,
-          "TOKEN_NOT_FOUND"
-        );
       case "failed":
-        return renderClickableTypography(params.row.failed, "FAILED");
       case "processed":
-        return renderClickableTypography(params.row.processed, "PROCESSED");
       case "alreadyExistsInDB":
         return renderClickableTypography(
-          params.row.alreadyExistsInDB,
-          "ALREADY_EXISTS_DB"
+          params.row[params.field],
+          params.field.toUpperCase()
         );
       default:
         return <RenderExpandableCells {...params} />;
@@ -156,31 +134,20 @@ const FileTypeUpload = ({
             field: key,
             headerName: formatColumnName(key),
             width:
-              key === "machineNo"
-                ? 110
-                : key === "date"
-                ? 110
-                : key === "time"
-                ? 60
-                : key === "totalFiles"
-                ? 120
-                : key === "matchedNames"
-                ? 140
-                : key === "unmatchedNames"
-                ? 160
-                : key === "tokenNotFound"
-                ? 150
-                : key === "duplicateFiles"
-                ? 150
-                : key === "failed"
-                ? 70
-                : key === "uploaded"
-                ? 90
-                : key === "processed"
-                ? 100
-                : key === "alreadyExistsInDB"
-                ? 180
-                : 200,
+              {
+                machineNo: 110,
+                date: 110,
+                time: 60,
+                totalFiles: 120,
+                matchedNames: 140,
+                unmatchedNames: 160,
+                tokenNotFound: 150,
+                duplicateFiles: 150,
+                failed: 70,
+                uploaded: 90,
+                processed: 100,
+                alreadyExistsInDB: 180,
+              }[key] || 200,
             align: "center",
             headerAlign: "center",
             renderCell,
@@ -275,11 +242,6 @@ const FileTypeUpload = ({
           >
             Select
           </Button>
-          {/* {selectedMachine.value === "" && (
-              <FormHelperText sx={{ color: "red" }}>
-                Please Select Machine No
-              </FormHelperText>
-            )} */}
         </Grid>
         <Grid
           item
@@ -287,8 +249,6 @@ const FileTypeUpload = ({
           xs={12}
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          {/* {selectedFiles?.[fileType.toUpperCase()]?.length > 0 && (
-            <Fragment> */}
           <Box
             sx={{
               paddingInline: "10px",
@@ -324,8 +284,6 @@ const FileTypeUpload = ({
           >
             View Selected
           </Button>
-          {/* </Fragment>
-          )} */}
         </Grid>
 
         <Grid
@@ -418,36 +376,20 @@ const FileTypeUpload = ({
             <Button
               onClick={() => {
                 let csvContent = "";
-
-                // Get fileTypeData based on the provided fileType
                 const fileTypeData = data?.[`${fileType.toLowerCase()}Defect`];
-
-                // Check if fileTypeData exists
                 if (fileTypeData) {
-                  // Add audiometryDefectStats column and value
                   csvContent += `${fileType.toLowerCase()}DefectStats\n`;
-
                   csvContent +=
                     fileTypeData?.[`${fileType.toLowerCase()}DefectStats`] +
                     "\n\n";
-                  // Add audiometryDefectEmpStats column headers
-                  csvContent += `${fileType.toLowerCase()}DefectEmpStats\n`;
 
+                  csvContent += `${fileType.toLowerCase()}DefectEmpStats\n`;
                   const empStats =
                     fileTypeData?.[`${fileType.toLowerCase()}DefectEmpStats`];
                   if (empStats && empStats.length > 0) {
                     csvContent += Papa.unparse(empStats);
-                    // const keys = Object.keys(empStats[0]);
-                    // csvContent += keys.join("\t") + "\n";
-
-                    // // Add audiometryDefectEmpStats data rows
-                    // empStats.forEach((emp) => {
-                    //   const values = keys.map((key) => emp[key]);
-                    //   csvContent += values.join("\t") + "\n";
-                    // });
                   }
                 }
-
                 const csvData = new Blob([csvContent], { type: "text/csv" });
                 const csvUrl = window.URL.createObjectURL(csvData);
                 const hiddenElement = document.createElement("a");
@@ -582,15 +524,6 @@ const UploadMain = () => {
         fileType: item.fileType,
         ...item,
         totalFiles: item.totalFiles,
-        // totalFiles: item.totalFiles,
-        // matchedNames: item.matchedNames,
-        // unmatchedNames: item.unmatchedNames,
-        // tokenNotFound: item.tokenNotFound,
-        // duplicates: item.duplicates,
-        // failed: item.failed,
-        // uploaded: item.uploaded,
-        // processed: item.processed,
-        // uploadId: item.uploadId,
       }));
       setMasterDataConsize(newTemp);
     } else {
