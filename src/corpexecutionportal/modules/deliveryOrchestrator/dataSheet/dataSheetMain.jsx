@@ -16,6 +16,7 @@ import {
   fetchSuperMasterData,
   getDataSheetReports,
 } from "../../../services/deliveryOrchestratorServices";
+import Papa from "papaparse";
 import { useSnackbar } from "notistack";
 import { isDesktop } from "react-device-detect";
 import { DATASHEET_SEQ } from "../../../assets/corpConstants";
@@ -23,6 +24,29 @@ import MarkStatusBtn from "../subComp/markStatusBtn";
 import { BASE_URL } from "../../../../assets/constants";
 import { downloadCsv } from "../../../../assets/utils";
 import { useParams } from "react-router-dom";
+const generateSummaryCSV = (data) => {
+  let csvContent = `Test Name,Done,\n`;
+  for (const testName in data) {
+    const testData = data[testName];
+    csvContent += `${testName},${testData.done}\n`;
+  }
+  return csvContent;
+};
+
+const generateSummaryDetailCSV = (data) => {
+  let csvContent = "";
+  csvContent += Papa.unparse(data);
+
+  return csvContent;
+};
+
+const generateCombinedCSV = (data) => {
+  const summaryContent = generateSummaryCSV(data.summary);
+  const summaryDetailContent = generateSummaryDetailCSV(data.summaryDetail);
+  let combinedContent = `${summaryContent}\n\n`; // Add two newlines for spacing
+  combinedContent += summaryDetailContent;
+  return combinedContent;
+};
 
 const generateCSVContent = (data) => {
   const headers = Object.keys(data[0]);
@@ -117,6 +141,17 @@ const RowComp = ({ item, handleChange, corpId }) => {
                   hiddenElement.target = "_blank";
                   hiddenElement.download = item.itemId;
                   hiddenElement.click();
+                } else if (item.itemId === "tabSnop") {
+                  const combinedCsv = generateCombinedCSV(item.snopMailReport);
+                  const csvData = new Blob([combinedCsv], {
+                    type: "text/csv",
+                  });
+                  const csvUrl = window.URL.createObjectURL(csvData);
+                  const hiddenElement = document.createElement("a");
+                  hiddenElement.href = csvUrl;
+                  hiddenElement.target = "_blank";
+                  hiddenElement.download = `test_result.csv`;
+                  hiddenElement.click();
                 }
               }}
               size="small"
@@ -209,8 +244,28 @@ const DataSheetMain = () => {
     }
   };
 
+  const [snopMailReport, setSnopMailReport] = useState([]);
+  const fetchSnopMail = async () => {
+    const url = BASE_URL + "org/reporting/snopEmail?corpId=" + corpId;
+    const result = await getData(url);
+    if (result.data) {
+      setSnopMailReport(result.data);
+    } else {
+      setSnopMailReport([]);
+    }
+  };
+  useEffect(() => {
+    fetchSnopMail();
+  }, []);
+
   const newDataSheet2 = newDataSheet.map((item, index) => ({
     ...item,
+    ...(item.itemId === "tabSnop" && {
+      snopMailReport: {
+        summary: snopMailReport.qcMap,
+        summaryDetail: snopMailReport.snopVM,
+      },
+    }),
     overallStats: [
       {
         TestName: "PFT",
