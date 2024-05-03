@@ -17,13 +17,21 @@ const GlobalDateLayout = ({
   disableFuture,
   numberOfDaysBack,
   disabled,
+  formValues,
+  setFormValues,
+  property,
 }) => {
   const [dateValue, setDateValue] = useState(null);
 
   useEffect(() => {
     if (initialDate === null) {
       setDateValue(null);
-      setDate(null);
+      if (setDate) {
+        setDate(null);
+      }
+      if (formValues && setFormValues && property) {
+        setFormValues({ ...formValues, [property]: null });
+      }
     } else if (initialDate) {
       setDateValue(dayjs(initialDate));
     } else if (numberOfDaysBack || sevenDaysBack) {
@@ -38,25 +46,37 @@ const GlobalDateLayout = ({
     if (newValue) {
       setDateValue(dayjs(newValue));
       const formattedDate = newValue.format("YYYY-MM-DD");
-      setDate(formattedDate);
+      if (setDate) {
+        setDate(formattedDate);
+      }
+      if (formValues && setFormValues && property) {
+        setFormValues({ ...formValues, [property]: formattedDate });
+      }
       if (setCheckDate) {
         setCheckDate(true);
       }
     } else {
       setDateValue(null);
       setDate(null);
+      if (formValues && setFormValues && property) {
+        setFormValues({ ...formValues, [property]: null });
+      }
     }
   };
 
   const handleClearDate = () => {
     setDateValue(null);
     setDate(null);
+    if (formValues && setFormValues && property) {
+      setFormValues({ ...formValues, [property]: null });
+    }
   };
 
   return (
     <Box
       sx={{
         width: "100%",
+
         "& .MuiFormControl-root": {
           display: "flex",
           justifyContent: "center",
@@ -68,6 +88,7 @@ const GlobalDateLayout = ({
         },
         "& .MuiOutlinedInput-input": {
           height: "6px",
+          borderRadius: "15px",
           backgroundColor: "#FFFFFF",
           fontWeight: "400",
           fontSize: "13px",

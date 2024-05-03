@@ -1,9 +1,19 @@
 import { Button, Typography } from "@mui/material";
 import React from "react";
 
-const CustomButtonBlue = ({ onClick, title, disabled, styles, fullWidth }) => {
+const CustomButtonBlue = ({
+  onClick,
+  title,
+  disabled,
+  styles,
+  fullWidth,
+  startIcon,
+  endIcon,
+}) => {
   return (
     <Button
+      startIcon={startIcon}
+      endIcon={endIcon}
       disabled={disabled}
       onClick={onClick}
       variant="contained"

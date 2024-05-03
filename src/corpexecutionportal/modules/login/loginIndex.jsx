@@ -31,6 +31,7 @@ const LoginIndex = () => {
     const payload = {
       username: userName?.trim(),
       password: password,
+      // role: "CORPSALES_ADMIN",
       portal: "ORG_ANALYSIS",
     };
     authenticateUser(payload, navigate, enqueueSnackbar);

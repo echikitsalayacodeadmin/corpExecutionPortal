@@ -13,10 +13,39 @@ export const authenticateUser = async (payload, navigate, enqueueSnackbar) => {
     });
   } else {
     let token = await response?.data?.token;
+    let userData = await jwtDecode(token);
     localStorage.setItem("AUTHHEADER_CORP_EXECUTION", token);
-    enqueueSnackbar("Successfully Logged In", {
-      variant: "success",
-    });
+    localStorage.setItem("authHeader_local_CORP_SALES", token);
+    localStorage.setItem("ROLE_CORP_SALES", userData?.role);
+    localStorage.setItem("BRANCH_ID_CORP_SALES", userData?.userID);
+    localStorage.setItem("BRANCH_ID_UNIQUE_CORP_SALES", userData?.userID);
+    localStorage.setItem("CLINIC_ID_CORP_SALES", userData?.clinicId);
+    localStorage.setItem("BRANCH_NAME_CORP_SALES", userData?.branchName);
+    localStorage.setItem("USER_NAME_CORP_SALES", userData?.name);
+    localStorage.setItem("USER_MOBILE_CORP_SALES", userData?.mobile);
+    localStorage.setItem("USER_ID_CORP_SALES", userData?.id);
+    localStorage.setItem("PORTAL_CORP_SALES", userData?.portal);
+    localStorage.setItem("ROLES_CORP_SALES", userData?.roles);
+    localStorage.setItem(
+      "PERMISSION_CORP_SALES",
+      userData?.permissions ? JSON.stringify(userData?.permissions) : null
+    );
+    // if (
+    //   userData.role === "CORPSALES_ADMIN" ||
+    //   userData.role === "CORPSALES_USER"
+    // ) {
+    //   navigate("/corp/home");
+    //   enqueueSnackbar("Successfully Logged In", {
+    //     variant: "success",
+    //   });
+    // } else {
+    //   localStorage.clear();
+    //   navigate("/");
+    //   enqueueSnackbar("You are not authorized to login", {
+    //     variant: "error",
+    //   });
+    // }
+
     navigate("/corp/home");
   }
 };

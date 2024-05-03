@@ -67,3 +67,15 @@ export const REPORTING = [
   "qcTech",
   "qcTechReport",
 ];
+
+export const CORPORATE_SERVICES = [
+  "Digitisation of Health records",
+  "Annual Health camps",
+  "Occupational health centre management",
+  "Pre Employment health tests",
+  "Care assistance for surgeries and emergencies",
+  "Group/Individual Insurence",
+  "CSR",
+  "Health awareness sessions",
+  "Ambulance services",
+];

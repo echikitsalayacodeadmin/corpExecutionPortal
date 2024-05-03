@@ -12,3 +12,16 @@ export async function deleteDataGlobal(url, token) {
     }).then((res) => res.data)
   );
 }
+
+export async function deleteDataWithObjectGlobal(url, payload, token) {
+  return await Resolver(
+    axios(url, {
+      method: "DELETE",
+      data: payload,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }).then((res) => res.data)
+  );
+}

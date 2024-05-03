@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import DataSheetMain from "../modules/deliveryOrchestrator/dataSheet/dataSheetMain";
+import DataSheetMain from "../modules/deliveryOrchestrator/subPages/dataSheet/dataSheetMain";
 
 const DataSheetCorp = () => {
   return (

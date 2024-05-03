@@ -16,7 +16,7 @@ const data = (val) => {
       title: "SALES VISITS",
       count: val?.totalEmployees,
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
-      path: "/corp/sales",
+      path: "/corp/salesvisit",
       xsgridwidth: 12,
     },
     {
@@ -32,7 +32,7 @@ const data = (val) => {
       title: "ORDER CONFIRMED",
       count: val?.totalEmployees,
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
-      path: "/corp/orders",
+      path: "/corp/orderconfirmed",
       xsgridwidth: 12,
     },
     {

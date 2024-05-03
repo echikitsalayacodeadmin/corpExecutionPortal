@@ -235,3 +235,29 @@ export const sortArrayByDateTime = (arr) => {
     return dateTimeB - dateTimeA;
   });
 };
+
+export const getMonthFromDate = (dateString) => {
+  const date = new Date(dateString);
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const monthNumber = date.getMonth();
+  const monthName = monthNames[monthNumber];
+  return monthName;
+};
+
+export const formatTime = (date) => {
+  const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
+  return date.toLocaleTimeString("en-US", timeOptions);
+};

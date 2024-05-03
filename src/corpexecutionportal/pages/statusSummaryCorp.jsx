@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import StatusSummaryMain from "../modules/deliveryOrchestrator/statusSummary/statusSummaryMain";
+import StatusSummaryMain from "../modules/deliveryOrchestrator/subPages/statusSummary/statusSummaryMain";
 
 const StatusSummaryCorp = () => {
   return (

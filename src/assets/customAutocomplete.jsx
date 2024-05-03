@@ -1,7 +1,10 @@
 import { Autocomplete, Box, TextField, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
 import React from "react";
 
 const CustomAutocomplete = ({
+  multiple,
+  disableCloseOnSelect,
   disabled,
   options,
   label,
@@ -18,8 +21,12 @@ const CustomAutocomplete = ({
   error,
   styles,
 }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   return (
     <Autocomplete
+      multiple={multiple}
+      disableCloseOnSelect={disableCloseOnSelect}
       disabled={disabled}
       fullWidth
       size="small"

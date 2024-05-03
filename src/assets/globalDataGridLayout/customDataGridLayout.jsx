@@ -22,7 +22,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button, Typography, createSvgIcon } from "@mui/material";
 import MuiPagination from "@mui/material/Pagination";
-import ParseCSV from "../parseCSV";
 
 function customCheckbox(theme) {
   return {
@@ -262,10 +261,10 @@ const CustomDataGridLayout = ({
           getRowClassName={(params) => {
             const snoCount = rows.filter(
               (row) => row.sno === params.row.sno
-            ).length;
+            )?.length;
             const employeeIdCount = rows.filter(
               (row) => row.employeeid === params.row.employeeid
-            ).length;
+            )?.length;
 
             return params.row.employeeid === "" ||
               params.row.sno === "" ||

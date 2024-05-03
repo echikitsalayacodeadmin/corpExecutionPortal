@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import UploadMain from "../modules/deliveryOrchestrator/upload/uploadMain";
+import UploadMain from "../modules/deliveryOrchestrator/subPages/upload/uploadMain";
 
 const UploadCorp = () => {
   return (

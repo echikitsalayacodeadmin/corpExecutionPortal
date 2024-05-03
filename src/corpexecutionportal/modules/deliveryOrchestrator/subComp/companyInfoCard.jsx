@@ -26,7 +26,7 @@ const CompanyInfoCard = ({ data }) => {
         }}
       >
         <Grid item xs={6} lg={6}>
-          <CustomTypographyBold>{data.corpName}</CustomTypographyBold>
+          <CustomTypographyBold>{data?.corpName}</CustomTypographyBold>
         </Grid>
         <Grid item xs={3} lg={3}>
           <Box
@@ -38,7 +38,7 @@ const CompanyInfoCard = ({ data }) => {
               textAlign: "center",
             }}
           >
-            <CustomTypographyBold>{data.status}</CustomTypographyBold>
+            <CustomTypographyBold>{data?.status}</CustomTypographyBold>
           </Box>
         </Grid>
         {data.status === "DISPATCH" ? null : (
