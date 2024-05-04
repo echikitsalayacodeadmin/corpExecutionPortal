@@ -102,6 +102,7 @@ const HomeMain = () => {
 
   useEffect(() => {
     fetchData();
+    localStorage.removeItem("SAVE_FILTERS__SALES_VISIT_DASHBOARD");
   }, []);
   return (
     <Fragment>
