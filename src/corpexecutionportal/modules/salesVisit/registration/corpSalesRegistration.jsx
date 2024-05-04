@@ -38,7 +38,7 @@ const CorpSalesRegistration = () => {
     corpType: "",
     address: "",
     noOfPlants: "",
-    timeField: new Date(),
+    timeField: new Date()?.toISOString().split("T")[0],
     onRollEmployees: "",
     offRollEmployees: "",
     prospectiveServices: [],
@@ -52,7 +52,7 @@ const CorpSalesRegistration = () => {
     visitType: "",
     userId: 0,
     childUserId: [0],
-    registrationDate: new Date(),
+    registrationDate: new Date()?.toISOString().split("T")[0],
     userName: "",
     location: "",
     priority: "",
@@ -79,7 +79,7 @@ const CorpSalesRegistration = () => {
     userName: userName,
     location: formValues.location,
     priority: formValues.priority,
-    nextVisitDate: new Date(),
+    // nextVisitDate: new Date()?.toISOString().split("T")[0],
   };
 
   const handleUpload = async (corpSalesId) => {

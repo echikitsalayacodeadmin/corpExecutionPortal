@@ -50,7 +50,7 @@ const CorpSalesNewVisit = () => {
     corpType: "",
     address: "",
     noOfPlants: "",
-    timeField: new Date(),
+    timeField: new Date()?.toISOString().split("T")[0],
     onRollEmployees: "",
     offRollEmployees: "",
     prospectiveServices: [],
@@ -64,12 +64,12 @@ const CorpSalesNewVisit = () => {
     visitType: "",
     userId: 0,
     childUserId: [0],
-    registrationDate: new Date(),
+    registrationDate: new Date()?.toISOString().split("T")[0],
     userName: "",
     location: "",
     priority: "",
     visitPhotoUrl: "",
-    nextVisitDate: new Date(),
+    nextVisitDate: new Date()?.toISOString().split("T")[0],
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -86,17 +86,21 @@ const CorpSalesNewVisit = () => {
         corpType: result?.data.corpType || "",
         address: result?.data.address || "",
         noOfPlants: result?.data.noOfPlants || "",
-        timeField: new Date(),
+        timeField: new Date()?.toISOString().split("T")[0],
         onRollEmployees: result?.data.onRollEmployees || "",
         offRollEmployees: result?.data.offRollEmployees || "",
         prospectiveServices: result?.data.prospectiveServices || [],
-        auditMonth: new Date(),
+        auditMonth: new Date(result?.data.auditMonth)
+          ?.toISOString()
+          .split("T")[0],
         photoUrl: result?.data.photoUrl || "",
         spocList: result?.data.spocList || [],
         visitType: result?.data.visitType || "",
         userId: result?.data.userId || userId,
         childUserId: result?.data.childUserId || [],
-        registrationDate: new Date(),
+        registrationDate: new Date(result?.data?.registrationDate)
+          ?.toISOString()
+          .split("T")[0],
         userName: result?.data.userName || userName,
         location: result?.data.location || "",
         priority: result?.data.priority || "",
@@ -105,7 +109,7 @@ const CorpSalesNewVisit = () => {
         anoterVisitRequired: false,
         interestedRemark: "",
         visitPhotoUrl: "",
-        nextVisitDate: new Date(),
+        nextVisitDate: new Date()?.toISOString().split("T")[0],
       });
     } else {
       console.log("SUCCESS", result?.error);
