@@ -21,6 +21,7 @@ import DashboardCard from "./subComp/dashboardCard";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { downloadCsv } from "../../../../assets/utils";
+import SelectUser from "../../../global/selectUsers/selectUsers";
 
 const SalesVisitDashboard = () => {
   const navigate = useNavigate();
@@ -285,7 +286,7 @@ const SalesVisitDashboard = () => {
               />
             </Grid>
             <Grid item xs={12} lg={2}>
-              <SelectKam
+              <SelectUser
                 selectedUserName={selectedUserName}
                 setSelectedUserName={setSelectedUserName}
                 setUserId={setUserId}

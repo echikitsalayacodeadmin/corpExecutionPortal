@@ -3,7 +3,7 @@ import { BASE_URL } from "../../../assets/constants";
 import { getData } from "../../assets/corpServices";
 import CustomAutocomplete from "../../../assets/customAutocomplete";
 
-const SelectKam = ({
+const SelectUser = ({
   selectedUserName,
   setSelectedUserName,
   userId,
@@ -26,8 +26,8 @@ const SelectKam = ({
   return (
     <Fragment>
       <CustomAutocomplete
-        label={"Select KAM"}
-        placeholder={"Select KAM"}
+        label={"Select User"}
+        placeholder={"Select User"}
         value={selectedUserName}
         getOptionLabel={(option) => option}
         options={userList
@@ -52,4 +52,4 @@ const SelectKam = ({
   );
 };
 
-export default SelectKam;
+export default SelectUser;
