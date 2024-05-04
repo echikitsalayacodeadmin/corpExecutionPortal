@@ -261,3 +261,10 @@ export const formatTime = (date) => {
   const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
   return date.toLocaleTimeString("en-US", timeOptions);
 };
+
+export const sortArrayByLastModifiedDate = (array) => {
+  const sortedArray = array.sort(
+    (a, b) => new Date(b.lastModifiedDate) - new Date(a.lastModifiedDate)
+  );
+  return sortedArray;
+};

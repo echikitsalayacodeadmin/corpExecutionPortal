@@ -38,18 +38,9 @@ const SearchBarCompany = ({
             onChange={(e) => setValue(e.target.value)}
             placeholder="Search"
             sx={{
-              background: "#fff",
+              backgroundColor: "#FFFFFF",
               color: "#000000",
-              fontWeight: "300",
-              fontSize: "13px",
-              lineHeight: " 15px",
-              "& input::placeholder": {
-                color: "#777777",
-                fontWeight: "300",
-                fontSize: "13px",
-                lineHeight: " 15px",
-              },
-              border: "0.5px solid rgba(0, 0, 0, 0.15)",
+              border: "1px solid rgba(0, 0, 0, 0.15)",
               borderRadius: "15px",
               "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
                 border: "none",
