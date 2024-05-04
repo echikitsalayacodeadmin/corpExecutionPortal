@@ -89,6 +89,7 @@ const EditCorpSummary = () => {
         variant: "success",
       });
       fetchCorpDetails(setFormValues, setIsLoading, corpSalesId);
+      navigate(-1);
     } else if (result && result?.error) {
       enqueueSnackbar("An Error Occured", {
         variant: "error",

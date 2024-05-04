@@ -64,6 +64,14 @@ const DashboardCard = ({ data, serviceMapping }) => {
               </Typography>
             </Grid>
           ) : null}
+          {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
+            <Grid item xs={12} lg={5} sx={{ display: "flex" }}>
+              <Typography sx={styles.subTitle}>Next Date - </Typography>
+              <Typography sx={styles.subTitle}>
+                {data?.corpSalesVisitEntities?.[0]?.nextVisitDate}
+              </Typography>
+            </Grid>
+          ) : null}
 
           {data?.totalVisits ? (
             <Grid item xs={12} lg={12} sx={{ display: "flex" }}>
@@ -123,7 +131,12 @@ const DashboardCard = ({ data, serviceMapping }) => {
               </Typography>
             ))}
           </Grid>
-          <Grid item xs={12} lg={12} sx={{ display: "flex", gap: "10px" }}>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
+          >
             {requiredServices &&
               Object.keys(requiredServices).map((key) => {
                 const info = requiredServices[key];
