@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import MarkAsLost from "../comps/markAsLost/MarkAsLost";
-import { useRouter } from "next/router";
 import MarkQuotation from "../comps/MarkQuotation";
 import QuotationCompanyDetail from "../comps/QuotationCompanyDetail";
 import { useFileUpload } from "use-file-upload";
@@ -21,7 +20,7 @@ import CustomButtonBlue from "../../../../assets/customButtonBlue";
 
 const QuotationDetail = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const router = useRouter();
+
   const [corpSalesId, setCorpSalesId] = useState("");
   const [corpSalesVisitId, setCorpSalesVisitId] = useState("");
   const [quotationId, setQuotationId] = useState("");
