@@ -34,6 +34,7 @@ import AddPotentialServices from "../registration/subComp/addPotentialServices";
 import AddSpocComp from "../registration/subComp/addSpocComp";
 import CompanyName from "../editVisit/subComp/companyName";
 import UploadFile from "../../../global/uploadFIle";
+import dayjs from "dayjs";
 
 const CorpSalesNewVisit = () => {
   const { itemId } = useParams();
@@ -50,7 +51,7 @@ const CorpSalesNewVisit = () => {
     corpType: "",
     address: "",
     noOfPlants: "",
-    timeField: new Date()?.toISOString().split("T")[0],
+    timeField: dayjs().format("YYYY-MM-DD"),
     onRollEmployees: "",
     offRollEmployees: "",
     prospectiveServices: [],
@@ -64,12 +65,12 @@ const CorpSalesNewVisit = () => {
     visitType: "",
     userId: 0,
     childUserId: [0],
-    registrationDate: new Date()?.toISOString().split("T")[0],
+    registrationDate: dayjs().format("YYYY-MM-DD"),
     userName: "",
     location: "",
     priority: "",
     visitPhotoUrl: "",
-    nextVisitDate: new Date()?.toISOString().split("T")[0],
+    nextVisitDate: dayjs().format("YYYY-MM-DD"),
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -106,7 +107,7 @@ const CorpSalesNewVisit = () => {
           anoterVisitRequired: false,
           interestedRemark: "",
           visitPhotoUrl: "",
-          nextVisitDate: new Date()?.toISOString().split("T")[0],
+          nextVisitDate: dayjs().format("YYYY-MM-DD"),
         });
       } else {
         console.log("SUCCESS", result?.error);

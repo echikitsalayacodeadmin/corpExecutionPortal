@@ -1,9 +1,11 @@
 import { Box, Button, Grid, Stack } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { CustomTypographyBoldAlt } from "../../../assets/customTypography";
 import MainPageLayout from "../../global/templates/mainPageLayout";
 import { showNumber } from "../../../assets/utils";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../../../assets/constants";
+import { getData } from "../../assets/corpServices";
 
 const ShowCount = ({ children }) => {
   return <CustomTypographyBoldAlt>{children}</CustomTypographyBoldAlt>;
@@ -14,39 +16,42 @@ const data = (val) => {
     {
       id: 1,
       title: "SALES VISITS",
-      count: val?.totalEmployees,
-      countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
+      count: val?.visits,
+      countComp: <ShowCount>{`${showNumber(val?.visits)}`}</ShowCount>,
       path: "/corp/salesvisit",
       xsgridwidth: 12,
     },
     {
       id: 2,
       title: "QUOTATION SENT",
-      count: val?.totalEmployees,
-      countComp: <ShowCount>{showNumber(val?.totalEmployees)}</ShowCount>,
+      count: val?.quotations,
+      countComp: <ShowCount>{`${showNumber(val?.quotations)}`}</ShowCount>,
       path: "/corp/quotation",
       xsgridwidth: 12,
+      disabled: true,
     },
     {
       id: 3,
       title: "ORDER CONFIRMED",
-      count: val?.totalEmployees,
-      countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
+      count: val?.orders,
+      countComp: <ShowCount>{`${showNumber(val?.orders)}`}</ShowCount>,
       path: "/corp/orderconfirmed",
       xsgridwidth: 12,
+      disabled: true,
     },
     {
       id: 4,
       title: "EXECUTION PLANNING",
-      count: val?.totalEmployees,
-      countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
+      count: val?.service,
+      countComp: <ShowCount>{`${showNumber(val?.service)}`}</ShowCount>,
       path: "/corp/executionplanning",
       xsgridwidth: 12,
+      disabled: true,
     },
     {
       id: 5,
       title: "DELIVERY ORCHESTRATOR",
-      count: val?.totalEmployees,
+      count: val?.totalEmployees || "",
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
       path: "/corp/deliveryorchestrator",
       xsgridwidth: 12,
@@ -54,10 +59,11 @@ const data = (val) => {
     {
       id: 6,
       title: "ACCOUNT RECEIVABLE",
-      count: val?.totalEmployees,
-      countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
+      count: val?.payment || "",
+      countComp: <ShowCount>{`${showNumber(val?.payment)}`}</ShowCount>,
       path: "/camp/accountreceivable",
       xsgridwidth: 12,
+      disabled: true,
     },
     {
       id: 7,
@@ -66,6 +72,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
       path: "/corp/bizfin",
       xsgridwidth: 12,
+      disabled: true,
     },
     {
       id: 8,
@@ -74,6 +81,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
       path: "/corp/mis",
       xsgridwidth: 12,
+      disabled: true,
     },
   ];
 };
@@ -81,6 +89,20 @@ const data = (val) => {
 const HomeMain = () => {
   let navigate = useNavigate();
   const [stats, setStats] = useState({});
+  const fetchData = async () => {
+    const url = BASE_URL + "corpSales/homepage";
+    const data = await getData(url);
+    if (data && data.data) {
+      console.log("SUCCESS GET", data.data);
+      setStats(data.data);
+    } else if (data && data.error) {
+      setStats({});
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <Fragment>
       <MainPageLayout title={""}>
@@ -89,7 +111,11 @@ const HomeMain = () => {
             {data(stats).map((item, index) => (
               <Grid item lg={4} xs={item?.xsgridwidth} key={index}>
                 <Box>
-                  <Button onClick={() => navigate(item?.path)} fullWidth>
+                  <Button
+                    disabled={item.disabled}
+                    onClick={() => navigate(item?.path)}
+                    fullWidth
+                  >
                     <Box
                       sx={{
                         flex: 1,

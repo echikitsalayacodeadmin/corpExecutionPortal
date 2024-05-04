@@ -4,6 +4,7 @@ import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useNavigate } from "react-router-dom";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const CompanyVisitDetails = ({ data, onlyView = false }) => {
   const navigate = useNavigate();
@@ -145,6 +146,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 sx={{ display: "flex", flexWrap: "wrap", marginTop: 1 }}
               >
                 <CustomButtonBlue
+                  startIcon={<DownloadIcon />}
                   disabled={item?.photoUrl ? false : true}
                   title="Photo"
                   onClick={() => {

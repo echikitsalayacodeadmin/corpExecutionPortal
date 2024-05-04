@@ -18,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { BASE_URL } from "../../../../assets/constants";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import dayjs from "dayjs";
 
 const SubServiceDetail = ({ openModal, setOpenModal, selectedRow }) => {
   const { itemId } = useParams();
@@ -30,7 +31,7 @@ const SubServiceDetail = ({ openModal, setOpenModal, selectedRow }) => {
     required: "",
     lastPlayer: "",
     existingAmmount: "",
-    dueDate: new Date()?.toISOString().split("T")[0],
+    dueDate: dayjs().format("YYYY-MM-DD"),
     comments: "",
     isEdit: false,
   });
@@ -209,7 +210,7 @@ const SubServiceDetail = ({ openModal, setOpenModal, selectedRow }) => {
               required: "",
               lastPlayer: "",
               existingAmmount: "",
-              dueDate: new Date()?.toISOString().split("T")[0],
+              dueDate: dayjs().format("YYYY-MM-DD"),
               comments: "",
               isEdit: false,
             });
@@ -239,7 +240,7 @@ const SubServiceDetail = ({ openModal, setOpenModal, selectedRow }) => {
                     required: "",
                     lastPlayer: "",
                     existingAmmount: "",
-                    dueDate: new Date()?.toISOString().split("T")[0],
+                    dueDate: dayjs().format("YYYY-MM-DD"),
                     comments: "",
                     isEdit: false,
                   });
@@ -376,7 +377,7 @@ const SubServiceDetail = ({ openModal, setOpenModal, selectedRow }) => {
                         required: "",
                         lastPlayer: "",
                         existingAmmount: "",
-                        dueDate: new Date()?.toISOString().split("T")[0],
+                        dueDate: dayjs().format("YYYY-MM-DD"),
                         comments: "",
                         isEdit: false,
                       });
@@ -393,7 +394,7 @@ const SubServiceDetail = ({ openModal, setOpenModal, selectedRow }) => {
                         required: "",
                         lastPlayer: "",
                         existingAmmount: "",
-                        dueDate: new Date()?.toISOString().split("T")[0],
+                        dueDate: dayjs().format("YYYY-MM-DD"),
                         comments: "",
                         isEdit: false,
                       });

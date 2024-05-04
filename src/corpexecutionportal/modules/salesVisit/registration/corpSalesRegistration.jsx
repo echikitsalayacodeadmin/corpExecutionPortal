@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import CompanyName from "./subComp/companyName";
 import SelectLocation from "../../../global/selectLocation/selectLocation";
 import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import { saveData, uploadFile } from "../../../assets/corpServices";
+import dayjs from "dayjs";
 
 const CorpSalesRegistration = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const CorpSalesRegistration = () => {
     corpType: "",
     address: "",
     noOfPlants: "",
-    timeField: new Date()?.toISOString().split("T")[0],
+    timeField: dayjs().format("YYYY-MM-DD"),
     onRollEmployees: "",
     offRollEmployees: "",
     prospectiveServices: [],
@@ -52,11 +53,11 @@ const CorpSalesRegistration = () => {
     visitType: "",
     userId: 0,
     childUserId: [0],
-    registrationDate: new Date()?.toISOString().split("T")[0],
+    registrationDate: dayjs().format("YYYY-MM-DD"),
     userName: "",
     location: "",
     priority: "",
-    nextVisitDate: new Date()?.toISOString().split("T")[0],
+    nextVisitDate: dayjs().format("YYYY-MM-DD"),
   });
 
   const obj = {
@@ -80,7 +81,7 @@ const CorpSalesRegistration = () => {
     location: formValues.location,
     priority: formValues.priority || null,
     visitType: formValues.visitType || null,
-    nextVisitDate: new Date()?.toISOString().split("T")[0],
+    nextVisitDate: dayjs().format("YYYY-MM-DD"),
   };
 
   if (formValues?.nextVisitDate) {
@@ -91,6 +92,20 @@ const CorpSalesRegistration = () => {
       },
     ];
   }
+
+  useEffect(() => {
+    if (!formValues.anoterVisitRequired) {
+      setFormValues((prevState) => ({
+        ...prevState,
+        nextVisitDate: dayjs().add(7, "day").format("YYYY-MM-DD"),
+      }));
+    } else if (formValues.anoterVisitRequired === true) {
+      setFormValues((prevState) => ({
+        ...prevState,
+        nextVisitDate: null,
+      }));
+    }
+  }, [formValues.anoterVisitRequired]);
 
   const handleUpload = async (corpSalesId) => {
     const formData = new FormData();
@@ -117,7 +132,7 @@ const CorpSalesRegistration = () => {
     const url = BASE_URL + "corpSales/register";
     const result = await saveData(url, obj);
     if (result && result.data) {
-      if (result?.data && formValues.photo !== "") {
+      if (result?.data && formValues.photoUrl !== "") {
         handleUpload(result?.data?.corpSalesId);
       } else {
         navigate(-1);
@@ -319,15 +334,18 @@ const CorpSalesRegistration = () => {
                 property={"auditMonth"}
               />
             </Grid>
-            <Grid item xs={6} lg={3}>
-              <GlobalDateLayout
-                label={"Next Visit Date"}
-                initialDate={formValues?.nextVisitDate}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"nextVisitDate"}
-              />
-            </Grid>
+            {formValues.anoterVisitRequired === true && (
+              <Grid item xs={6} lg={3}>
+                <GlobalDateLayout
+                  label={"Next Visit Date"}
+                  initialDate={formValues?.nextVisitDate}
+                  formValues={formValues}
+                  setFormValues={setFormValues}
+                  property={"nextVisitDate"}
+                />
+              </Grid>
+            )}
+
             <Grid
               item
               xs={12}
@@ -462,6 +480,7 @@ const CorpSalesRegistration = () => {
               }}
             >
               <Button
+                disabled={formValues.visitType === "" ? true : false}
                 variant="contained"
                 sx={{ width: "150px", borderRadius: "15px" }}
                 onClick={() => {

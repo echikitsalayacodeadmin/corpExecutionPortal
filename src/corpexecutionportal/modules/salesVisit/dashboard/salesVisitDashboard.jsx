@@ -22,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { downloadCsv } from "../../../../assets/utils";
 import SelectUser from "../../../global/selectUsers/selectUsers";
+import SelectkamInDashboard from "../../../global/selectKam/selectkamInDashboard";
+import dayjs from "dayjs";
 
 const SalesVisitDashboard = () => {
   const navigate = useNavigate();
@@ -41,27 +43,30 @@ const SalesVisitDashboard = () => {
 
   useEffect(() => {
     const _fromDate = _storedData?.fromDate
-      ? new Date(_storedData?.fromDate)?.toISOString().split("T")[0]
-      : new Date()?.toISOString().split("T")[0];
+      ? dayjs(_storedData.fromDate).format("YYYY-MM-DD")
+      : dayjs().subtract(7, "day").format("YYYY-MM-DD");
 
     const _toDate = _storedData?.toDate
-      ? new Date(_storedData?.toDate)?.toISOString().split("T")[0]
-      : new Date()?.toISOString().split("T")[0];
+      ? dayjs(_storedData.toDate).format("YYYY-MM-DD")
+      : dayjs().format("YYYY-MM-DD");
 
     const _status = _storedData?.status || "";
     const _userId = _storedData?.userId || "";
+    const _selectedUserName = _storedData?.selectedUserName || "";
     const _selectedLocation = _storedData?.selectedLocation || "";
     const _selectedPriority = _storedData?.selectedPriority || "";
     setFromDate(_fromDate);
     setToDate(_toDate);
     setStatus(_status);
     setUserId(_userId);
+    setSelectedUserName(_selectedUserName);
     setselectedLocation(_selectedLocation);
     setSelectedPriority(_selectedPriority);
 
     fetchData(
       _status,
       _userId,
+      _selectedUserName,
       _fromDate,
       _toDate,
       _selectedPriority,
@@ -72,6 +77,7 @@ const SalesVisitDashboard = () => {
   const fetchData = async (
     _status,
     _userId,
+    _selectedUserName,
     _fromDate,
     _toDate,
     _selectedPriority,
@@ -90,9 +96,14 @@ const SalesVisitDashboard = () => {
         return (
           (_status === "Interested" ? item?.interested === true : true) &&
           (_status === "NotInterested" ? item?.interested === false : true) &&
-          (_userId ? item.userId === _userId : true) &&
+          // (_userId ? item.userId === _userId : true) &&
           (_selectedPriority ? item.priority === _selectedPriority : true) &&
-          (_selectedLocation ? item.location === _selectedLocation : true)
+          (_selectedLocation ? item.location === _selectedLocation : true) &&
+          (_selectedUserName
+            ? Object.keys(item?.mapOfUserAndVisitsCount)?.includes(
+                _selectedUserName
+              )
+            : true)
         );
       });
       setCompanyList(tempList);
@@ -175,9 +186,9 @@ const SalesVisitDashboard = () => {
   };
 
   const [fromDate, setFromDate] = useState(
-    new Date()?.toISOString().split("T")[0]
+    dayjs().subtract(7, "day").format("YYYY-MM-DD")
   );
-  const [toDate, setToDate] = useState(new Date()?.toISOString().split("T")[0]);
+  const [toDate, setToDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [status, setStatus] = useState("");
   const [companyList, setCompanyList] = useState([]);
   const [companyListStatic, setCompanyListStatic] = useState([]);
@@ -194,9 +205,14 @@ const SalesVisitDashboard = () => {
         return (
           (status === "Interested" ? item?.interested === true : true) &&
           (status === "NotInterested" ? item?.interested === false : true) &&
-          (userId ? item.userId === userId : true) &&
+          // (userId ? item.userId === userId : true) &&
           (selectedPriority ? item.priority === selectedPriority : true) &&
-          (selectedLocation ? item.location === selectedLocation : true)
+          (selectedLocation ? item.location === selectedLocation : true) &&
+          (selectedUserName
+            ? Object.keys(item?.mapOfUserAndVisitsCount)?.includes(
+                selectedUserName
+              )
+            : true)
         );
       })
     );
@@ -226,6 +242,7 @@ const SalesVisitDashboard = () => {
       toDate,
       status,
       userId,
+      selectedUserName,
       selectedPriority,
       selectedLocation,
     };
@@ -233,7 +250,15 @@ const SalesVisitDashboard = () => {
       "SAVE_FILTERS__SALES_VISIT_DASHBOARD",
       JSON.stringify(filtersData)
     );
-  }, [fromDate, toDate, status, userId, selectedLocation, selectedPriority]);
+  }, [
+    fromDate,
+    toDate,
+    status,
+    userId,
+    selectedUserName,
+    selectedLocation,
+    selectedPriority,
+  ]);
 
   const [rows, setRows] = useState([]);
 
@@ -275,6 +300,7 @@ const SalesVisitDashboard = () => {
                 setDate={setFromDate}
                 label={"From Date"}
                 disableFuture={true}
+                sevenDaysBack={true}
               />
             </Grid>
             <Grid item xs={12} lg={2}>
@@ -286,11 +312,9 @@ const SalesVisitDashboard = () => {
               />
             </Grid>
             <Grid item xs={12} lg={2}>
-              <SelectUser
-                selectedUserName={selectedUserName}
+              <SelectkamInDashboard
                 setSelectedUserName={setSelectedUserName}
                 setUserId={setUserId}
-                userId={userId}
               />
             </Grid>
             <Grid item xs={12} lg={2}>

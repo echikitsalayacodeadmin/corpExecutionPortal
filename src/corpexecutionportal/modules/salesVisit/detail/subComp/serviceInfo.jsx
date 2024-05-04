@@ -23,6 +23,7 @@ import CustomAutocomplete from "../../../../../assets/customAutocomplete";
 import { CustomTypographyBold } from "../../../../../assets/customTypography";
 import GlobalDateLayout from "../../../../../assets/globalDateLayout/globalDateLayout";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
+import dayjs from "dayjs";
 
 const ServiceInfo = ({ data }) => {
   const { itemId } = useParams();
@@ -50,11 +51,13 @@ const ServiceInfo = ({ data }) => {
             : "1",
         servicesInfoVM:
           {
-            required: data?.[item.id]?.required,
-            lastPlayer: data?.[item.id]?.lastPlayer,
-            lastAmount: data?.[item.id]?.lastAmount,
-            dueDate: new Date(data?.[item.id]?.dueDate),
-            comments: data?.[item.id]?.comments,
+            required: data?.[item.id]?.required || "",
+            lastPlayer: data?.[item.id]?.lastPlayer || "",
+            lastAmount: data?.[item.id]?.lastAmount || "",
+            dueDate: data?.[item.id]?.dueDate
+              ? new Date(data?.[item.id]?.dueDate)
+              : null,
+            comments: data?.[item.id]?.comments || "",
           } || "",
       }));
       setRows(temp);
@@ -73,7 +76,7 @@ const ServiceInfo = ({ data }) => {
     required: "",
     lastPlayer: "",
     lastAmount: "",
-    dueDate: new Date()?.toISOString().split("T")[0],
+    dueDate: dayjs().format("YYYY-MM-DD"),
     comments: "",
     isEdit: false,
   });
@@ -142,7 +145,8 @@ const ServiceInfo = ({ data }) => {
                 <Tooltip title="More Info">
                   <IconButton
                     onClick={() => {
-                      const servicesInfo = obj.servicesInfoVM;
+                      const servicesInfo = obj?.servicesInfoVM || null;
+                      console.log({ servicesInfo });
                       setOpenModal(true);
                       setSelectedRow(obj);
                       setMoreInfoObject({
@@ -279,7 +283,7 @@ const ServiceInfo = ({ data }) => {
               required: "",
               lastPlayer: "",
               lastAmount: "",
-              dueDate: new Date()?.toISOString().split("T")[0],
+              dueDate: dayjs().format("YYYY-MM-DD"),
               comments: "",
               isEdit: false,
             });
@@ -309,7 +313,7 @@ const ServiceInfo = ({ data }) => {
                     required: "",
                     lastPlayer: "",
                     lastAmount: "",
-                    dueDate: new Date()?.toISOString().split("T")[0],
+                    dueDate: dayjs().format("YYYY-MM-DD"),
                     comments: "",
                     isEdit: false,
                   });
@@ -458,7 +462,7 @@ const ServiceInfo = ({ data }) => {
                       required: "",
                       lastPlayer: "",
                       lastAmount: "",
-                      dueDate: new Date()?.toISOString().split("T")[0],
+                      dueDate: dayjs().format("YYYY-MM-DD"),
                       comments: "",
                       isEdit: false,
                     });

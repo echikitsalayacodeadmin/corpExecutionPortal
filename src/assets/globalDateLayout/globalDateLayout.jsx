@@ -125,7 +125,7 @@ const GlobalDateLayout = ({
               </>
             ),
           }}
-          renderInput={(params) => (
+          textField={(params) => (
             <TextField {...params} size="small" sx={{ borderRadius: "15px" }} />
           )}
         />

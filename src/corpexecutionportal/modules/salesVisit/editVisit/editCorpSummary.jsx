@@ -27,6 +27,7 @@ import { BASE_URL } from "../../../../assets/constants";
 import { saveData, updateData, uploadFile } from "../../../assets/corpServices";
 import { fetchCorpDetails } from "../../../services/salesVisitServices";
 import CompanyVisitDetails from "../detail/subComp/companyVisitDetails";
+import dayjs from "dayjs";
 
 const EditCorpSummary = () => {
   const { itemId } = useParams();
@@ -42,7 +43,7 @@ const EditCorpSummary = () => {
     corpType: "",
     address: "",
     noOfPlants: "",
-    timeField: new Date()?.toISOString().split("T")[0],
+    timeField: dayjs().format("YYYY-MM-DD"),
     onRollEmployees: "",
     offRollEmployees: "",
     prospectiveServices: [],
@@ -56,7 +57,7 @@ const EditCorpSummary = () => {
     visitType: "",
     userId: 0,
     childUserId: [0],
-    registrationDate: new Date()?.toISOString().split("T")[0],
+    registrationDate: dayjs().format("YYYY-MM-DD"),
     userName: "",
     location: "",
     priority: "",
@@ -235,13 +236,13 @@ const EditCorpSummary = () => {
               />
             </Grid>
 
-            <Grid item xs={12} lg={12}>
+            {/* <Grid item xs={12} lg={12}>
               <SelectKam
                 formValues={formValues}
                 setFormValues={setFormValues}
                 property={"childUserId"}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} lg={12}>
               <CompanyVisitDetails data={formValues} />
             </Grid>
@@ -276,7 +277,6 @@ const EditCorpSummary = () => {
                 formValues={formValues}
                 setFormValues={setFormValues}
                 property={"auditMonth"}
-                disableFuture={true}
               />
             </Grid>
             <Grid item xs={12} lg={6}>

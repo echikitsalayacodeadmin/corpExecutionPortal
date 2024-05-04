@@ -53,19 +53,27 @@ const DashboardCard = ({ data, serviceMapping }) => {
             marginY: "10px",
           }}
         >
-          <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
+          <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
             <Typography sx={styles.companyName}>{data?.corpName}</Typography>
           </Grid>
+          {data?.corpSalesVisitEntities?.[1]?.nextVisitDate ? (
+            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.subTitle}>Last Date - </Typography>
+              <Typography sx={styles.subTitle}>
+                {data?.corpSalesVisitEntities?.[1]?.nextVisitDate}
+              </Typography>
+            </Grid>
+          ) : null}
           {data?.registrationDate ? (
-            <Grid item xs={12} lg={5} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>Date - </Typography>
+            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.subTitle}>Create Date - </Typography>
               <Typography sx={styles.subTitle}>
                 {data?.registrationDate}
               </Typography>
             </Grid>
           ) : null}
           {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
-            <Grid item xs={12} lg={5} sx={{ display: "flex" }}>
+            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
               <Typography sx={styles.subTitle}>Next Date - </Typography>
               <Typography sx={styles.subTitle}>
                 {data?.corpSalesVisitEntities?.[0]?.nextVisitDate}
@@ -74,7 +82,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
           ) : null}
 
           {data?.totalVisits ? (
-            <Grid item xs={12} lg={12} sx={{ display: "flex" }}>
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
               >{`Total Visits : ${data?.totalVisits}`}</Typography>
@@ -92,28 +100,28 @@ const DashboardCard = ({ data, serviceMapping }) => {
             </Grid>
           ) : null}
           {data?.userName ? (
-            <Grid item xs={5} lg={5} sx={{ display: "flex" }}>
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
               >{`User : ${data?.userName}`}</Typography>
             </Grid>
           ) : null}
           {data?.location ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
+            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
               <Typography sx={styles.subTitle}>
                 Location: {data?.location}
               </Typography>
             </Grid>
           ) : null}
           {data?.priority ? (
-            <Grid item xs={5} lg={5} sx={{ display: "flex" }}>
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
               >{`Priority : ${data?.priority}`}</Typography>
             </Grid>
           ) : null}
           {data?.userName ? (
-            <Grid item xs={5} lg={5} sx={{ display: "flex" }}>
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
               >{`Priority : ${data?.priority}`}</Typography>
@@ -140,7 +148,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             {requiredServices &&
               Object.keys(requiredServices).map((key) => {
                 const info = requiredServices[key];
-                console.log({ status: info?.status });
+
                 return (
                   <Typography key={key} sx={styles.subTitle}>
                     {`${

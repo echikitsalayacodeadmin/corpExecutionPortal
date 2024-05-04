@@ -102,7 +102,7 @@ const GlobalTimeLayout = ({
               </>
             ),
           }}
-          renderInput={(params) => (
+          textField={(params) => (
             <TextField {...params} size="small" sx={{ borderRadius: "15px" }} />
           )}
         />
