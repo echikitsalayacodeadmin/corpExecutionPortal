@@ -153,20 +153,10 @@ export default DashboardCard;
 
 const styles = {
   companyName: {
-    fontWeight: "600",
-    fontSize: "13px",
-    lineHeight: "15px",
-    color: "#404040",
-    paddingLeft: "5px",
+    fontWeight: "bold",
     textTransform: "capitalize",
   },
   subTitle: {
-    fontWeight: "400",
-    fontSize: "13px",
-    lineHeight: "12px",
-    color: "#404040",
-    marginTop: "5px",
-    paddingLeft: "5px",
     textTransform: "capitalize",
   },
 };
