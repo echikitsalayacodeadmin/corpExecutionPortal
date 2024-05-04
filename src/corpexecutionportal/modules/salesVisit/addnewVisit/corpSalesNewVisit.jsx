@@ -75,44 +75,42 @@ const CorpSalesNewVisit = () => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const fetchCorpData = async () => {
-    const url = BASE_URL + "corpSales/" + corpSalesId;
-    const result = await getData(url);
-    if (result?.data) {
-      setCorpDetail(result.data);
-      setFormValues({
-        ...formValues,
-        corpSalesId: result?.data.corpSalesId,
-        corpName: result?.data.corpName || "",
-        corpType: result?.data.corpType || "",
-        address: result?.data.address || "",
-        noOfPlants: result?.data.noOfPlants || "",
-        timeField: new Date()?.toISOString().split("T")[0],
-        onRollEmployees: result?.data.onRollEmployees || "",
-        offRollEmployees: result?.data.offRollEmployees || "",
-        prospectiveServices: result?.data.prospectiveServices || [],
-        auditMonth: new Date(result?.data.auditMonth)
-          ?.toISOString()
-          .split("T")[0],
-        photoUrl: result?.data.photoUrl || "",
-        spocList: result?.data.spocList || [],
-        visitType: result?.data.visitType || "",
-        userId: result?.data.userId || userId,
-        childUserId: result?.data.childUserId || [],
-        registrationDate: new Date(result?.data?.registrationDate)
-          ?.toISOString()
-          .split("T")[0],
-        userName: result?.data.userName || userName,
-        location: result?.data.location || "",
-        priority: result?.data.priority || "",
-        interested: false,
-        quotationAsked: false,
-        anoterVisitRequired: false,
-        interestedRemark: "",
-        visitPhotoUrl: "",
-        nextVisitDate: new Date()?.toISOString().split("T")[0],
-      });
-    } else {
-      console.log("SUCCESS", result?.error);
+    if (fetchCorpData) {
+      const url = BASE_URL + "corpSales/" + corpSalesId;
+      const result = await getData(url);
+      if (result?.data) {
+        setCorpDetail(result.data);
+        setFormValues({
+          ...formValues,
+          corpSalesId: result?.data.corpSalesId,
+          corpName: result?.data.corpName || "",
+          corpType: result?.data.corpType || "",
+          address: result?.data.address || "",
+          noOfPlants: result?.data.noOfPlants || "",
+          timeField: new Date(),
+          onRollEmployees: result?.data.onRollEmployees || "",
+          offRollEmployees: result?.data.offRollEmployees || "",
+          prospectiveServices: result?.data.prospectiveServices || [],
+          auditMonth: result?.data.auditMonth,
+          photoUrl: result?.data.photoUrl || "",
+          spocList: result?.data.spocList || [],
+          visitType: result?.data.visitType || "",
+          userId: result?.data.userId || userId,
+          childUserId: result?.data.childUserId || [],
+          registrationDate: result?.data?.registrationDate,
+          userName: result?.data.userName || userName,
+          location: result?.data.location || "",
+          priority: result?.data.priority || "",
+          interested: false,
+          quotationAsked: false,
+          anoterVisitRequired: false,
+          interestedRemark: "",
+          visitPhotoUrl: "",
+          nextVisitDate: new Date()?.toISOString().split("T")[0],
+        });
+      } else {
+        console.log("SUCCESS", result?.error);
+      }
     }
   };
 
@@ -128,11 +126,11 @@ const CorpSalesNewVisit = () => {
   formData.append("quotationAsked", formValues.quotationAsked);
   formData.append("anotherVisitRequired", formValues.anoterVisitRequired);
   formData.append("interestedRemark", formValues?.interestedRemark);
-  formData.append("visitType", formValues?.visitType);
+  formData.append("visitType", formValues?.visitType || null);
   formData.append("userId", userId);
   formData.append(
     "nextVisitDate",
-    formValues?.nextVisitDate?.toISOString().slice(0, 10)
+    new Date(formValues?.nextVisitDate)?.toISOString().slice(0, 10)
   );
   formData.append(
     "childUserId",
@@ -403,7 +401,6 @@ const CorpSalesNewVisit = () => {
                 formValues={formValues}
                 setFormValues={setFormValues}
                 property={"auditMonth"}
-                disableFuture={true}
               />
             </Grid>
             <Grid
@@ -524,7 +521,9 @@ const CorpSalesNewVisit = () => {
                 variant="contained"
                 sx={{ width: "150px", borderRadius: "15px" }}
                 onClick={() => handleSubmit()}
-                disabled={isDisabled}
+                disabled={
+                  isDisabled || formValues.visitType === "" ? true : false
+                }
               >
                 Submit
               </Button>

@@ -69,8 +69,8 @@ const SelectKam = ({
           <TextField
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             {...params}
-            label="Select Kam"
-            placeholder="Select Kam"
+            label="Select Associates"
+            placeholder="Select Associates"
           />
         )}
       />

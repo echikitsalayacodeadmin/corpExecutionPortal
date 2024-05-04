@@ -56,6 +56,7 @@ const CorpSalesRegistration = () => {
     userName: "",
     location: "",
     priority: "",
+    nextVisitDate: new Date()?.toISOString().split("T")[0],
   });
 
   const obj = {
@@ -72,20 +73,29 @@ const CorpSalesRegistration = () => {
     anoterVisitRequired: formValues.anoterVisitRequired,
     interestedRemark: formValues.interestedRemark,
     spocList: formValues.spocList,
-    visitType: formValues.visitType,
     userId: userId,
     childUserId: formValues.childUserId.map((item) => item.id) || [],
     registrationDate: formValues.registrationDate,
     userName: userName,
     location: formValues.location,
-    priority: formValues.priority,
-    // nextVisitDate: new Date()?.toISOString().split("T")[0],
+    priority: formValues.priority || null,
+    visitType: formValues.visitType || null,
+    nextVisitDate: new Date()?.toISOString().split("T")[0],
   };
+
+  if (formValues?.nextVisitDate) {
+    obj.corpSalesVisitEntities = [
+      {
+        nextVisitDate: formValues.nextVisitDate,
+        userId: userId,
+      },
+    ];
+  }
 
   const handleUpload = async (corpSalesId) => {
     const formData = new FormData();
     formValues.photoUrl.file
-      ? formData.append("orgLogoFile", formValues.photoUrl.file)
+      ? formData.append("file", formValues.photoUrl.file)
       : null;
     const url =
       BASE_URL +
@@ -307,17 +317,15 @@ const CorpSalesRegistration = () => {
                 formValues={formValues}
                 setFormValues={setFormValues}
                 property={"auditMonth"}
-                disableFuture={true}
               />
             </Grid>
             <Grid item xs={6} lg={3}>
               <GlobalDateLayout
                 label={"Next Visit Date"}
-                initialDate={formValues.nextVisitDate}
+                initialDate={formValues?.nextVisitDate}
                 formValues={formValues}
                 setFormValues={setFormValues}
                 property={"nextVisitDate"}
-                disablePast={true}
               />
             </Grid>
             <Grid

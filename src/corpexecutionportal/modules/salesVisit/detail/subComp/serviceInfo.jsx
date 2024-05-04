@@ -52,7 +52,7 @@ const ServiceInfo = ({ data }) => {
           {
             required: data?.[item.id]?.required,
             lastPlayer: data?.[item.id]?.lastPlayer,
-            existingAmmount: data?.[item.id]?.lastAmount,
+            lastAmount: data?.[item.id]?.lastAmount,
             dueDate: new Date(data?.[item.id]?.dueDate),
             comments: data?.[item.id]?.comments,
           } || "",
@@ -72,7 +72,7 @@ const ServiceInfo = ({ data }) => {
   const [moreInfoObject, setMoreInfoObject] = useState({
     required: "",
     lastPlayer: "",
-    existingAmmount: "",
+    lastAmount: "",
     dueDate: new Date()?.toISOString().split("T")[0],
     comments: "",
     isEdit: false,
@@ -82,7 +82,7 @@ const ServiceInfo = ({ data }) => {
       status: data?.status,
       required: data.servicesInfoVM.required,
       lastPlayer: data.servicesInfoVM.lastPlayer,
-      lastAmount: data.servicesInfoVM.existingAmmount,
+      lastAmount: data.servicesInfoVM.lastAmount,
       dueDate: data.servicesInfoVM.dueDate,
       comments: data.servicesInfoVM.comments,
       userId: userId,
@@ -138,7 +138,7 @@ const ServiceInfo = ({ data }) => {
                   {obj.testName}
                 </Typography>
               </Grid>
-              <Grid item xs={1.5} lg={1}>
+              <Grid item xs={3} lg={1}>
                 <Tooltip title="More Info">
                   <IconButton
                     onClick={() => {
@@ -148,11 +148,9 @@ const ServiceInfo = ({ data }) => {
                       setMoreInfoObject({
                         required: servicesInfo.required,
                         lastPlayer: servicesInfo.lastPlayer,
-                        existingAmmount: servicesInfo.existingAmmount,
+                        lastAmount: servicesInfo.lastAmount,
                         dueDate: servicesInfo.dueDate
                           ? new Date(servicesInfo.dueDate)
-                              ?.toISOString()
-                              .split("T")[0]
                           : null,
                         comments: servicesInfo.comments,
                       });
@@ -162,7 +160,7 @@ const ServiceInfo = ({ data }) => {
                   </IconButton>
                 </Tooltip>
               </Grid>
-              <Grid item xs={1.5} lg={1}>
+              {/* <Grid item xs={1.5} lg={1}>
                 <Tooltip title="View Quotation">
                   <IconButton
                     onClick={() => {
@@ -174,7 +172,7 @@ const ServiceInfo = ({ data }) => {
                     <RemoveRedEyeIcon />
                   </IconButton>
                 </Tooltip>
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={8} lg={3}>
                 <CustomAutocomplete
@@ -280,7 +278,7 @@ const ServiceInfo = ({ data }) => {
               id: "",
               required: "",
               lastPlayer: "",
-              existingAmmount: "",
+              lastAmount: "",
               dueDate: new Date()?.toISOString().split("T")[0],
               comments: "",
               isEdit: false,
@@ -310,7 +308,7 @@ const ServiceInfo = ({ data }) => {
                     id: "",
                     required: "",
                     lastPlayer: "",
-                    existingAmmount: "",
+                    lastAmount: "",
                     dueDate: new Date()?.toISOString().split("T")[0],
                     comments: "",
                     isEdit: false,
@@ -322,9 +320,7 @@ const ServiceInfo = ({ data }) => {
             </Box>
 
             <Box sx={{ textAlign: "center", marginTop: "-30px" }}>
-              <CustomTypographyBold>
-                {selectedRow?.testName}
-              </CustomTypographyBold>
+              <Typography>{selectedRow?.testName}</Typography>
             </Box>
 
             <Grid
@@ -354,7 +350,7 @@ const ServiceInfo = ({ data }) => {
                       ? "Paramedical Staff"
                       : null
                   }
-                  value={moreInfoObject.required}
+                  value={moreInfoObject.required || ""}
                   onChange={(e) => {
                     setMoreInfoObject({
                       ...moreInfoObject,
@@ -369,7 +365,7 @@ const ServiceInfo = ({ data }) => {
                   size="small"
                   label="Last Player"
                   placeholder="Last Player"
-                  value={moreInfoObject.lastPlayer}
+                  value={moreInfoObject.lastPlayer || ""}
                   onChange={(e) => {
                     setMoreInfoObject({
                       ...moreInfoObject,
@@ -383,13 +379,19 @@ const ServiceInfo = ({ data }) => {
                   fullWidth
                   size="small"
                   label="Existing Amount"
-                  placeholder="Existing Amount"
-                  value={moreInfoObject.existingAmmount}
+                  placeholder="Last Amount"
+                  value={moreInfoObject.lastAmount || ""}
                   onChange={(e) => {
-                    setMoreInfoObject({
-                      ...moreInfoObject,
-                      existingAmmount: e.target.value,
-                    });
+                    const inputValue = e.target.value;
+                    if (
+                      inputValue === "" ||
+                      (!isNaN(inputValue) && parseInt(inputValue))
+                    ) {
+                      setMoreInfoObject({
+                        ...moreInfoObject,
+                        lastAmount: inputValue,
+                      });
+                    }
                   }}
                 />
               </Grid>
@@ -400,7 +402,6 @@ const ServiceInfo = ({ data }) => {
                   formValues={moreInfoObject}
                   setFormValues={setMoreInfoObject}
                   property="dueDate"
-                  disableFuture={true}
                 />
               </Grid>
 
@@ -412,7 +413,7 @@ const ServiceInfo = ({ data }) => {
                   size="small"
                   label="Comments"
                   placeholder="Comments"
-                  value={moreInfoObject.comments}
+                  value={moreInfoObject.comments || ""}
                   onChange={(e) => {
                     setMoreInfoObject({
                       ...moreInfoObject,
@@ -437,7 +438,7 @@ const ServiceInfo = ({ data }) => {
                 }}
               >
                 <CustomButtonBlue
-                  title="Add"
+                  title="Save"
                   onClick={() => {
                     const newRow = { ...moreInfoObject };
                     const updatedRows = rows.map((row) =>
@@ -445,13 +446,18 @@ const ServiceInfo = ({ data }) => {
                         ? { ...row, servicesInfoVM: newRow }
                         : row
                     );
+
+                    const modifiedRow = updatedRows.find(
+                      (item) => item.id === selectedRow.id
+                    );
+                    handleSave(modifiedRow);
                     setRows(updatedRows);
                     setOpenModal(false);
                     setMoreInfoObject({
                       id: "",
                       required: "",
                       lastPlayer: "",
-                      existingAmmount: "",
+                      lastAmount: "",
                       dueDate: new Date()?.toISOString().split("T")[0],
                       comments: "",
                       isEdit: false,

@@ -57,7 +57,9 @@ const GlobalDateLayout = ({
       }
     } else {
       setDateValue(null);
-      setDate(null);
+      if (setDate) {
+        setDate(null);
+      }
       if (formValues && setFormValues && property) {
         setFormValues({ ...formValues, [property]: null });
       }
@@ -66,7 +68,9 @@ const GlobalDateLayout = ({
 
   const handleClearDate = () => {
     setDateValue(null);
-    setDate(null);
+    if (setDate) {
+      setDate(null);
+    }
     if (formValues && setFormValues && property) {
       setFormValues({ ...formValues, [property]: null });
     }
