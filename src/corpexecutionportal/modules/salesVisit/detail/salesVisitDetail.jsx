@@ -11,6 +11,7 @@ import AddSpocInVisitDetail from "./subComp/addSpocInVisitDetail";
 import { IOSSwitch } from "../../../../assets/customSwitch";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import ServiceInfo from "./subComp/serviceInfo";
+import MarkAsLostBtn from "../../../global/markAsLost/markAsLostBtn";
 
 const SalesVisitDetail = () => {
   const navigate = useNavigate();
@@ -100,6 +101,7 @@ const SalesVisitDetail = () => {
           </Grid>
 
           <ServiceInfo data={corpDetails?.mapOfServiceIdAndInfo} />
+          <MarkAsLostBtn corpSalesId={corpSalesId} />
         </Box>
       </Container>
     </Fragment>

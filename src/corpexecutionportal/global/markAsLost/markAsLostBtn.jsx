@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import CustomButtonBlue from "../../../assets/customButtonBlue";
 import CustomButtonWhite from "../../../assets/customButtonWhite";
+import { saveData } from "../../assets/corpServices";
+import { BASE_URL } from "../../../assets/constants";
 
 const MarkAsLostBtn = ({
   buttonWidth,
@@ -68,12 +70,15 @@ const MarkAsLostBtn = ({
         <Grid item xs={12} sx={{ textAlign: textAlign }}>
           <Button
             sx={{
+              backgroundColor: "red",
               width: buttonWidth ? buttonWidth : 200,
               borderRadius: ButtonBorderRadius ? ButtonBorderRadius : null,
               height: "37px",
               marginBlock: marginBlock,
+              ":hover": {
+                backgroundColor: "#cc0000",
+              },
             }}
-            color="error"
             variant="contained"
             onClick={handleOpen}
           >
@@ -121,7 +126,16 @@ const MarkAsLostBtn = ({
               </IconButton>
             </Box>
 
-            <Typography gutterBottom>Mark As Lost</Typography>
+            <Typography
+              gutterBottom
+              sx={{
+                marginTop: "-30px",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Mark As Lost
+            </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} lg={12}>
                 <Typography>Reason for mark as lost ?</Typography>
@@ -150,7 +164,8 @@ const MarkAsLostBtn = ({
                   disabled={reason === "" ? true : false}
                   onClick={() => handleClose()}
                   title={"Cancel"}
-                  styles={{ borderColor: "red", color: "red" }}
+                  styles={{ borderColor: "red" }}
+                  textColor="red"
                 />
               </Grid>
             </Grid>
