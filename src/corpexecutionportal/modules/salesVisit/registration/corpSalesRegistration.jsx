@@ -33,6 +33,7 @@ const CorpSalesRegistration = () => {
   const [files, selectFiles] = useFileUpload();
   const userId = localStorage.getItem("USER_ID_CORP_SALES");
   const userName = localStorage.getItem("USER_NAME_CORP_SALES");
+  const [isDisabled, setIsDisabled] = useState(false);
   const [formValues, setFormValues] = useState({
     corpSalesId: "",
     corpName: "",
@@ -129,9 +130,11 @@ const CorpSalesRegistration = () => {
   };
 
   const handleSubmit = async () => {
+    setIsDisabled(true);
     const url = BASE_URL + "corpSales/register";
     const result = await saveData(url, obj);
     if (result && result.data) {
+      setIsDisabled(false);
       if (result?.data && formValues.photoUrl !== "") {
         handleUpload(result?.data?.corpSalesId);
       } else {
@@ -139,6 +142,7 @@ const CorpSalesRegistration = () => {
       }
       enqueueSnackbar("Successfully Saved", { variant: "success" });
     } else {
+      setIsDisabled(false);
       enqueueSnackbar("An error occured while saving Data", {
         variant: "error",
       });
@@ -342,6 +346,7 @@ const CorpSalesRegistration = () => {
                   formValues={formValues}
                   setFormValues={setFormValues}
                   property={"nextVisitDate"}
+                  disablePast={true}
                 />
               </Grid>
             )}
@@ -480,7 +485,11 @@ const CorpSalesRegistration = () => {
               }}
             >
               <Button
-                disabled={formValues.visitType === "" ? true : false}
+                disabled={
+                  isDisabled === true || formValues.visitType === ""
+                    ? true
+                    : false
+                }
                 variant="contained"
                 sx={{ width: "150px", borderRadius: "15px" }}
                 onClick={() => {

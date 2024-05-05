@@ -90,7 +90,12 @@ const SalesVisitDetail = () => {
                 }
               />
             </Grid>
-            <Grid item xs={4} lg={6}>
+            <Grid
+              item
+              xs={4}
+              lg={6}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
               <CustomButtonBlue
                 title="Mark"
                 onClick={() => {
