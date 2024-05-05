@@ -72,6 +72,7 @@ const EditCorpSummary = () => {
     corpSalesId: formValues?.corpSalesId,
     corpName: formValues.corpName,
     corpType: formValues.corpType,
+    noOfPlants: formValues.noOfPlants,
     address: formValues.address,
     childUserId: formValues?.childUserId?.map((item) => item.id) || [],
     onRollEmployees: formValues.onRollEmployees,

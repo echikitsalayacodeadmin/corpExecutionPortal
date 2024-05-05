@@ -5,9 +5,7 @@ import MainPageLayoutWithBack from "../global/templates/mainPageLayoutWithBack";
 const SalesVisitCorp = () => {
   return (
     <Fragment>
-      <MainPageLayoutWithBack title="Sales Visit Dashboard">
-        <SalesVisitDashboard />
-      </MainPageLayoutWithBack>
+      <SalesVisitDashboard />
     </Fragment>
   );
 };

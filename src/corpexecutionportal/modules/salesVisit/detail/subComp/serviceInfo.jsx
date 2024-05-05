@@ -41,11 +41,6 @@ const servicesFields = {
       fieldName: "dueDate",
       type: "date",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -100,11 +95,7 @@ const servicesFields = {
       type: "textField",
       dataType: "string",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
+
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -176,11 +167,7 @@ const servicesFields = {
       type: "textField",
       dataType: "string",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
+
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -236,11 +223,7 @@ const servicesFields = {
       type: "textField",
       dataType: "string",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
+
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -289,11 +272,7 @@ const servicesFields = {
       type: "textField",
       dataType: "string",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
+
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -342,11 +321,7 @@ const servicesFields = {
       type: "textField",
       dataType: "string",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
+
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -395,12 +370,6 @@ const servicesFields = {
       type: "textField",
       dataType: "number",
     },
-
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",
@@ -466,11 +435,7 @@ const servicesFields = {
       type: "textField",
       dataType: "number",
     },
-    // {
-    //   label: "Status",
-    //   fieldName: "status",
-    //   type: "dropdown",
-    // },
+
     {
       label: "Confidence level",
       fieldName: "confidenceLeveLStatus",

@@ -30,8 +30,8 @@ const SelectkamInDashboard = ({
   return (
     <Fragment>
       <CustomAutocomplete
-        label={"Select Associates"}
-        placeholder={"Select Associates"}
+        label={"Associates"}
+        placeholder={"Associates"}
         value={selectedValue}
         options={kamList.filter((item) => item.name)}
         getOptionLabel={(option) => option.name || ""}

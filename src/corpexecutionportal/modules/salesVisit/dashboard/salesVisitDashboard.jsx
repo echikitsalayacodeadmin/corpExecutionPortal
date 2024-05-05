@@ -24,6 +24,7 @@ import { downloadCsv } from "../../../../assets/utils";
 import SelectUser from "../../../global/selectUsers/selectUsers";
 import SelectkamInDashboard from "../../../global/selectKam/selectkamInDashboard";
 import dayjs from "dayjs";
+import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
 
 const SalesVisitDashboard = () => {
   const navigate = useNavigate();
@@ -277,148 +278,137 @@ const SalesVisitDashboard = () => {
 
   return (
     <Fragment>
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{ backgroundColor: "#F5F5F5", minHeight: "80vh", borderRadius: 5 }}
+      <MainPageLayoutWithBack
+        title="Sales Visit Dashboard"
+        onDownloadClick={() =>
+          fetchMisData(
+            status,
+            userId,
+            fromDate,
+            toDate,
+            selectedPriority,
+            selectedLocation
+          )
+        }
+        downloadButton={true}
       >
-        <Box sx={{ p: 2 }}>
-          <Grid
-            spacing={1}
-            container
-            sx={{
-              boxSizing: "border-box",
-              background: "#FFFFFF",
-              border: "0.5px solid #A6A6A6",
-              borderRadius: 5,
-              padding: 1,
-            }}
-          >
-            <Grid item xs={12} lg={2}>
-              <GlobalDateLayout
-                initialDate={fromDate}
-                setDate={setFromDate}
-                label={"From Date"}
-                disableFuture={true}
-                sevenDaysBack={true}
-              />
-            </Grid>
-            <Grid item xs={12} lg={2}>
-              <GlobalDateLayout
-                initialDate={toDate}
-                setDate={setToDate}
-                label={"To Date"}
-                disableFuture={true}
-              />
-            </Grid>
-            <Grid item xs={12} lg={2}>
-              <SelectkamInDashboard
-                setSelectedUserName={setSelectedUserName}
-                setUserId={setUserId}
-              />
-            </Grid>
-            <Grid item xs={12} lg={2}>
-              <CustomSelect
-                label="Priority"
-                placeholder={"Select Priority"}
-                setvalue={setSelectedPriority}
-                value={selectedPriority}
-                options={[
-                  { label: "Select Priority", value: "" },
-                  { label: "P0", value: "P0" },
-                  { label: "P1", value: "P1" },
-                  { label: "P2", value: "P2" },
-                  { label: "P3", value: "P3" },
-                  { label: "P4", value: "P4" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} lg={2}>
-              <SelectLocation
-                label={"Location"}
-                placeholder={"Select Location"}
-                selectedValue={selectedLocation}
-                setSelectedValue={setselectedLocation}
-              />
-            </Grid>
-            <Grid item xs={12} lg={2}>
-              <CustomSelect
-                label="Interested Status"
-                placeholder={"Select Interested Status"}
-                setvalue={setStatus}
-                value={status}
-                options={[
-                  { label: "Select Interested Status", value: "" },
-                  { label: "Interested", value: "Interested" },
-                  { label: "Not Interested", value: "NotInterested" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} lg={2}>
-              <CustomAutocomplete
-                options={[]}
-                placeholder="Colour Code"
-                label="Colour Code"
-                value={null}
-                onChange={() => {}}
-              />
-            </Grid>
-            <Grid item xs={6} lg={1}>
-              <CustomButtonBlue title={"Next 7 Days"} />
-            </Grid>
-            <Grid item xs={6} lg={2}>
-              <CustomButtonBlue
-                title={"Register New"}
-                onClick={() => {
-                  navigate(`/corp/registercorp`);
-                }}
-              />
-            </Grid>
-            <Grid item xs={0} lg={5}></Grid>
-            <Grid item xs={12} lg={2}>
-              <CustomButtonBlue
-                title={"Download as CSV"}
-                onClick={() => {
-                  fetchMisData(
-                    status,
-                    userId,
-                    fromDate,
-                    toDate,
-                    selectedPriority,
-                    selectedLocation
-                  );
-                }}
-                startIcon={<DownloadIcon />}
-              />
-            </Grid>
+        <Grid
+          spacing={1}
+          container
+          sx={{
+            boxSizing: "border-box",
+            background: "#FFFFFF",
+            // border: "0.5px solid #A6A6A6",
+            borderRadius: 5,
+          }}
+        >
+          <Grid item xs={4} lg={2}>
+            <GlobalDateLayout
+              initialDate={fromDate}
+              setDate={setFromDate}
+              label={"From Date"}
+              disableFuture={true}
+              sevenDaysBack={true}
+            />
           </Grid>
-          <SearchBarCompany
-            setTokenListStatic={setCompanyListStatic}
-            tokenListStatic={companyListStatic}
-            tokenList={companyList}
-            setTokenList={setCompanyList}
-          />
+          <Grid item xs={4} lg={2}>
+            <GlobalDateLayout
+              initialDate={toDate}
+              setDate={setToDate}
+              label={"To Date"}
+              disableFuture={true}
+            />
+          </Grid>
+          <Grid item xs={4} lg={2}>
+            <SelectkamInDashboard
+              setSelectedUserName={setSelectedUserName}
+              setUserId={setUserId}
+            />
+          </Grid>
+          <Grid item xs={4} lg={2}>
+            <CustomSelect
+              label="Priority"
+              placeholder={"Priority"}
+              setvalue={setSelectedPriority}
+              value={selectedPriority}
+              options={[
+                { label: "Priority", value: "" },
+                { label: "P0", value: "P0" },
+                { label: "P1", value: "P1" },
+                { label: "P2", value: "P2" },
+                { label: "P3", value: "P3" },
+                { label: "P4", value: "P4" },
+              ]}
+            />
+          </Grid>
+          <Grid item xs={4} lg={2}>
+            <SelectLocation
+              label={"Location"}
+              placeholder={"Location"}
+              selectedValue={selectedLocation}
+              setSelectedValue={setselectedLocation}
+            />
+          </Grid>
+          <Grid item xs={4} lg={2}>
+            <CustomSelect
+              label="Status"
+              placeholder={"Status"}
+              setvalue={setStatus}
+              value={status}
+              options={[
+                { label: "Status", value: "" },
+                { label: "Interested", value: "Interested" },
+                { label: "Not Interested", value: "NotInterested" },
+              ]}
+            />
+          </Grid>
+          <Grid item xs={4} lg={2}>
+            <CustomAutocomplete
+              options={[]}
+              placeholder="Colour Code"
+              label="Colour Code"
+              value={null}
+              onChange={() => {}}
+            />
+          </Grid>
+          <Grid item xs={4} lg={1}>
+            <CustomButtonBlue title={"Next 7 Days"} />
+          </Grid>
+          <Grid item xs={4} lg={2}>
+            <CustomButtonBlue
+              title={"Register New"}
+              onClick={() => {
+                navigate(`/corp/registercorp`);
+              }}
+            />
+          </Grid>
+        </Grid>
+        <SearchBarCompany
+          setTokenListStatic={setCompanyListStatic}
+          tokenListStatic={companyListStatic}
+          tokenList={companyList}
+          setTokenList={setCompanyList}
+        />
 
-          <Box>
-            {isLoading ? (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "30vh",
-                }}
-              >
-                <CircularProgress />
-              </Box>
-            ) : (
-              companyList.map((item, index) => (
-                <DashboardCard data={item} key={index} serviceMapping={rows} />
-              ))
-            )}
-          </Box>
+        <Box>
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "30vh",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            companyList.map((item, index) => (
+              <DashboardCard data={item} key={index} serviceMapping={rows} />
+            ))
+          )}
         </Box>
-      </Container>
+      </MainPageLayoutWithBack>
     </Fragment>
   );
 };

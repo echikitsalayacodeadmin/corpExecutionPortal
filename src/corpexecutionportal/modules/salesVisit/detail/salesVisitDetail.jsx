@@ -47,68 +47,60 @@ const SalesVisitDetail = () => {
   };
   return (
     <Fragment>
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{ backgroundColor: "#F5F5F5", minHeight: "80vh", borderRadius: 5 }}
+      <CompanySummaryInfo data={corpDetails} />
+
+      <CompanyVisitDetails data={corpDetails} />
+
+      <AddSpocInVisitDetail
+        formValues={corpDetails}
+        setFormValues={setCorpDetails}
+      />
+
+      <Grid
+        container
+        sx={{
+          boxSizing: "border-box",
+          background: "#FFFFFF",
+          border: "0.5px solid #A6A6A6",
+          borderRadius: 5,
+          padding: 1,
+          marginBlock: 2,
+          alignItems: "center",
+        }}
       >
-        <Box sx={{ p: 2 }}>
-          <CompanySummaryInfo data={corpDetails} />
-
-          <CompanyVisitDetails data={corpDetails} />
-
-          <AddSpocInVisitDetail
-            formValues={corpDetails}
-            setFormValues={setCorpDetails}
+        <Grid item xs={8} lg={6}>
+          <FormControlLabel
+            label="Quotation Required"
+            labelPlacement="start"
+            control={
+              <Box sx={{ marginInline: "10px" }}>
+                <IOSSwitch
+                  checked={quotationRequired}
+                  onChange={(e) => {
+                    setQuotationRequired(e.target.checked);
+                  }}
+                />
+              </Box>
+            }
           />
-
-          <Grid
-            container
-            sx={{
-              boxSizing: "border-box",
-              background: "#FFFFFF",
-              border: "0.5px solid #A6A6A6",
-              borderRadius: 5,
-              padding: 1,
-              marginBlock: 2,
-              alignItems: "center",
+        </Grid>
+        <Grid
+          item
+          xs={4}
+          lg={6}
+          sx={{ display: "flex", justifyContent: "flex-end" }}
+        >
+          <CustomButtonBlue
+            title="Mark"
+            onClick={() => {
+              handleSubmit();
             }}
-          >
-            <Grid item xs={8} lg={6}>
-              <FormControlLabel
-                label="Quotation Required"
-                labelPlacement="start"
-                control={
-                  <Box sx={{ marginInline: "10px" }}>
-                    <IOSSwitch
-                      checked={quotationRequired}
-                      onChange={(e) => {
-                        setQuotationRequired(e.target.checked);
-                      }}
-                    />
-                  </Box>
-                }
-              />
-            </Grid>
-            <Grid
-              item
-              xs={4}
-              lg={6}
-              sx={{ display: "flex", justifyContent: "flex-end" }}
-            >
-              <CustomButtonBlue
-                title="Mark"
-                onClick={() => {
-                  handleSubmit();
-                }}
-              />
-            </Grid>
-          </Grid>
+          />
+        </Grid>
+      </Grid>
 
-          <ServiceInfo data={corpDetails?.mapOfServiceIdAndInfo} />
-          <MarkAsLostBtn corpSalesId={corpSalesId} />
-        </Box>
-      </Container>
+      <ServiceInfo data={corpDetails?.mapOfServiceIdAndInfo} />
+      <MarkAsLostBtn corpSalesId={corpSalesId} />
     </Fragment>
   );
 };
