@@ -1,6 +1,11 @@
 import { Grid, IconButton, Typography } from "@mui/material";
 import React, { Fragment, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import TourIcon from "@mui/icons-material/Tour";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const getServicesStatusSymbol = (status) => {
   return status === "INTERESTED"
@@ -53,28 +58,51 @@ const DashboardCard = ({ data, serviceMapping }) => {
             marginY: "10px",
           }}
         >
-          <Grid item xs={12} lg={12} sx={{ display: "flex" }}>
-            <Typography sx={styles.companyName}>{data?.corpName}</Typography>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
+          >
+            <Typography sx={styles.companyName}>
+              {data?.corpName.toLowerCase()},
+            </Typography>
+            {/* <LocationOnIcon sx={{ marginRight: "5px" , si}} /> */}
+            <Typography
+              sx={{
+                fontSize: "20px",
+                fontWeight: "bold",
+                textTransform: "capitalize",
+                marginLeft: "3px",
+              }}
+            >
+              {data?.location.toLowerCase()}
+            </Typography>
           </Grid>
           {data?.corpSalesVisitEntities?.[1]?.nextVisitDate ? (
-            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>Last Date - </Typography>
+            <Grid
+              item
+              xs={12}
+              lg={6}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <CalendarMonthIcon
+                sx={{ marginRight: "5px", color: "#127DDD" }}
+              />
+              <Typography sx={styles.subTitle}>Last Visit:</Typography>
               <Typography sx={styles.subTitle}>
                 {data?.corpSalesVisitEntities?.[1]?.nextVisitDate}
               </Typography>
             </Grid>
           ) : null}
-          {/* {data?.registrationDate ? (
-            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>Create Date - </Typography>
-              <Typography sx={styles.subTitle}>
-                {data?.registrationDate}
-              </Typography>
-            </Grid>
-          ) : null} */}
+
           {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
             <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>Next Date - </Typography>
+              <CalendarMonthIcon
+                sx={{ marginRight: "5px", color: "#127DDD" }}
+              />
+              <Typography sx={styles.subTitle}>Next Visit:</Typography>
+
               <Typography sx={styles.subTitle}>
                 {data?.corpSalesVisitEntities?.[0]?.nextVisitDate}
               </Typography>
@@ -82,12 +110,22 @@ const DashboardCard = ({ data, serviceMapping }) => {
           ) : null}
 
           {data?.totalVisits ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography
-                sx={styles.subTitle}
-              >{`#Visits : ${data?.totalVisits}`}</Typography>
+            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
+              <TourIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
+              <Typography sx={styles.subTitle}>Visits:</Typography>
+              <Typography sx={styles.subTitle}>{data?.totalVisits}</Typography>
             </Grid>
           ) : null}
+          {data?.priority ? (
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
+              <PriorityHighIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
+              <Typography sx={styles.subTitle}>Priority:</Typography>
+              <Typography
+                sx={styles.subTitle}
+              >{`${data?.priority}`}</Typography>
+            </Grid>
+          ) : null}
+
           {data?.interested ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography sx={styles.subTitle}>
@@ -106,24 +144,14 @@ const DashboardCard = ({ data, serviceMapping }) => {
               >{`User : ${data?.userName}`}</Typography>
             </Grid>
           ) : null}
-          {data?.location ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>{data?.location}</Typography>
-            </Grid>
-          ) : null}
-          {data?.priority ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography
-                sx={styles.subTitle}
-              >{`${data?.priority}`}</Typography>
-            </Grid>
-          ) : null}
+
           <Grid
             item
             xs={12}
             lg={12}
             sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
           >
+            <ManageAccountsIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
             {userAndCount.map(({ name, count }) => (
               <Typography key={name} sx={styles.subTitle}>
                 {name} ({count})
@@ -167,8 +195,12 @@ const styles = {
   companyName: {
     fontWeight: "bold",
     textTransform: "capitalize",
+    fontSize: "22px",
   },
   subTitle: {
     textTransform: "capitalize",
+    alignProperty: "center",
+    fontSize: "17px",
+    marginInline: "5px",
   },
 };
