@@ -197,319 +197,274 @@ const CorpSalesNewVisit = () => {
 
   return (
     <Fragment>
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{ backgroundColor: "#F5F5F5", minHeight: "80vh", borderRadius: 5 }}
-      >
-        <Box sx={{ p: 2 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} lg={12}>
-              <CompanyName
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            </Grid>
-            <Grid item xs={12} lg={12}>
-              <TextField
-                fullWidth
-                sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-                size="small"
-                label={"Company Address"}
-                placeholder={"Enter Company Address"}
-                value={formValues.address || ""}
-                onChange={(e) => {
-                  setFormValues({ ...formValues, address: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} lg={12}>
-              <TextField
-                fullWidth
-                sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-                size="small"
-                label={"No Of Plants"}
-                placeholder={"No Of Plants"}
-                value={formValues.noOfPlants || ""}
-                onChange={(e) => {
-                  setFormValues({ ...formValues, noOfPlants: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} lg={12}>
-              <TextField
-                fullWidth
-                sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-                size="small"
-                label={"Company Type"}
-                placeholder={"Enter Company Type"}
-                value={formValues.corpType || ""}
-                onChange={(e) => {
-                  setFormValues({ ...formValues, corpType: e.target.value });
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} lg={12}>
-              <SelectLocation
-                freeSolo={true}
-                fontWeight={"600"}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"location"}
-                label={"Select Location"}
-                placeholder={"Select Location"}
-              />
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <GlobalDateLayout
-                label={"Date"}
-                initialDate={formValues.registrationDate}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"registrationDate"}
-                disableFuture={true}
-              />
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <GlobalTimeLayout
-                label={"Time"}
-                initialDate={formValues.timeField}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"timeField"}
-                disableFuture={true}
-              />
-            </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} lg={12}>
+          <CompanyName formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
+        <Grid item xs={12} lg={12}>
+          <TextField
+            fullWidth
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            size="small"
+            label={"Company Address"}
+            placeholder={"Enter Company Address"}
+            value={formValues.address || ""}
+            onChange={(e) => {
+              setFormValues({ ...formValues, address: e.target.value });
+            }}
+          />
+        </Grid>
+        <Grid item xs={6} lg={6}>
+          <TextField
+            fullWidth
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            size="small"
+            label={"#Plants"}
+            placeholder={"#Plants"}
+            value={formValues.noOfPlants || ""}
+            onChange={(e) => {
+              setFormValues({ ...formValues, noOfPlants: e.target.value });
+            }}
+          />
+        </Grid>
+        <Grid item xs={6} lg={6}>
+          <GlobalDateLayout
+            label={"Date"}
+            initialDate={formValues.registrationDate}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"registrationDate"}
+            disableFuture={true}
+          />
+        </Grid>
+        <Grid item xs={12} lg={12}>
+          <TextField
+            fullWidth
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            size="small"
+            label={"Company Type"}
+            placeholder={"Enter Company Type"}
+            value={formValues.corpType || ""}
+            onChange={(e) => {
+              setFormValues({ ...formValues, corpType: e.target.value });
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} lg={12}>
+          <SelectLocation
+            freeSolo={true}
+            fontWeight={"600"}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"location"}
+            label={"Select Location"}
+            placeholder={"Select Location"}
+          />
+        </Grid>
 
-            <Grid item xs={6} lg={3}>
-              <TextField
-                sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-                fullWidth
-                label="#On Roll Employee"
-                placeholder="#On Roll Employee"
-                variant="outlined"
-                size="small"
-                value={formValues?.onRollEmployees || ""}
-                onChange={(e) => {
-                  if (!isNaN(e.target.value) && e.target.value.length >= 0) {
+        <Grid item xs={6} lg={6}>
+          <TextField
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            fullWidth
+            label="#On Roll"
+            placeholder="#On Roll"
+            variant="outlined"
+            size="small"
+            value={formValues?.onRollEmployees || ""}
+            onChange={(e) => {
+              if (!isNaN(e.target.value) && e.target.value.length >= 0) {
+                setFormValues({
+                  ...formValues,
+                  onRollEmployees: e.target.value,
+                });
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={6} lg={6}>
+          <TextField
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            fullWidth
+            label="#Off Roll"
+            variant="outlined"
+            placeholder="#Off Role"
+            size="small"
+            value={formValues?.offRollEmployees || ""}
+            onChange={(e) => {
+              if (!isNaN(e.target.value) && e.target.value.length >= 0) {
+                setFormValues({
+                  ...formValues,
+                  offRollEmployees: e.target.value,
+                });
+              }
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12} lg={12}>
+          <AddPotentialServices
+            formValues={formValues}
+            setFormValues={setFormValues}
+          />
+        </Grid>
+
+        <Grid item xs={12} lg={12}>
+          <SelectKam
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"childUserId"}
+          />
+        </Grid>
+
+        <Grid item xs={12} lg={12}>
+          <CompanyVisitDetails data={corpDetail} onlyView={true} />
+        </Grid>
+        <Grid item xs={12} lg={12}>
+          <AddSpocComp formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
+        <Grid item xs={6} lg={6}>
+          <VisitType formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
+        <Grid item xs={6} lg={6}>
+          <Priority formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+        >
+          <Typography>Interested</Typography>
+          <RadioGroup
+            value={
+              formValues.interested === true
+                ? "Yes"
+                : formValues.interested === false
+                ? "No"
+                : ""
+            }
+            onChange={(e) => {
+              setFormValues({
+                ...formValues,
+                interested:
+                  e.target.value === "Yes"
+                    ? true
+                    : e.target.value === "No"
+                    ? false
+                    : "",
+              });
+            }}
+          >
+            <Box sx={{ display: "flex" }}>
+              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio />} label="No" />
+            </Box>
+          </RadioGroup>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <FormControlLabel
+            label="Another Visit Asked"
+            labelPlacement="start"
+            sx={{ marginLeft: "2px" }}
+            control={
+              <Box sx={{ marginRight: "10px" }}>
+                <IOSSwitch
+                  checked={formValues.anoterVisitRequired}
+                  onChange={(e) => {
                     setFormValues({
                       ...formValues,
-                      onRollEmployees: e.target.value,
+                      anoterVisitRequired: e.target.checked,
                     });
-                  }
-                }}
-              />
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <TextField
-                sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-                fullWidth
-                label="#Off Roll Employee"
-                variant="outlined"
-                placeholder="#Off Role Employee"
-                size="small"
-                value={formValues?.offRollEmployees || ""}
-                onChange={(e) => {
-                  if (!isNaN(e.target.value) && e.target.value.length >= 0) {
-                    setFormValues({
-                      ...formValues,
-                      offRollEmployees: e.target.value,
-                    });
-                  }
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={12} lg={12}>
-              <AddPotentialServices
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            </Grid>
-
-            <Grid item xs={6} lg={3}>
-              <GlobalDateLayout
-                label={"Next Visit Date"}
-                initialDate={formValues.nextVisitDate}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"nextVisitDate"}
-                disablePast={true}
-              />
-            </Grid>
-            {formValues.photoUrl && (
-              <Grid item xs={6} lg={3}>
-                <CustomButtonBlue
-                  title="PhotoUrl"
-                  onClick={() => {
-                    handleDownload(formValues.photoUrl);
                   }}
                 />
-              </Grid>
-            )}
-            <Grid item xs={12} lg={12}>
-              <SelectKam
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"childUserId"}
-              />
-            </Grid>
-
-            <Grid item xs={12} lg={12}>
-              <CompanyVisitDetails data={corpDetail} onlyView={true} />
-            </Grid>
-            <Grid item xs={12} lg={12}>
-              <AddSpocComp
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            </Grid>
-            <Grid item xs={6} lg={6}>
-              <VisitType
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            </Grid>
-            <Grid item xs={6} lg={6}>
-              <Priority formValues={formValues} setFormValues={setFormValues} />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <GlobalDateLayout
-                label={"Sales Date"}
-                initialDate={formValues.auditMonth}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"auditMonth"}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={6}
-              sx={{ display: "flex", alignItems: "center", gap: "10px" }}
-            >
-              <Typography>Interested ?</Typography>
-              <RadioGroup
-                value={
-                  formValues.interested === true
-                    ? "Yes"
-                    : formValues.interested === false
-                    ? "No"
-                    : ""
-                }
-                onChange={(e) => {
-                  setFormValues({
-                    ...formValues,
-                    interested:
-                      e.target.value === "Yes"
-                        ? true
-                        : e.target.value === "No"
-                        ? false
-                        : "",
-                  });
-                }}
-              >
-                <Box sx={{ display: "flex" }}>
-                  <FormControlLabel
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel value="No" control={<Radio />} label="No" />
-                </Box>
-              </RadioGroup>
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Box sx={{ marginBlock: 2 }}>
-                <FormControlLabel
-                  label="Another Visit Asked"
-                  labelPlacement="start"
-                  control={
-                    <Box sx={{ marginInline: "10px" }}>
-                      <IOSSwitch
-                        checked={formValues.anoterVisitRequired}
-                        onChange={(e) => {
-                          setFormValues({
-                            ...formValues,
-                            anoterVisitRequired: e.target.checked,
-                          });
-                        }}
-                      />
-                    </Box>
-                  }
-                />
               </Box>
-            </Grid>
+            }
+          />
+        </Grid>
 
-            <Grid item xs={12} lg={6}>
-              <UploadFile
-                title="Upload Visit Photo"
-                styles={{ height: "40px", borderRadius: "15px" }}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"visitPhotoUrl"}
-                onClick={() =>
-                  selectFiles(
-                    { accept: "*" },
-                    ({ name, size, source, file }) => {
-                      const filedata = { name, size, source, file };
-                      setFormValues((prevFormValues) => ({
-                        ...prevFormValues,
-                        visitPhotoUrl: filedata,
-                      }));
-                    }
-                  )
-                }
-              />
-            </Grid>
+        <Grid item xs={6} lg={6}>
+          <GlobalDateLayout
+            label={"Sales Date"}
+            initialDate={formValues.auditMonth}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"auditMonth"}
+          />
+        </Grid>
+        <Grid item xs={6} lg={6}>
+          <GlobalDateLayout
+            label={"Next Visit Date"}
+            initialDate={formValues.nextVisitDate}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"nextVisitDate"}
+            disablePast={true}
+          />
+        </Grid>
 
-            <Grid item xs={12} lg={12}>
-              <TextField
-                multiline
-                label="Remark"
-                size="small"
-                fullWidth
-                placeholder="Enter Remark"
-                value={formValues.interestedRemark}
-                sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    interestedRemark: e.target.value,
-                  })
-                }
-                inputProps={{
-                  style: {
-                    height: "110px",
-                  },
-                }}
-              />
-            </Grid>
+        <Grid item xs={12} lg={6}>
+          <UploadFile
+            title="Upload Visit Photo"
+            styles={{ height: "40px", borderRadius: "15px" }}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"visitPhotoUrl"}
+            onClick={() =>
+              selectFiles({ accept: "*" }, ({ name, size, source, file }) => {
+                const filedata = { name, size, source, file };
+                setFormValues((prevFormValues) => ({
+                  ...prevFormValues,
+                  visitPhotoUrl: filedata,
+                }));
+              })
+            }
+          />
+        </Grid>
 
-            <Grid
-              item
-              xs={12}
-              lg={12}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                variant="contained"
-                sx={{ width: "150px", borderRadius: "15px" }}
-                onClick={() => handleSubmit()}
-                disabled={
-                  isDisabled || formValues.visitType === "" ? true : false
-                }
-              >
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
+        <Grid item xs={12} lg={12}>
+          <TextField
+            multiline
+            label="Remark"
+            size="small"
+            fullWidth
+            placeholder="Enter Remark"
+            value={formValues.interestedRemark}
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            onChange={(e) =>
+              setFormValues({
+                ...formValues,
+                interestedRemark: e.target.value,
+              })
+            }
+            inputProps={{
+              style: {
+                height: "110px",
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            sx={{ width: "150px", borderRadius: "15px" }}
+            onClick={() => handleSubmit()}
+            disabled={isDisabled || formValues.visitType === "" ? true : false}
+          >
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

@@ -56,8 +56,8 @@ const AddPotentialServices = ({ formValues, setFormValues }) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Select Potential Services"
-            placeholder="Select Potential Services"
+            label="Potential Services"
+            placeholder="Potential Services"
             sx={{ borderRadius: "15px", backgroundColor: "#FFFFFF" }}
             InputProps={{
               ...params.InputProps,
