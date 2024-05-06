@@ -17,6 +17,7 @@ const VisitType = ({ formValues, setFormValues }) => {
       setFormValues({ ...formValues, visitType: "" });
     }
   };
+
   return (
     <Fragment>
       <CustomAutocomplete
