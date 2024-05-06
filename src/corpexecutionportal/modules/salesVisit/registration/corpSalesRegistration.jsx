@@ -49,7 +49,7 @@ const CorpSalesRegistration = () => {
     prospectiveServices: [],
     auditMonth: "",
     photoUrl: "",
-    interested: false,
+    interested: null,
     quotationAsked: false,
     anoterVisitRequired: false,
     interestedRemark: "",
@@ -221,7 +221,7 @@ const CorpSalesRegistration = () => {
           />
         </Grid>
 
-        <Grid item xs={6} lg={3}>
+        <Grid item xs={6} lg={6}>
           <TextField
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             fullWidth
@@ -240,7 +240,7 @@ const CorpSalesRegistration = () => {
             }}
           />
         </Grid>
-        <Grid item xs={6} lg={3}>
+        <Grid item xs={6} lg={6}>
           <TextField
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             fullWidth
@@ -280,7 +280,7 @@ const CorpSalesRegistration = () => {
         <Grid item xs={6} lg={6}>
           <VisitType formValues={formValues} setFormValues={setFormValues} />
         </Grid>
-        <Grid item xs={6} lg={4}>
+        <Grid item xs={6} lg={6}>
           <Priority formValues={formValues} setFormValues={setFormValues} />
         </Grid>
 

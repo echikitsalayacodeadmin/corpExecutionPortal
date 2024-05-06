@@ -57,7 +57,7 @@ const CorpSalesNewVisit = () => {
     onRollEmployees: "",
     offRollEmployees: "",
     prospectiveServices: [],
-    auditMonth: "",
+    auditMonth: dayjs().format("YYYY-MM-DD"),
     photoUrl: "",
     interested: false,
     quotationAsked: false,
