@@ -218,9 +218,9 @@ const EditCorpSummary = () => {
             setFormValues={setFormValues}
           />
         </Grid>
-        <Grid item xs={12} lg={12}>
+        {/* <Grid item xs={12} lg={12}>
           <CompanyVisitDetails data={formValues} onlyView={true} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} lg={12}>
           <AddSpocComp formValues={formValues} setFormValues={setFormValues} />
         </Grid>
