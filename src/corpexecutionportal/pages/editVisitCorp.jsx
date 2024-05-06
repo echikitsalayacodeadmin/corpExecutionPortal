@@ -5,7 +5,7 @@ import MainPageLayoutWithBack from "../global/templates/mainPageLayoutWithBack";
 const EditVisitCorp = () => {
   return (
     <Fragment>
-      <MainPageLayoutWithBack title="Edit Visit">
+      <MainPageLayoutWithBack title="Edit Company Info">
         <EditCorpSummary />
       </MainPageLayoutWithBack>
     </Fragment>

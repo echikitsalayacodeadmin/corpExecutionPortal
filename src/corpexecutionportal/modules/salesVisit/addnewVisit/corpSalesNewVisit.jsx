@@ -35,6 +35,8 @@ import AddSpocComp from "../registration/subComp/addSpocComp";
 import CompanyName from "../editVisit/subComp/companyName";
 import UploadFile from "../../../global/uploadFIle";
 import dayjs from "dayjs";
+import VisitType from "../registration/subComp/visitType";
+import Priority from "../registration/subComp/priority";
 
 const CorpSalesNewVisit = () => {
   const { itemId } = useParams();
@@ -363,41 +365,17 @@ const CorpSalesNewVisit = () => {
               />
             </Grid>
             <Grid item xs={6} lg={6}>
-              <CustomSelect
-                options={[
-                  { value: "", label: "Select Visit Type" },
-                  { value: "TELEPHONIC", label: "Telephonic Visit" },
-                  { value: "IN_PERSON", label: "In Person Visit" },
-                ]}
-                required={true}
-                helperText={"Please Select Visit Type its mandatory"}
-                placeholder="Type Of Visit"
-                value={formValues.visitType || ""}
-                property={"visitType"}
+              <VisitType
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
             <Grid item xs={6} lg={6}>
-              <CustomSelect
-                placeholder={"Select Priority"}
-                value={formValues.priority || ""}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"priority"}
-                options={[
-                  { value: "", label: "Select Priority" },
-                  { value: "P0", label: "P0" },
-                  { value: "P1", label: "P1" },
-                  { value: "P2", label: "P2" },
-                  { value: "P3", label: "P3" },
-                  { value: "P4", label: "P4" },
-                ]}
-              />
+              <Priority formValues={formValues} setFormValues={setFormValues} />
             </Grid>
             <Grid item xs={12} lg={6}>
               <GlobalDateLayout
-                label={"Audit Date"}
+                label={"Sales Date"}
                 initialDate={formValues.auditMonth}
                 formValues={formValues}
                 setFormValues={setFormValues}

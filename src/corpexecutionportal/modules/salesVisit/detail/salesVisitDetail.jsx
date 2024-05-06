@@ -20,11 +20,12 @@ const SalesVisitDetail = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [corpDetails, setCorpDetails] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [fetch, setFetch] = useState(false);
   const [quotationRequired, setQuotationRequired] = useState(false);
 
   useEffect(() => {
     fetchCorpDetails(setCorpDetails, setIsLoading, corpSalesId);
-  }, [corpSalesId]);
+  }, [corpSalesId, fetch]);
 
   const handleSubmit = async () => {
     const Obj = {
@@ -38,6 +39,7 @@ const SalesVisitDetail = () => {
       enqueueSnackbar("Successfully Saved", {
         variant: "success",
       });
+
       navigate(-1);
     } else if (result && result.error) {
       enqueueSnackbar("An error occured", {
@@ -99,7 +101,7 @@ const SalesVisitDetail = () => {
         </Grid>
       </Grid>
 
-      <ServiceInfo data={corpDetails?.mapOfServiceIdAndInfo} />
+      <ServiceInfo data={corpDetails?.mapOfServiceIdAndInfo} setFetch={true} />
       <MarkAsLostBtn corpSalesId={corpSalesId} />
     </Fragment>
   );

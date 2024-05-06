@@ -16,7 +16,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
   };
   return (
     <Fragment>
-      <Box sx={{ marginBlock: 2 }}>
+      <Box sx={{}}>
         <Grid container>
           <Grid item xs={12} lg={12}>
             <Box

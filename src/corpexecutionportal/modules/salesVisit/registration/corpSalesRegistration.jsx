@@ -26,6 +26,9 @@ import { useSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import { saveData, uploadFile } from "../../../assets/corpServices";
 import dayjs from "dayjs";
+import CustomAutocomplete from "../../../../assets/customAutocomplete";
+import VisitType from "./subComp/visitType";
+import Priority from "./subComp/priority";
 
 const CorpSalesRegistration = () => {
   const navigate = useNavigate();
@@ -171,25 +174,35 @@ const CorpSalesRegistration = () => {
                 fullWidth
                 sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
                 size="small"
-                label={"Company Address"}
-                placeholder={"Enter Company Address"}
+                label={"Address"}
+                placeholder={"Address"}
                 value={formValues.address || ""}
                 onChange={(e) => {
                   setFormValues({ ...formValues, address: e.target.value });
                 }}
               />
             </Grid>
-            <Grid item xs={12} lg={12}>
+            <Grid item xs={6} lg={6}>
               <TextField
                 fullWidth
                 sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
                 size="small"
-                label={"No Of Plants"}
-                placeholder={"No Of Plants"}
+                label={"#Plants"}
+                placeholder={"#Plants"}
                 value={formValues.noOfPlants || ""}
                 onChange={(e) => {
                   setFormValues({ ...formValues, noOfPlants: e.target.value });
                 }}
+              />
+            </Grid>
+            <Grid item xs={6} lg={6}>
+              <GlobalDateLayout
+                label={"Date"}
+                initialDate={formValues.registrationDate}
+                formValues={formValues}
+                setFormValues={setFormValues}
+                property={"registrationDate"}
+                disableFuture={true}
               />
             </Grid>
             <Grid item xs={12} lg={12}>
@@ -216,33 +229,13 @@ const CorpSalesRegistration = () => {
                 placeholder={"Select Location"}
               />
             </Grid>
-            <Grid item xs={6} lg={3}>
-              <GlobalDateLayout
-                label={"Date"}
-                initialDate={formValues.registrationDate}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"registrationDate"}
-                disableFuture={true}
-              />
-            </Grid>
-            <Grid item xs={6} lg={3}>
-              <GlobalTimeLayout
-                label={"Time"}
-                initialDate={formValues.timeField}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"timeField"}
-                disableFuture={true}
-              />
-            </Grid>
 
             <Grid item xs={6} lg={3}>
               <TextField
                 sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
                 fullWidth
-                label="#On Roll Employee"
-                placeholder="#On Roll Employee"
+                label="#On Roll"
+                placeholder="#On Roll"
                 variant="outlined"
                 size="small"
                 value={formValues?.onRollEmployees || ""}
@@ -260,9 +253,9 @@ const CorpSalesRegistration = () => {
               <TextField
                 sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
                 fullWidth
-                label="#Off Roll Employee"
+                label="#Off Roll"
                 variant="outlined"
-                placeholder="#Off Role Employee"
+                placeholder="#Off Role"
                 size="small"
                 value={formValues?.offRollEmployees || ""}
                 onChange={(e) => {
@@ -297,67 +290,22 @@ const CorpSalesRegistration = () => {
               />
             </Grid>
             <Grid item xs={6} lg={6}>
-              <CustomSelect
-                options={[
-                  { value: "", label: "Select Visit Type" },
-                  { value: "TELEPHONIC", label: "Telephonic Visit" },
-                  { value: "IN_PERSON", label: "In Person Visit" },
-                ]}
-                required={true}
-                helperText={"Please Select Visit Type its mandatory"}
-                placeholder="Type Of Visit"
-                value={formValues.visitType || ""}
-                property={"visitType"}
+              <VisitType
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
             <Grid item xs={6} lg={6}>
-              <CustomSelect
-                placeholder={"Select Priority"}
-                value={formValues.priority || ""}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"priority"}
-                options={[
-                  { value: "", label: "Select Priority" },
-                  { value: "P0", label: "P0" },
-                  { value: "P1", label: "P1" },
-                  { value: "P2", label: "P2" },
-                  { value: "P3", label: "P3" },
-                  { value: "P4", label: "P4" },
-                ]}
-              />
+              <Priority formValues={formValues} setFormValues={setFormValues} />
             </Grid>
-            <Grid item xs={6} lg={4}>
-              <GlobalDateLayout
-                label={"Audit Date"}
-                initialDate={formValues.auditMonth}
-                formValues={formValues}
-                setFormValues={setFormValues}
-                property={"auditMonth"}
-              />
-            </Grid>
-            {formValues.anoterVisitRequired === true && (
-              <Grid item xs={6} lg={3}>
-                <GlobalDateLayout
-                  label={"Next Visit Date"}
-                  initialDate={formValues?.nextVisitDate}
-                  formValues={formValues}
-                  setFormValues={setFormValues}
-                  property={"nextVisitDate"}
-                  disablePast={true}
-                />
-              </Grid>
-            )}
 
             <Grid
               item
               xs={12}
-              lg={4}
+              lg={3}
               sx={{ display: "flex", alignItems: "center", gap: "10px" }}
             >
-              <Typography>Interested ?</Typography>
+              <Typography>Interested</Typography>
               <RadioGroup
                 value={
                   formValues.interested === true
@@ -389,46 +337,68 @@ const CorpSalesRegistration = () => {
               </RadioGroup>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
-              <Box sx={{ marginBlock: 2 }}>
-                <FormControlLabel
-                  label="Another Visit Asked"
-                  labelPlacement="start"
-                  control={
-                    <Box sx={{ marginInline: "10px" }}>
-                      <IOSSwitch
-                        checked={formValues.anoterVisitRequired}
-                        onChange={(e) => {
-                          setFormValues({
-                            ...formValues,
-                            anoterVisitRequired: e.target.checked,
-                          });
-                        }}
-                      />
-                    </Box>
-                  }
-                />
-              </Box>
-              <Box sx={{ marginBlock: 2 }}>
-                <FormControlLabel
-                  label="Quotation Required"
-                  labelPlacement="start"
-                  control={
-                    <Box sx={{ marginInline: "10px" }}>
-                      <IOSSwitch
-                        checked={formValues.quotationAsked}
-                        onChange={(e) => {
-                          setFormValues({
-                            ...formValues,
-                            quotationAsked: e.target.checked,
-                          });
-                        }}
-                      />
-                    </Box>
-                  }
-                />
-              </Box>
+            <Grid item xs={12} lg={3}>
+              <FormControlLabel
+                label="Another Visit Asked"
+                labelPlacement="start"
+                sx={{ marginLeft: "-2px" }}
+                control={
+                  <Box sx={{ marginRight: "10px" }}>
+                    <IOSSwitch
+                      checked={formValues.anoterVisitRequired}
+                      onChange={(e) => {
+                        setFormValues({
+                          ...formValues,
+                          anoterVisitRequired: e.target.checked,
+                        });
+                      }}
+                    />
+                  </Box>
+                }
+              />
             </Grid>
+            <Grid item xs={12} lg={3}>
+              <FormControlLabel
+                label="Quotation Required"
+                labelPlacement="start"
+                sx={{ marginLeft: "-2px" }}
+                control={
+                  <Box sx={{ marginRight: "10px" }}>
+                    <IOSSwitch
+                      checked={formValues.quotationAsked}
+                      onChange={(e) => {
+                        setFormValues({
+                          ...formValues,
+                          quotationAsked: e.target.checked,
+                        });
+                      }}
+                    />
+                  </Box>
+                }
+              />
+            </Grid>
+
+            <Grid item xs={6} lg={6}>
+              <GlobalDateLayout
+                label={"Sales Date"}
+                initialDate={formValues.auditMonth}
+                formValues={formValues}
+                setFormValues={setFormValues}
+                property={"auditMonth"}
+              />
+            </Grid>
+            {formValues.anoterVisitRequired === true && (
+              <Grid item xs={6} lg={6}>
+                <GlobalDateLayout
+                  label={"Next Visit Date"}
+                  initialDate={formValues?.nextVisitDate}
+                  formValues={formValues}
+                  setFormValues={setFormValues}
+                  property={"nextVisitDate"}
+                  disablePast={true}
+                />
+              </Grid>
+            )}
             <Grid item xs={12} lg={6}>
               <UploadFile
                 title="Upload Photo"

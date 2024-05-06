@@ -25,6 +25,7 @@ import SelectUser from "../../../global/selectUsers/selectUsers";
 import SelectkamInDashboard from "../../../global/selectKam/selectkamInDashboard";
 import dayjs from "dayjs";
 import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
+import MainPageLayoutWithBackSV from "../../../global/templates/mainPageLayoutWithBackSV";
 
 const SalesVisitDashboard = () => {
   const navigate = useNavigate();
@@ -278,8 +279,8 @@ const SalesVisitDashboard = () => {
 
   return (
     <Fragment>
-      <MainPageLayoutWithBack
-        title="Sales Visit Dashboard"
+      <MainPageLayoutWithBackSV
+        title="Visit Dashboard"
         onDownloadClick={() =>
           fetchMisData(
             status,
@@ -291,6 +292,9 @@ const SalesVisitDashboard = () => {
           )
         }
         downloadButton={true}
+        onRegisterClick={() => {
+          navigate(`/corp/registercorp`);
+        }}
       >
         <Grid
           spacing={1}
@@ -298,7 +302,6 @@ const SalesVisitDashboard = () => {
           sx={{
             boxSizing: "border-box",
             background: "#FFFFFF",
-            // border: "0.5px solid #A6A6A6",
             borderRadius: 5,
           }}
         >
@@ -374,14 +377,6 @@ const SalesVisitDashboard = () => {
           <Grid item xs={4} lg={1}>
             <CustomButtonBlue title={"Next 7 Days"} />
           </Grid>
-          <Grid item xs={4} lg={2}>
-            <CustomButtonBlue
-              title={"Register New"}
-              onClick={() => {
-                navigate(`/corp/registercorp`);
-              }}
-            />
-          </Grid>
         </Grid>
         <SearchBarCompany
           setTokenListStatic={setCompanyListStatic}
@@ -408,7 +403,7 @@ const SalesVisitDashboard = () => {
             ))
           )}
         </Box>
-      </MainPageLayoutWithBack>
+      </MainPageLayoutWithBackSV>
     </Fragment>
   );
 };

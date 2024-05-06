@@ -132,7 +132,7 @@ const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
               )}
             </IconButton>
             <CustomButtonBlue
-              title="Add New SPOC"
+              title="Add SPOC"
               onClick={() => {
                 handleOpen();
               }}

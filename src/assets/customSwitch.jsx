@@ -5,6 +5,7 @@ export const IOSSwitch = styled((props) => (
 ))(({ theme }) => ({
   width: 50, //width: 100,
   height: 26,
+  marginLeft: 10,
   padding: 0,
   "& .MuiSwitch-switchBase": {
     padding: 0,

@@ -4,6 +4,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import CreateIcon from "@mui/icons-material/Create";
 import { useNavigate } from "react-router-dom";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
+import { CustomTypographyBold } from "../../../../../assets/customTypography";
 
 const CompanySummaryInfo = ({ data }) => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const CompanySummaryInfo = ({ data }) => {
   };
   return (
     <Fragment>
+      <CustomTypographyBold>Company Info</CustomTypographyBold>
       <Grid
         container
         sx={{
@@ -22,6 +24,8 @@ const CompanySummaryInfo = ({ data }) => {
           border: "0.5px solid #A6A6A6",
           borderRadius: 5,
           padding: 1,
+          marginTop: 1,
+          marginBottom: 2,
         }}
       >
         <Grid item xs={11} lg={11} md={11} sm={11}>
@@ -34,7 +38,7 @@ const CompanySummaryInfo = ({ data }) => {
               sm={6}
               sx={{ display: "flex", flexWrap: "wrap" }}
             >
-              <Typography sx={styles.heading}>Company Name -</Typography>
+              <Typography sx={styles.heading}>Name -</Typography>
               <Typography sx={styles.data}>{data?.corpName}</Typography>
             </Grid>
             <Grid
@@ -45,52 +49,37 @@ const CompanySummaryInfo = ({ data }) => {
               sm={6}
               sx={{ display: "flex", flexWrap: "wrap" }}
             >
-              <Typography sx={styles.heading}>Company Address -</Typography>
+              <Typography sx={styles.heading}>Address -</Typography>
               <Typography sx={styles.data}>{data?.address}</Typography>
             </Grid>
-            <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>
-                No of On Roll Employees -
-              </Typography>
+            <Grid item xs={6} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.heading}>#On Roll -</Typography>
               <Typography sx={styles.data}>{data?.onRollEmployees}</Typography>
             </Grid>
-            <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>
-                No of Off Roll Employees -
-              </Typography>
+            <Grid item xs={6} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.heading}>#Off Roll -</Typography>
               <Typography sx={styles.data}>{data?.offRollEmployees}</Typography>
             </Grid>
-            <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
+            <Grid item xs={6} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
               <Typography sx={styles.heading}># Plants -</Typography>
               <Typography sx={styles.data}>{data?.noOfPlants}</Typography>
             </Grid>
+            <Grid item xs={6} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.heading}>Priority -</Typography>
+              <Typography sx={styles.data}>{data?.priority}</Typography>
+            </Grid>
             <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>Type of Company -</Typography>
+              <Typography sx={styles.heading}>Type -</Typography>
               <Typography sx={styles.data}>{data?.corpType}</Typography>
             </Grid>
             <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
               <Typography sx={styles.heading}>Location -</Typography>
               <Typography sx={styles.data}>{data?.location}</Typography>
             </Grid>
-            <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>Priority -</Typography>
-              <Typography sx={styles.data}>{data?.priority}</Typography>
-            </Grid>
-
             <Grid item xs={12} lg={6} md={6} sm={12} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>Sales Month -</Typography>
+              <Typography sx={styles.heading}>Sales Date -</Typography>
               <Typography sx={styles.data}>{data?.auditMonth}</Typography>
             </Grid>
-
-            {data?.visitType === null ? null : (
-              <Grid item xs={12} lg={6} md={6} sm={12} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>Visit Type -</Typography>
-                <Typography sx={styles.data}>
-                  {data?.visitType?.replace(/_/g, " ")}
-                </Typography>
-              </Grid>
-            )}
-
             {/* <Grid item xs={12} lg={6} md={6} sm={12} sx={{ display: "flex" }}>
               <Typography sx={styles.heading}>Delivery Date -</Typography>
               <Typography sx={styles.data}>{data?.deliveryDate}</Typography>
@@ -104,7 +93,6 @@ const CompanySummaryInfo = ({ data }) => {
                 {data?.deliveryInstruction}
               </Typography>
             </Grid> */}
-
             <Grid
               item
               xs={12}
@@ -163,7 +151,7 @@ const CompanySummaryInfo = ({ data }) => {
           </Grid>
         </Grid>
         <Grid item xs={1} lg={1} md={1} sm={1}>
-          <Tooltip title="Click to Edit Visit">
+          <Tooltip title="Click to Edit Company Info">
             <IconButton
               onClick={() => {
                 navigate(`/corp/editvisit/${data?.corpSalesId}`);

@@ -6,8 +6,10 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
+  IconButton,
 } from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const UploadFile = ({
   title,
@@ -30,21 +32,23 @@ const UploadFile = ({
   return (
     <Fragment>
       <Box>
-        <Box>
-          {formValues?.[property]?.source !== "" ? (
-            <Box
-              component={"img"}
-              src={formValues?.[property]?.source}
-              style={{ height: "70px", cursor: "pointer", width: "200px" }}
-              onClick={handleImageClick} // Open modal on image click
-            />
-          ) : null}
-        </Box>
+        {formValues?.[property]?.source && (
+          <Box
+            component={"img"}
+            src={formValues?.[property]?.source}
+            style={{ height: "70px", cursor: "pointer", width: "200px" }}
+            onClick={handleImageClick} // Open modal on image click
+          />
+        )}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            marginTop: formValues?.[property]?.source !== "" ? null : "70px",
+            marginTop:
+              formValues?.[property]?.source !== "" ||
+              formValues?.[property]?.source !== undefined
+                ? null
+                : "70px",
           }}
         >
           <Button
@@ -62,23 +66,25 @@ const UploadFile = ({
           >
             {title}
           </Button>
-          {formValues?.[property].source !== "" ? (
-            <Button
+          {formValues?.[property].source && (
+            <IconButton
               onClick={() =>
                 setFormValues({ ...formValues, [property]: { source: "" } })
               }
               variant="outlined"
               sx={{
                 color: "red",
-                marginLeft: "10px",
+                position: "absolute",
+                marginLeft: 22,
                 height: "40px",
                 borderRadius: "15px",
                 borderColor: "red",
+                marginTop: -20,
               }}
             >
-              Remove
-            </Button>
-          ) : null}
+              <DeleteIcon />
+            </IconButton>
+          )}
         </Box>
       </Box>
 

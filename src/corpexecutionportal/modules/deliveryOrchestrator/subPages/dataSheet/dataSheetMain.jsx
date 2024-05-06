@@ -18,7 +18,7 @@ import {
   fetchAllTaskList,
   fetchSuperMasterData,
 } from "../../../../services/deliveryOrchestratorServices";
-import { getData } from "../../../../assets/corpServices";
+import { getData, updateData } from "../../../../assets/corpServices";
 import { BASE_URL } from "../../../../../assets/constants";
 import MainPageLayoutWithBack from "../../../../global/templates/mainPageLayoutWithBack";
 import MarkStatusBtn from "../../subComp/markStatusBtn";

@@ -53,7 +53,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             marginY: "10px",
           }}
         >
-          <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
+          <Grid item xs={12} lg={12} sx={{ display: "flex" }}>
             <Typography sx={styles.companyName}>{data?.corpName}</Typography>
           </Grid>
           {data?.corpSalesVisitEntities?.[1]?.nextVisitDate ? (
@@ -64,14 +64,14 @@ const DashboardCard = ({ data, serviceMapping }) => {
               </Typography>
             </Grid>
           ) : null}
-          {data?.registrationDate ? (
+          {/* {data?.registrationDate ? (
             <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
               <Typography sx={styles.subTitle}>Create Date - </Typography>
               <Typography sx={styles.subTitle}>
                 {data?.registrationDate}
               </Typography>
             </Grid>
-          ) : null}
+          ) : null} */}
           {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
             <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
               <Typography sx={styles.subTitle}>Next Date - </Typography>
@@ -85,7 +85,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
-              >{`Total Visits : ${data?.totalVisits}`}</Typography>
+              >{`#Visits : ${data?.totalVisits}`}</Typography>
             </Grid>
           ) : null}
           {data?.interested ? (
@@ -107,24 +107,15 @@ const DashboardCard = ({ data, serviceMapping }) => {
             </Grid>
           ) : null}
           {data?.location ? (
-            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>
-                Location: {data?.location}
-              </Typography>
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.subTitle}>{data?.location}</Typography>
             </Grid>
           ) : null}
           {data?.priority ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
-              >{`Priority : ${data?.priority}`}</Typography>
-            </Grid>
-          ) : null}
-          {data?.userName ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography
-                sx={styles.subTitle}
-              >{`Priority : ${data?.priority}`}</Typography>
+              >{`${data?.priority}`}</Typography>
             </Grid>
           ) : null}
           <Grid

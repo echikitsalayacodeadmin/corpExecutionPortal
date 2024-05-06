@@ -29,11 +29,11 @@ const servicesFields = {
   62502: [
     {
       label: "AHC Interested Yes or No",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -46,18 +46,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -76,11 +76,11 @@ const servicesFields = {
   62503: [
     {
       label: "Pre Emp Interested Yes or No",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -101,18 +101,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -131,11 +131,11 @@ const servicesFields = {
   62504: [
     {
       label: "Insurance Interested Yes or No",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -173,18 +173,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
 
@@ -195,14 +195,14 @@ const servicesFields = {
       dataType: "string",
     },
   ],
-  "OHC STAFF": [
+  62512: [
     {
       label: "OHC Stafff Interested Yes or No",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -229,18 +229,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -259,11 +259,11 @@ const servicesFields = {
   62508: [
     {
       label: "Interested in Medicines or Not",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -278,18 +278,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -305,14 +305,14 @@ const servicesFields = {
       dataType: "string",
     },
   ],
-  "OHC equipment/ First aid Box or OHC Design": [
+  62505: [
     {
       label: "Interested or Not",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -327,18 +327,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -357,11 +357,11 @@ const servicesFields = {
   62509: [
     {
       label: "Interested or Not",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -375,18 +375,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -402,14 +402,14 @@ const servicesFields = {
       dataType: "string",
     },
   ],
-  "Engagement Info": [
+  62497: [
     {
       label: "Interested or Not",
-      fieldName: "corpInterestStatus",
+      fieldName: "corpRequirementStatus",
       type: "dropdown",
       options: [
-        { value: "Yes", label: "Yes" },
-        { value: "No", label: "No" },
+        { value: "YES", label: "Yes" },
+        { value: "NO", label: "No" },
       ],
     },
     {
@@ -428,6 +428,7 @@ const servicesFields = {
       label: "Current Service Provider",
       fieldName: "currentServiceProvider",
       type: "textField",
+      dataType: "string",
     },
     {
       label: "Number of accidents in month",
@@ -441,18 +442,18 @@ const servicesFields = {
       fieldName: "confidenceLeveLStatus",
       type: "dropdown",
       options: [
-        { value: "Confirmed", label: "Confirmed" },
-        { value: "Good Confidence", label: "Good Confidence" },
-        { value: "May Be", label: "May Be" },
-        { value: "Difficult", label: "Difficult" },
-        { value: "Lost", label: "Lost" },
-        { value: "Done", label: "Done" },
-        { value: "Just a Lead", label: "Just a Lead" },
+        { value: "CONFIRMED", label: "Confirmed" },
+        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
+        { value: "MAY_BE", label: "May Be" },
+        { value: "DIFFICULT", label: "Difficult" },
+        { value: "LOST", label: "Lost" },
+        { value: "DONE", label: "Done" },
+        { value: "JUST_A_LEAD", label: "Just a Lead" },
         {
-          value: "Vendor Registration Started",
+          value: "VENDOR_REGISTRATION_STARTED",
           label: "Vendor Registration Started",
         },
-        { value: "Due Later", label: "Due Later" },
+        { value: "DUE_LATER", label: "Due Later" },
       ],
     },
     {
@@ -507,7 +508,7 @@ const getServiceFields = (serviceId) => {
     : servicesFields.default;
 };
 
-const ServiceInfo = ({ data }) => {
+const ServiceInfo = ({ data, setFetch }) => {
   const { itemId } = useParams();
   const corpSalesId = itemId;
   const userId = localStorage.getItem("USER_ID_CORP_SALES");
@@ -541,7 +542,7 @@ const ServiceInfo = ({ data }) => {
               : null,
             remarks: data?.[item.id]?.remarks || "",
             confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus || "",
-            corpInterestStatus: data?.[item.id]?.corpInterestStatus || "",
+            corpRequirementStatus: data?.[item.id]?.corpRequirementStatus || "",
             estimatedBusinessSize: data?.[item.id]?.estimatedBusinessSize || "",
             typeOfPolicy: data?.[item.id]?.typeOfPolicy || "",
             numberOfLives: data?.[item.id]?.numberOfLives || "",
@@ -575,8 +576,8 @@ const ServiceInfo = ({ data }) => {
     lastAmount: "",
     dueDate: dayjs().format("YYYY-MM-DD"),
     remarks: "",
-    confidenceLeveLStatus: "",
-    corpInterestStatus: "",
+    confidenceLeveLStatus: { label: "", value: "" },
+    corpRequirementStatus: { label: "", value: "" },
     estimatedBusinessSize: "",
     typeOfPolicy: "",
     numberOfLives: "",
@@ -600,8 +601,10 @@ const ServiceInfo = ({ data }) => {
       remarks: data.servicesInfoVM.remarks,
       userId: userId,
       userName: userName,
-      confidenceLeveLStatus: data.servicesInfoVM.confidenceLeveLStatus.value,
-      corpInterestStatus: data.servicesInfoVM.corpInterestStatus.value,
+      confidenceLeveLStatus:
+        data.servicesInfoVM.confidenceLeveLStatus.value || null,
+      corpRequirementStatus:
+        data.servicesInfoVM.corpRequirementStatus.value || null,
       estimatedBusinessSize: data.servicesInfoVM.estimatedBusinessSize,
       typeOfPolicy: data.servicesInfoVM.typeOfPolicy,
       numberOfLives: data.servicesInfoVM.numberOfLives,
@@ -620,9 +623,10 @@ const ServiceInfo = ({ data }) => {
       `corpSales/service/info?corpId=${corpSalesId}&serviceId=${data?.id}`;
     const result = await saveData(url, obj);
     if (result.data) {
-      enqueueSnackbar("Uploaded successfully.", {
+      enqueueSnackbar("Successfully Saved", {
         variant: "success",
       });
+      setFetch(true);
     } else {
       enqueueSnackbar("An Error Occured.", {
         variant: "error",
@@ -667,11 +671,25 @@ const ServiceInfo = ({ data }) => {
                     lastAmount: servicesInfo.lastAmount || "",
                     dueDate: servicesInfo.dueDate
                       ? new Date(servicesInfo.dueDate)
-                      : null,
+                      : dayjs().format("YYYY-MM-DD"),
                     remarks: servicesInfo.remarks || "",
-                    confidenceLeveLStatus:
-                      servicesInfo.confidenceLeveLStatus || "",
-                    corpInterestStatus: servicesInfo.corpInterestStatus || "",
+                    confidenceLeveLStatus: {
+                      value: servicesInfo?.confidenceLeveLStatus || "",
+                      label:
+                        servicesInfo?.confidenceLeveLStatus
+                          ?.replace(/_/g, " ")
+                          ?.toLowerCase()
+                          ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
+                    },
+
+                    corpRequirementStatus: {
+                      value: servicesInfo?.corpRequirementStatus || "",
+                      label:
+                        servicesInfo?.corpRequirementStatus
+                          ?.replace(/_/g, " ")
+                          ?.toLowerCase()
+                          ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
+                    },
                     estimatedBusinessSize:
                       servicesInfo.estimatedBusinessSize || "",
                     typeOfPolicy: servicesInfo.typeOfPolicy || "",
@@ -814,8 +832,8 @@ const ServiceInfo = ({ data }) => {
               lastAmount: "",
               dueDate: dayjs().format("YYYY-MM-DD"),
               remarks: "",
-              confidenceLeveLStatus: "",
-              corpInterestStatus: "",
+              confidenceLeveLStatus: { label: "", value: "" },
+              corpRequirementStatus: { label: "", value: "" },
               estimatedBusinessSize: "",
               typeOfPolicy: "",
               numberOfLives: "",
@@ -857,8 +875,8 @@ const ServiceInfo = ({ data }) => {
                     lastAmount: "",
                     dueDate: dayjs().format("YYYY-MM-DD"),
                     remarks: "",
-                    confidenceLeveLStatus: "",
-                    corpInterestStatus: "",
+                    confidenceLeveLStatus: { label: "", value: "" },
+                    corpRequirementStatus: { label: "", value: "" },
                     estimatedBusinessSize: "",
                     typeOfPolicy: "",
                     numberOfLives: "",
@@ -878,8 +896,12 @@ const ServiceInfo = ({ data }) => {
               </IconButton>
             </Box>
 
-            <Box sx={{ textAlign: "center", marginTop: "-30px" }}>
-              <Typography>{selectedRow?.testName}</Typography>
+            <Box
+              sx={{ textAlign: "center", marginTop: "-30px", marginBottom: 2 }}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>
+                {selectedRow?.testName}
+              </Typography>
             </Box>
 
             <Grid
@@ -894,7 +916,7 @@ const ServiceInfo = ({ data }) => {
                       label={val?.label}
                       placeholder={val?.label}
                       options={val?.options || []}
-                      value={moreInfoObject?.[val?.fieldName] || null}
+                      value={moreInfoObject?.[val?.fieldName]}
                       onChange={(event, newValue, reason) => {
                         setMoreInfoObject({
                           ...moreInfoObject,
@@ -1014,8 +1036,8 @@ const ServiceInfo = ({ data }) => {
                       lastAmount: "",
                       dueDate: dayjs().format("YYYY-MM-DD"),
                       remarks: "",
-                      confidenceLeveLStatus: "",
-                      corpInterestStatus: "",
+                      confidenceLeveLStatus: { label: "", value: "" },
+                      corpRequirementStatus: { label: "", value: "" },
                       estimatedBusinessSize: "",
                       typeOfPolicy: "",
                       numberOfLives: "",
@@ -1073,7 +1095,7 @@ export default ServiceInfo;
 //   62502: [
 //     {
 //       label: "AHC Interested Yes or No",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1108,12 +1130,12 @@ export default ServiceInfo;
 //   62503: [
 //     {
 //       label: "Pre Emp Interested Yes or No",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
 //       label: "Monthly Influx",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1148,7 +1170,7 @@ export default ServiceInfo;
 //   62504: [
 //     {
 //       label: "Insurance Interested Yes or No",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1201,7 +1223,7 @@ export default ServiceInfo;
 //   "OHC STAFF": [
 //     {
 //       label: "OHC Stafff Interested Yes or No",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1248,7 +1270,7 @@ export default ServiceInfo;
 //   62508: [
 //     {
 //       label: "Interested in Medicines or Not",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1283,7 +1305,7 @@ export default ServiceInfo;
 //   "OHC equipment/ First aid Box or OHC Design": [
 //     {
 //       label: "Interested or Not",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1319,7 +1341,7 @@ export default ServiceInfo;
 //   62509: [
 //     {
 //       label: "Interested or Not",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1356,7 +1378,7 @@ export default ServiceInfo;
 //   "Engagement Info": [
 //     {
 //       label: "Interested or Not",
-//       fieldName: "corpInterestStatus",
+//       fieldName: "corpRequirementStatus",
 //       type: "dropdown",
 //     },
 //     {
@@ -1505,7 +1527,7 @@ export default ServiceInfo;
 //       userId: userId,
 //       userName: userName,
 //       confidenceLeveLStatus: "",
-//       corpInterestStatus: "",
+//       corpRequirementStatus: "",
 //       estimatedBusinessSize: "",
 //       typeOfPolicy: "",
 //       numberOfLives: "",

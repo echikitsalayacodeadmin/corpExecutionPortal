@@ -16,7 +16,7 @@ const CompanyName = ({ formValues, setFormValues }) => {
       <CustomAutocomplete
         freeSolo={true}
         label={"Company Name"}
-        placeholder={"Enter Company Name"}
+        placeholder={"Company Name"}
         options={corpDatalist.filter(
           (corp, index, self) =>
             corp.corpSalesId !== null &&
@@ -34,7 +34,7 @@ const CompanyName = ({ formValues, setFormValues }) => {
         value={selectedValue}
         getOptionLabel={(option) => option.corpName}
         onChange={(event, newValue, reason) => {
-          setSelectedValue(newValue.corpName);
+          setSelectedValue(newValue);
           setFormValues({ ...formValues, corpName: newValue?.corpName });
           if (reason === "clear") {
             setSelectedValue(null);
