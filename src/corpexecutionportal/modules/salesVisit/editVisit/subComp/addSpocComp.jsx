@@ -19,7 +19,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import { isMobile } from "react-device-detect";
 
-const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
+const AddSpocComp = ({
+  formValues,
+  setFormValues,
+  onlyView = false,
+  removeEdit = false,
+}) => {
   const [showSpocList, setShowSpocList] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const validateEmail = (email) => {
@@ -157,12 +162,12 @@ const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
             }}
           >
             <Grid item xs={10} lg={10}>
-              <Grid container spacing={1}>
-                <Grid item xs={6} lg={4} sx={{ display: "flex" }}>
+              <Grid container>
+                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                   <Typography sx={styles.heading}>Name -</Typography>
                   <Typography sx={styles.data}>{spoc.name}</Typography>
                 </Grid>
-                <Grid item xs={6} lg={4} sx={{ display: "flex" }}>
+                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                   <Typography sx={styles.heading}>Mobile -</Typography>
                   <Typography sx={styles.data}>{spoc.mobile}</Typography>
                 </Grid>
@@ -174,7 +179,7 @@ const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
                   <Typography sx={styles.heading}>Designation -</Typography>
                   <Typography sx={styles.data}>{spoc.designation}</Typography>
                 </Grid>
-                <Grid item xs={6} lg={4} sx={{ display: "flex" }}>
+                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                   <Typography sx={styles.heading}>Decision Maker -</Typography>
                   <Typography sx={styles.data}>
                     {spoc.isDecisionMaker ? "Yes" : "No"}
@@ -182,15 +187,24 @@ const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={1} lg={1} sx={{ textAlign: "end" }}>
+            <Grid
+              item
+              xs={1}
+              lg={1}
+              sx={{
+                textAlign: "end",
+                marginLeft: "10px",
+              }}
+            >
               {onlyView === true ? null : (
                 <IconButton onClick={() => deleteSpoc(index)}>
                   <DeleteIcon />
                 </IconButton>
               )}
             </Grid>
+
             <Grid item xs={1} lg={1} sx={{ textAlign: "end" }}>
-              {onlyView === true ? null : (
+              {removeEdit === true ? null : (
                 <IconButton onClick={() => handleOpen(index)}>
                   <EditIcon />
                 </IconButton>

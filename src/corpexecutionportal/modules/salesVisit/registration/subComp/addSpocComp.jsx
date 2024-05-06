@@ -19,7 +19,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import { isMobile } from "react-device-detect";
 
-const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
+const AddSpocComp = ({
+  formValues,
+  setFormValues,
+  onlyView = false,
+  removeEdit = true,
+}) => {
   const [showSpocList, setShowSpocList] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const validateEmail = (email) => {
@@ -157,7 +162,7 @@ const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
             }}
           >
             <Grid item xs={10} lg={10}>
-              <Grid container spacing={1}>
+              <Grid container>
                 <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                   <Typography sx={styles.heading}>Name -</Typography>
                   <Typography sx={styles.data}>{spoc.name}</Typography>
@@ -190,7 +195,7 @@ const AddSpocComp = ({ formValues, setFormValues, onlyView = false }) => {
               )}
             </Grid>
             <Grid item xs={1} lg={1} sx={{ textAlign: "end" }}>
-              {onlyView === true ? null : (
+              {removeEdit === true ? null : (
                 <IconButton onClick={() => handleOpen(index)}>
                   <EditIcon />
                 </IconButton>
