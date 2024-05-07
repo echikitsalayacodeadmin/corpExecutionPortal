@@ -20,6 +20,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.visits)}`}</ShowCount>,
       path: "/corp/salesvisit",
       xsgridwidth: 12,
+      disabled: false,
     },
     {
       id: 2,
@@ -28,7 +29,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.quotations)}`}</ShowCount>,
       path: "/corp/quotation",
       xsgridwidth: 12,
-      disabled: true,
+      disabled: false,
     },
     {
       id: 3,

@@ -3,7 +3,10 @@ import {
   deleteDataWithObjectGlobal,
 } from "../../assets/services/api/deleteApi";
 import { getDataGlobal } from "../../assets/services/api/getApiCalls";
-import { updateDataGlobal } from "../../assets/services/api/patchApi";
+import {
+  updateDataGlobal,
+  updateFormDataGlobal,
+} from "../../assets/services/api/patchApi";
 import {
   saveDataGlobal,
   uploadFileGlobal,
@@ -40,6 +43,12 @@ export const uploadData = async (url, payload) => {
 export const uploadFile = async (url, payload) => {
   let authHeader_local = localStorage.getItem("AUTHHEADER_CORP_EXECUTION");
   const response = await uploadFileGlobal(url, payload, authHeader_local);
+  return response;
+};
+
+export const updateDataFile = async (url, payload) => {
+  let authHeader_local = localStorage.getItem("AUTHHEADER_CORP_EXECUTION");
+  const response = await updateFormDataGlobal(url, payload, authHeader_local);
   return response;
 };
 

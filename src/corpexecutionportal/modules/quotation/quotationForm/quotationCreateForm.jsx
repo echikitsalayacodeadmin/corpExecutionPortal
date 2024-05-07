@@ -16,8 +16,18 @@ import PdfMain from "./pdfComp/pdfMain";
 import { useReactToPrint } from "react-to-print";
 import { pdf } from "@react-pdf/renderer";
 import MyDocument from "./pdfComp/myDocument";
+import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
+import { useParams } from "react-router-dom";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import CustomButtonWhite from "../../../../assets/customButtonWhite";
+import { useSnackbar } from "notistack";
+import { BASE_URL } from "../../../../assets/constants";
+import {
+  getData,
+  saveData,
+  updateData,
+  updateDataFile,
+} from "../../../assets/corpServices";
 
 const calculateTestListRowFields = (dialogData) => {
   const pricePerEmp = dialogData?.testList?.reduce(
@@ -88,14 +98,18 @@ const QuotationCreateForm = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const router = useRouter();
+  const { itemId } = useParams();
+  const query = JSON.parse(decodeURIComponent(itemId));
   const [role, setRole] = useState("");
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [routerDetail, setRouterDetail] = useState("");
   const [responseId, setResponseId] = useState("");
+
+  console.log({ query });
+
   useEffect(() => {
-    const detail = router?.query;
+    const detail = query;
     setRouterDetail(detail);
     setFormValues({
       ...formValues,
@@ -123,7 +137,7 @@ const QuotationCreateForm = () => {
         ? localStorage.getItem("QUOTATION_ID_RESPONSE_CORPSALES") || ""
         : ""
     );
-  }, [router?.query, responseId]);
+  }, [itemId]);
 
   const [formValues, setFormValues] = useState({
     id: "",
@@ -188,9 +202,11 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
     isActive: true,
   });
 
+  console.log({ routerDetail, responseId });
+
   const [qoutationDetails, setQoutationDetails] = useState("");
   const fetchQouatationForm = async () => {
-    if (responseId !== "" || routerDetail?.quotationId !== "") {
+    if (responseId || routerDetail?.quotationId) {
       setIsLoading(true);
       const url =
         BASE_URL +
@@ -268,7 +284,7 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
   };
 
   useEffect(() => {
-    if (responseId !== "" || routerDetail?.quotationId !== "") {
+    if (responseId || routerDetail?.quotationId) {
       fetchQouatationForm();
     }
   }, [responseId, routerDetail]);
@@ -401,24 +417,24 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
   }
   return (
     <Fragment>
-      <BackButton title="Quotation" onClick={() => router.back()} />
-      <Fab
-        size="small"
-        color="primary"
-        aria-label="add"
-        onClick={() => {
-          handleOpenPdf();
-        }}
-        sx={{
-          position: "fixed",
-          top: 100,
-          right: 10,
-          zIndex: 1000,
-        }}
-      >
-        <RemoveRedEyeIcon />
-      </Fab>
-      {/* <Fab
+      <MainPageLayoutWithBack title="Quotation Create">
+        <Fab
+          size="small"
+          color="primary"
+          aria-label="add"
+          onClick={() => {
+            handleOpenPdf();
+          }}
+          sx={{
+            position: "fixed",
+            top: 100,
+            right: 10,
+            zIndex: 1000,
+          }}
+        >
+          <RemoveRedEyeIcon />
+        </Fab>
+        {/* <Fab
         size="small"
         color="primary"
         aria-label="add"
@@ -434,84 +450,136 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
       >
         <RemoveRedEyeIcon />
       </Fab> */}
-      <Grid container spacing={2}>
-        <Grid item xs={12} lg={12}>
-          <BasicInfo
-            data={qoutationDetails}
-            corpSalesId={routerDetail?.corpId}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={12}>
+            <BasicInfo
+              data={qoutationDetails}
+              corpSalesId={routerDetail?.corpId}
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
+          </Grid>
+          <Grid item xs={12} lg={12}>
+            <Ahc
+              handleUpload={handleUpload}
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
+          </Grid>
+          <Grid item xs={12} lg={12}>
+            <Ohc
+              handleUpload={handleUpload}
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CustomButtonBlue
+              title={"Save"}
+              onClick={handleSave}
+              styles={{ width: "200px" }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CustomButtonBlue
+              title={"View PDF"}
+              onClick={handleOpenPdf}
+              styles={{ width: "200px" }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CustomButtonBlue
+              disabled={responseId ? false : true}
+              title={"Upload Quotation PDF"}
+              onClick={() => handleConvertToBlob()}
+              styles={{ width: "200px" }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {role === "CORPSALES_USER" && (
+              <CustomButtonWhite
+                disabled={
+                  responseId === "" ||
+                  formValues.quotationStatus === null ||
+                  formValues.quotationStatus !== "PENDING"
+                    ? true
+                    : false
+                }
+                textColor={
+                  responseId === "" ||
+                  formValues.quotationStatus === null ||
+                  formValues.quotationStatus !== "PENDING"
+                    ? "lightgrey"
+                    : "#127DDD"
+                }
+                title={"Send To Approval"}
+                onClick={() => {
+                  handleMarkApprovalStatus("PENDING_APPROVAL");
+                }}
+                styles={{ width: "200px" }}
+              />
+            )}
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={12}>
-          <Ahc
-            handleUpload={handleUpload}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <Ohc
-            handleUpload={handleUpload}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-      </Grid>
 
-      <CustomButtonBlue title={"Save"} onClick={handleSave} />
-
-      <CustomButtonBlue title={"View PDF"} onClick={handleOpenPdf} />
-
-      <CustomButtonBlue
-        disabled={responseId ? false : true}
-        title={"Upload Quotation PDF"}
-        onClick={() => handleConvertToBlob()}
-      />
-
-      {role === "CORPSALES_USER" && (
-        <CustomButtonWhite
-          disabled={
-            responseId === "" ||
-            formValues.quotationStatus === null ||
-            formValues.quotationStatus !== "PENDING"
-              ? true
-              : false
-          }
-          textColor={
-            responseId === "" ||
-            formValues.quotationStatus === null ||
-            formValues.quotationStatus !== "PENDING"
-              ? "lightgrey"
-              : "#127DDD"
-          }
-          title={"Send To Approval"}
-          onClick={() => {
-            handleMarkApprovalStatus("PENDING_APPROVAL");
-          }}
-        />
-      )}
-
-      <Portal>
-        <Dialog
-          fullWidth={true}
-          maxWidth={false}
-          open={openPdf}
-          onClose={handleClosePdf}
-        >
-          <DialogContent sx={{ height: "80vh" }}>
-            <PdfMain data={formValues} />
-          </DialogContent>
-        </Dialog>
-      </Portal>
-      <Box component={"iframe"} sx={{ width: 0, height: 0, display: "none" }}>
-        <Box
-          ref={componentRef}
-          sx={{ fontFamily: '"Roboto","Helvetica","Arial",sans-serif' }}
-        >
-          {/* <MobileQuotationTemplate data={formValues} /> */}
+        <Portal>
+          <Dialog
+            fullWidth={true}
+            maxWidth={false}
+            open={openPdf}
+            onClose={handleClosePdf}
+          >
+            <DialogContent sx={{ height: "80vh" }}>
+              <PdfMain data={formValues} />
+            </DialogContent>
+          </Dialog>
+        </Portal>
+        <Box component={"iframe"} sx={{ width: 0, height: 0, display: "none" }}>
+          <Box
+            ref={componentRef}
+            sx={{ fontFamily: '"Roboto","Helvetica","Arial",sans-serif' }}
+          >
+            {/* <MobileQuotationTemplate data={formValues} /> */}
+          </Box>
         </Box>
-      </Box>
+      </MainPageLayoutWithBack>
     </Fragment>
   );
 };

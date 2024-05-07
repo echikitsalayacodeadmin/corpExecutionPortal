@@ -67,6 +67,9 @@ const BasicInfo = ({ data = null, corpSalesId, formValues, setFormValues }) => {
                 value={
                   "Regd. Office: 253, Shri Krishna Avenue, Phase-1,  Limbodi Khandwa Road, Indore-452001"
                 }
+                InputProps={{
+                  style: { minHeight: "63px" },
+                }}
               />
             </Grid>
           </Grid>

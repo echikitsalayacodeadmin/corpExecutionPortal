@@ -453,94 +453,102 @@ const PackageModalAhc = ({
               disableRowSelectionOnClick={true}
               slots={null}
             />
-            <CustomButtonBlue
-              title={dialogData.isEdit === false ? "Add" : "Update"}
-              onClick={() => {
-                if (dialogData.isEdit === false) {
-                  setFormValues((prevState) => {
-                    return {
-                      ...prevState,
-                      quotationTableDataVMS:
-                        prevState.quotationTableDataVMS.map((tableData) => {
-                          return {
-                            ...tableData,
-                            quotationDataVMS: [
-                              ...tableData.quotationDataVMS,
-                              dialogData,
-                            ],
-                          };
-                        }),
-                    };
-                  });
-                  setDialogData({
-                    id: "",
-                    packageName: "",
-                    noOfEmp: 0,
-                    finalPrice: 0,
-                    pricePerEmp: 0,
-                    totalMarginPercent: 0,
-                    quotationDataType: "AHC",
-                    testList: [],
-                  });
-                  handleClose();
-                  setFormValues((formValues) => ({
-                    ...formValues,
-                    quotationTableDataVMS: [
-                      {
-                        ...formValues.quotationTableDataVMS[0],
-                        quotationDataVMS:
-                          formValues.quotationTableDataVMS[0].quotationDataVMS?.map(
-                            (item) => calculateTestListRowFields(item)
-                          ),
-                      },
-                    ],
-                  }));
-                } else {
-                  setFormValues((prevState) => {
-                    return {
-                      ...prevState,
-                      quotationTableDataVMS:
-                        prevState.quotationTableDataVMS.map((tableData) => {
-                          return {
-                            ...tableData,
-                            quotationDataVMS: tableData.quotationDataVMS.map(
-                              (data) => {
-                                if (data.id === dialogData.id) {
-                                  return dialogData;
-                                }
-                                return data;
-                              }
-                            ),
-                          };
-                        }),
-                    };
-                  });
-                  setDialogData({
-                    id: "",
-                    packageName: "",
-                    noOfEmp: 0,
-                    finalPrice: 0,
-                    pricePerEmp: 0,
-                    totalMarginPercent: 0,
-                    quotationDataType: "AHC",
-                    testList: [],
-                  });
-                  handleClose();
-                  setFormValues((formValues) => ({
-                    ...formValues,
-                    quotationTableDataVMS: [
-                      {
-                        ...formValues.quotationTableDataVMS[0],
-                        quotationDataVMS:
-                          formValues.quotationTableDataVMS[0].quotationDataVMS?.map(
-                            (item) => calculateTestListRowFields(item)
-                          ),
-                      },
-                    ],
-                  }));
-                }
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
+            >
+              <CustomButtonBlue
+                title={dialogData.isEdit === false ? "Add" : "Update"}
+                onClick={() => {
+                  if (dialogData.isEdit === false) {
+                    setFormValues((prevState) => {
+                      return {
+                        ...prevState,
+                        quotationTableDataVMS:
+                          prevState.quotationTableDataVMS.map((tableData) => {
+                            return {
+                              ...tableData,
+                              quotationDataVMS: [
+                                ...tableData.quotationDataVMS,
+                                dialogData,
+                              ],
+                            };
+                          }),
+                      };
+                    });
+                    setDialogData({
+                      id: "",
+                      packageName: "",
+                      noOfEmp: 0,
+                      finalPrice: 0,
+                      pricePerEmp: 0,
+                      totalMarginPercent: 0,
+                      quotationDataType: "AHC",
+                      testList: [],
+                    });
+                    handleClose();
+                    setFormValues((formValues) => ({
+                      ...formValues,
+                      quotationTableDataVMS: [
+                        {
+                          ...formValues.quotationTableDataVMS[0],
+                          quotationDataVMS:
+                            formValues.quotationTableDataVMS[0].quotationDataVMS?.map(
+                              (item) => calculateTestListRowFields(item)
+                            ),
+                        },
+                      ],
+                    }));
+                  } else {
+                    setFormValues((prevState) => {
+                      return {
+                        ...prevState,
+                        quotationTableDataVMS:
+                          prevState.quotationTableDataVMS.map((tableData) => {
+                            return {
+                              ...tableData,
+                              quotationDataVMS: tableData.quotationDataVMS.map(
+                                (data) => {
+                                  if (data.id === dialogData.id) {
+                                    return dialogData;
+                                  }
+                                  return data;
+                                }
+                              ),
+                            };
+                          }),
+                      };
+                    });
+                    setDialogData({
+                      id: "",
+                      packageName: "",
+                      noOfEmp: 0,
+                      finalPrice: 0,
+                      pricePerEmp: 0,
+                      totalMarginPercent: 0,
+                      quotationDataType: "AHC",
+                      testList: [],
+                    });
+                    handleClose();
+                    setFormValues((formValues) => ({
+                      ...formValues,
+                      quotationTableDataVMS: [
+                        {
+                          ...formValues.quotationTableDataVMS[0],
+                          quotationDataVMS:
+                            formValues.quotationTableDataVMS[0].quotationDataVMS?.map(
+                              (item) => calculateTestListRowFields(item)
+                            ),
+                        },
+                      ],
+                    }));
+                  }
+                }}
+              />
+            </Box>
           </DialogContent>
         </Dialog>
       </Portal>
@@ -724,17 +732,29 @@ const PackageModalAhc = ({
                   disabled
                 />
               </Grid>
+
+              <Grid
+                item
+                xs={12}
+                lg={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CustomButtonBlue
+                  title={formData.isEdit === false ? "Add Row" : "Update Row"}
+                  onClick={() => {
+                    if (formData.isEdit === false) {
+                      handleAddTests();
+                    } else {
+                      handleSaveClick(formData.editingId);
+                    }
+                  }}
+                />
+              </Grid>
             </Grid>
-            <CustomButtonBlue
-              title={formData.isEdit === false ? "Add Row" : "Update Row"}
-              onClick={() => {
-                if (formData.isEdit === false) {
-                  handleAddTests();
-                } else {
-                  handleSaveClick(formData.editingId);
-                }
-              }}
-            />
           </Box>
         </Modal>
       </Portal>

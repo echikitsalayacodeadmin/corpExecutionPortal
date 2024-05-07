@@ -2,6 +2,7 @@ import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 import { isBrowser, isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 const WaitingCardQoutationDashboard = ({ data }) => {
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ const WaitingCardQoutationDashboard = ({ data }) => {
           </Typography>
         </Grid>{" "}
         <Grid item xs={6} lg={6}>
-          <Button
+          <IconButton
             onClick={() => {
               const query = {
                 corpId: data.corpId,
@@ -98,16 +99,19 @@ const WaitingCardQoutationDashboard = ({ data }) => {
                 quotationStatus: data.quotationStatus,
                 fromAdmin: true,
               };
-              navigate(`/corp/quotation/quotationUpdate/${query}`);
+              navigate(
+                `/corp/quotation/quotationupdate/${encodeURIComponent(
+                  JSON.stringify(query)
+                )}`
+              );
             }}
+            startIcon={<RemoveRedEyeIcon />}
             size="small"
             variant="contained"
             sx={{ borderRadius: "10px", textTransform: "capitalize" }}
           >
-            <Typography sx={{ color: "#FFFFFF", textAlign: "center" }}>
-              View Quotation
-            </Typography>
-          </Button>
+            Quotation
+          </IconButton>
         </Grid>
       </Grid>
     </Fragment>

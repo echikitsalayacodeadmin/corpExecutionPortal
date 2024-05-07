@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import QuotationDashboardNew from "./quotationDashboard/quotationDashboardNew";
 import QuotationDashoard from "./quotationOld/QuotationDashoard";
 import QuotationSelect from "./subComp/quotationSelect";
+import MainPageLayoutWithBackQ from "../../global/templates/mainPageLayoutWithBackQ";
 
 const QuotationMain = () => {
   const _storedData = (() => {
@@ -63,83 +64,87 @@ const QuotationMain = () => {
 
   return (
     <Fragment>
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{ backgroundColor: "#F5F5F5", minHeight: "80vh", borderRadius: 5 }}
+      <MainPageLayoutWithBackQ
+        title="Quotations"
+        onAddQuotationClick={() => {
+          handleOpen();
+        }}
       >
-        <Box sx={{ p: 2 }}>
-          <Box sx={{ width: "100%" }}>
-            <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <TabList
-                  onChange={handleChange}
-                  aria-label="lab API tabs example"
-                >
-                  <Tab label="Dashboard" value="1" />
-                  <Tab label="Quotation Old" value="2" />
-                </TabList>
-              </Box>
-              <TabPanel value="1" sx={{ p: 0 }}>
-                <QuotationDashboardNew />
-              </TabPanel>
-              <TabPanel value="2" sx={{ p: 0 }}>
-                <QuotationDashoard />
-              </TabPanel>
-            </TabContext>
-          </Box>
-          <Portal>
-            <Modal
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              open={open}
-              onClose={handleClose}
+        <Box
+          sx={{
+            width: "100%",
+          }}
+        >
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+              >
+                <Tab label="Dashboard" value="1" />
+                <Tab label="Quotation Old" value="2" />
+              </TabList>
+            </Box>
+            <TabPanel value="1" sx={{ p: 0 }}>
+              <QuotationDashboardNew />
+            </TabPanel>
+            <TabPanel value="2" sx={{ p: 0 }}>
+              <QuotationDashoard />
+            </TabPanel>
+          </TabContext>
+        </Box>
+
+        <Portal>
+          <Modal
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            open={open}
+            onClose={handleClose}
+            sx={{
+              "& .MuiBackdrop-root": {
+                backgroundColor: "rgba(187, 187, 187, 0.1)",
+              },
+            }}
+          >
+            <Box
               sx={{
-                "& .MuiBackdrop-root": {
-                  backgroundColor: "rgba(187, 187, 187, 0.1)",
-                },
+                backgroundColor: "#fff",
+                boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
+                borderRadius: "5px",
+                padding: "15px",
+                width: "365px",
+                height: "550px",
               }}
             >
-              <Box
+              {/* <Box sx={{ minHeight: "130px" }}> */}
+              <Box display="flex" justifyContent="flex-end">
+                <IconButton onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+
+              <Typography
+                gutterBottom
                 sx={{
-                  backgroundColor: "#fff",
-                  boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "5px",
-                  padding: "15px",
-                  width: "365px",
-                  height: "550px",
+                  textAlign: "center",
+                  fontWeight: "600",
+                  fontSize: "16px",
+                  lineHeight: "15px",
+                  color: "#000000",
+                  marginTop: "-25px",
+                  marginBottom: "10px",
                 }}
               >
-                {/* <Box sx={{ minHeight: "130px" }}> */}
-                <Box display="flex" justifyContent="flex-end">
-                  <IconButton onClick={handleClose}>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-
-                <Typography
-                  gutterBottom
-                  sx={{
-                    textAlign: "center",
-                    fontWeight: "600",
-                    fontSize: "16px",
-                    lineHeight: "15px",
-                    color: "#000000",
-                    marginTop: "-25px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  Create/Select Corp
-                </Typography>
-                <QuotationSelect />
-              </Box>
-            </Modal>
-          </Portal>
-        </Box>
-      </Container>
+                Create/Select Corp
+              </Typography>
+              <QuotationSelect />
+            </Box>
+          </Modal>
+        </Portal>
+      </MainPageLayoutWithBackQ>
     </Fragment>
   );
 };

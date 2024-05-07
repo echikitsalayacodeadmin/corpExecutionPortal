@@ -23,9 +23,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { Fragment, useEffect, useState } from "react";
 import OhcSelectCategory from "./ohcSelectCategory";
 import PackageModalOhc from "./packageModalOhc";
-import CustomButtonBlue from "@/global/customButton/CustomButtonBlue";
 import { useFileUpload } from "use-file-upload";
-import Image from "next/image";
+import CustomButtonBlue from "../../../../../assets/customButtonBlue";
+import { fetchItemListOhc2 } from "../../../../services/quotationServices";
 
 const bullet = "\u2022";
 const bulletWithSpace = `${bullet} `;
@@ -437,7 +437,7 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
                         />
                       </IconButton>
                     </TableCell>
-                    <TableCell colSpan={5} sx={{ paddingLeft: "180px" }}>
+                    <TableCell colSpan={5} sx={{ textAlign: "center" }}>
                       {row.categoryTitle}
                     </TableCell>
                   </TableRow>
@@ -492,7 +492,8 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
           <Fragment>
             {formValues.ohcVM.ohcTableUrl && (
               <Box style={{ height: "700px", width: "100px" }}>
-                <Image
+                <Box
+                  component={"img"}
                   src={formValues.ohcVM.ohcTableUrl}
                   alt="tableImage"
                   width={900}

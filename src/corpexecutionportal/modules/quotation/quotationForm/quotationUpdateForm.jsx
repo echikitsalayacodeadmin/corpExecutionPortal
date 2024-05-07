@@ -14,17 +14,24 @@ import {
   Typography,
 } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { pdf, renderToBlob } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import BasicInfo from "./subComp/basicInfo";
 import CloseIcon from "@mui/icons-material/Close";
 import Ahc from "./subComp/ahc";
 import Ohc from "./subComp/ohc";
 import MyDocument from "./pdfComp/myDocument";
 import PdfMain from "./pdfComp/pdfMain";
-import { getData, updateData } from "../../../assets/corpServices";
+import {
+  getData,
+  updateData,
+  updateDataFile,
+} from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import CustomButtonWhite from "../../../../assets/customButtonWhite";
+
+import { useParams } from "react-router-dom";
+import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
 
 const calculateTestListRowFields = (dialogData) => {
@@ -92,7 +99,8 @@ const calculateTestListRowFields = (dialogData) => {
 
 const QuotationUpdateForm = () => {
   const { enqueueSnackbar } = useSnackbar();
-
+  const { itemId } = useParams();
+  const query = JSON.parse(decodeURIComponent(itemId));
   const [role, setRole] = useState("");
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
@@ -100,7 +108,7 @@ const QuotationUpdateForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const detail = router?.query;
+    const detail = query;
     setRouterDetail(detail);
     setFormValues({
       ...formValues,
@@ -123,7 +131,7 @@ const QuotationUpdateForm = () => {
         ? localStorage.getItem("USER_NAME_CORP_SALES")
         : null
     );
-  }, [router?.query]);
+  }, [itemId]);
 
   const [formValues, setFormValues] = useState({
     id: "",
@@ -405,172 +413,251 @@ const QuotationUpdateForm = () => {
 
   return (
     <Fragment>
-      <Fab
-        size="small"
-        color="primary"
-        aria-label="add"
-        onClick={() => {
-          handleOpenPdf();
-        }}
-        sx={{
-          position: "fixed",
-          top: 100,
-          right: 10,
-          zIndex: 1000,
-        }}
-      >
-        <RemoveRedEyeIcon />
-      </Fab>
-      <Grid container spacing={2}>
-        <Grid item xs={12} lg={12}>
-          <BasicInfo
-            data={qoutationDetails}
-            corpSalesId={routerDetail?.corpId}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <Ahc
-            handleUpload={handleUpload}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <Ohc
-            handleUpload={handleUpload}
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-      </Grid>
-
-      <CustomButtonBlue title={"Save"} onClick={handleUpdateQouatation} />
-      <CustomButtonBlue title={"View PDF"} onClick={handleOpenPdf} />
-      <CustomButtonBlue
-        title={"Upload Quotation PDF"}
-        onClick={() => handleConvertToBlob()}
-      />
-      {role === "CORPSALES_ADMIN" && (
-        <CustomButtonWhite
-          title={"Mark Quotation Status"}
+      <MainPageLayoutWithBack title="Quotation Update">
+        <Fab
+          size="small"
+          color="primary"
+          aria-label="add"
           onClick={() => {
-            handleOpenStatus();
+            handleOpenPdf();
           }}
-        />
-      )}
-      {role === "CORPSALES_USER" &&
-        formValues.quotationStatus === "PENDING" && (
-          <CustomButtonWhite
-            disabled={
-              formValues.quotationStatus === null ||
-              formValues.quotationStatus !== "PENDING"
-                ? true
-                : false
-            }
-            textColor={
-              formValues.quotationStatus === null ||
-              formValues.quotationStatus !== "PENDING"
-                ? "lightgrey"
-                : "#127DDD"
-            }
-            title={"Send To Approval"}
-            onClick={() => {
-              handleMarkSendToApproval("PENDING_APPROVAL");
-            }}
-          />
-        )}
-      <Portal>
-        <Modal
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          open={openStatus}
-          onClose={handleCloseStatus}
           sx={{
-            "& .MuiBackdrop-root": {
-              backgroundColor: "rgba(187, 187, 187, 0.1)",
-            },
+            position: "fixed",
+            top: 100,
+            right: 10,
+            zIndex: 1000,
           }}
         >
-          <Box
+          <RemoveRedEyeIcon />
+        </Fab>
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg={12}>
+            <BasicInfo
+              data={qoutationDetails}
+              corpSalesId={routerDetail?.corpId}
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
+          </Grid>
+          <Grid item xs={12} lg={12}>
+            <Ahc
+              handleUpload={handleUpload}
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
+          </Grid>
+          <Grid item xs={12} lg={12}>
+            <Ohc
+              handleUpload={handleUpload}
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
             sx={{
-              backgroundColor: "#fff",
-              boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-              padding: "15px",
-              width: "365px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Box display="flex" justifyContent="flex-end">
-              <IconButton onClick={handleCloseStatus}>
-                <CloseIcon />
-              </IconButton>
-            </Box>
-
-            <Typography
-              gutterBottom
-              sx={{
-                textAlign: "center",
-                fontWeight: "600",
-                fontSize: "13px",
-                lineHeight: "15px",
-                color: "#000000",
-                marginTop: "-25px",
-                marginBottom: "10px",
-              }}
-            >
-              Mark Quotation Status
-            </Typography>
-            <Grid
-              container
-              sx={{ justifyContent: "space-between", marginTop: "20px" }}
-              spacing={2}
-            >
-              <Grid item xs={12} lg={12}>
-                <CustomAutocomplete
-                  options={[
-                    { label: "Approved", value: "APPROVED" },
-                    { label: "Rejected", value: "REJECTED" },
-                    // { label: "Pending", value: "PENDING" },
-                  ]}
-                  placeholder={"Select Status"}
-                  label={"Select Status"}
-                  value={selectedStaus || null}
-                  onChange={(event, newValue, reason) => {
-                    setSelectedStatus(newValue);
-                    if (reason === "clear") {
-                      setSelectedStatus(null);
-                    }
-                  }}
-                />
-              </Grid>
-            </Grid>
-
+            <CustomButtonBlue
+              title={"Save"}
+              onClick={handleUpdateQouatation}
+              styles={{ width: "200px" }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CustomButtonBlue
+              title={"View PDF"}
+              onClick={handleOpenPdf}
+              styles={{ width: "200px" }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <CustomButtonBlue
+              title={"Upload Quotation PDF"}
+              onClick={() => handleConvertToBlob()}
+              styles={{ width: "200px" }}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             {role === "CORPSALES_ADMIN" && (
-              <CustomButtonBlue
-                title={"Save"}
-                onClick={() => handleMarkApprovalStatus()}
+              <CustomButtonWhite
+                title={"Mark Quotation Status"}
+                onClick={() => {
+                  handleOpenStatus();
+                }}
+                styles={{ width: "200px" }}
               />
             )}
-          </Box>
-        </Modal>
-      </Portal>
-      <Portal>
-        <Dialog
-          fullWidth={true}
-          maxWidth={false}
-          open={openPdf}
-          onClose={handleClosePdf}
-        >
-          <DialogContent sx={{ height: "80vh" }}>
-            <PdfMain data={formValues} />
-          </DialogContent>
-        </Dialog>
-      </Portal>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {role === "CORPSALES_USER" &&
+              formValues.quotationStatus === "PENDING" && (
+                <CustomButtonWhite
+                  disabled={
+                    formValues.quotationStatus === null ||
+                    formValues.quotationStatus !== "PENDING"
+                      ? true
+                      : false
+                  }
+                  textColor={
+                    formValues.quotationStatus === null ||
+                    formValues.quotationStatus !== "PENDING"
+                      ? "lightgrey"
+                      : "#127DDD"
+                  }
+                  title={"Send To Approval"}
+                  onClick={() => {
+                    handleMarkSendToApproval("PENDING_APPROVAL");
+                  }}
+                  styles={{ width: "200px" }}
+                />
+              )}
+          </Grid>
+        </Grid>
+
+        <Portal>
+          <Modal
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            open={openStatus}
+            onClose={handleCloseStatus}
+            sx={{
+              "& .MuiBackdrop-root": {
+                backgroundColor: "rgba(187, 187, 187, 0.1)",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
+                borderRadius: "5px",
+                padding: "15px",
+                width: "365px",
+              }}
+            >
+              <Box display="flex" justifyContent="flex-end">
+                <IconButton onClick={handleCloseStatus}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+
+              <Typography
+                gutterBottom
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "600",
+                  fontSize: "13px",
+                  lineHeight: "15px",
+                  color: "#000000",
+                  marginTop: "-25px",
+                  marginBottom: "10px",
+                }}
+              >
+                Mark Quotation Status
+              </Typography>
+              <Grid
+                container
+                sx={{ justifyContent: "space-between", marginTop: "20px" }}
+                spacing={2}
+              >
+                <Grid item xs={12} lg={12}>
+                  <CustomAutocomplete
+                    options={[
+                      { label: "Approved", value: "APPROVED" },
+                      { label: "Rejected", value: "REJECTED" },
+                      // { label: "Pending", value: "PENDING" },
+                    ]}
+                    placeholder={"Select Status"}
+                    label={"Select Status"}
+                    value={selectedStaus || null}
+                    onChange={(event, newValue, reason) => {
+                      setSelectedStatus(newValue);
+                      if (reason === "clear") {
+                        setSelectedStatus(null);
+                      }
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  lg={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {role === "CORPSALES_ADMIN" && (
+                    <CustomButtonBlue
+                      title={"Save"}
+                      onClick={() => handleMarkApprovalStatus()}
+                    />
+                  )}
+                </Grid>
+              </Grid>
+            </Box>
+          </Modal>
+        </Portal>
+        <Portal>
+          <Dialog
+            fullWidth={true}
+            maxWidth={false}
+            open={openPdf}
+            onClose={handleClosePdf}
+          >
+            <DialogContent sx={{ height: "80vh" }}>
+              <PdfMain data={formValues} />
+            </DialogContent>
+          </Dialog>
+        </Portal>
+      </MainPageLayoutWithBack>
     </Fragment>
   );
 };

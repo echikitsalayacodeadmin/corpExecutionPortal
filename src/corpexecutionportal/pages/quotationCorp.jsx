@@ -5,9 +5,7 @@ import MainPageLayoutWithBack from "../global/templates/mainPageLayoutWithBack";
 const QuotationCorp = () => {
   return (
     <Fragment>
-      <MainPageLayoutWithBack title="Quotation Dashboard">
-        <QuotationMain />
-      </MainPageLayoutWithBack>
+      <QuotationMain />
     </Fragment>
   );
 };

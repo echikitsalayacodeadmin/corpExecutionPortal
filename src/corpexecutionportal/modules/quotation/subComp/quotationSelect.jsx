@@ -6,6 +6,7 @@ import { BASE_URL } from "../../../../assets/constants";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import { sortArrayByLastModifiedDate } from "../../../../assets/utils";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
+import { useNavigate, useParams } from "react-router-dom";
 
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
@@ -17,7 +18,7 @@ const formatDateTime = (dateString) => {
 
 const QuotationSelect = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const router = useRouter();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [corpList, setCorpList] = useState([]);
   const [selectedCorp, setSelectedCorp] = useState(null);
@@ -50,17 +51,19 @@ const QuotationSelect = () => {
       if (response?.data) {
         setQouatationList(response?.data);
         if (response?.data.length === 0) {
-          router.push({
-            pathname: "/corpSales/quotationss/quotationCreate",
-            query: {
-              corpId: selectedCorp?.corpSalesId,
-              quotationId: null,
-              companyName: selectedCorp?.corpName,
-              address: selectedCorp?.corpAddress,
-              quotationStatus: null,
-              fromAdmin: false,
-            },
-          });
+          const query = {
+            corpId: selectedCorp?.corpSalesId,
+            quotationId: null,
+            companyName: selectedCorp?.corpName,
+            address: selectedCorp?.corpAddress,
+            quotationStatus: null,
+            fromAdmin: false,
+          };
+          navigate(
+            `/corp/quotation/quotationcreate/${encodeURIComponent(
+              JSON.stringify(query)
+            )}`
+          );
         }
         enqueueSnackbar(`${selectedCorp?.corpName} is Selected!`, {
           variant: "success",
@@ -83,14 +86,16 @@ const QuotationSelect = () => {
     if (result && result.data) {
       console.log("SUCCESS POST", result.data);
       setNewCropName("");
-      router.push({
-        pathname: "/corpSales/quotationss/quotationCreate",
-        query: {
-          corpSalesId: result.data.corpSalesId,
-          companyName: result.data.corpName,
-          address: result.data.address,
-        },
-      });
+      const query = {
+        corpSalesId: result.data.corpSalesId,
+        companyName: result.data.corpName,
+        address: result.data.address,
+      };
+      navigate(
+        `/corp/quotation/quotationcreate/${encodeURIComponent(
+          JSON.stringify(query)
+        )}`
+      );
       enqueueSnackbar("Corp Created Successfully!", {
         variant: "success",
       });
@@ -250,68 +255,116 @@ const QuotationSelect = () => {
             )}
           />
         </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CustomButtonBlue
+            disabled={selectedQouation === null ? true : false}
+            title={"Copy Selected Quotation"}
+            onClick={() => {
+              const query = {
+                corpId: selectedQouation?.corpId,
+                quotationId: selectedQouation?.id,
+                companyName: selectedQouation?.corpName,
+                address: selectedQouation?.corpAddress,
+                quotationStatus: selectedQouation?.quotationStatus,
+                fromAdmin: false,
+                copyQuotation: true,
+              };
+              navigate(
+                `/corp/quotation/quotationcreate/${encodeURIComponent(
+                  JSON.stringify(query)
+                )}`
+              );
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CustomButtonBlue
+            disabled={selectedQouation === null ? true : false}
+            title={"View Selected Quotation"}
+            onClick={() => {
+              const query = {
+                corpId: selectedQouation?.corpId,
+                quotationId: selectedQouation?.id,
+                companyName: selectedQouation?.corpName,
+                address: selectedQouation?.corpAddress,
+                quotationStatus: selectedQouation?.quotationStatus,
+                fromAdmin: false,
+              };
+              navigate(
+                `/corp/quotation/quotationupdate/${encodeURIComponent(
+                  JSON.stringify(query)
+                )}`
+              );
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CustomButtonBlue
+            title={"Create New Quotation"}
+            disabled={selectedCorp === null || !isExistingCorp ? true : false}
+            onClick={() => {
+              const query = {
+                corpId: selectedCorp?.corpSalesId,
+                quotationId: null,
+                companyName: selectedCorp?.corpName,
+                address: selectedCorp?.corpAddress,
+                quotationStatus: null,
+                fromAdmin: false,
+              };
+              navigate(
+                `/corp/quotation/quotationcreate/${encodeURIComponent(
+                  JSON.stringify(query)
+                )}`
+              );
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          lg={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CustomButtonBlue
+            title={"Create New Corp"}
+            disabled={isExistingCorp || newCorpName === "" ? true : false}
+            onClick={() => {
+              handleCreateCorp();
+            }}
+          />
+        </Grid>
       </Grid>
-
-      <CustomButtonBlue
-        disabled={selectedQouation === null ? true : false}
-        title={"Copy Selected Quotation"}
-        onClick={() => {
-          router.push({
-            pathname: "/corpSales/quotationss/quotationCreate",
-            query: {
-              corpId: selectedQouation?.corpId,
-              quotationId: selectedQouation?.id,
-              companyName: selectedQouation?.corpName,
-              address: selectedQouation?.corpAddress,
-              quotationStatus: selectedQouation?.quotationStatus,
-              fromAdmin: false,
-              copyQuotation: true,
-            },
-          });
-        }}
-      />
-      <CustomButtonBlue
-        disabled={selectedQouation === null ? true : false}
-        title={"View Selected Quotation"}
-        onClick={() => {
-          router.push({
-            pathname: "/corpSales/quotationss/quotationUpdate",
-            query: {
-              corpId: selectedQouation?.corpId,
-              quotationId: selectedQouation?.id,
-              companyName: selectedQouation?.corpName,
-              address: selectedQouation?.corpAddress,
-              quotationStatus: selectedQouation?.quotationStatus,
-              fromAdmin: false,
-            },
-          });
-        }}
-      />
-
-      <CustomButtonBlue
-        title={"Create New Quotation"}
-        disabled={selectedCorp === null || !isExistingCorp ? true : false}
-        onClick={() => {
-          router.push({
-            pathname: "/corpSales/quotationss/quotationCreate",
-            query: {
-              corpId: selectedCorp?.corpSalesId,
-              quotationId: null,
-              companyName: selectedCorp?.corpName,
-              address: selectedCorp?.corpAddress,
-              quotationStatus: null,
-              fromAdmin: false,
-            },
-          });
-        }}
-      />
-      <CustomButtonBlue
-        title={"Create New Corp"}
-        disabled={isExistingCorp || newCorpName === "" ? true : false}
-        onClick={() => {
-          handleCreateCorp();
-        }}
-      />
     </Fragment>
   );
 };

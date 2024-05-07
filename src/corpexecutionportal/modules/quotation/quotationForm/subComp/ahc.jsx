@@ -25,10 +25,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { fetchItemListNew2 } from "@/services/corpSales/qoutationServices";
 import PackageModalAhc from "./packageModalAhc";
 import { useFileUpload } from "use-file-upload";
 import { useSnackbar } from "notistack";
+import { fetchItemListNew2 } from "../../../../services/quotationServices";
 
 const calculateTestListRowFields = (dialogData) => {
   const pricePerEmp = dialogData?.testList?.reduce(

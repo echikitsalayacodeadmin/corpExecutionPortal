@@ -330,52 +330,60 @@ const PackageModalOhc = ({
               disableRowSelectionOnClick={true}
               slots={null}
             />
-            <CustomButtonBlue
-              title={dialogData.isEdit === false ? "Add" : "Update"}
-              onClick={() => {
-                if (dialogData.isEdit === false) {
-                  console.log({ dialogDataBeforeAdding: dialogData });
-                  setFormValues({
-                    ...formValues,
-                    ohcVM: {
-                      ...formValues.ohcVM,
-                      categoryTitle: dialogData?.categoryTitle,
-                      ohcCategoryVMS: [
-                        ...formValues.ohcVM.ohcCategoryVMS,
-                        dialogData,
-                      ],
-                    },
-                  });
-                  setDialogData({
-                    id: "",
-                    categoryTitle: "",
-                    sequence: "",
-                    ohcPackageVMS: [],
-                  });
-                  handleClose();
-                } else {
-                  setFormValues({
-                    ...formValues,
-                    ohcVM: {
-                      ...formValues.ohcVM,
-                      categoryTitle: dialogData?.categoryTitle,
-                      ohcCategoryVMS: formValues.ohcVM.ohcCategoryVMS.map(
-                        (item, index) =>
-                          index === packageIndex ? dialogData : item
-                      ),
-                    },
-                  });
-                  setDialogData({
-                    id: "",
-                    categoryTitle: "",
-                    sequence: "",
-                    ohcPackageVMS: [],
-                  });
-
-                  handleClose();
-                }
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
-            />
+            >
+              <CustomButtonBlue
+                title={dialogData.isEdit === false ? "Add" : "Update"}
+                onClick={() => {
+                  if (dialogData.isEdit === false) {
+                    console.log({ dialogDataBeforeAdding: dialogData });
+                    setFormValues({
+                      ...formValues,
+                      ohcVM: {
+                        ...formValues.ohcVM,
+                        categoryTitle: dialogData?.categoryTitle,
+                        ohcCategoryVMS: [
+                          ...formValues.ohcVM.ohcCategoryVMS,
+                          dialogData,
+                        ],
+                      },
+                    });
+                    setDialogData({
+                      id: "",
+                      categoryTitle: "",
+                      sequence: "",
+                      ohcPackageVMS: [],
+                    });
+                    handleClose();
+                  } else {
+                    setFormValues({
+                      ...formValues,
+                      ohcVM: {
+                        ...formValues.ohcVM,
+                        categoryTitle: dialogData?.categoryTitle,
+                        ohcCategoryVMS: formValues.ohcVM.ohcCategoryVMS.map(
+                          (item, index) =>
+                            index === packageIndex ? dialogData : item
+                        ),
+                      },
+                    });
+                    setDialogData({
+                      id: "",
+                      categoryTitle: "",
+                      sequence: "",
+                      ohcPackageVMS: [],
+                    });
+
+                    handleClose();
+                  }
+                }}
+              />
+            </Box>
           </DialogContent>
         </Dialog>
       </Portal>
@@ -537,17 +545,28 @@ const PackageModalOhc = ({
                   }}
                 />
               </Grid>
+              <Grid
+                item
+                xs={12}
+                lg={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <CustomButtonBlue
+                  title={formData.isEdit === false ? "Add Row" : "Update Row"}
+                  onClick={() => {
+                    if (formData.isEdit === false) {
+                      handleAddTests();
+                    } else {
+                      handleSaveClick(formData.editingId);
+                    }
+                  }}
+                />
+              </Grid>
             </Grid>
-            <CustomButtonBlue
-              title={formData.isEdit === false ? "Add Row" : "Update Row"}
-              onClick={() => {
-                if (formData.isEdit === false) {
-                  handleAddTests();
-                } else {
-                  handleSaveClick(formData.editingId);
-                }
-              }}
-            />
           </Box>
         </Modal>
       </Portal>
