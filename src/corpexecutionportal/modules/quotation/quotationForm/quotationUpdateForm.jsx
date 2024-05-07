@@ -158,7 +158,6 @@ const QuotationUpdateForm = () => {
         sequence: "",
         tableUrl: "",
         tableTitle: "",
-        disclaimer: "",
         quotationDataType: "AHC",
         noOfEmp: "",
         systemPrice: "",

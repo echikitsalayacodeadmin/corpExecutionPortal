@@ -180,7 +180,6 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
         sequence: "",
         tableUrl: "",
         tableTitle: "",
-        disclaimer: "",
         quotationDataType: "AHC",
         noOfEmp: "",
         systemPrice: "",
