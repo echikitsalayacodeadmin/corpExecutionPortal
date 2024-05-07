@@ -139,7 +139,9 @@ const CorpSalesNewVisit = () => {
     "childUserId",
     formValues?.childUserId?.map((item) => item.id).join(",")
   );
-  formData.append("file", formValues.visitPhotoUrl.file);
+  formValues.visitPhotoUrl.file
+    ? formData.append("file", formValues.visitPhotoUrl.file)
+    : null;
 
   const handleSubmit = async () => {
     setIsDisabled(true);
