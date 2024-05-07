@@ -23,7 +23,8 @@ const QuotationListMain = () => {
         sortArrayByLastModifiedDate(response?.data).filter((item) =>
           serviceName === "AHC"
             ? item?.quotationTableDataVMS?.[0]?.quotationDataVMS?.length > 0
-            : serviceName === "OHC Equipments" || serviceName === "OHC Staff"
+            : serviceName === "OHC Equipments" ||
+              serviceName === "OHC Staff Info"
             ? item?.ohcVM?.ohcCategoryVMS?.length
             : null
         ) || [];
