@@ -5,6 +5,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TourIcon from "@mui/icons-material/Tour";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const getServicesStatusSymbol = (status) => {
@@ -87,9 +88,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
               lg={6}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <CalendarMonthIcon
-                sx={{ marginRight: "5px", color: "#127DDD" }}
-              />
+              <CalendarMonthIcon sx={{ color: "#127DDD" }} />
               <Typography sx={styles.subTitle}>Last Visit:</Typography>
               <Typography sx={styles.subTitle}>
                 {data?.corpSalesVisitEntities?.[1]?.nextVisitDate}
@@ -99,9 +98,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
 
           {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
             <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <CalendarMonthIcon
-                sx={{ marginRight: "5px", color: "#127DDD" }}
-              />
+              <CalendarMonthIcon sx={{ color: "#127DDD" }} />
               <Typography sx={styles.subTitle}>Next Visit:</Typography>
 
               <Typography sx={styles.subTitle}>
@@ -112,14 +109,14 @@ const DashboardCard = ({ data, serviceMapping }) => {
 
           {data?.totalVisits ? (
             <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <TourIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
+              <TourIcon sx={{ color: "#127DDD" }} />
               <Typography sx={styles.subTitle}>Visits:</Typography>
               <Typography sx={styles.subTitle}>{data?.totalVisits}</Typography>
             </Grid>
           ) : null}
           {data?.priority ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <PriorityHighIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
+              <PriorityHighIcon sx={{ color: "#127DDD" }} />
               <Typography sx={styles.subTitle}>Priority:</Typography>
               <Typography
                 sx={styles.subTitle}
@@ -152,7 +149,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             lg={12}
             sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
           >
-            <ManageAccountsIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
+            <ManageAccountsIcon sx={{ color: "#127DDD" }} />
             {userAndCount?.map(({ name, count }) => (
               <Typography key={name} sx={styles.subTitle}>
                 {name} ({count})
@@ -165,6 +162,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             lg={12}
             sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
           >
+            <MiscellaneousServicesIcon sx={{ color: "#127DDD" }} />
             {requiredServices &&
               Object.keys(requiredServices).map((key) => {
                 const info = requiredServices[key];
