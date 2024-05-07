@@ -22,7 +22,7 @@ const CustomButtonWhite = ({
         sx={{
           fontSize: "13px",
           fontWeight: "600",
-          color: textColor || "#FFF",
+          color: textColor || "#127DDD",
         }}
       >
         {title}

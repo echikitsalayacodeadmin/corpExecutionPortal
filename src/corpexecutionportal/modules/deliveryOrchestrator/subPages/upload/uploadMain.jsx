@@ -15,7 +15,11 @@ import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
 import Papa from "papaparse";
-import { getData, uploadFile } from "../../../../assets/corpServices";
+import {
+  getData,
+  updateData,
+  uploadFile,
+} from "../../../../assets/corpServices";
 import { BASE_URL } from "../../../../../assets/constants";
 import CustomAutocomplete from "../../../../../assets/customAutocomplete";
 import ViewFilesModal from "./subComp/viewFilesModal";
