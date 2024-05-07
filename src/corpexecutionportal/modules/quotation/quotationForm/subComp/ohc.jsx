@@ -26,6 +26,7 @@ import PackageModalOhc from "./packageModalOhc";
 import { useFileUpload } from "use-file-upload";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import { fetchItemListOhc2 } from "../../../../services/quotationServices";
+import { generateRandomId } from "../../../../../assets/utils";
 
 const bullet = "\u2022";
 const bulletWithSpace = `${bullet} `;
@@ -105,8 +106,8 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
   useEffect(() => {
     fetchItemListOhc2(setItemlist, setFormValues);
     const isTableVisible =
-      formValues?.ohcVM.ohcTableUrl === null ||
-      formValues?.ohcVM.ohcTableUrl === ""
+      formValues?.ohcVM?.ohcTableUrl === null ||
+      formValues?.ohcVM?.ohcTableUrl === ""
         ? true
         : false;
 
@@ -335,12 +336,12 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={formValues.ohcVM.isOHCTableNextPage}
+                  checked={formValues?.ohcVM?.isOHCTableNextPage}
                   onChange={(e) => {
                     setFormValues({
                       ...formValues,
                       ohcVM: {
-                        ...formValues.ohcVM,
+                        ...formValues?.ohcVM,
                         isOHCTableNextPage: e.target.checked,
                       },
                     });
@@ -356,7 +357,7 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
               fullWidth
               placeholder="Table Tile"
               size="small"
-              value={formValues.ohcVM.title}
+              value={formValues?.ohcVM?.title}
               onChange={(e) => {
                 setFormValues({
                   ...formValues,
@@ -474,7 +475,7 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
                     label="Disclaimer"
                     multiline
                     size="small"
-                    value={formValues?.ohcVM.disclaimer}
+                    value={formValues?.ohcVM?.disclaimer}
                     onChange={(e) => handleInput(e, formValues, setFormValues)}
                     variant="outlined"
                     fullWidth
@@ -490,11 +491,11 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
         )}
         {useUploadImage && (
           <Fragment>
-            {formValues.ohcVM.ohcTableUrl && (
+            {formValues?.ohcVM?.ohcTableUrl && (
               <Box style={{ height: "700px", width: "100px" }}>
                 <Box
                   component={"img"}
-                  src={formValues.ohcVM.ohcTableUrl}
+                  src={formValues?.ohcVM?.ohcTableUrl}
                   alt="tableImage"
                   width={900}
                   height={700}

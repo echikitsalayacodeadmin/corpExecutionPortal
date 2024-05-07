@@ -238,39 +238,41 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
           createdDate: formData.createdDate,
           lastModifiedDate: formData.lastModifiedDate,
           quotationTableDataVMS: formData.quotationTableDataVMS,
-          ohcVM: {
-            title: formData.ohcVM.title,
-            details: formData.ohcVM.details,
-            disclaimer: formData.ohcVM.disclaimer,
-            ohcTableUrl: formData.ohcVM.ohcTableUrl,
-            ohcCategoryVMS: formData.ohcVM.ohcCategoryVMS.map(
+          ohcVM: formData?.ohcVM && {
+            title: formData?.ohcVM?.title,
+            details: formData?.ohcVM?.details,
+            disclaimer: formData?.ohcVM?.disclaimer,
+            ohcTableUrl: formData?.ohcVM?.ohcTableUrl,
+            ohcCategoryVMS: formData?.ohcVM?.ohcCategoryVMS.map(
               (item, index) => ({
                 id: index,
-                categoryTitle: item.categoryTitle,
-                sequence: item.sequence,
-                ohcPackageVMS: item.ohcPackageVMS.map((subItem, subIndex) => ({
-                  id: subIndex,
-                  packageTitle: subItem.packageTitle,
-                  packageName: subItem.packageName,
-                  packageDescription: subItem.packageDescription,
-                  noOfStaff: subItem.noOfStaff,
-                  perMonthCost: subItem.perMonthCost,
-                  totalCostPerMonth: subItem.totalCostPerMonth,
-                  sequence: subItem.sequence,
-                })),
+                categoryTitle: item?.categoryTitle,
+                sequence: item?.sequence,
+                ohcPackageVMS: item?.ohcPackageVMS?.map(
+                  (subItem, subIndex) => ({
+                    id: subIndex,
+                    packageTitle: subItem?.packageTitle,
+                    packageName: subItem?.packageName,
+                    packageDescription: subItem?.packageDescription,
+                    noOfStaff: subItem?.noOfStaff,
+                    perMonthCost: subItem?.perMonthCost,
+                    totalCostPerMonth: subItem?.totalCostPerMonth,
+                    sequence: subItem?.sequence,
+                  })
+                ),
               })
             ),
           },
-          quotationUrl: formData.quotationUrl || "",
+          quotationUrl: formData?.quotationUrl || "",
         });
         setIsLoading(false);
         setFormValues((formValues) => ({
           ...formValues,
           quotationTableDataVMS: [
             {
-              ...formValues.quotationTableDataVMS[0],
+              ...formValues?.quotationTableDataVMS?.[0],
               quotationDataVMS:
-                formValues.quotationTableDataVMS[0].quotationDataVMS?.map(
+                formValues?.quotationTableDataVMS?.[0]?.quotationDataVMS?.map(
                   (item) => calculateTestListRowFields(item)
                 ),
             },
@@ -306,8 +308,14 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
       quotationDate: formValues.quotationDate,
       quotationExpirationDate: formValues.quotationExpirationDate,
       quotationStatus: "PENDING",
-      quotationTableDataVMS: formValues.quotationTableDataVMS,
-      ohcVM: formValues.ohcVM,
+      quotationTableDataVMS:
+        formValues?.quotationTableDataVMS?.[0]?.quotationDataVMS?.length > 0
+          ? formValues?.quotationTableDataVMS
+          : null,
+      ohcVM:
+        formValues?.ohcVM?.ohcCategoryVMS?.length > 0
+          ? formValues?.ohcVM
+          : null,
       corpId: routerDetail?.corpId,
       quotationUrl: formValues.quotationUrl,
       isActive: true,

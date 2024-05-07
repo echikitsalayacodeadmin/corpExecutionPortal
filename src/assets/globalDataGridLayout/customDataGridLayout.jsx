@@ -218,6 +218,11 @@ const CustomDataGridLayout = ({
   onColumnVisibilityModelChange,
   checkboxSelection = true,
   getRowClassName,
+  editMode,
+  processRowUpdate,
+  rowModesModel,
+  onRowModesModelChange,
+  onRowEditStop,
   styles,
 }) => {
   // const [paginationModel, setPaginationModel] = React.useState({
@@ -274,6 +279,11 @@ const CustomDataGridLayout = ({
               ? "error"
               : "";
           }}
+          editMode={editMode}
+          processRowUpdate={processRowUpdate}
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={onRowModesModelChange}
+          onRowEditStop={onRowEditStop}
         />
       </Box>
     </React.Fragment>

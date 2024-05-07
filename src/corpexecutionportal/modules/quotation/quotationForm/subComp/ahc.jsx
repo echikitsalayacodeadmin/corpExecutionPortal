@@ -238,15 +238,13 @@ const Ahc = ({ handleUpload, formValues, setFormValues }) => {
               size="small"
               value={
                 formValues?.quotationTableDataVMS?.filter(
-                  (quote) => quote.quotationDataType === "AHC"
-                )[0]?.details ||
-                "" ||
-                ""
+                  (quote) => quote?.quotationDataType === "AHC"
+                )[0]?.details || ""
               }
               onChange={(e) => {
                 const updatedFormValues = { ...formValues };
                 const ahcDataIndex =
-                  formValues.quotationTableDataVMS?.findIndex(
+                  formValues?.quotationTableDataVMS?.findIndex(
                     (quote) => quote.quotationDataType === "AHC"
                   );
                 if (ahcDataIndex !== -1) {

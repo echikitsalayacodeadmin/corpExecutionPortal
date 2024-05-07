@@ -268,3 +268,17 @@ export const sortArrayByLastModifiedDate = (array) => {
   );
   return sortedArray;
 };
+
+export const sortArrayBySequence = (array) => {
+  return array.sort((a, b) => a.sequence - b.sequence);
+};
+
+export const generateRandomId = (existingIdsArray) => {
+  const min = 100000; // Minimum value for a six-digit number
+  const max = 999999; // Maximum value for a six-digit number
+  let newId;
+  do {
+    newId = Math.floor(Math.random() * (max - min + 1)) + min;
+  } while (existingIdsArray?.some((obj) => obj.id === newId));
+  return newId;
+};

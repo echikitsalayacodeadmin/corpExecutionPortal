@@ -30,13 +30,14 @@ const getServicesStatusSymbol = (status) => {
 };
 
 const DashboardCard = ({ data, serviceMapping }) => {
-  const requiredServices = data?.mapOfServiceIdAndInfo;
-  const userAndCount = Object?.entries(data?.mapOfUserAndVisitsCount)?.map(
-    ([name, count]) => ({
-      name,
-      count,
-    })
-  );
+  const requiredServices = data?.mapOfServiceIdAndInfo || {};
+  const userAndCount =
+    Object?.entries(data?.mapOfUserAndVisitsCount || {}).map(
+      ([name, count]) => ({
+        name,
+        count,
+      })
+    ) || [];
   const navigate = useNavigate();
   return (
     <Fragment>
@@ -76,7 +77,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
                 marginLeft: "3px",
               }}
             >
-              {data?.location.toLowerCase()}
+              {data?.location?.toLowerCase()}
             </Typography>
           </Grid>
           {data?.corpSalesVisitEntities?.[1]?.nextVisitDate ? (
@@ -152,7 +153,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
           >
             <ManageAccountsIcon sx={{ marginRight: "5px", color: "#127DDD" }} />
-            {userAndCount.map(({ name, count }) => (
+            {userAndCount?.map(({ name, count }) => (
               <Typography key={name} sx={styles.subTitle}>
                 {name} ({count})
               </Typography>

@@ -24,7 +24,7 @@ const OhcSection = ({ data }) => {
           {data?.ohcVM?.details}
         </Typography>
       </Box>
-      {data.ohcVM.ohcTableUrl === "" || data.ohcVM.ohcTableUrl === null ? (
+      {data?.ohcVM?.ohcTableUrl === "" || data?.ohcVM?.ohcTableUrl === null ? (
         <Box style={{ border: "1px solid #DDD" }}>
           <Box style={{ padding: "3px", borderBottom: "1px solid #DDD" }}>
             <Typography
@@ -135,7 +135,7 @@ const OhcSection = ({ data }) => {
                     fontWeight: "bold",
                   }}
                 >
-                  {category.categoryTitle}
+                  {category?.categoryTitle}
                 </Typography>
               </Box>
               {category?.ohcPackageVMS?.map((pack, index) => (
@@ -154,7 +154,7 @@ const OhcSection = ({ data }) => {
                     <Typography
                       style={{ fontSize: "15px", fontWeight: "bold" }}
                     >
-                      {pack.packageTitle}
+                      {pack?.packageTitle}
                     </Typography>
                   </Box>
                   <Box
@@ -188,7 +188,7 @@ const OhcSection = ({ data }) => {
                       }}
                     >
                       <Typography style={{ fontSize: "15px" }}>
-                        {pack.packageName}
+                        {pack?.packageName}
                       </Typography>
                     </Box>
                     <Box
@@ -202,7 +202,7 @@ const OhcSection = ({ data }) => {
                       }}
                     >
                       <Typography style={{ fontSize: "15px" }}>
-                        {pack.packageDescription}
+                        {pack?.packageDescription}
                       </Typography>
                     </Box>
                     <Box
@@ -216,7 +216,7 @@ const OhcSection = ({ data }) => {
                       }}
                     >
                       <Typography style={{ fontSize: "15px" }}>
-                        {pack.noOfStaff}
+                        {pack?.noOfStaff}
                       </Typography>
                     </Box>
                     <Box
@@ -230,7 +230,7 @@ const OhcSection = ({ data }) => {
                       }}
                     >
                       <Typography style={{ fontSize: "15px" }}>
-                        {pack.perMonthCost}
+                        {pack?.perMonthCost}
                       </Typography>
                     </Box>
                     <Box
@@ -243,7 +243,7 @@ const OhcSection = ({ data }) => {
                       }}
                     >
                       <Typography style={{ fontSize: "15px" }}>
-                        {pack.totalCostPerMonth}
+                        {pack?.totalCostPerMonth}
                       </Typography>
                     </Box>
                   </Box>
@@ -259,7 +259,7 @@ const OhcSection = ({ data }) => {
                 whiteSpace: "pre-line",
               }}
             >
-              {data?.ohcVM.disclaimer || ""}
+              {data?.ohcVM?.disclaimer || ""}
             </Typography>
           </Box>
         </Box>

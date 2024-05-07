@@ -20,6 +20,7 @@ import { GridActionsCellItem } from "@mui/x-data-grid";
 import React, { Fragment, useState } from "react";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import CustomDataGridLayout from "../../../../../assets/globalDataGridLayout/customDataGridLayout";
+import { generateRandomId } from "../../../../../assets/utils";
 
 const calculateTestListRowFields = (dialogData) => {
   const pricePerEmp = dialogData?.testList?.reduce(

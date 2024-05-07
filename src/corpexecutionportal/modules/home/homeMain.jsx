@@ -6,6 +6,7 @@ import { showNumber } from "../../../assets/utils";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../../assets/constants";
 import { getData } from "../../assets/corpServices";
+import CustomButtonBlue from "../../../assets/customButtonBlue";
 
 const ShowCount = ({ children }) => {
   return <CustomTypographyBoldAlt>{children}</CustomTypographyBoldAlt>;
@@ -157,6 +158,14 @@ const HomeMain = () => {
                 </Box>
               </Grid>
             ))}
+            <Grid item lg={12} xs={12}>
+              <CustomButtonBlue
+                title="Add Data in Quotation"
+                onClick={() => {
+                  navigate(`/corp/quotation/addquotationdata`);
+                }}
+              />
+            </Grid>
           </Grid>
         </Box>
       </MainPageLayout>
