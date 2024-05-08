@@ -13,7 +13,7 @@ import {
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import CloseIcon from "@mui/icons-material/Close";
 import QuotationDashboardNew from "./quotationDashboard/quotationDashboardNew";
-import QuotationDashoard from "./quotationOld/QuotationDashoard";
+// import QuotationDashoard from "./quotationOld/QuotationDashoard";
 import QuotationSelect from "./subComp/quotationSelect";
 import MainPageLayoutWithBackQ from "../../global/templates/mainPageLayoutWithBackQ";
 
@@ -70,7 +70,7 @@ const QuotationMain = () => {
           handleOpen();
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             width: "100%",
           }}
@@ -86,14 +86,14 @@ const QuotationMain = () => {
               </TabList>
             </Box>
             <TabPanel value="1" sx={{ p: 0 }}>
-              <QuotationDashboardNew />
+            
             </TabPanel>
             <TabPanel value="2" sx={{ p: 0 }}>
               <QuotationDashoard />
             </TabPanel>
           </TabContext>
-        </Box>
-
+        </Box> */}
+        <QuotationDashboardNew />
         <Portal>
           <Modal
             style={{

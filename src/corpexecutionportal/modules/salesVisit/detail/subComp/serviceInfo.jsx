@@ -27,15 +27,15 @@ import dayjs from "dayjs";
 
 const servicesFields = {
   62502: [
-    {
-      label: "AHC Interested Yes or No",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested Yes or No",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Due Date",
       fieldName: "dueDate",
@@ -67,6 +67,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -74,15 +118,15 @@ const servicesFields = {
     },
   ],
   62503: [
-    {
-      label: "Pre Emp Interested Yes or No",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested Yes or No",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Monthly Influx",
       fieldName: "required",
@@ -122,6 +166,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -129,15 +217,15 @@ const servicesFields = {
     },
   ],
   62504: [
-    {
-      label: "Insurance Interested Yes or No",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested Yes or No",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Type of Policy",
       fieldName: "typeOfPolicy",
@@ -187,7 +275,50 @@ const servicesFields = {
         { value: "DUE_LATER", label: "Due Later" },
       ],
     },
+    {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
 
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
     {
       label: "Remarks",
       fieldName: "remarks",
@@ -196,15 +327,15 @@ const servicesFields = {
     },
   ],
   62512: [
-    {
-      label: "OHC Stafff Interested Yes or No",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested Yes or No",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Current Player",
       fieldName: "currentServiceProvider",
@@ -250,6 +381,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -257,15 +432,15 @@ const servicesFields = {
     },
   ],
   62508: [
-    {
-      label: "Interested in Medicines or Not",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested in Medicines or Not",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Current Player",
       fieldName: "currentServiceProvider",
@@ -299,6 +474,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -306,15 +525,15 @@ const servicesFields = {
     },
   ],
   62505: [
-    {
-      label: "Interested or Not",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested or Not",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Type of Request",
       fieldName: "typeOfRequest",
@@ -348,6 +567,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -355,15 +618,15 @@ const servicesFields = {
     },
   ],
   62509: [
-    {
-      label: "Interested or Not",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested or Not",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "# of training needed",
       fieldName: "noOfTrainingNeeded",
@@ -396,6 +659,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -403,15 +710,15 @@ const servicesFields = {
     },
   ],
   62497: [
-    {
-      label: "Interested or Not",
-      fieldName: "corpRequirementStatus",
-      type: "dropdown",
-      options: [
-        { value: "YES", label: "Yes" },
-        { value: "NO", label: "No" },
-      ],
-    },
+    // {
+    //   label: "Interested or Not",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
       label: "Type of Request",
       fieldName: "typeOfRequest",
@@ -463,6 +770,50 @@ const servicesFields = {
       dataType: "number",
     },
     {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
+    },
+    {
       label: "Remarks",
       fieldName: "remarks",
       type: "textFieldMultiline",
@@ -470,15 +821,18 @@ const servicesFields = {
     },
   ],
   default: [
+    // {
+    //   label: "Interested or Not",
+    //   fieldName: "corpRequirementStatus",
+    //   type: "dropdown",
+    //   options: [
+    //     { value: "YES", label: "Yes" },
+    //     { value: "NO", label: "No" },
+    //   ],
+    // },
     {
-      label: "Required",
-      fieldName: "required",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Last Player",
-      fieldName: "lastPlayer",
+      label: "Current Service Provider",
+      fieldName: "currentServiceProvider",
       type: "textField",
       dataType: "string",
     },
@@ -492,6 +846,50 @@ const servicesFields = {
       label: "Due Date",
       fieldName: "dueDate",
       type: "date",
+    },
+    {
+      label: "Status",
+      fieldName: "status",
+      type: "dropdown",
+      options: [
+        {
+          label: "INTERESTED",
+          value: "INTERESTED",
+        },
+        {
+          label: "NOT INTERESTED",
+          value: "NOT_INTERESTED",
+        },
+
+        {
+          label: "ONE_MORE_MEETING",
+          value: "ONE_MORE_MEETING",
+        },
+        {
+          label: "QUOTATION_ASKED",
+          value: "QUOTATION_ASKED",
+        },
+        {
+          label: "QUOTATION_SENT",
+          value: "QUOTATION_SENT",
+        },
+        {
+          label: "NEGOTIATION",
+          value: "NEGOTIATION",
+        },
+        {
+          label: "QUOTATION_APPROVED",
+          value: "QUOTATION_APPROVED",
+        },
+        {
+          label: "QUOTATION_REJECTED",
+          value: "QUOTATION_REJECTED",
+        },
+        {
+          label: "ORDER_LOST",
+          value: "ORDER_LOST",
+        },
+      ],
     },
     {
       label: "Remarks",
@@ -533,30 +931,27 @@ const ServiceInfo = ({ data, setFetch }) => {
             : item.serviceName === "Doctor's visit"
             ? "2"
             : "1",
-        servicesInfoVM:
-          {
-            required: data?.[item.id]?.required || "",
-            lastPlayer: data?.[item.id]?.lastPlayer || "",
-            lastAmount: data?.[item.id]?.lastAmount || "",
-            dueDate: data?.[item.id]?.dueDate
-              ? new Date(data?.[item.id]?.dueDate)
-              : null,
-            remarks: data?.[item.id]?.remarks || "",
-            confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus || "",
-            corpRequirementStatus: data?.[item.id]?.corpRequirementStatus || "",
-            estimatedBusinessSize: data?.[item.id]?.estimatedBusinessSize || "",
-            typeOfPolicy: data?.[item.id]?.typeOfPolicy || "",
-            numberOfLives: data?.[item.id]?.numberOfLives || "",
-            decisionMaking: data?.[item.id]?.decisionMaking || "",
-            currentServiceProvider:
-              data?.[item.id]?.currentServiceProvider || "",
-            noOfStaffNeeded: data?.[item.id]?.noOfStaffNeeded || "",
-            doctorTypeRequired: data?.[item.id]?.doctorTypeRequired || "",
-            typeOfRequest: data?.[item.id]?.typeOfRequest || "",
-            noOfTrainingNeeded: data?.[item.id]?.noOfTrainingNeeded || "",
-            emergencyTieUp: data?.[item.id]?.emergencyTieUp || "",
-            noOfAccidentsInMonth: data?.[item.id]?.noOfAccidentsInMonth || "",
-          } || "",
+
+        required: data?.[item.id]?.required || "",
+        lastPlayer: data?.[item.id]?.lastPlayer || "",
+        lastAmount: data?.[item.id]?.lastAmount || "",
+        dueDate: data?.[item.id]?.dueDate
+          ? new Date(data?.[item.id]?.dueDate)
+          : null,
+        remarks: data?.[item.id]?.remarks || "",
+        confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus || "",
+        corpRequirementStatus: data?.[item.id]?.corpRequirementStatus || "",
+        estimatedBusinessSize: data?.[item.id]?.estimatedBusinessSize || "",
+        typeOfPolicy: data?.[item.id]?.typeOfPolicy || "",
+        numberOfLives: data?.[item.id]?.numberOfLives || "",
+        decisionMaking: data?.[item.id]?.decisionMaking || "",
+        currentServiceProvider: data?.[item.id]?.currentServiceProvider || "",
+        noOfStaffNeeded: data?.[item.id]?.noOfStaffNeeded || "",
+        doctorTypeRequired: data?.[item.id]?.doctorTypeRequired || "",
+        typeOfRequest: data?.[item.id]?.typeOfRequest || "",
+        noOfTrainingNeeded: data?.[item.id]?.noOfTrainingNeeded || "",
+        emergencyTieUp: data?.[item.id]?.emergencyTieUp || "",
+        noOfAccidentsInMonth: data?.[item.id]?.noOfAccidentsInMonth || "",
       }));
       setRows(temp);
     } else {
@@ -594,29 +989,27 @@ const ServiceInfo = ({ data, setFetch }) => {
   });
   const handleSave = async (data) => {
     const obj = {
-      status: data?.status,
-      required: data.servicesInfoVM.required,
-      lastPlayer: data.servicesInfoVM.lastPlayer,
-      lastAmount: data.servicesInfoVM.lastAmount,
-      dueDate: data.servicesInfoVM.dueDate,
-      remarks: data.servicesInfoVM.remarks,
+      status: data?.status.value || null,
+      required: data.required,
+      lastPlayer: data.lastPlayer,
+      lastAmount: data.lastAmount,
+      dueDate: data.dueDate,
+      remarks: data.remarks,
       userId: userId,
       userName: userName,
-      confidenceLeveLStatus:
-        data.servicesInfoVM.confidenceLeveLStatus.value || null,
-      corpRequirementStatus:
-        data.servicesInfoVM.corpRequirementStatus.value || null,
-      estimatedBusinessSize: data.servicesInfoVM.estimatedBusinessSize,
-      typeOfPolicy: data.servicesInfoVM.typeOfPolicy,
-      numberOfLives: data.servicesInfoVM.numberOfLives,
-      decisionMaking: data.servicesInfoVM.decisionMaking,
-      currentServiceProvider: data.servicesInfoVM.currentServiceProvider,
-      noOfStaffNeeded: data.servicesInfoVM.noOfStaffNeeded,
-      doctorTypeRequired: data.servicesInfoVM.doctorTypeRequired,
-      typeOfRequest: data.servicesInfoVM.typeOfRequest,
-      noOfTrainingNeeded: data.servicesInfoVM.noOfTrainingNeeded,
-      emergencyTieUp: data.servicesInfoVM.emergencyTieUp,
-      noOfAccidentsInMonth: data.servicesInfoVM.noOfAccidentsInMonth,
+      confidenceLeveLStatus: data.confidenceLeveLStatus.value || null,
+      corpRequirementStatus: data.corpRequirementStatus.value || null,
+      estimatedBusinessSize: data.estimatedBusinessSize,
+      typeOfPolicy: data.typeOfPolicy,
+      numberOfLives: data.numberOfLives,
+      decisionMaking: data.decisionMaking,
+      currentServiceProvider: data.currentServiceProvider,
+      noOfStaffNeeded: data.noOfStaffNeeded,
+      doctorTypeRequired: data.doctorTypeRequired,
+      typeOfRequest: data.typeOfRequest,
+      noOfTrainingNeeded: data.noOfTrainingNeeded,
+      emergencyTieUp: data.emergencyTieUp,
+      noOfAccidentsInMonth: data.noOfAccidentsInMonth,
     };
 
     const url =
@@ -662,49 +1055,49 @@ const ServiceInfo = ({ data, setFetch }) => {
             <Tooltip title="More Info">
               <IconButton
                 onClick={() => {
-                  const servicesInfo = obj?.servicesInfoVM || null;
-                  console.log({ servicesInfo });
+                  console.log({ obj });
                   setOpenModal(true);
                   setSelectedRow(obj);
                   setMoreInfoObject({
-                    required: servicesInfo.required || "",
-                    lastPlayer: servicesInfo.lastPlayer || "",
-                    lastAmount: servicesInfo.lastAmount || "",
-                    dueDate: servicesInfo.dueDate
-                      ? new Date(servicesInfo.dueDate)
+                    status: {
+                      value: obj.status || "",
+                      label: obj.status || "",
+                    },
+                    required: obj.required || "",
+                    lastPlayer: obj.lastPlayer || "",
+                    lastAmount: obj.lastAmount || "",
+                    dueDate: obj.dueDate
+                      ? new Date(obj.dueDate)
                       : dayjs().format("YYYY-MM-DD"),
-                    remarks: servicesInfo.remarks || "",
+                    remarks: obj.remarks || "",
                     confidenceLeveLStatus: {
-                      value: servicesInfo?.confidenceLeveLStatus || "",
+                      value: obj?.confidenceLeveLStatus || "",
                       label:
-                        servicesInfo?.confidenceLeveLStatus
+                        obj?.confidenceLeveLStatus
                           ?.replace(/_/g, " ")
                           ?.toLowerCase()
                           ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
                     },
 
                     corpRequirementStatus: {
-                      value: servicesInfo?.corpRequirementStatus || "",
+                      value: obj?.corpRequirementStatus || "",
                       label:
-                        servicesInfo?.corpRequirementStatus
+                        obj?.corpRequirementStatus
                           ?.replace(/_/g, " ")
                           ?.toLowerCase()
                           ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
                     },
-                    estimatedBusinessSize:
-                      servicesInfo.estimatedBusinessSize || "",
-                    typeOfPolicy: servicesInfo.typeOfPolicy || "",
-                    numberOfLives: servicesInfo.numberOfLives || "",
-                    decisionMaking: servicesInfo.decisionMaking || "",
-                    currentServiceProvider:
-                      servicesInfo.currentServiceProvider || "",
-                    noOfStaffNeeded: servicesInfo.noOfStaffNeeded || "",
-                    doctorTypeRequired: servicesInfo.doctorTypeRequired || "",
-                    typeOfRequest: servicesInfo.typeOfRequest || "",
-                    noOfTrainingNeeded: servicesInfo.noOfTrainingNeeded || "",
-                    emergencyTieUp: servicesInfo.emergencyTieUp || "",
-                    noOfAccidentsInMonth:
-                      servicesInfo.noOfAccidentsInMonth || "",
+                    estimatedBusinessSize: obj.estimatedBusinessSize || "",
+                    typeOfPolicy: obj.typeOfPolicy || "",
+                    numberOfLives: obj.numberOfLives || "",
+                    decisionMaking: obj.decisionMaking || "",
+                    currentServiceProvider: obj.currentServiceProvider || "",
+                    noOfStaffNeeded: obj.noOfStaffNeeded || "",
+                    doctorTypeRequired: obj.doctorTypeRequired || "",
+                    typeOfRequest: obj.typeOfRequest || "",
+                    noOfTrainingNeeded: obj.noOfTrainingNeeded || "",
+                    emergencyTieUp: obj.emergencyTieUp || "",
+                    noOfAccidentsInMonth: obj.noOfAccidentsInMonth || "",
                   });
                 }}
               >
@@ -739,62 +1132,35 @@ const ServiceInfo = ({ data, setFetch }) => {
               fullWidth
               size="small"
               options={[
-                {
-                  label: "INTERESTED",
-                  value: "INTERESTED",
-                },
-                {
-                  label: "NOT INTERESTED",
-                  value: "NOT_INTERESTED",
-                },
-
-                {
-                  label: "ONE_MORE_MEETING",
-                  value: "ONE_MORE_MEETING",
-                },
-                {
-                  label: "QUOTATION_ASKED",
-                  value: "QUOTATION_ASKED",
-                },
-                {
-                  label: "QUOTATION_SENT",
-                  value: "QUOTATION_SENT",
-                },
-                {
-                  label: "NEGOTIATION",
-                  value: "NEGOTIATION",
-                },
-                {
-                  label: "QUOTATION_APPROVED",
-                  value: "QUOTATION_APPROVED",
-                },
-                {
-                  label: "QUOTATION_REJECTED",
-                  value: "QUOTATION_REJECTED",
-                },
-                {
-                  label: "ORDER_LOST",
-                  value: "ORDER_LOST",
-                },
+                { value: "YES", label: "Yes" },
+                { value: "NO", label: "No" },
               ]}
               value={{
-                label: obj.status || "",
-                value: obj.status || "",
+                label:
+                  obj?.corpRequirementStatus
+                    ?.replace(/_/g, " ")
+                    ?.toLowerCase()
+                    ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
+                value: obj?.corpRequirementStatus || "",
               }}
               onChange={(event, newValue, reason) => {
                 const updatedRows = rows.map((row) =>
-                  row.id === obj.id ? { ...obj, status: newValue.value } : row
+                  row.id === obj.id
+                    ? { ...obj, corpRequirementStatus: newValue.value }
+                    : row
                 );
                 setRows(updatedRows);
                 if (reason === "clear") {
                   const updatedRows = rows.map((row) =>
-                    row.id === obj.id ? { ...obj, status: null } : row
+                    row.id === obj.id
+                      ? { ...obj, corpRequirementStatus: null }
+                      : row
                   );
                   setRows(updatedRows);
                 }
               }}
-              label="Mark Status"
-              placeholder="Mark Status"
+              label="Interested or Not"
+              placeholder="Interested or Not"
             />
           </Grid>
           <Grid
@@ -803,17 +1169,14 @@ const ServiceInfo = ({ data, setFetch }) => {
             lg={2}
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
-            <Button
+            <IconButton
               disabled={obj.status ? false : true}
               onClick={() => {
                 handleSave(obj);
               }}
-              size="small"
-              variant="contained"
-              startIcon={<SaveIcon />}
             >
-              Save
-            </Button>
+              <SaveIcon style={{ color: "#127DDD" }} />
+            </IconButton>
           </Grid>
         </Grid>
       ))}
@@ -885,7 +1248,7 @@ const ServiceInfo = ({ data, setFetch }) => {
                     dueDate: dayjs().format("YYYY-MM-DD"),
                     remarks: "",
                     confidenceLeveLStatus: { label: "", value: "" },
-                    corpRequirementStatus: { label: "", value: "" },
+                    status: { label: "", value: "" },
                     estimatedBusinessSize: "",
                     typeOfPolicy: "",
                     numberOfLives: "",
@@ -934,7 +1297,7 @@ const ServiceInfo = ({ data, setFetch }) => {
                         if (reason === "clear") {
                           setMoreInfoObject({
                             ...moreInfoObject,
-                            [val.fieldName]: "",
+                            [val.fieldName]: { label: "", value: "" },
                           });
                         }
                       }}
@@ -1026,27 +1389,26 @@ const ServiceInfo = ({ data, setFetch }) => {
                     const newRow = { ...moreInfoObject };
                     // console.log({ newRow });
                     const updatedRows = rows.map((row) =>
-                      row.id === selectedRow.id
-                        ? { ...row, servicesInfoVM: newRow }
-                        : row
+                      row.id === selectedRow.id ? { ...row, ...newRow } : row
                     );
                     // console.log({ updatedRows });
                     const modifiedRow = updatedRows.find(
                       (item) => item.id === selectedRow.id
                     );
-                    // console.log({ modifiedRow });
+
                     handleSave(modifiedRow);
                     setRows(updatedRows);
                     setOpenModal(false);
                     setMoreInfoObject({
                       id: "",
+                      status: { label: "", value: "" },
                       required: "",
                       lastPlayer: "",
                       lastAmount: "",
                       dueDate: dayjs().format("YYYY-MM-DD"),
                       remarks: "",
                       confidenceLeveLStatus: { label: "", value: "" },
-                      corpRequirementStatus: { label: "", value: "" },
+                      corpRequirementStatus: "",
                       estimatedBusinessSize: "",
                       typeOfPolicy: "",
                       numberOfLives: "",

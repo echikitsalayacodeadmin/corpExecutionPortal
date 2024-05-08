@@ -58,7 +58,7 @@ const SalesVisitDetail = () => {
         setFormValues={setCorpDetails}
       />
 
-      <Grid
+      {/* <Grid
         container
         sx={{
           boxSizing: "border-box",
@@ -99,9 +99,12 @@ const SalesVisitDetail = () => {
             }}
           />
         </Grid>
-      </Grid>
+      </Grid> */}
 
-      <ServiceInfo data={corpDetails?.mapOfServiceIdAndInfo} setFetch={true} />
+      <ServiceInfo
+        data={corpDetails?.mapOfServiceIdAndInfo}
+        setFetch={setFetch}
+      />
       <MarkAsLostBtn corpSalesId={corpSalesId} />
     </Fragment>
   );
