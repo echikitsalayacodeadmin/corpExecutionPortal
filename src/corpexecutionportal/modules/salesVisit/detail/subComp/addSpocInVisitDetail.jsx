@@ -261,7 +261,7 @@ const AddSpocInVisitDetail = ({
             </Grid>
           ))}
         {showSpocList && (
-          <Grid item xs={12} lg={12}>
+          <Grid item xs={12} lg={12} sx={{ marginTop: 2 }}>
             <CustomButtonBlue
               title="Add New SPOC"
               onClick={() => {
