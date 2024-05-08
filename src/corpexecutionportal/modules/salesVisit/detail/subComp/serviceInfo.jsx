@@ -24,6 +24,7 @@ import { CustomTypographyBold } from "../../../../../assets/customTypography";
 import GlobalDateLayout from "../../../../../assets/globalDateLayout/globalDateLayout";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import dayjs from "dayjs";
+import { isBrowser, isMobile } from "react-device-detect";
 
 const servicesFields = {
   62502: [
@@ -1120,8 +1121,10 @@ const ServiceInfo = ({ data, setFetch }) => {
             </Tooltip>
           </Grid>
 
-          <Grid item xs={9} lg={3}>
+          <Grid item xs={7} lg={3}>
             <CustomAutocomplete
+              required={true}
+              asterickColor={"red"}
               fullWidth
               size="small"
               options={["YES", "NO"]}
@@ -1146,13 +1149,12 @@ const ServiceInfo = ({ data, setFetch }) => {
                   setRows(updatedRows);
                 }
               }}
-              styles={{
-                width: "170px",
-              }}
               label="Interested or Not"
               placeholder="Interested or Not"
             />
           </Grid>
+          {isMobile && <Grid item xs={2} lg={0}></Grid>}
+
           <Grid
             item
             xs={3}

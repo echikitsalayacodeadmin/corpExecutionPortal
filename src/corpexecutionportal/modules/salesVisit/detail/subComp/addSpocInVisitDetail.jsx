@@ -151,11 +151,18 @@ const AddSpocInVisitDetail = ({
             <Box
               sx={{
                 display: "flex",
-                gap: "10px",
+                // gap: "10px",
                 minWidth: "300px",
+                alignItems: "center",
+                cursor: "pointer",
+                justifyContent: "space-between",
+                backgroundColor: "#F5F5F5",
+              }}
+              onClick={() => {
+                setShowSpocList(!showSpocList);
               }}
             >
-              <Box
+              {/* <Box
                 sx={{
                   p: 1,
                   height: "40px",
@@ -165,35 +172,32 @@ const AddSpocInVisitDetail = ({
                   backgroundColor: "#FFFFFF",
                   textAlign: "center",
                 }}
-              >
-                <Typography>Corp SPOC List</Typography>
-              </Box>
+              > */}
+              <Typography sx={{ fontWeight: "bold" }}>
+                SPOC Information
+              </Typography>
+              {/* </Box> */}
               <IconButton
-                sx={{
-                  height: "40px",
-                  marginRight: "15px",
-                  backgroundColor: "#127DDD",
-                  ":hover": {
-                    backgroundColor: "#1f63a1",
-                  },
-                }}
+                sx={
+                  {
+                    // height: "40px",
+                    // marginRight: "15px",
+                    // backgroundColor: "#127DDD",
+                    // ":hover": {
+                    //   backgroundColor: "#1f63a1",
+                    // },
+                  }
+                }
                 onClick={() => {
                   setShowSpocList(!showSpocList);
                 }}
               >
                 {showSpocList === false ? (
-                  <ExpandMoreIcon style={{ color: "#FFF" }} />
+                  <ExpandMoreIcon />
                 ) : (
-                  <ExpandLessIcon style={{ color: "#FFF" }} />
+                  <ExpandLessIcon />
                 )}
               </IconButton>
-              <CustomButtonBlue
-                title="Add New SPOC"
-                onClick={() => {
-                  handleOpen();
-                }}
-                styles={{ width: "150px", height: "40px" }}
-              />
             </Box>
           </Grid>
         </Grid>
@@ -256,6 +260,17 @@ const AddSpocInVisitDetail = ({
               </Grid> */}
             </Grid>
           ))}
+        {showSpocList && (
+          <Grid item xs={12} lg={12}>
+            <CustomButtonBlue
+              title="Add New SPOC"
+              onClick={() => {
+                handleOpen();
+              }}
+              styles={{ width: "150px", height: "40px" }}
+            />
+          </Grid>
+        )}
       </Box>
 
       <Portal>

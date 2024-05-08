@@ -1,4 +1,11 @@
-import { Box, Container, FormControlLabel, Grid } from "@mui/material";
+import {
+  Box,
+  Container,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { useSnackbar } from "notistack";
 import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,8 +15,8 @@ import { BASE_URL } from "../../../../assets/constants";
 import CompanySummaryInfo from "./subComp/companySummaryInfo";
 import CompanyVisitDetails from "./subComp/companyVisitDetails";
 import AddSpocInVisitDetail from "./subComp/addSpocInVisitDetail";
-import { IOSSwitch } from "../../../../assets/customSwitch";
-import CustomButtonBlue from "../../../../assets/customButtonBlue";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ServiceInfo from "./subComp/serviceInfo";
 import MarkAsLostBtn from "../../../global/markAsLost/markAsLostBtn";
 
@@ -20,6 +27,7 @@ const SalesVisitDetail = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [corpDetails, setCorpDetails] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showServicesList, setShowServicesList] = useState(false);
   const [fetch, setFetch] = useState(false);
   const [quotationRequired, setQuotationRequired] = useState(false);
 
@@ -100,11 +108,36 @@ const SalesVisitDetail = () => {
           />
         </Grid>
       </Grid> */}
-
-      <ServiceInfo
-        data={corpDetails?.mapOfServiceIdAndInfo}
-        setFetch={setFetch}
-      />
+      <Box
+        onClick={() => {
+          setShowServicesList(!showServicesList);
+        }}
+        sx={{
+          display: "flex",
+          minWidth: "300px",
+          justifyContent: "space-between",
+          alignItems: "center",
+          cursor: "pointer",
+          backgroundColor: "#F5F5F5",
+        }}
+      >
+        <Typography sx={{ fontWeight: "bold" }}>Service Information</Typography>
+        <IconButton
+          onClick={() => {
+            setShowServicesList(!showServicesList);
+          }}
+        >
+          {showServicesList === false ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+        </IconButton>
+      </Box>
+      <Box sx={{ marginBottom: 2 }}>
+        {showServicesList && (
+          <ServiceInfo
+            data={corpDetails?.mapOfServiceIdAndInfo}
+            setFetch={setFetch}
+          />
+        )}
+      </Box>
       <MarkAsLostBtn corpSalesId={corpSalesId} />
     </Fragment>
   );

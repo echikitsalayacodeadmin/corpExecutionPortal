@@ -15,7 +15,7 @@ const CompanySummaryInfo = ({ data }) => {
   };
   return (
     <Fragment>
-      <CustomTypographyBold>Company Info</CustomTypographyBold>
+      <CustomTypographyBold>Company Information</CustomTypographyBold>
       <Grid
         container
         sx={{

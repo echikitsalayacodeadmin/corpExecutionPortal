@@ -20,13 +20,21 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
         <Grid container>
           <Grid item xs={12} lg={12}>
             <Box
+              onClick={() => {
+                setShowSalesVisit(!showSalesVisit);
+              }}
               sx={{
                 display: "flex",
-                gap: "10px",
+                // gap: "10px",
                 minWidth: "300px",
+                // border: "0.5px solid lightgray",
+                justifyContent: "space-between",
+                alignItems: "center",
+                cursor: "pointer",
+                backgroundColor: "#F5F5F5",
               }}
             >
-              <Box
+              {/* <Box
                 sx={{
                   p: 1,
                   height: "40px",
@@ -36,37 +44,32 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                   backgroundColor: "#FFFFFF",
                   textAlign: "center",
                 }}
-              >
-                <Typography>Sales Visits</Typography>
-              </Box>
+              > */}
+              <Typography sx={{ fontWeight: "bold" }}>
+                Visit Information
+              </Typography>
+              {/* </Box> */}
               <IconButton
-                sx={{
-                  height: "40px",
-                  marginRight: "15px",
-                  backgroundColor: "#127DDD",
-                  ":hover": {
-                    backgroundColor: "#1f63a1",
-                  },
-                }}
+                sx={
+                  {
+                    // height: "40px",
+                    // marginRight: "15px",
+                    // backgroundColor: "#127DDD",
+                    // ":hover": {
+                    //   backgroundColor: "#1f63a1",
+                    // },
+                  }
+                }
                 onClick={() => {
                   setShowSalesVisit(!showSalesVisit);
                 }}
               >
                 {showSalesVisit === false ? (
-                  <ExpandMoreIcon style={{ color: "#FFF" }} />
+                  <ExpandMoreIcon />
                 ) : (
-                  <ExpandLessIcon style={{ color: "#FFF" }} />
+                  <ExpandLessIcon />
                 )}
               </IconButton>
-              {onlyView === true ? null : (
-                <CustomButtonBlue
-                  title="Add New Visit"
-                  onClick={() => {
-                    navigate(`/corp/addnewvisit/${data.corpSalesId}`);
-                  }}
-                  styles={{ width: "150px", height: "40px" }}
-                />
-              )}
             </Box>
           </Grid>
         </Grid>
@@ -83,7 +86,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 border: "0.5px solid #A6A6A6",
                 borderRadius: 5,
                 padding: 1,
-                marginBlock: 2,
+                marginBlock: 1,
                 alignItems: "center",
               }}
             >
@@ -156,6 +159,19 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
               </Grid>
             </Grid>
           ))}
+        {showSalesVisit && (
+          <Grid item xs={12} lg={12}>
+            {onlyView === true ? null : (
+              <CustomButtonBlue
+                title="Add New Visit"
+                onClick={() => {
+                  navigate(`/corp/addnewvisit/${data.corpSalesId}`);
+                }}
+                styles={{ width: "150px", height: "40px" }}
+              />
+            )}
+          </Grid>
+        )}
       </Box>
     </Fragment>
   );
