@@ -1120,7 +1120,7 @@ const ServiceInfo = ({ data, setFetch }) => {
             </Tooltip>
           </Grid>
 
-          <Grid item xs={8} lg={3}>
+          <Grid item xs={9} lg={3}>
             <CustomAutocomplete
               fullWidth
               size="small"
@@ -1146,23 +1146,37 @@ const ServiceInfo = ({ data, setFetch }) => {
                   setRows(updatedRows);
                 }
               }}
+              styles={{
+                width: "170px",
+              }}
               label="Interested or Not"
               placeholder="Interested or Not"
             />
           </Grid>
           <Grid
             item
-            xs={4}
+            xs={3}
             lg={2}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
+            // sx={{ display: "flex", justifyContent: "flex-end" }}
           >
             <IconButton
+              sx={{
+                ":disabled": {
+                  backgroundColor: obj.corpRequirementStatus
+                    ? null
+                    : "lightgray",
+                },
+              }}
               disabled={obj.corpRequirementStatus ? false : true}
               onClick={() => {
                 handleSave(obj);
               }}
             >
-              <SaveIcon style={{ color: "#127DDD" }} />
+              <SaveIcon
+                style={{
+                  color: obj.corpRequirementStatus ? "#127DDD" : "#FFF",
+                }}
+              />
             </IconButton>
           </Grid>
         </Grid>

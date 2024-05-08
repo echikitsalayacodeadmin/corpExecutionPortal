@@ -21,6 +21,10 @@ const getServicesStatusSymbol = (status) => {
     ? "✔️"
     : status === "NEGOTIATION"
     ? "✔️"
+    : status === "DATA_AWAITED"
+    ? "?"
+    : status === "NEED_TO_REVISE_THE_QUOTE"
+    ? "?"
     : status === "QUOTATION_APPROVED"
     ? "✔️"
     : status === "QUOTATION_REJECTED"
@@ -39,6 +43,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
         count,
       })
     ) || [];
+  console.log({ userAndCount });
   const navigate = useNavigate();
   return (
     <Fragment>
@@ -67,29 +72,18 @@ const DashboardCard = ({ data, serviceMapping }) => {
             sx={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
           >
             <Typography sx={styles.companyName}>
-              {data?.corpName.toLowerCase()},
-            </Typography>
-            {/* <LocationOnIcon sx={{ marginRight: "5px" , si}} /> */}
-            <Typography
-              sx={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                textTransform: "capitalize",
-                marginLeft: "3px",
-              }}
-            >
-              {data?.location?.toLowerCase()}
+              {data?.corpName.toLowerCase()}{" "}
+              {data?.priority && `(${data?.priority})`}
             </Typography>
           </Grid>
           {data?.corpSalesVisitEntities?.[1]?.nextVisitDate ? (
             <Grid
               item
-              xs={12}
+              xs={6}
               lg={6}
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <CalendarMonthIcon sx={{ color: "#127DDD" }} />
-              <Typography sx={styles.subTitle}>Last Visit:</Typography>
+              <Typography>Last:</Typography>
               <Typography sx={styles.subTitle}>
                 {data?.corpSalesVisitEntities?.[1]?.nextVisitDate}
               </Typography>
@@ -97,10 +91,8 @@ const DashboardCard = ({ data, serviceMapping }) => {
           ) : null}
 
           {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
-            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <CalendarMonthIcon sx={{ color: "#127DDD" }} />
-              <Typography sx={styles.subTitle}>Next Visit:</Typography>
-
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
+              <Typography>Next:</Typography>
               <Typography sx={styles.subTitle}>
                 {data?.corpSalesVisitEntities?.[0]?.nextVisitDate}
               </Typography>
@@ -108,25 +100,20 @@ const DashboardCard = ({ data, serviceMapping }) => {
           ) : null}
 
           {data?.totalVisits ? (
-            <Grid item xs={12} lg={6} sx={{ display: "flex" }}>
-              <TourIcon sx={{ color: "#127DDD" }} />
-              <Typography sx={styles.subTitle}>Visits:</Typography>
+            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
+              <Typography>Visits:</Typography>
               <Typography sx={styles.subTitle}>{data?.totalVisits}</Typography>
             </Grid>
           ) : null}
-          {data?.priority ? (
+          {/* {data?.priority ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <PriorityHighIcon sx={{ color: "#127DDD" }} />
-              <Typography sx={styles.subTitle}>Priority:</Typography>
-              <Typography
-                sx={styles.subTitle}
-              >{`${data?.priority}`}</Typography>
+              <Typography>{`${data?.priority}`}</Typography>
             </Grid>
-          ) : null}
+          ) : null} */}
 
           {data?.interested ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.subTitle}>
+              <Typography>
                 {data?.interested === true
                   ? "Interested"
                   : data?.interested === false
@@ -135,24 +122,23 @@ const DashboardCard = ({ data, serviceMapping }) => {
               </Typography>
             </Grid>
           ) : null}
-          {data?.userName ? (
+          {/* {data?.userName ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography
                 sx={styles.subTitle}
               >{`User : ${data?.userName}`}</Typography>
             </Grid>
-          ) : null}
+          ) : null} */}
 
           <Grid
             item
             xs={12}
             lg={12}
-            sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
+            sx={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
           >
-            <ManageAccountsIcon sx={{ color: "#127DDD" }} />
             {userAndCount?.map(({ name, count }) => (
-              <Typography key={name} sx={styles.subTitle}>
-                {name} ({count})
+              <Typography key={name}>
+                {data?.userId?.toString() === name ? name + "*" : name}({count})
               </Typography>
             ))}
           </Grid>
@@ -160,25 +146,26 @@ const DashboardCard = ({ data, serviceMapping }) => {
             item
             xs={12}
             lg={12}
-            sx={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
+            sx={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
           >
-            <MiscellaneousServicesIcon sx={{ color: "#127DDD" }} />
             {requiredServices &&
               Object.keys(requiredServices).map((key) => {
                 const info = requiredServices[key];
 
                 return (
-                  <Typography key={key} sx={styles.subTitle}>
-                    {`${
-                      serviceMapping?.find(
-                        (item) => parseInt(item?.id) === parseInt(key)
-                      )?.serviceName
-                    }: ${
-                      info?.status
-                        ? `(${getServicesStatusSymbol(info?.status)})`
-                        : ""
-                    }`}
-                  </Typography>
+                  info?.status && (
+                    <Typography key={key}>
+                      {`${
+                        serviceMapping?.find(
+                          (item) => parseInt(item?.id) === parseInt(key)
+                        )?.serviceName
+                      }${
+                        info?.status
+                          ? `(${getServicesStatusSymbol(info?.status)})`
+                          : ""
+                      }`}
+                    </Typography>
+                  )
                 );
               })}
           </Grid>

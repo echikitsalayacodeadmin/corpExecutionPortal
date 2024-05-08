@@ -200,7 +200,7 @@ const CorpSalesNewVisit = () => {
   return (
     <Fragment>
       <Grid container spacing={2}>
-        <Grid item xs={12} lg={12}>
+        {/* <Grid item xs={12} lg={12}>
           <CompanyName formValues={formValues} setFormValues={setFormValues} />
         </Grid>
         <Grid item xs={12} lg={12}>
@@ -308,7 +308,7 @@ const CorpSalesNewVisit = () => {
             formValues={formValues}
             setFormValues={setFormValues}
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} lg={12}>
           <SelectKam
@@ -318,7 +318,7 @@ const CorpSalesNewVisit = () => {
           />
         </Grid>
 
-        <Grid item xs={12} lg={12}>
+        {/* <Grid item xs={12} lg={12}>
           <CompanyVisitDetails data={corpDetail} onlyView={true} />
         </Grid>
         <Grid item xs={12} lg={12}>
@@ -327,7 +327,7 @@ const CorpSalesNewVisit = () => {
             setFormValues={setFormValues}
             removeEdit={true}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={6} lg={6}>
           <VisitType formValues={formValues} setFormValues={setFormValues} />
         </Grid>
