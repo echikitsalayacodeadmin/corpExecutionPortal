@@ -966,7 +966,7 @@ const ServiceInfo = ({ data, setFetch }) => {
   const [openModalQuote, setOpenModalQuote] = useState(false);
 
   const [moreInfoObject, setMoreInfoObject] = useState({
-    status: "",
+    status: { label: "", value: "" },
     required: "",
     lastPlayer: "",
     lastAmount: "",
@@ -989,7 +989,7 @@ const ServiceInfo = ({ data, setFetch }) => {
   });
   const handleSave = async (data) => {
     const obj = {
-      status: data?.status.value || null,
+      status: data?.status?.value || null,
       required: data.required,
       lastPlayer: data.lastPlayer,
       lastAmount: data.lastAmount,
@@ -997,8 +997,8 @@ const ServiceInfo = ({ data, setFetch }) => {
       remarks: data.remarks,
       userId: userId,
       userName: userName,
-      confidenceLeveLStatus: data.confidenceLeveLStatus.value || null,
-      corpRequirementStatus: data.corpRequirementStatus.value || null,
+      confidenceLeveLStatus: data?.confidenceLeveLStatus?.value || null,
+      corpRequirementStatus: data?.corpRequirementStatus || null,
       estimatedBusinessSize: data.estimatedBusinessSize,
       typeOfPolicy: data.typeOfPolicy,
       numberOfLives: data.numberOfLives,
@@ -1079,14 +1079,7 @@ const ServiceInfo = ({ data, setFetch }) => {
                           ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
                     },
 
-                    corpRequirementStatus: {
-                      value: obj?.corpRequirementStatus || "",
-                      label:
-                        obj?.corpRequirementStatus
-                          ?.replace(/_/g, " ")
-                          ?.toLowerCase()
-                          ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
-                    },
+                    corpRequirementStatus: obj.corpRequirementStatus || "",
                     estimatedBusinessSize: obj.estimatedBusinessSize || "",
                     typeOfPolicy: obj.typeOfPolicy || "",
                     numberOfLives: obj.numberOfLives || "",
@@ -1131,29 +1124,23 @@ const ServiceInfo = ({ data, setFetch }) => {
             <CustomAutocomplete
               fullWidth
               size="small"
-              options={[
-                { value: "YES", label: "Yes" },
-                { value: "NO", label: "No" },
-              ]}
-              value={{
-                label:
-                  obj?.corpRequirementStatus
-                    ?.replace(/_/g, " ")
-                    ?.toLowerCase()
-                    ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
-                value: obj?.corpRequirementStatus || "",
-              }}
+              options={["YES", "NO"]}
+              getOptionLabel={(option) => option}
+              value={obj?.corpRequirementStatus || ""}
               onChange={(event, newValue, reason) => {
                 const updatedRows = rows.map((row) =>
                   row.id === obj.id
-                    ? { ...obj, corpRequirementStatus: newValue.value }
+                    ? { ...obj, corpRequirementStatus: newValue }
                     : row
                 );
                 setRows(updatedRows);
                 if (reason === "clear") {
                   const updatedRows = rows.map((row) =>
                     row.id === obj.id
-                      ? { ...obj, corpRequirementStatus: null }
+                      ? {
+                          ...obj,
+                          corpRequirementStatus: null,
+                        }
                       : row
                   );
                   setRows(updatedRows);
@@ -1170,7 +1157,7 @@ const ServiceInfo = ({ data, setFetch }) => {
             sx={{ display: "flex", justifyContent: "flex-end" }}
           >
             <IconButton
-              disabled={obj.status ? false : true}
+              disabled={obj.corpRequirementStatus ? false : true}
               onClick={() => {
                 handleSave(obj);
               }}
@@ -1199,13 +1186,14 @@ const ServiceInfo = ({ data, setFetch }) => {
             setOpenModal(false);
             setMoreInfoObject({
               id: "",
+              status: { label: "", value: "" },
               required: "",
               lastPlayer: "",
               lastAmount: "",
               dueDate: dayjs().format("YYYY-MM-DD"),
               remarks: "",
               confidenceLeveLStatus: { label: "", value: "" },
-              corpRequirementStatus: { label: "", value: "" },
+              corpRequirementStatus: "",
               estimatedBusinessSize: "",
               typeOfPolicy: "",
               numberOfLives: "",
@@ -1242,13 +1230,14 @@ const ServiceInfo = ({ data, setFetch }) => {
                   setOpenModal(false);
                   setMoreInfoObject({
                     id: "",
+                    status: { label: "", value: "" },
                     required: "",
                     lastPlayer: "",
                     lastAmount: "",
                     dueDate: dayjs().format("YYYY-MM-DD"),
                     remarks: "",
                     confidenceLeveLStatus: { label: "", value: "" },
-                    status: { label: "", value: "" },
+                    corpRequirementStatus: "",
                     estimatedBusinessSize: "",
                     typeOfPolicy: "",
                     numberOfLives: "",
