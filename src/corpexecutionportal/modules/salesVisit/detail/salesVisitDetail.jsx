@@ -108,7 +108,7 @@ const SalesVisitDetail = () => {
           />
         </Grid>
       </Grid> */}
-      <Box
+      {/* <Box
         onClick={() => {
           setShowServicesList(!showServicesList);
         }}
@@ -129,15 +129,15 @@ const SalesVisitDetail = () => {
         >
           {showServicesList === false ? <ExpandMoreIcon /> : <ExpandLessIcon />}
         </IconButton>
-      </Box>
-      <Box sx={{ marginBottom: 2 }}>
-        {showServicesList && (
-          <ServiceInfo
-            data={corpDetails?.mapOfServiceIdAndInfo}
-            setFetch={setFetch}
-          />
-        )}
-      </Box>
+      </Box> */}
+      {/* <Box sx={{ marginBottom: 2 }}>
+        {showServicesList && ( */}
+      <ServiceInfo
+        data={corpDetails?.mapOfServiceIdAndInfo}
+        setFetch={setFetch}
+      />
+      {/* )}
+      </Box> */}
       <MarkAsLostBtn corpSalesId={corpSalesId} />
     </Fragment>
   );

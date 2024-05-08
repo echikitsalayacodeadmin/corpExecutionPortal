@@ -66,7 +66,7 @@ const MarkAsLostBtn = ({
 
   return (
     <Fragment>
-      <Grid container>
+      <Grid container sx={{ marginBlock: 2 }}>
         <Grid item xs={12} sx={{ textAlign: textAlign }}>
           <Button
             sx={{
