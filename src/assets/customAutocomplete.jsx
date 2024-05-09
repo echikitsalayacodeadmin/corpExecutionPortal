@@ -4,7 +4,7 @@ import React from "react";
 
 const CustomAutocomplete = ({
   multiple,
-  disableCloseOnSelect,
+  disableClearable,
   disabled,
   options,
   label,
@@ -26,7 +26,7 @@ const CustomAutocomplete = ({
   return (
     <Autocomplete
       multiple={multiple}
-      disableCloseOnSelect={disableCloseOnSelect}
+      disableClearable={disableClearable}
       disabled={disabled}
       fullWidth
       size="small"

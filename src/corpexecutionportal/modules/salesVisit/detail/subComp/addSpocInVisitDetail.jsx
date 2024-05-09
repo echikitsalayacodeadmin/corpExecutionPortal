@@ -151,7 +151,7 @@ const AddSpocInVisitDetail = ({
             <Box
               sx={{
                 display: "flex",
-                // gap: "10px",
+                marginBottom: 1,
                 minWidth: "300px",
                 alignItems: "center",
                 cursor: "pointer",
@@ -201,7 +201,15 @@ const AddSpocInVisitDetail = ({
             </Box>
           </Grid>
         </Grid>
-
+        {/* <Box
+          sx={{
+            backgroundColor: "#fff",
+            border: "1px solid #777777",
+            padding: "10px",
+            borderRadius: "15px",
+            marginBlock: "10px",
+          }}
+        > */}
         {showSpocList &&
           formValues?.spocList?.length > 0 &&
           formValues?.spocList?.map((spoc, index) => (
@@ -213,7 +221,7 @@ const AddSpocInVisitDetail = ({
                 border: "1px solid #777777",
                 padding: "10px",
                 borderRadius: "15px",
-                marginBlock: "10px",
+                marginBottom: "10px",
               }}
             >
               <Grid item xs={10} lg={10}>
@@ -261,7 +269,7 @@ const AddSpocInVisitDetail = ({
             </Grid>
           ))}
         {showSpocList && (
-          <Grid item xs={12} lg={12} sx={{ marginTop: 2 }}>
+          <Box sx={{ marginTop: 2 }}>
             <CustomButtonBlue
               title="Add New SPOC"
               onClick={() => {
@@ -269,8 +277,9 @@ const AddSpocInVisitDetail = ({
               }}
               styles={{ width: "150px", height: "40px" }}
             />
-          </Grid>
+          </Box>
         )}
+        {/* </Box> */}
       </Box>
 
       <Portal>

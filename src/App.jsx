@@ -32,6 +32,7 @@ import QuotationCreate from "./corpexecutionportal/pages/quotationCreate";
 import QuotationUpdate from "./corpexecutionportal/pages/quotationUpdate";
 import QuotationListCorp from "./corpexecutionportal/pages/quotationListCorp";
 import AddQuotationDataCorp from "./corpexecutionportal/pages/addQuotationDataCorp";
+import OrderConfirmedDetailCorp from "./corpexecutionportal/pages/orderConfirmedDetailCorp";
 
 function App() {
   const router = createBrowserRouter(
@@ -106,6 +107,10 @@ function App() {
             />
 
             <Route path="orderconfirmed" element={<OrderConfirmedCorp />} />
+            <Route
+              path="orderconfirmed/detailed/:itemId"
+              element={<OrderConfirmedDetailCorp />}
+            />
             <Route
               path="executionplanning"
               element={<ExecutionPlanningCorp />}

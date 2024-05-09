@@ -39,7 +39,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.orders)}`}</ShowCount>,
       path: "/corp/orderconfirmed",
       xsgridwidth: 12,
-      disabled: true,
+      disabled: false,
     },
     {
       id: 4,

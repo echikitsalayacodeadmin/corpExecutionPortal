@@ -36,6 +36,7 @@ const CorpSalesRegistration = () => {
   const [files, selectFiles] = useFileUpload();
   const userId = localStorage.getItem("USER_ID_CORP_SALES");
   const userName = localStorage.getItem("USER_NAME_CORP_SALES");
+
   const [isDisabled, setIsDisabled] = useState(false);
   const [formValues, setFormValues] = useState({
     corpSalesId: "",
@@ -43,25 +44,12 @@ const CorpSalesRegistration = () => {
     corpType: "",
     address: "",
     noOfPlants: "",
-    timeField: dayjs().format("YYYY-MM-DD"),
     onRollEmployees: "",
     offRollEmployees: "",
-    prospectiveServices: [],
-    auditMonth: dayjs().format("YYYY-MM-DD"),
     photoUrl: "",
-    interested: null,
-    quotationAsked: false,
-    anoterVisitRequired: false,
-    interestedRemark: "",
-    spocList: [],
-    visitType: "",
     userId: 0,
-    childUserId: [0],
-    registrationDate: dayjs().format("YYYY-MM-DD"),
     userName: "",
     location: "",
-    priority: "",
-    nextVisitDate: dayjs().format("YYYY-MM-DD"),
   });
 
   const obj = {
@@ -71,65 +59,9 @@ const CorpSalesRegistration = () => {
     noOfPlants: formValues.noOfPlants,
     onRollEmployees: formValues.onRollEmployees,
     offRollEmployees: formValues.offRollEmployees,
-    auditMonth: formValues.auditMonth,
-    prospectiveServices: formValues.prospectiveServices,
-    interested: formValues.interested,
-    quotationAsked: formValues.quotationAsked,
-    anoterVisitRequired: formValues.anoterVisitRequired,
-    interestedRemark: formValues.interestedRemark,
-    spocList: formValues.spocList,
     userId: userId,
-    childUserId: formValues.childUserId.map((item) => item.id) || [],
-    registrationDate: formValues.registrationDate,
     userName: userName,
     location: formValues.location,
-    priority: formValues.priority || null,
-    visitType: formValues.visitType || null,
-    nextVisitDate: dayjs().format("YYYY-MM-DD"),
-  };
-
-  if (formValues?.nextVisitDate) {
-    obj.corpSalesVisitEntities = [
-      {
-        nextVisitDate: formValues.nextVisitDate,
-        userId: userId,
-      },
-    ];
-  }
-
-  useEffect(() => {
-    if (!formValues.anoterVisitRequired) {
-      setFormValues((prevState) => ({
-        ...prevState,
-        nextVisitDate: dayjs().add(7, "day").format("YYYY-MM-DD"),
-      }));
-    } else if (formValues.anoterVisitRequired === true) {
-      setFormValues((prevState) => ({
-        ...prevState,
-        nextVisitDate: null,
-      }));
-    }
-  }, [formValues.anoterVisitRequired]);
-
-  const handleUpload = async (corpSalesId) => {
-    const formData = new FormData();
-    formValues.photoUrl.file
-      ? formData.append("file", formValues.photoUrl.file)
-      : null;
-    const url =
-      BASE_URL +
-      "corpSales/upload?corpSalesId=" +
-      corpSalesId +
-      "&fileType=PHOTO";
-    const result = await uploadFile(url, formData);
-    if (result.data) {
-      enqueueSnackbar("Successfully Uploaded!", { variant: "success" });
-      navigate(-1);
-    } else {
-      enqueueSnackbar("An error occured while uploading photo", {
-        variant: "error",
-      });
-    }
   };
 
   const handleSubmit = async () => {
@@ -152,7 +84,26 @@ const CorpSalesRegistration = () => {
     }
   };
 
-  console.log({ formValues });
+  const handleUpload = async (corpSalesId) => {
+    const formData = new FormData();
+    formValues.photoUrl.file
+      ? formData.append("file", formValues.photoUrl.file)
+      : null;
+    const url =
+      BASE_URL +
+      "corpSales/upload?corpSalesId=" +
+      corpSalesId +
+      "&fileType=PHOTO";
+    const result = await uploadFile(url, formData);
+    if (result.data) {
+      enqueueSnackbar("Successfully Uploaded!", { variant: "success" });
+      navigate(-1);
+    } else {
+      enqueueSnackbar("An error occured while uploading photo", {
+        variant: "error",
+      });
+    }
+  };
 
   return (
     <Fragment>
@@ -173,7 +124,7 @@ const CorpSalesRegistration = () => {
             }}
           />
         </Grid>
-        <Grid item xs={6} lg={6}>
+        <Grid item xs={4} lg={6}>
           <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
@@ -182,21 +133,13 @@ const CorpSalesRegistration = () => {
             placeholder={"#Plants"}
             value={formValues.noOfPlants || ""}
             onChange={(e) => {
-              setFormValues({ ...formValues, noOfPlants: e.target.value });
+              if (!isNaN(e.target.value) && e.target.value.length >= 0) {
+                setFormValues({ ...formValues, noOfPlants: e.target.value });
+              }
             }}
           />
         </Grid>
-        <Grid item xs={6} lg={6}>
-          <GlobalDateLayout
-            label={"Date"}
-            initialDate={formValues.registrationDate}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"registrationDate"}
-            disableFuture={true}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={8} lg={12}>
           <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
@@ -209,6 +152,7 @@ const CorpSalesRegistration = () => {
             }}
           />
         </Grid>
+
         <Grid item xs={12} lg={12}>
           <SelectLocation
             freeSolo={true}
@@ -260,126 +204,6 @@ const CorpSalesRegistration = () => {
           />
         </Grid>
 
-        <Grid item xs={12} lg={12}>
-          <AddPotentialServices
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-
-        <Grid item xs={12} lg={12}>
-          <SelectKam
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"childUserId"}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <AddSpocComp formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <VisitType formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <Priority formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
-
-        <Grid
-          item
-          xs={12}
-          lg={3}
-          sx={{ display: "flex", alignItems: "center", gap: "10px" }}
-        >
-          <Typography>Interested</Typography>
-          <RadioGroup
-            value={
-              formValues.interested === true
-                ? "Yes"
-                : formValues.interested === false
-                ? "No"
-                : ""
-            }
-            onChange={(e) => {
-              setFormValues({
-                ...formValues,
-                interested:
-                  e.target.value === "Yes"
-                    ? true
-                    : e.target.value === "No"
-                    ? false
-                    : "",
-              });
-            }}
-          >
-            <Box sx={{ display: "flex" }}>
-              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-              <FormControlLabel value="No" control={<Radio />} label="No" />
-            </Box>
-          </RadioGroup>
-        </Grid>
-
-        <Grid item xs={12} lg={4}>
-          <FormControlLabel
-            label="Another Visit Asked"
-            labelPlacement="start"
-            sx={{ marginLeft: "-2px" }}
-            control={
-              <Box sx={{ marginRight: "10px" }}>
-                <IOSSwitch
-                  checked={formValues.anoterVisitRequired}
-                  onChange={(e) => {
-                    setFormValues({
-                      ...formValues,
-                      anoterVisitRequired: e.target.checked,
-                    });
-                  }}
-                />
-              </Box>
-            }
-          />
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <FormControlLabel
-            label="Quotation Required"
-            labelPlacement="start"
-            sx={{ marginLeft: "-2px" }}
-            control={
-              <Box sx={{ marginRight: "10px" }}>
-                <IOSSwitch
-                  checked={formValues.quotationAsked}
-                  onChange={(e) => {
-                    setFormValues({
-                      ...formValues,
-                      quotationAsked: e.target.checked,
-                    });
-                  }}
-                />
-              </Box>
-            }
-          />
-        </Grid>
-
-        <Grid item xs={6} lg={6}>
-          <GlobalDateLayout
-            label={"Sales Date"}
-            initialDate={formValues.auditMonth}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"auditMonth"}
-          />
-        </Grid>
-        {formValues.anoterVisitRequired === true && (
-          <Grid item xs={6} lg={6}>
-            <GlobalDateLayout
-              label={"Next Visit Date"}
-              initialDate={formValues?.nextVisitDate}
-              formValues={formValues}
-              setFormValues={setFormValues}
-              property={"nextVisitDate"}
-              disablePast={true}
-            />
-          </Grid>
-        )}
         <Grid item xs={12} lg={6}>
           <UploadFile
             title="Upload Photo"
@@ -434,7 +258,7 @@ const CorpSalesRegistration = () => {
         >
           <Button
             disabled={
-              isDisabled === true || formValues.visitType === "" ? true : false
+              isDisabled === true || formValues.corpName === "" ? true : false
             }
             variant="contained"
             sx={{ width: "150px", borderRadius: "15px" }}

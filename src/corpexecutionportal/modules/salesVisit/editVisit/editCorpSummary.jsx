@@ -138,16 +138,7 @@ const EditCorpSummary = () => {
             }}
           />
         </Grid>
-        <Grid item xs={6} lg={6}>
-          <GlobalDateLayout
-            label={"Date"}
-            initialDate={formValues.registrationDate}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"registrationDate"}
-            disableFuture={true}
-          />
-        </Grid>
+
         <Grid item xs={12} lg={6}>
           <TextField
             fullWidth
@@ -212,41 +203,23 @@ const EditCorpSummary = () => {
           />
         </Grid>
 
-        <Grid item xs={12} lg={12}>
-          <AddPotentialServices
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid>
-        {/* <Grid item xs={12} lg={12}>
-          <CompanyVisitDetails data={formValues} onlyView={true} />
-        </Grid> */}
-        {/* <Grid item xs={12} lg={12}>
-          <AddSpocComp
-            formValues={formValues}
-            setFormValues={setFormValues}
-            removeEdit={true}
-          />
-        </Grid> */}
-        <Grid item xs={6} lg={6}>
-          <Priority formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <GlobalDateLayout
-            label={"Sales Date"}
-            initialDate={formValues.auditMonth}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"auditMonth"}
-          />
-        </Grid>
         <Grid item xs={12} lg={6}>
-          <Button
-            disabled={formValues?.photoUrl ? false : true}
-            onClick={() => {
-              handleDownload(formValues?.photoUrl);
-            }}
-          ></Button>
+          <UploadFile
+            title="Upload Photo"
+            styles={{ height: "40px", borderRadius: "15px" }}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"photoUrl"}
+            onClick={() =>
+              selectFiles({ accept: "*" }, ({ name, size, source, file }) => {
+                const filedata = { name, size, source, file };
+                setFormValues((prevFormValues) => ({
+                  ...prevFormValues,
+                  photoUrl: filedata,
+                }));
+              })
+            }
+          />
         </Grid>
 
         <Grid
