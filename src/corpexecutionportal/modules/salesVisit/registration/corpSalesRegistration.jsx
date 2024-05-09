@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import VisitType from "./subComp/visitType";
 import Priority from "./subComp/priority";
+import SubLocation from "./subComp/subLocation";
 
 const CorpSalesRegistration = () => {
   const navigate = useNavigate();
@@ -49,7 +50,9 @@ const CorpSalesRegistration = () => {
     photoUrl: "",
     userId: 0,
     userName: "",
+    priority: "",
     location: "",
+    subLocation: "",
   });
 
   const obj = {
@@ -62,6 +65,8 @@ const CorpSalesRegistration = () => {
     userId: userId,
     userName: userName,
     location: formValues.location,
+    subLocation: formValues.subLocation,
+    priority: formValues.priority,
   };
 
   const handleSubmit = async () => {
@@ -97,7 +102,7 @@ const CorpSalesRegistration = () => {
     const result = await uploadFile(url, formData);
     if (result.data) {
       enqueueSnackbar("Successfully Uploaded!", { variant: "success" });
-      navigate(-1);
+      navigate(`/corp/salesvisit/detail/${result?.data?.corpSalesId}`);
     } else {
       enqueueSnackbar("An error occured while uploading photo", {
         variant: "error",
@@ -124,7 +129,7 @@ const CorpSalesRegistration = () => {
             }}
           />
         </Grid>
-        <Grid item xs={4} lg={6}>
+        <Grid item xs={6} lg={6}>
           <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
@@ -139,7 +144,10 @@ const CorpSalesRegistration = () => {
             }}
           />
         </Grid>
-        <Grid item xs={8} lg={12}>
+        <Grid item xs={6} lg={6}>
+          <Priority formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
+        <Grid item xs={12} lg={12}>
           <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
@@ -153,7 +161,7 @@ const CorpSalesRegistration = () => {
           />
         </Grid>
 
-        <Grid item xs={12} lg={12}>
+        <Grid item xs={12} lg={6}>
           <SelectLocation
             freeSolo={true}
             fontWeight={"600"}
@@ -164,7 +172,13 @@ const CorpSalesRegistration = () => {
             placeholder={"Select Location"}
           />
         </Grid>
-
+        <Grid item xs={12} lg={6}>
+          <SubLocation
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"subLocation"}
+          />
+        </Grid>
         <Grid item xs={6} lg={6}>
           <TextField
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}

@@ -29,6 +29,7 @@ import { fetchCorpDetails } from "../../../services/salesVisitServices";
 import CompanyVisitDetails from "../detail/subComp/companyVisitDetails";
 import dayjs from "dayjs";
 import Priority from "../registration/subComp/priority";
+import SubLocation from "../registration/subComp/subLocation";
 
 const EditCorpSummary = () => {
   const { itemId } = useParams();
@@ -100,11 +101,12 @@ const EditCorpSummary = () => {
     }
   };
 
-  const handleDownload = (url) => {
-    if (url !== "" || url !== null || url !== undefined) {
-      window.open(url, "_blank");
-    }
-  };
+  useEffect(() => {
+    setFormValues({
+      ...formValues,
+      photoUrl: { source: formValues.photoUrl || "" },
+    });
+  }, [isLoading]);
 
   return (
     <Fragment>
@@ -138,8 +140,10 @@ const EditCorpSummary = () => {
             }}
           />
         </Grid>
-
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={6} lg={6}>
+          <Priority formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
+        <Grid item xs={12} lg={12}>
           <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
@@ -161,6 +165,13 @@ const EditCorpSummary = () => {
             property={"location"}
             label={"Select Location"}
             placeholder={"Select Location"}
+          />
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <SubLocation
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"subLocation"}
           />
         </Grid>
 
@@ -219,6 +230,29 @@ const EditCorpSummary = () => {
                 }));
               })
             }
+          />
+        </Grid>
+
+        <Grid item xs={12} lg={12}>
+          <TextField
+            multiline
+            label="Remark"
+            size="small"
+            fullWidth
+            placeholder="Enter Remark"
+            value={formValues.interestedRemark || ""}
+            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
+            onChange={(e) =>
+              setFormValues({
+                ...formValues,
+                interestedRemark: e.target.value,
+              })
+            }
+            inputProps={{
+              style: {
+                height: "110px",
+              },
+            }}
           />
         </Grid>
 

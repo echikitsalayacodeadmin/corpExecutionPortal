@@ -1,22 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import CustomAutocomplete from "../../../../../assets/customAutocomplete";
 
-const SubLocation = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
-  const handleChangeVisitType = (event, newValue, reason) => {
+const SubLocation = ({ formValues, setFormValues, property }) => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const handleChangeSubLoaction = (event, newValue, reason) => {
     setSelectedValue(newValue);
-    setFormValues({ ...formValues, sub: newValue });
+    setFormValues({ ...formValues, [property]: newValue });
     if (reason === "clear") {
-      setSelectedValue({
-        value: "",
-        label: "",
-      });
-      setFormValues({ ...formValues, priority: "" });
+      setSelectedValue("");
+      setFormValues({ ...formValues, [property]: "" });
     }
   };
-
   useEffect(() => {
-    setSelectedValue(formValues.priority);
+    setSelectedValue(formValues?.[property] || "");
   }, [formValues]);
   return (
     <Fragment>

@@ -142,7 +142,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
               </Typography>
             ))}
           </Grid>
-          <Grid
+          {/* <Grid
             item
             xs={12}
             lg={12}
@@ -168,7 +168,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
                   )
                 );
               })}
-          </Grid>
+          </Grid> */}
         </Grid>
       </NavLink>
     </Fragment>

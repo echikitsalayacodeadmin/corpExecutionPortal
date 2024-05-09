@@ -20,6 +20,7 @@ const GlobalDateLayout = ({
   formValues,
   setFormValues,
   property,
+  maxNextDays,
 }) => {
   const [dateValue, setDateValue] = useState(null);
 
@@ -125,6 +126,7 @@ const GlobalDateLayout = ({
               </>
             ),
           }}
+          maxDate={dayjs().add(maxNextDays, "day")}
           textField={(params) => (
             <TextField {...params} size="small" sx={{ borderRadius: "15px" }} />
           )}

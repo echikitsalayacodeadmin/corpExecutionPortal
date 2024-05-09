@@ -16,10 +16,6 @@ const SelectLocation = ({
 }) => {
   const [value, setValue] = useState(null);
 
-  useEffect(() => {
-    setValue(formValues?.[property] || selectedValue || null);
-  }, [formValues, selectedValue]);
-
   const [regionList, setRegionList] = useState([]);
 
   const fetchRegionList = async () => {
@@ -44,6 +40,10 @@ const SelectLocation = ({
       setSelectedValue(newValue);
     }
   };
+
+  useEffect(() => {
+    setValue(formValues?.[property] || selectedValue || null);
+  }, [formValues, selectedValue]);
 
   return (
     <Fragment>

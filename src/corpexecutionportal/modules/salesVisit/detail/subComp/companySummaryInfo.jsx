@@ -76,36 +76,6 @@ const CompanySummaryInfo = ({ data }) => {
               <Typography sx={styles.heading}>Location -</Typography>
               <Typography sx={styles.data}>{data?.location}</Typography>
             </Grid>
-            <Grid item xs={12} lg={6} md={6} sm={12} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>Sales Date -</Typography>
-              <Typography sx={styles.data}>{data?.auditMonth}</Typography>
-            </Grid>
-            {/* <Grid item xs={12} lg={6} md={6} sm={12} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>Delivery Date -</Typography>
-              <Typography sx={styles.data}>{data?.deliveryDate}</Typography>
-            </Grid>
-
-            <Grid item xs={12} lg={6} md={6} sm={12} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>
-                Delivery Instruction -
-              </Typography>
-              <Typography sx={styles.data}>
-                {data?.deliveryInstruction}
-              </Typography>
-            </Grid> */}
-            <Grid
-              item
-              xs={12}
-              lg={12}
-              md={12}
-              sm={12}
-              sx={{ display: "flex", marginTop: "5px", flexWrap: "wrap" }}
-            >
-              <Typography sx={styles.heading}>Potential Services -</Typography>
-              <Typography sx={styles.data}>
-                {data?.prospectiveServices?.join(", ")}
-              </Typography>
-            </Grid>
             <Grid
               item
               xs={12}
@@ -125,25 +95,6 @@ const CompanySummaryInfo = ({ data }) => {
                   title="Photo"
                   onClick={() => {
                     handleDownload(data?.photoUrl);
-                  }}
-                />
-              )}
-              {data?.invoiceUrl === "" || data?.invoiceUrl === null ? null : (
-                <CustomButtonBlue
-                  startIcon={<DownloadIcon />}
-                  title=" Invoice"
-                  onClick={() => {
-                    handleDownload(data?.invoiceUrl);
-                  }}
-                />
-              )}
-              {data?.approvedQuotationUrl === "" ||
-              data?.approvedQuotationUrl === null ? null : (
-                <CustomButtonBlue
-                  startIcon={<DownloadIcon />}
-                  title="Approved Quotation"
-                  onClick={() => {
-                    handleDownload(data?.approvedQuotationUrl);
                   }}
                 />
               )}

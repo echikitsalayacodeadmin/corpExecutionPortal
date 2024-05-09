@@ -29,6 +29,8 @@ const UploadFile = ({
     setOpen(false);
   };
 
+  console.log({ photourl: formValues?.[property] });
+
   return (
     <Fragment>
       <Box>

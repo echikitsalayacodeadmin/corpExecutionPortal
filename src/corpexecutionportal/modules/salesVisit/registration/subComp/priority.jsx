@@ -2,21 +2,18 @@ import React, { Fragment, useEffect, useState } from "react";
 import CustomAutocomplete from "../../../../../assets/customAutocomplete";
 
 const Priority = ({ formValues, setFormValues }) => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState("");
   const handleChangeVisitType = (event, newValue, reason) => {
     setSelectedValue(newValue);
     setFormValues({ ...formValues, priority: newValue });
     if (reason === "clear") {
-      setSelectedValue({
-        value: "",
-        label: "",
-      });
+      setSelectedValue("");
       setFormValues({ ...formValues, priority: "" });
     }
   };
 
   useEffect(() => {
-    setSelectedValue(formValues.priority);
+    setSelectedValue(formValues.priority || "");
   }, [formValues]);
 
   return (

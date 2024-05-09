@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   FormControlLabel,
   Grid,
@@ -49,30 +50,17 @@ const CorpSalesNewVisit = () => {
   const [corpDetail, setCorpDetail] = useState("");
   const [formValues, setFormValues] = useState({
     corpSalesId: "",
-    corpName: "",
-    corpType: "",
-    address: "",
-    noOfPlants: "",
-    timeField: dayjs().format("YYYY-MM-DD"),
-    onRollEmployees: "",
-    offRollEmployees: "",
-    prospectiveServices: [],
-    auditMonth: dayjs().format("YYYY-MM-DD"),
-    photoUrl: "",
+    auditMonth: null,
     interested: false,
     quotationAsked: false,
     anoterVisitRequired: false,
     interestedRemark: "",
-    spocList: [],
     visitType: "",
     userId: 0,
     childUserId: [0],
-    registrationDate: dayjs().format("YYYY-MM-DD"),
     userName: "",
-    location: "",
-    priority: "",
     visitPhotoUrl: "",
-    nextVisitDate: dayjs().format("YYYY-MM-DD"),
+    nextVisitDate: null,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -86,30 +74,17 @@ const CorpSalesNewVisit = () => {
         setFormValues({
           ...formValues,
           corpSalesId: result?.data.corpSalesId,
-          corpName: result?.data.corpName || "",
-          corpType: result?.data.corpType || "",
-          address: result?.data.address || "",
-          noOfPlants: result?.data.noOfPlants || "",
-          timeField: new Date(),
-          onRollEmployees: result?.data.onRollEmployees || "",
-          offRollEmployees: result?.data.offRollEmployees || "",
-          prospectiveServices: result?.data.prospectiveServices || [],
           auditMonth: result?.data.auditMonth,
-          photoUrl: result?.data.photoUrl || "",
-          spocList: result?.data.spocList || [],
           visitType: result?.data.visitType || "",
           userId: result?.data.userId || userId,
-          childUserId: result?.data.childUserId || [],
-          registrationDate: result?.data?.registrationDate,
+          childUserId: result?.data?.childUserId || [],
           userName: result?.data.userName || userName,
-          location: result?.data.location || "",
-          priority: result?.data.priority || "",
           interested: false,
           quotationAsked: false,
           anoterVisitRequired: false,
           interestedRemark: "",
           visitPhotoUrl: "",
-          nextVisitDate: dayjs().format("YYYY-MM-DD"),
+          nextVisitDate: null,
         });
       } else {
         console.log("SUCCESS", result?.error);
@@ -133,7 +108,9 @@ const CorpSalesNewVisit = () => {
   formData.append("userId", userId);
   formData.append(
     "nextVisitDate",
-    new Date(formValues?.nextVisitDate)?.toISOString().slice(0, 10)
+    formValues.nextVisitDate === null
+      ? dayjs().add(3, "day").format("YYYY-MM-DD")
+      : dayjs(formValues?.nextVisitDate).format("YYYY-MM-DD")
   );
   formData.append(
     "childUserId",
@@ -153,41 +130,11 @@ const CorpSalesNewVisit = () => {
       enqueueSnackbar("Successfully Saved", {
         variant: "success",
       });
-      handleUpdate();
     } else if (result && result?.error) {
       enqueueSnackbar("An error occured", {
         variant: "error",
       });
       setIsDisabled(false);
-    }
-  };
-  const Obj2 = {
-    corpSalesId: formValues?.corpSalesId,
-    corpName: formValues.corpName,
-    address: formValues.address,
-    onRollEmployees: formValues.onRollEmployees,
-    offRollEmployees: formValues.offRollEmployees,
-    auditMonth: formValues.auditMonth === null ? null : formValues.auditMonth,
-    prospectiveServices: formValues.prospectiveServices,
-    location: formValues?.location || null,
-    priority: formValues?.priority || null,
-  };
-
-  const handleUpdate = async () => {
-    const url = BASE_URL + "corpSales/edit";
-    const result = await updateData(url, Obj2);
-    if (result && result.data) {
-      console.log("SUCCESS POST", result?.data);
-      enqueueSnackbar("Successfully Saved", {
-        variant: "success",
-      });
-      setTimeout(() => {
-        navigate(-1);
-      }, 1000);
-    } else if (result && result?.error) {
-      enqueueSnackbar("An error occured", {
-        variant: "error",
-      });
     }
   };
 
@@ -200,116 +147,6 @@ const CorpSalesNewVisit = () => {
   return (
     <Fragment>
       <Grid container spacing={2}>
-        {/* <Grid item xs={12} lg={12}>
-          <CompanyName formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <TextField
-            fullWidth
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-            size="small"
-            label={"Company Address"}
-            placeholder={"Enter Company Address"}
-            value={formValues.address || ""}
-            onChange={(e) => {
-              setFormValues({ ...formValues, address: e.target.value });
-            }}
-          />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <TextField
-            fullWidth
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-            size="small"
-            label={"#Plants"}
-            placeholder={"#Plants"}
-            value={formValues.noOfPlants || ""}
-            onChange={(e) => {
-              setFormValues({ ...formValues, noOfPlants: e.target.value });
-            }}
-          />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <GlobalDateLayout
-            label={"Date"}
-            initialDate={formValues.registrationDate}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"registrationDate"}
-            disableFuture={true}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <TextField
-            fullWidth
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-            size="small"
-            label={"Company Type"}
-            placeholder={"Enter Company Type"}
-            value={formValues.corpType || ""}
-            onChange={(e) => {
-              setFormValues({ ...formValues, corpType: e.target.value });
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <SelectLocation
-            freeSolo={true}
-            fontWeight={"600"}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"location"}
-            label={"Select Location"}
-            placeholder={"Select Location"}
-          />
-        </Grid>
-
-        <Grid item xs={6} lg={6}>
-          <TextField
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-            fullWidth
-            label="#On Roll"
-            placeholder="#On Roll"
-            variant="outlined"
-            size="small"
-            value={formValues?.onRollEmployees || ""}
-            onChange={(e) => {
-              if (!isNaN(e.target.value) && e.target.value.length >= 0) {
-                setFormValues({
-                  ...formValues,
-                  onRollEmployees: e.target.value,
-                });
-              }
-            }}
-          />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <TextField
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-            fullWidth
-            label="#Off Roll"
-            variant="outlined"
-            placeholder="#Off Role"
-            size="small"
-            value={formValues?.offRollEmployees || ""}
-            onChange={(e) => {
-              if (!isNaN(e.target.value) && e.target.value.length >= 0) {
-                setFormValues({
-                  ...formValues,
-                  offRollEmployees: e.target.value,
-                });
-              }
-            }}
-          />
-        </Grid>
-
-        <Grid item xs={12} lg={12}>
-          <AddPotentialServices
-            formValues={formValues}
-            setFormValues={setFormValues}
-          />
-        </Grid> */}
-
         <Grid item xs={12} lg={12}>
           <SelectKam
             formValues={formValues}
@@ -318,21 +155,8 @@ const CorpSalesNewVisit = () => {
           />
         </Grid>
 
-        {/* <Grid item xs={12} lg={12}>
-          <CompanyVisitDetails data={corpDetail} onlyView={true} />
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <AddSpocComp
-            formValues={formValues}
-            setFormValues={setFormValues}
-            removeEdit={true}
-          />
-        </Grid> */}
         <Grid item xs={6} lg={6}>
           <VisitType formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
-        <Grid item xs={6} lg={6}>
-          <Priority formValues={formValues} setFormValues={setFormValues} />
         </Grid>
 
         <Grid
@@ -341,32 +165,43 @@ const CorpSalesNewVisit = () => {
           lg={6}
           sx={{ display: "flex", alignItems: "center", gap: "10px" }}
         >
-          <Typography>Interested</Typography>
-          <RadioGroup
-            value={
-              formValues.interested === true
-                ? "Yes"
-                : formValues.interested === false
-                ? "No"
-                : ""
+          <Typography>Interested ?</Typography>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={formValues.interested === true}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    interested: e.target.checked
+                      ? true
+                      : formValues.interested === false
+                      ? false
+                      : null,
+                  })
+                }
+              />
             }
-            onChange={(e) => {
-              setFormValues({
-                ...formValues,
-                interested:
-                  e.target.value === "Yes"
-                    ? true
-                    : e.target.value === "No"
-                    ? false
-                    : "",
-              });
-            }}
-          >
-            <Box sx={{ display: "flex" }}>
-              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-              <FormControlLabel value="No" control={<Radio />} label="No" />
-            </Box>
-          </RadioGroup>
+            label="Yes"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={formValues.interested === false}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    interested: e.target.checked
+                      ? false
+                      : formValues.interested === true
+                      ? true
+                      : null,
+                  })
+                }
+              />
+            }
+            label="No"
+          />
         </Grid>
         <Grid item xs={12} lg={6}>
           <FormControlLabel
@@ -406,6 +241,7 @@ const CorpSalesNewVisit = () => {
             setFormValues={setFormValues}
             property={"nextVisitDate"}
             disablePast={true}
+            maxNextDays={15}
           />
         </Grid>
 

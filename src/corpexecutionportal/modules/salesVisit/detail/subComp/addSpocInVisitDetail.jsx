@@ -25,6 +25,7 @@ import { isMobile } from "react-device-detect";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import UploadFile from "../../../../global/uploadFIle";
 
 const AddSpocInVisitDetail = ({
   formValues,
@@ -49,6 +50,7 @@ const AddSpocInVisitDetail = ({
     mobile: "",
     designation: "",
     isDecisionMaker: "No",
+    spocPhotoUrl: "",
   });
   const [open, setOpen] = useState(false);
   const [editedIndex, setEditedIndex] = useState(null);
@@ -65,6 +67,7 @@ const AddSpocInVisitDetail = ({
         mobile: "",
         designation: "",
         isDecisionMaker: "No",
+        spocPhotoUrl: "",
       });
       setEditedIndex(null);
     }
@@ -451,6 +454,27 @@ const AddSpocInVisitDetail = ({
                     />
                   </Box>
                 </RadioGroup>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <UploadFile
+                  title="Upload SPOC Photo"
+                  styles={{ height: "40px", borderRadius: "15px" }}
+                  formValues={formValues}
+                  setFormValues={setFormValues}
+                  property={"visitPhotoUrl"}
+                  onClick={() =>
+                    selectFiles(
+                      { accept: "*" },
+                      ({ name, size, source, file }) => {
+                        const filedata = { name, size, source, file };
+                        setFormValues((prevFormValues) => ({
+                          ...prevFormValues,
+                          spocPhotoUrl: filedata,
+                        }));
+                      }
+                    )
+                  }
+                />
               </Grid>
               <Grid item xs={12} lg={12} sx={{ textAlign: "center" }}>
                 <CustomButtonBlue
