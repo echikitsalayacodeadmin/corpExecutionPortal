@@ -19,7 +19,7 @@ import AddSpocComp from "./subComp/addSpocComp";
 import SelectKam from "../../../global/selectKam/selectKam";
 import CustomSelect from "../../../../assets/customSelect";
 import { IOSSwitch } from "../../../../assets/customSwitch";
-import UploadFile from "../../../global/uploadFIle";
+import UploadFile from "../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";

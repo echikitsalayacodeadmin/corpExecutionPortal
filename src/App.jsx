@@ -33,6 +33,7 @@ import QuotationUpdate from "./corpexecutionportal/pages/quotationUpdate";
 import QuotationListCorp from "./corpexecutionportal/pages/quotationListCorp";
 import AddQuotationDataCorp from "./corpexecutionportal/pages/addQuotationDataCorp";
 import OrderConfirmedDetailCorp from "./corpexecutionportal/pages/orderConfirmedDetailCorp";
+import ServiceFormCorp from "./corpexecutionportal/pages/serviceFormCorp";
 
 function App() {
   const router = createBrowserRouter(
@@ -84,6 +85,10 @@ function App() {
             <Route
               path="salesvisit/detail/:itemId"
               element={<SalesVisitDetailCorp />}
+            />
+            <Route
+              path="salesvisit/serviceform/:itemId"
+              element={<ServiceFormCorp />}
             />
             <Route path="registercorp" element={<RegisterCorp />} />
             <Route path="addnewvisit/:itemId" element={<AddNewVisitCorp />} />

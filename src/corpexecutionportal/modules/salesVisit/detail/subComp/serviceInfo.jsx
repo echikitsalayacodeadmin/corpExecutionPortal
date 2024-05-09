@@ -1035,7 +1035,6 @@ const ServiceInfo = ({ data, setFetch }) => {
     <Fragment>
       {rows.map((obj) => (
         <Grid
-          columnSpacing={0.5}
           container
           key={obj.id}
           sx={{
@@ -1047,150 +1046,56 @@ const ServiceInfo = ({ data, setFetch }) => {
             borderRadius: "15px",
           }}
         >
-          <Grid item xs={9} lg={5}>
-            <Typography sx={{ fontWeight: "bold", marginBottom: "10px" }}>
-              {obj.testName}
-            </Typography>
+          <Grid item xs={12} lg={12}>
+            <Typography sx={{ fontWeight: "bold" }}>{obj.testName}</Typography>
           </Grid>
-          <Grid item xs={1.5} lg={1}>
+
+          <Grid item xs={6} lg={3}>
+            <Typography>First Time User</Typography>
+          </Grid>
+
+          <Grid item xs={6} lg={3}>
+            <Typography>Quotation Asked</Typography>
+          </Grid>
+          <Grid item xs={6} lg={3}>
+            <Typography>Good Confidence</Typography>
+          </Grid>
+
+          <Grid item xs={3} lg={2}>
+            <CustomButtonBlue
+              onClick={() => {
+                const query = {
+                  corpId: corpSalesId,
+                  serviceName: obj.testName,
+                };
+                navigate(
+                  `/corp/salesvisit/quotationlist/${encodeURIComponent(
+                    JSON.stringify(query)
+                  )}`
+                );
+              }}
+              title="View"
+            />
+          </Grid>
+          <Grid item xs={3} lg={1}>
             <Tooltip title="More Info">
               <IconButton
                 onClick={() => {
-                  console.log({ obj });
-                  setOpenModal(true);
-                  setSelectedRow(obj);
-                  setMoreInfoObject({
-                    status: {
-                      value: obj.status || "",
-                      label: obj.status || "",
-                    },
-                    required: obj.required || "",
-                    lastPlayer: obj.lastPlayer || "",
-                    lastAmount: obj.lastAmount || "",
-                    dueDate: obj.dueDate
-                      ? new Date(obj.dueDate)
-                      : dayjs().format("YYYY-MM-DD"),
-                    remarks: obj.remarks || "",
-                    confidenceLeveLStatus: {
-                      value: obj?.confidenceLeveLStatus || "",
-                      label:
-                        obj?.confidenceLeveLStatus
-                          ?.replace(/_/g, " ")
-                          ?.toLowerCase()
-                          ?.replace(/^\w/, (c) => c?.toUpperCase()) || "",
-                    },
-
-                    corpRequirementStatus: obj.corpRequirementStatus || "",
-                    estimatedBusinessSize: obj.estimatedBusinessSize || "",
-                    typeOfPolicy: obj.typeOfPolicy || "",
-                    numberOfLives: obj.numberOfLives || "",
-                    decisionMaking: obj.decisionMaking || "",
-                    currentServiceProvider: obj.currentServiceProvider || "",
-                    noOfStaffNeeded: obj.noOfStaffNeeded || "",
-                    doctorTypeRequired: obj.doctorTypeRequired || "",
-                    typeOfRequest: obj.typeOfRequest || "",
-                    noOfTrainingNeeded: obj.noOfTrainingNeeded || "",
-                    emergencyTieUp: obj.emergencyTieUp || "",
-                    noOfAccidentsInMonth: obj.noOfAccidentsInMonth || "",
-                  });
+                  navigate(
+                    `/corp/salesvisit/serviceform/${encodeURIComponent(
+                      JSON.stringify(obj)
+                    )}`
+                  );
                 }}
               >
                 <InfoIcon style={{ color: "#127DDD" }} />
               </IconButton>
             </Tooltip>
           </Grid>
-          <Grid item xs={1.5} lg={1}>
-            <Tooltip title="View Quotation">
-              <IconButton
-                onClick={() => {
-                  const query = {
-                    corpId: corpSalesId,
-                    serviceName: obj.testName,
-                  };
-                  navigate(
-                    `/corp/salesvisit/quotationlist/${encodeURIComponent(
-                      JSON.stringify(query)
-                    )}`
-                  );
-                }}
-                size="small"
-                variant="contained"
-              >
-                <RemoveRedEyeIcon />
-              </IconButton>
-            </Tooltip>
-          </Grid>
-
-          <Grid item xs={7} lg={3}>
-            <CustomAutocomplete
-              required={true}
-              asterickColor={"red"}
-              fullWidth
-              size="small"
-              options={["YES", "NO"]}
-              getOptionLabel={(option) => option}
-              value={obj?.corpRequirementStatus || ""}
-              onChange={(event, newValue, reason) => {
-                const updatedRows = rows.map((row) =>
-                  row.id === obj.id
-                    ? { ...obj, corpRequirementStatus: newValue }
-                    : row
-                );
-                setRows(updatedRows);
-                if (reason === "clear") {
-                  const updatedRows = rows.map((row) =>
-                    row.id === obj.id
-                      ? {
-                          ...obj,
-                          corpRequirementStatus: null,
-                        }
-                      : row
-                  );
-                  setRows(updatedRows);
-                }
-              }}
-              label="Interested or Not"
-              placeholder="Interested or Not"
-            />
-          </Grid>
-          {isMobile && <Grid item xs={2} lg={0}></Grid>}
-
-          <Grid
-            item
-            xs={3}
-            lg={2}
-            // sx={{ display: "flex", justifyContent: "flex-end" }}
-          >
-            <IconButton
-              sx={{
-                ":disabled": {
-                  backgroundColor: obj.corpRequirementStatus
-                    ? null
-                    : "lightgray",
-                },
-              }}
-              disabled={obj.corpRequirementStatus ? false : true}
-              onClick={() => {
-                handleSave(obj);
-              }}
-            >
-              <SaveIcon
-                style={{
-                  color: obj.corpRequirementStatus ? "#127DDD" : "#FFF",
-                }}
-              />
-            </IconButton>
-          </Grid>
         </Grid>
       ))}
 
-      <ViewAllQuotation
-        openModal={openModalQuote}
-        setOpenModal={setOpenModalQuote}
-        selectedRow={selectedRow}
-      />
-
-      <Portal>
+      {/* <Portal>
         <Modal
           style={{
             display: "flex",
@@ -1433,7 +1338,7 @@ const ServiceInfo = ({ data, setFetch }) => {
             </Grid>
           </Box>
         </Modal>
-      </Portal>
+      </Portal> */}
     </Fragment>
   );
 };

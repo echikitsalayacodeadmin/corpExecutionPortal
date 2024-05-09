@@ -29,8 +29,6 @@ const UploadFile = ({
     setOpen(false);
   };
 
-  console.log({ photourl: formValues?.[property] });
-
   return (
     <Fragment>
       <Box>
@@ -68,7 +66,7 @@ const UploadFile = ({
           >
             {title}
           </Button>
-          {formValues?.[property].source && (
+          {formValues?.[property]?.source && (
             <IconButton
               onClick={() =>
                 setFormValues({ ...formValues, [property]: { source: "" } })

@@ -76,6 +76,10 @@ const CompanySummaryInfo = ({ data }) => {
               <Typography sx={styles.heading}>Location -</Typography>
               <Typography sx={styles.data}>{data?.location}</Typography>
             </Grid>
+            <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
+              <Typography sx={styles.heading}>Sub Location -</Typography>
+              <Typography sx={styles.data}>{data?.subLocation}</Typography>
+            </Grid>
             <Grid
               item
               xs={12}

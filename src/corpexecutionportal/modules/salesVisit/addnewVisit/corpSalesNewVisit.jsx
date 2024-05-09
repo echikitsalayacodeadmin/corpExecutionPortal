@@ -34,7 +34,7 @@ import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import AddPotentialServices from "../registration/subComp/addPotentialServices";
 import AddSpocComp from "../registration/subComp/addSpocComp";
 import CompanyName from "../editVisit/subComp/companyName";
-import UploadFile from "../../../global/uploadFIle";
+import UploadFile from "../../../global/uploadFile";
 import dayjs from "dayjs";
 import VisitType from "../registration/subComp/visitType";
 import Priority from "../registration/subComp/priority";

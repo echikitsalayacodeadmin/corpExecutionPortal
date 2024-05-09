@@ -6,6 +6,7 @@ import {
 import { BASE_URL } from "../../../../../assets/constants";
 import {
   Box,
+  Button,
   FormControlLabel,
   Grid,
   IconButton,
@@ -25,7 +26,8 @@ import { isMobile } from "react-device-detect";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import UploadFile from "../../../../global/uploadFIle";
+import UploadFile from "../../../../global/uploadFile";
+import { useFileUpload } from "use-file-upload";
 
 const AddSpocInVisitDetail = ({
   formValues,
@@ -35,6 +37,7 @@ const AddSpocInVisitDetail = ({
   const { itemId } = useParams();
   const corpSalesId = itemId;
   const { enqueueSnackbar } = useSnackbar();
+  const [files, selectFiles] = useFileUpload();
   const [showSpocList, setShowSpocList] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const validateEmail = (email) => {
@@ -72,6 +75,8 @@ const AddSpocInVisitDetail = ({
       setEditedIndex(null);
     }
   };
+
+  console.log({ spocForm });
 
   const handleClose = () => {
     setOpen(false);
@@ -165,32 +170,11 @@ const AddSpocInVisitDetail = ({
                 setShowSpocList(!showSpocList);
               }}
             >
-              {/* <Box
-                sx={{
-                  p: 1,
-                  height: "40px",
-                  minWidth: "150px",
-                  border: "1px solid #000",
-                  borderRadius: "15px",
-                  backgroundColor: "#FFFFFF",
-                  textAlign: "center",
-                }}
-              > */}
               <Typography sx={{ fontWeight: "bold" }}>
                 SPOC Information
               </Typography>
-              {/* </Box> */}
+
               <IconButton
-                sx={
-                  {
-                    // height: "40px",
-                    // marginRight: "15px",
-                    // backgroundColor: "#127DDD",
-                    // ":hover": {
-                    //   backgroundColor: "#1f63a1",
-                    // },
-                  }
-                }
                 onClick={() => {
                   setShowSpocList(!showSpocList);
                 }}
@@ -204,15 +188,7 @@ const AddSpocInVisitDetail = ({
             </Box>
           </Grid>
         </Grid>
-        {/* <Box
-          sx={{
-            backgroundColor: "#fff",
-            border: "1px solid #777777",
-            padding: "10px",
-            borderRadius: "15px",
-            marginBlock: "10px",
-          }}
-        > */}
+
         {showSpocList &&
           formValues?.spocList?.length > 0 &&
           formValues?.spocList?.map((spoc, index) => (
@@ -253,6 +229,9 @@ const AddSpocInVisitDetail = ({
                       {spoc.isDecisionMaker ? "Yes" : "No"}
                     </Typography>
                   </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Button variant="contained">Photo</Button>
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={2} lg={2} sx={{ textAlign: "end" }}>
@@ -262,13 +241,6 @@ const AddSpocInVisitDetail = ({
                   </IconButton>
                 )}
               </Grid>
-              {/* <Grid item xs={1} lg={1} sx={{ textAlign: "end" }}>
-                {onlyView === true ? null : (
-                  <IconButton onClick={() => handleOpen(index)}>
-                    <EditIcon />
-                  </IconButton>
-                )}
-              </Grid> */}
             </Grid>
           ))}
         {showSpocList && (
@@ -282,7 +254,6 @@ const AddSpocInVisitDetail = ({
             />
           </Box>
         )}
-        {/* </Box> */}
       </Box>
 
       <Portal>
@@ -309,7 +280,6 @@ const AddSpocInVisitDetail = ({
               width: isMobile ? "365px" : "665px",
             }}
           >
-            {/* <Box sx={{ minHeight: "130px" }}> */}
             <Box display="flex" justifyContent="flex-end">
               <IconButton onClick={handleClose}>
                 <CloseIcon />
@@ -459,16 +429,16 @@ const AddSpocInVisitDetail = ({
                 <UploadFile
                   title="Upload SPOC Photo"
                   styles={{ height: "40px", borderRadius: "15px" }}
-                  formValues={formValues}
-                  setFormValues={setFormValues}
-                  property={"visitPhotoUrl"}
+                  formValues={spocForm}
+                  setFormValues={setSpocForm}
+                  property={"spocPhotoUrl"}
                   onClick={() =>
                     selectFiles(
                       { accept: "*" },
                       ({ name, size, source, file }) => {
                         const filedata = { name, size, source, file };
-                        setFormValues((prevFormValues) => ({
-                          ...prevFormValues,
+                        setSpocForm((spocForm) => ({
+                          ...spocForm,
                           spocPhotoUrl: filedata,
                         }));
                       }
