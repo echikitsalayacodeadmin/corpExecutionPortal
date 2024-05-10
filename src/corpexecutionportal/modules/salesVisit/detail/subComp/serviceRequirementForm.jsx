@@ -55,7 +55,7 @@ const servicesFields = {
       label: "Location",
       fieldName: "location",
       type: "dropdown",
-      options: ["Onesite", "Offsite"],
+      options: ["ONSITE", "OFFSITE"],
     },
     {
       label: "Decision Owner",
@@ -144,7 +144,7 @@ const servicesFields = {
       label: "Location",
       fieldName: "location",
       type: "dropdown",
-      options: ["Onesite", "Offsite"],
+      options: ["ON_SITE", "OFF_SITE"],
     },
     {
       label: "Decision Owner",
@@ -204,7 +204,7 @@ const servicesFields = {
       label: "Degree",
       fieldName: "degree",
       type: "dropdown",
-      options: ["MBBS", "AFIH", "BOTH"],
+      options: ["MBBS", "AFIH", "MBBS_AND_AFIH"],
     },
     {
       label: "Procedure of closure",

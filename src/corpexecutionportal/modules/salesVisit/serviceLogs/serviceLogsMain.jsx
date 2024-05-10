@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
-import { Grid, Typography } from "@mui/material";
+import { Grid, IconButton, Typography } from "@mui/material";
 import { getData } from "../../../assets/corpServices";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { BASE_URL } from "../../../../assets/constants";
 
 const ServiceLogsMain = () => {
+  const navigate = useNavigate();
   const { itemId } = useParams();
   const data = JSON.parse(decodeURIComponent(itemId));
   const [serviceLog, setServiceLog] = useState([]);
@@ -67,6 +69,25 @@ const ServiceLogsMain = () => {
                     {item?.currentStatus?.replace(/_/g, " ")?.toLowerCase()}
                   </Typography>
                 </Grid>
+                {item?.currentStatus === "QUOTATION_SENT" && (
+                  <Grid item xs={12} lg={12}>
+                    <IconButton
+                      onClick={() => {
+                        const query = {
+                          corpId: data.corpId,
+                          serviceName: data.serviceName,
+                        };
+                        navigate(
+                          `/corp/salesvisit/quotationlist/${encodeURIComponent(
+                            JSON.stringify(query)
+                          )}`
+                        );
+                      }}
+                    >
+                      <RemoveRedEyeIcon />
+                    </IconButton>
+                  </Grid>
+                )}
               </Grid>
             ))}
           </Grid>

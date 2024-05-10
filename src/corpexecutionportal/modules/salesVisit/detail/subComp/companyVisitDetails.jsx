@@ -133,7 +133,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
               </Grid>
 
               <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>Last Visit Date -</Typography>
+                <Typography sx={styles.heading}>Visit Date -</Typography>
                 <Typography sx={styles.data}>{item?.visitDate}</Typography>
               </Grid>
 
