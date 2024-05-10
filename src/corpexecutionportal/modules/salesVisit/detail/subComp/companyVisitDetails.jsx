@@ -18,7 +18,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import { RemoveRedEye } from "@mui/icons-material";
 import { BASE_URL } from "../../../../../assets/constants";
 import { getData } from "../../../../assets/corpServices";
-import { getColorOfNextVisitDate } from "../../../../../assets/utils";
+import { assignColors } from "../../../../../assets/utils";
 
 const CompanyVisitDetails = ({ data, onlyView = false }) => {
   const navigate = useNavigate();
@@ -28,19 +28,102 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
       window.open(url, "_blank");
     }
   };
-  const [visitDetail, setVisitDetail] = useState();
+  const [visitDetail, setVisitDetail] = useState([
+    // {
+    //   nextVisitDate: "2024-05-10",
+    //   visitDate: "2024-05-02",
+    //   color: getColorOfNextVisitDate("2024-05-10"),
+    // },
+    // {
+    //   nextVisitDate: "2024-05-03",
+    //   visitDate: "2024-04-28",
+    //   color:
+    //     "2024-05-02" > "2024-05-03"
+    //       ? "red"
+    //       : "2024-05-02" === "2024-05-03"
+    //       ? "orange"
+    //       : "green",
+    // },
+    // {
+    //   nextVisitDate: "2024-04-28",
+    //   visitDate: "2024-04-23",
+    //   color:
+    //     "2024-04-28" > "2024-04-28"
+    //       ? "red"
+    //       : "2024-04-28" === "2024-04-28"
+    //       ? "orange"
+    //       : "green",
+    // },
+    // {
+    //   nextVisitDate: "2024-04-24",
+    //   visitDate: "2024-04-18",
+    //   color:
+    //     "2024-04-23" > "2024-05-24"
+    //       ? "red"
+    //       : "2024-04-23" === "2024-04-24"
+    //       ? "orange"
+    //       : "green",
+    // },
+    // {
+    //   nextVisitDate: "2024-04-17",
+    //   visitDate: "2024-04-14",
+    //   color:
+    //     "2024-04-18" > "2024-05-17"
+    //       ? "red"
+    //       : "2024-04-18" === "2024-04-17"
+    //       ? "orange"
+    //       : "green",
+    // },
+    // {
+    //   nextVisitDate: "2024-04-13",
+    //   visitDate: "2024-04-08",
+    //   color:
+    //     "2024-04-14" > "2024-04-13"
+    //       ? "red"
+    //       : "2024-04-14" === "2024-04-13"
+    //       ? "orange"
+    //       : "green",
+    // },
+    // {
+    //   nextVisitDate: "2024-04-08",
+    //   visitDate: "2024-04-04",
+    //   color:
+    //     "2024-04-08" > "2024-04-08"
+    //       ? "red"
+    //       : "2024-04-08" === "2024-04-08"
+    //       ? "orange"
+    //       : "green",
+    // },
+    // {
+    //   nextVisitDate: "2024-04-05",
+    //   visitDate: "2024-04-01",
+    //   color:
+    //     "2024-04-04" > "2024-04-05"
+    //       ? "red"
+    //       : "2024-04-04" === "2024-04-05"
+    //       ? "orange"
+    //       : "green",
+    // },
+  ]);
+
   const fetchVisitDetail = async () => {
     if (data?.corpSalesId) {
       const url =
         BASE_URL + `corpSales/corp/visits?corpSalesId=${data?.corpSalesId}`;
       const result = await getData(url);
       if (result.data) {
-        setVisitDetail(result.data);
+        const temp = result.data.map((item, index) => ({
+          ...item,
+          color: "",
+        }));
+        setVisitDetail(assignColors(temp));
       } else {
         setVisitDetail([]);
       }
     }
   };
+
+  console.log({ visitDetail });
 
   useEffect(() => {
     fetchVisitDetail();
@@ -48,25 +131,6 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
 
   const [openPhoto, setOpenPhoto] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-
-  const getColorOfNextVisitAfter0Index = (visitDetail, index) => {
-    const currentDate = new Date();
-    const currentVisitDate = new Date(visitDetail[index]?.visitDate);
-    const previousNextVisitDate = new Date(
-      visitDetail[index - 1]?.nextVisitDate
-    );
-    const timeDifference =
-      previousNextVisitDate.getTime() - currentVisitDate.getTime();
-    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-    if (daysDifference > 0) {
-      return "red";
-    } else if (daysDifference === 0) {
-      return "orange";
-    } else {
-      return "green";
-    }
-  };
 
   return (
     <Fragment>
@@ -79,41 +143,18 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
               }}
               sx={{
                 display: "flex",
-                // gap: "10px",
                 minWidth: "300px",
-                // border: "0.5px solid lightgray",
                 justifyContent: "space-between",
                 alignItems: "center",
                 cursor: "pointer",
                 backgroundColor: "#F5F5F5",
               }}
             >
-              {/* <Box
-                sx={{
-                  p: 1,
-                  height: "40px",
-                  minWidth: "150px",
-                  border: "1px solid #000",
-                  borderRadius: "15px",
-                  backgroundColor: "#FFFFFF",
-                  textAlign: "center",
-                }}
-              > */}
               <Typography sx={{ fontWeight: "bold" }}>
                 Visit Information
               </Typography>
-              {/* </Box> */}
+
               <IconButton
-                sx={
-                  {
-                    // height: "40px",
-                    // marginRight: "15px",
-                    // backgroundColor: "#127DDD",
-                    // ":hover": {
-                    //   backgroundColor: "#1f63a1",
-                    // },
-                  }
-                }
                 onClick={() => {
                   setShowSalesVisit(!showSalesVisit);
                 }}
@@ -163,10 +204,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                     color: "#127DDD",
                     fontWeight: "bold",
                     textTransform: "capitalize",
-                    color:
-                      index === 0
-                        ? getColorOfNextVisitDate(item?.nextVisitDate)
-                        : getColorOfNextVisitAfter0Index(item, index),
+                    color: item.color,
                   }}
                 >
                   {item?.nextVisitDate}

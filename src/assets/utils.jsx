@@ -311,3 +311,41 @@ export const getColorOfNextVisitDate = (nextVisitDate) => {
     return "red";
   }
 };
+
+export const assignColors = (visits) => {
+  // Convert date strings to Date objects
+  visits.forEach((visit) => {
+    visit.nextVisitDate = new Date(visit.nextVisitDate);
+    visit.visitDate = new Date(visit.visitDate);
+  });
+
+  // Assign colors based on comparisons starting from the second visit
+  for (let i = 1; i < visits.length; i++) {
+    const prevVisitDate = visits[i - 1].visitDate;
+    const currentNextVisitDate = visits[i].nextVisitDate;
+    if (
+      prevVisitDate.toISOString().slice(0, 10) >
+      currentNextVisitDate.toISOString().slice(0, 10)
+    ) {
+      visits[i].color = "red";
+    } else if (
+      prevVisitDate.toISOString().slice(0, 10) ===
+      currentNextVisitDate.toISOString().slice(0, 10)
+    ) {
+      visits[i].color = "orange";
+    } else {
+      visits[i].color = "green";
+    }
+  }
+
+  // Assign color for the most recent visit
+  visits[0].color = getColorOfNextVisitDate(visits[0].nextVisitDate);
+
+  // Convert Date objects back to strings
+  visits.forEach((visit) => {
+    visit.nextVisitDate = visit.nextVisitDate.toISOString().slice(0, 10);
+    visit.visitDate = visit.visitDate.toISOString().slice(0, 10);
+  });
+
+  return visits;
+};
