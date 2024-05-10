@@ -49,6 +49,25 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
   const [openPhoto, setOpenPhoto] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
+  const getColorOfNextVisitAfter0Index = (visitDetail, index) => {
+    const currentDate = new Date();
+    const currentVisitDate = new Date(visitDetail[index]?.visitDate);
+    const previousNextVisitDate = new Date(
+      visitDetail[index - 1]?.nextVisitDate
+    );
+    const timeDifference =
+      previousNextVisitDate.getTime() - currentVisitDate.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    if (daysDifference > 0) {
+      return "red";
+    } else if (daysDifference === 0) {
+      return "orange";
+    } else {
+      return "green";
+    }
+  };
+
   return (
     <Fragment>
       <Box sx={{}}>
@@ -144,7 +163,10 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                     color: "#127DDD",
                     fontWeight: "bold",
                     textTransform: "capitalize",
-                    color: getColorOfNextVisitDate(item?.nextVisitDate),
+                    color:
+                      index === 0
+                        ? getColorOfNextVisitDate(item?.nextVisitDate)
+                        : getColorOfNextVisitAfter0Index(item, index),
                   }}
                 >
                   {item?.nextVisitDate}
