@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import MainPageLayoutWithBack from "../../../../global/templates/mainPageLayoutWithBack";
 import {
   Box,
@@ -16,18 +16,21 @@ import {
 import GlobalDateLayout from "../../../../../assets/globalDateLayout/globalDateLayout";
 import CustomAutocomplete from "../../../../../assets/customAutocomplete";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
+import { BASE_URL } from "../../../../../assets/constants";
+import { saveData } from "../../../../assets/corpServices";
+import { useSnackbar } from "notistack";
 
 const servicesFields = {
   62502: [
     {
       label: "List Of Tests",
-      fieldName: "listOfTests",
+      fieldName: "list",
       type: "textField",
       dataType: "string",
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -46,7 +49,7 @@ const servicesFields = {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["One Time", "Quaterly", "Semi Annually", "Throughout the year"],
+      options: ["ONE_TIME", "QUATERLY", "SEMI_ANNUALLY", "ANNUALY", "ALL_YEAR"],
     },
     {
       label: "Location",
@@ -58,13 +61,13 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -81,7 +84,7 @@ const servicesFields = {
           label: "Interest Reason",
           fieldName: "interestReason",
           type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          options: ["JUST_FOR_QUOTATION", "EXPLORING", "INTERESTED", "ALL_IN"],
         },
         {
           label: "Pain Point",
@@ -90,7 +93,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -104,19 +107,19 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62503: [
     {
       label: "List Of Tests",
-      fieldName: "listOfTests",
+      fieldName: "list",
       type: "textField",
       dataType: "string",
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -135,7 +138,7 @@ const servicesFields = {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["One Time", "Quaterly", "Semi Annually", "Throughout the year"],
+      options: ["ONE_TIME", "QUATERLY", "SEMI_ANNUALLY", "ANNUALY", "ALL_YEAR"],
     },
     {
       label: "Location",
@@ -147,13 +150,13 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -179,7 +182,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -193,7 +196,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62507: [
@@ -205,7 +208,7 @@ const servicesFields = {
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -222,15 +225,22 @@ const servicesFields = {
     },
     {
       label: "Timing",
-      fieldName: "timing",
+      fieldName: "timings",
       type: "dropdown",
-      options: ["1hr", "2hr", "4hr", "8hr"],
+      options: ["ONE_HOUR", "TWO_HOUR", "THREE_HOUR", "EIGHT_HOUR"],
     },
     {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["1/week", "2/week", "3/week", "4/week", "5/week", "Full Time"],
+      options: [
+        "ONE_PER_WEEK",
+        "TWO_PER_WEEK",
+        "THREE_PER_WEEK",
+        "FOUR_PER_WEEK",
+        "FIVE_PER_WEEK",
+        "FULL_TIME",
+      ],
     },
     {
       label: "Location",
@@ -242,13 +252,13 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -274,7 +284,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -288,7 +298,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62506: [
@@ -300,7 +310,7 @@ const servicesFields = {
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -317,7 +327,7 @@ const servicesFields = {
     },
     {
       label: "Timing",
-      fieldName: "timing",
+      fieldName: "timings",
       type: "dropdown",
       options: ["1hr", "2hr", "4hr", "8hr"],
     },
@@ -337,13 +347,13 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -369,7 +379,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -383,7 +393,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62508: [
@@ -401,7 +411,7 @@ const servicesFields = {
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -413,7 +423,7 @@ const servicesFields = {
     },
     {
       label: "List Of Medicines",
-      fieldName: "listOfMedicines",
+      fieldName: "list",
       type: "textField",
       dataType: "string",
     },
@@ -439,26 +449,26 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
   ],
   62510: [
     {
       label: "Type of CSR",
-      fieldName: "typeOfCSR",
+      fieldName: "typeOfService",
       type: "dropdown",
-      options: ["Education", "Healthcare", "Environment", "Other"],
+      options: ["EDUCATION", "HEALTHCARE", "ENVIRONMENT", "OTHER"],
     },
     {
       label: "Executed By",
-      fieldName: "executedBy",
+      fieldName: "csrExecutedBy",
       type: "dropdown",
-      options: ["Self", "Outsourced"],
+      options: ["SELF", "OUTSOURCED"],
     },
 
     {
       label: "Budget",
-      fieldName: "budget",
+      fieldName: "tentativeBudget",
       type: "textField",
       dataType: "string",
     },
@@ -466,7 +476,7 @@ const servicesFields = {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["One Time", "Quaterly", "Semi Annually", "Throughout the year"],
+      options: ["ONE_TIME", "QUATERLY", "SEMI_ANNUALLY", "ANNUALY", "ALL_YEAR"],
     },
     {
       label: "Decision Making Criteria",
@@ -480,8 +490,8 @@ const servicesFields = {
       type: "date",
     },
     {
-      label: "Remarks",
-      fieldName: "remarks",
+      label: "Remark",
+      fieldName: "remark",
       type: "textFieldMultiline",
       dataType: "string",
     },
@@ -489,13 +499,13 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -521,7 +531,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -535,19 +545,19 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62511: [
     {
       label: "List of Services",
-      fieldName: "listOfServices",
+      fieldName: "list",
       type: "textField",
       dataType: "string",
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -561,19 +571,19 @@ const servicesFields = {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["One Time", "Quaterly", "Semi Annually", "Throughout the year"],
+      options: ["ONE_TIME", "QUATERLY", "SEMI_ANNUALLY", "ANNUALY", "ALL_YEAR"],
     },
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -599,7 +609,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -613,7 +623,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62509: [
@@ -625,7 +635,7 @@ const servicesFields = {
     },
     {
       label: "Procedure of closure",
-      fieldName: "procedureOfClosure",
+      fieldName: "closureProcedure",
       type: "textField",
       dataType: "string",
     },
@@ -639,7 +649,7 @@ const servicesFields = {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["One Time", "Quaterly", "Semi Annually", "Throughout the year"],
+      options: ["ONE_TIME", "QUATERLY", "SEMI_ANNUALLY", "ANNUALY", "ALL_YEAR"],
     },
     {
       label: "No Of People",
@@ -651,13 +661,13 @@ const servicesFields = {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -683,7 +693,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -697,25 +707,25 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   62505: [
     {
       label: "OHC",
-      fieldName: "ohc",
+      fieldName: "typeOfService",
       type: "dropdown",
-      options: ["New", "Old"],
+      options: ["NEW", "OLD"],
     },
     {
       label: "Remark",
       fieldName: "remark",
-      type: "textField",
+      type: "textFieldMultiline",
       dataType: "string",
     },
     {
       label: "Budget",
-      fieldName: "budget",
+      fieldName: "tentativeBudget",
       type: "textField",
       dataType: "string",
     },
@@ -723,19 +733,19 @@ const servicesFields = {
   62504: [
     {
       label: "Type Of Insurance",
-      fieldName: "typeOfInsurance",
+      fieldName: "typeOfService",
       type: "dropdown",
-      options: ["GHI", "GPA", "Workmen", "GTI"],
+      options: ["GHI", "GPA", "WORKMEN", "GTI"],
     },
     {
       label: "Request Type",
-      fieldName: "requestType",
+      fieldName: "insuranceRequestType",
       type: "drowpDown",
-      options: ["Renewal", "New"],
+      options: ["RENEWAL", "NEW"],
     },
     {
       label: "# Lifes",
-      fieldName: "lifes",
+      fieldName: "numberOfLives",
       type: "textField",
       dataType: "string",
     },
@@ -743,19 +753,19 @@ const servicesFields = {
       label: "Type Of Policy",
       fieldName: "typeOfPolicy",
       type: "dropdown",
-      options: ["Individual", "Family", "Parents", "Others"],
+      options: ["INDIVIDUAL", "FAMILY", "PARENTS", "OTHERS"],
     },
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdown",
-      options: ["HR/ER Head", "Plant Head", "Purchase"],
+      options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
       label: "Type Of User",
-      fieldName: "typeOfUser",
+      fieldName: "user",
       type: "radioButton",
-      "Regular User": [
+      REGULAR_USER: [
         {
           label: "Service Provider",
           fieldName: "serviceProvider",
@@ -781,7 +791,7 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "First Time User": [
+      FIRST_TIME_USER: [
         {
           label: "Reason For Starting",
           fieldName: "reasonForStarting",
@@ -795,19 +805,19 @@ const servicesFields = {
           dataType: "string",
         },
       ],
-      "None User": [],
+      NON_USER: [],
     },
   ],
   default: [
     {
-      label: "Current Service Provider",
-      fieldName: "currentServiceProvider",
+      label: "Service Provider",
+      fieldName: "serviceProvider",
       type: "textField",
       dataType: "string",
     },
     {
       label: "Last Amount",
-      fieldName: "lastAmount",
+      fieldName: "oldRate",
       type: "textField",
       dataType: "number",
     },
@@ -817,8 +827,8 @@ const servicesFields = {
       type: "date",
     },
     {
-      label: "Remarks",
-      fieldName: "remarks",
+      label: "Remark",
+      fieldName: "remark",
       type: "textFieldMultiline",
       dataType: "string",
     },
@@ -832,68 +842,140 @@ const getServiceFields = (serviceId) => {
 };
 
 const ServiceRequirementForm = () => {
+  const navigate = useNavigate();
   const { itemId } = useParams();
-  const data = JSON.parse(decodeURIComponent(itemId));
-
+  const { enqueueSnackbar } = useSnackbar();
+  const userId = localStorage.getItem("USER_ID_CORP_SALES");
+  const userName = localStorage.getItem("USER_NAME_CORP_SALES");
+  const { data, corpId } = JSON.parse(decodeURIComponent(itemId));
+  console.log({ data, corpId });
   const [formValues, setFormValues] = useState({
-    listOfTests: "",
-    procedureOfClosure: "",
+    user: "",
+    list: "",
     decisionMakingCriteria: "",
+    closureProcedure: "",
     dueDate: "",
     frequency: "",
     location: "",
-    decisionOwner: "",
-    typeOfUser: "",
     serviceProvider: "",
     oldRate: "",
     interestReason: "",
+    decisionOwner: "",
     painPoint: "",
+    reasonForStarting: "",
     tentativeBudget: "",
     degree: "",
-    timing: "",
-    reasonForStarting: "",
-    reasonForShift: "",
-    listOfMedicines: "",
+    timings: "",
     monthlyConsumption: "",
     orderCycle: "",
-    typeOfCSR: "",
-    executedBy: "",
-    budget: "",
+    reasonForShift: "",
     remark: "",
-    listOfServices: "",
-    noOfPeople: "",
+    csrExecutedBy: "",
     typeOfTraining: "",
-    ohc: "",
-    typeOfInsurance: "",
-    requestType: "",
-    noOfLives: "",
+    noOfPeople: "",
+    typeOfService: "",
     typeOfPolicy: "",
+    numberOfLives: "",
+    insuranceRequestType: "",
+    status: "",
+    userId: "",
+    userName: "",
+    confidenceLeveLStatus: "",
   });
 
-  const data1 =
-    servicesFields &&
-    servicesFields[62502] &&
-    servicesFields[62502][7].type === "radioButton";
-  const data2 =
-    servicesFields &&
-    servicesFields[62502][7] &&
-    formValues &&
-    formValues.typeOfUser &&
-    servicesFields[62502][7].hasOwnProperty(formValues.typeOfUser);
-  const data3 =
-    servicesFields &&
-    servicesFields[62502][7] &&
-    formValues &&
-    formValues.typeOfUser &&
-    servicesFields[62502][7][formValues.typeOfUser];
+  useEffect(() => {
+    setFormValues({
+      ...formValues,
+      user: data.user || "",
+      list: data.list || "",
+      decisionMakingCriteria: data.decisionMakingCriteria || "",
+      closureProcedure: data.closureProcedure || "",
+      dueDate: data.dueDate || "",
+      frequency: data.frequency || "",
+      location: data.location || "",
+      serviceProvider: data.serviceProvider || "",
+      oldRate: data.oldRate || "",
+      interestReason: data.interestReason || "",
+      decisionOwner: data.decisionOwner || "",
+      painPoint: data.painPoint || "",
+      reasonForStarting: data.reasonForStarting || "",
+      tentativeBudget: data.tentativeBudget || "",
+      degree: data.degree || "",
+      timings: data.timings || "",
+      monthlyConsumption: data.monthlyConsumption || "",
+      orderCycle: data.orderCycle || "",
+      reasonForShift: data.reasonForShift || "",
+      remark: data.remark || "",
+      csrExecutedBy: data.csrExecutedBy || "",
+      typeOfTraining: data.typeOfTraining || "",
+      noOfPeople: data.noOfPeople || "",
+      typeOfService: data.typeOfService || "",
+      typeOfPolicy: data.typeOfPolicy || "",
+      numberOfLives: data.numberOfLives || "",
+      insuranceRequestType: data.insuranceRequestType || "",
+      status: data.status || "",
+      userId: userId || "",
+      userName: userName || "",
+      confidenceLeveLStatus: data.confidenceLeveLStatus || "",
+    });
+  }, []);
 
-  console.log({ data1, data2, data3, servicesFields });
+  const handleSave = async () => {
+    const obj = {
+      user: formValues.user || null,
+      list: formValues.list || null,
+      decisionMakingCriteria: formValues.decisionMakingCriteria || null,
+      closureProcedure: formValues.closureProcedure || null,
+      dueDate: formValues.dueDate || null,
+      frequency: formValues.frequency || null,
+      location: formValues.location || null,
+      serviceProvider: formValues.serviceProvider || null,
+      oldRate: formValues.oldRate || null,
+      interestReason: formValues.interestReason || null,
+      decisionOwner: formValues.decisionOwner || null,
+      painPoint: formValues.painPoint || null,
+      reasonForStarting: formValues.reasonForStarting || null,
+      tentativeBudget: formValues.tentativeBudget || null,
+      degree: formValues.degree || null,
+      timings: formValues.timings || null,
+      monthlyConsumption: formValues.monthlyConsumption || null,
+      orderCycle: formValues.orderCycle || null,
+      reasonForShift: formValues.reasonForShift || null,
+      remark: formValues.remark || null,
+      csrExecutedBy: formValues.csrExecutedBy || null,
+      typeOfTraining: formValues.typeOfTraining || null,
+      noOfPeople: formValues.noOfPeople || null,
+      typeOfService: formValues.typeOfService || null,
+      typeOfPolicy: formValues.typeOfPolicy || null,
+      numberOfLives: formValues.numberOfLives || null,
+      insuranceRequestType: formValues.insuranceRequestType || null,
+      status: formValues.status || null,
+      userId: userId || null,
+      userName: userName || null,
+      confidenceLeveLStatus: formValues.confidenceLeveLStatus || null,
+    };
+
+    const url =
+      BASE_URL +
+      `corpSales/service/info?corpId=${corpId}&serviceId=${data?.id}`;
+    const result = await saveData(url, obj);
+    if (result.data) {
+      enqueueSnackbar("Successfully Saved", {
+        variant: "success",
+      });
+      navigate(-1);
+    } else {
+      enqueueSnackbar("An Error Occured.", {
+        variant: "error",
+      });
+    }
+  };
 
   return (
     <Fragment>
-      <MainPageLayoutWithBack title={`${data.serviceName} Form`}>
+      <MainPageLayoutWithBack title={`${data?.serviceName} Form`}>
         <Grid container sx={{ justifyContent: "space-between" }} spacing={2}>
-          {getServiceFields(data.id)?.map((val, index) => (
+          {getServiceFields(data?.id)?.map((val, index) => (
             <Grid item xs={12} lg={12} key={index}>
               {val.type === "dropdown" && (
                 <CustomAutocomplete
@@ -982,6 +1064,7 @@ const ServiceRequirementForm = () => {
                   initialDate={formValues?.[val?.fieldName]}
                   formValues={formValues}
                   setFormValues={setFormValues}
+                  disablePast={true}
                 />
               )}
               {val.type === "radioButton" && (
@@ -1002,19 +1085,19 @@ const ServiceRequirementForm = () => {
                     >
                       <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                         <FormControlLabel
-                          value="Regular User"
+                          value="REGULAR_USER"
                           control={<Radio />}
                           label="Regular User"
                         />
                         <FormControlLabel
-                          value="First Time User"
+                          value="FIRST_TIME_USER"
                           control={<Radio />}
                           label="First Time User"
                         />
                         <FormControlLabel
-                          value="None User"
+                          value="NON_USER"
                           control={<Radio />}
-                          label="None User"
+                          label="Non User"
                         />
                       </Box>
                     </RadioGroup>
@@ -1085,7 +1168,12 @@ const ServiceRequirementForm = () => {
               alignItems: "center",
             }}
           >
-            <CustomButtonBlue title="Save" onClick={() => {}} />
+            <CustomButtonBlue
+              title="Save"
+              onClick={() => {
+                handleSave();
+              }}
+            />
           </Grid>
         </Grid>
       </MainPageLayoutWithBack>

@@ -20,7 +20,7 @@ import SearchBarCompany from "../../../global/searchBarCompany/searchBarCompany"
 import DashboardCard from "./subComp/dashboardCard";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
-import { downloadCsv } from "../../../../assets/utils";
+import { downloadCsv, getColorOfNextVisitDate } from "../../../../assets/utils";
 import SelectUser from "../../../global/selectUsers/selectUsers";
 import SelectkamInDashboard from "../../../global/selectKam/selectkamInDashboard";
 import dayjs from "dayjs";
@@ -57,6 +57,7 @@ const SalesVisitDashboard = () => {
     const _selectedUserName = _storedData?.selectedUserName || "";
     const _selectedLocation = _storedData?.selectedLocation || "";
     const _selectedPriority = _storedData?.selectedPriority || "";
+    const _selectedColor = _storedData?.selectedColor || "";
     setFromDate(_fromDate);
     setToDate(_toDate);
     setStatus(_status);
@@ -64,6 +65,7 @@ const SalesVisitDashboard = () => {
     setSelectedUserName(_selectedUserName);
     setselectedLocation(_selectedLocation);
     setSelectedPriority(_selectedPriority);
+    setSelectedColor(_selectedColor);
 
     fetchData(
       _status,
@@ -72,7 +74,8 @@ const SalesVisitDashboard = () => {
       _fromDate,
       _toDate,
       _selectedPriority,
-      _selectedLocation
+      _selectedLocation,
+      _selectedColor
     );
   }, []);
 
@@ -83,7 +86,8 @@ const SalesVisitDashboard = () => {
     _fromDate,
     _toDate,
     _selectedPriority,
-    _selectedLocation
+    _selectedLocation,
+    _selectedColor
   ) => {
     setIsLoading(true);
     let url =
@@ -105,6 +109,9 @@ const SalesVisitDashboard = () => {
             ? Object?.keys(item?.mapOfUserAndVisitsCount || {}).includes(
                 _selectedUserName
               )
+            : true) &&
+          (_selectedColor
+            ? getColorOfNextVisitDate(item.nextVisitDate) === _selectedColor
             : true)
         );
       });
@@ -198,6 +205,7 @@ const SalesVisitDashboard = () => {
   const [selectedUserName, setSelectedUserName] = useState("");
   const [selectedLocation, setselectedLocation] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
   const [csvData, setCSVData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -214,6 +222,9 @@ const SalesVisitDashboard = () => {
             ? Object.keys(item?.mapOfUserAndVisitsCount)?.includes(
                 selectedUserName
               )
+            : true) &&
+          (selectedColor
+            ? getColorOfNextVisitDate(item.nextVisitDate) === selectedColor
             : true)
         );
       })
@@ -225,6 +236,7 @@ const SalesVisitDashboard = () => {
     status,
     selectedPriority,
     selectedLocation,
+    selectedColor,
   ]);
 
   useEffect(() => {
@@ -247,6 +259,7 @@ const SalesVisitDashboard = () => {
       selectedUserName,
       selectedPriority,
       selectedLocation,
+      selectedColor,
     };
     localStorage.setItem(
       "SAVE_FILTERS__SALES_VISIT_DASHBOARD",
@@ -260,6 +273,7 @@ const SalesVisitDashboard = () => {
     selectedUserName,
     selectedLocation,
     selectedPriority,
+    selectedColor,
   ]);
 
   const [rows, setRows] = useState([]);
@@ -280,7 +294,7 @@ const SalesVisitDashboard = () => {
   return (
     <Fragment>
       <MainPageLayoutWithBackSV
-        title="Visit Dashboard"
+        title="Dashboard"
         onDownloadClick={() =>
           fetchMisData(
             status,
@@ -329,19 +343,18 @@ const SalesVisitDashboard = () => {
             />
           </Grid>
           <Grid item xs={4} lg={2}>
-            <CustomSelect
+            <CustomAutocomplete
+              options={["P0", "P1", "P2", "P3", "P4"]}
+              placeholder="Priority"
               label="Priority"
-              placeholder={"Priority"}
-              setvalue={setSelectedPriority}
+              getOptionLabel={(option) => option}
               value={selectedPriority}
-              options={[
-                { label: "Priority", value: "" },
-                { label: "P0", value: "P0" },
-                { label: "P1", value: "P1" },
-                { label: "P2", value: "P2" },
-                { label: "P3", value: "P3" },
-                { label: "P4", value: "P4" },
-              ]}
+              onChange={(event, newValue, reason) => {
+                setSelectedPriority(newValue);
+                if (reason === "clear") {
+                  setSelectedPriority("");
+                }
+              }}
             />
           </Grid>
           <Grid item xs={4} lg={2}>
@@ -367,11 +380,17 @@ const SalesVisitDashboard = () => {
           </Grid>
           <Grid item xs={4} lg={2}>
             <CustomAutocomplete
-              options={[]}
+              options={["green", "orange", "red"]}
               placeholder="Colour Code"
               label="Colour Code"
-              value={null}
-              onChange={() => {}}
+              getOptionLabel={(option) => option}
+              value={selectedColor}
+              onChange={(event, newValue, reason) => {
+                setSelectedColor(newValue);
+                if (reason === "clear") {
+                  setSelectedColor("");
+                }
+              }}
             />
           </Grid>
           <Grid item xs={4} lg={1}>

@@ -11,7 +11,8 @@ const ServiceLogsMain = () => {
   const [serviceLog, setServiceLog] = useState([]);
   const fetchData = async (_status) => {
     const url =
-      BASE_URL + `corpSales/service/logs?serviceId=${data?.serviceId}`;
+      BASE_URL +
+      `corpSales/service/logs?serviceId=${data?.serviceId}&corpSalesId=${data.corpId}`;
     const result = await getData(url);
     if (result?.data) {
       setServiceLog(result?.data?.[data.serviceId]);

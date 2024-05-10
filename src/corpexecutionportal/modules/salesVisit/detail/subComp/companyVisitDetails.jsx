@@ -18,6 +18,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import { RemoveRedEye } from "@mui/icons-material";
 import { BASE_URL } from "../../../../../assets/constants";
 import { getData } from "../../../../assets/corpServices";
+import { getColorOfNextVisitDate } from "../../../../../assets/utils";
 
 const CompanyVisitDetails = ({ data, onlyView = false }) => {
   const navigate = useNavigate();
@@ -125,31 +126,6 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
               }}
             >
               <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>Interested -</Typography>
-                <Typography sx={styles.data}>
-                  {item?.interested === true
-                    ? "Yes"
-                    : item?.interested === false
-                    ? "No"
-                    : ""}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>
-                  Another Visit Required -
-                </Typography>
-                <Typography sx={styles.data}>
-                  {item?.anotherVisitRequired === true
-                    ? "Yes"
-                    : item?.anotherVisitRequired === false
-                    ? "No"
-                    : null}
-                </Typography>
-              </Grid>
-              {/* )} */}
-
-              <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                 <Typography sx={styles.heading}>Visit Type -</Typography>
                 <Typography sx={styles.data}>
                   {item?.visitType?.replace(/_/g, " ")}
@@ -163,7 +139,16 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
 
               <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                 <Typography sx={styles.heading}>Next Visit Date -</Typography>
-                <Typography sx={styles.data}>{item?.nextVisitDate}</Typography>
+                <Typography
+                  sx={{
+                    color: "#127DDD",
+                    fontWeight: "bold",
+                    textTransform: "capitalize",
+                    color: getColorOfNextVisitDate(item?.nextVisitDate),
+                  }}
+                >
+                  {item?.nextVisitDate}
+                </Typography>
               </Grid>
               <Grid
                 item
@@ -171,7 +156,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 lg={12}
                 sx={{ display: "flex", flexWrap: "wrap" }}
               >
-                <Typography sx={styles.heading}>Remark:</Typography>
+                <Typography sx={styles.heading}>Key Highlights:</Typography>
                 <Typography sx={styles.data}>
                   {item?.interestedRemark}
                 </Typography>
@@ -235,7 +220,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
         </Portal>
 
         {showSalesVisit && (
-          <Grid item xs={12} lg={12}>
+          <Box sx={{ marginTop: 2 }}>
             {onlyView === true ? null : (
               <CustomButtonBlue
                 title="Add New Visit"
@@ -245,7 +230,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 styles={{ width: "150px", height: "40px" }}
               />
             )}
-          </Grid>
+          </Box>
         )}
       </Box>
     </Fragment>

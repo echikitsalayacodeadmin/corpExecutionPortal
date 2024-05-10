@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import {
   deleteDataWithObj,
   updateDatePut,
+  updateDatePutMultipart,
+  uploadFile,
 } from "../../../../assets/corpServices";
 import DownloadIcon from "@mui/icons-material/Download";
 import { BASE_URL } from "../../../../../assets/constants";
@@ -118,12 +120,23 @@ const AddSpocInVisitDetail = ({
   };
 
   const handleSubmit = async () => {
-    const Obj = {
-      corpSalesId: corpSalesId,
-      corpSalesSpocVMs: [spocForm],
-    };
-    const url = BASE_URL + "corpSales/spoc";
-    const result = await updateDatePut(url, Obj);
+    const formData = new FormData();
+    formData.append("corpSalesId", formValues.corpSalesId);
+    spocForm.name ? formData.append("name", spocForm.name) : null;
+    spocForm?.mobile ? formData.append("mobile", spocForm?.mobile) : null;
+    spocForm?.email ? formData.append("email", spocForm?.email) : null;
+    spocForm?.designation
+      ? formData.append("designation", spocForm?.designation)
+      : null;
+    spocForm?.isDecisionMaker
+      ? formData.append("decisionMaker", spocForm?.isDecisionMaker)
+      : null;
+    spocForm?.spocPhotoUrl
+      ? formData.append("file", spocForm?.spocPhotoUrl.file)
+      : null;
+
+    const url = BASE_URL + "corpSales/add/spoc";
+    const result = await uploadFile(url, formData);
     if (result && result.data) {
       console.log("SUCCESS POST", result.data);
       enqueueSnackbar("Successfully Added", {
@@ -138,12 +151,8 @@ const AddSpocInVisitDetail = ({
   };
 
   const handleDeleteSpoc = async (id) => {
-    const Obj = {
-      corpSalesId: formValues?.corpSalesId,
-      deleteList: [id],
-    };
     const url = BASE_URL + "corpSales/spoc";
-    const result = await deleteDataWithObj(url, Obj);
+    const result = await deleteDataWithObj(url, formData);
     if (result && result.data) {
       enqueueSnackbar("Successfully Deleted", {
         variant: "success",
@@ -161,7 +170,7 @@ const AddSpocInVisitDetail = ({
 
   return (
     <Fragment>
-      <Box sx={{ marginBlock: 2 }}>
+      <Box sx={{ marginTop: 1 }}>
         <Grid container>
           <Grid item xs={12} lg={12}>
             <Box
@@ -259,8 +268,9 @@ const AddSpocInVisitDetail = ({
               </Grid>
             </Grid>
           ))}
+
         {showSpocList && (
-          <Box sx={{ marginTop: 2 }}>
+          <Box sx={{ marginTop: 1 }}>
             <CustomButtonBlue
               title="Add New SPOC"
               onClick={() => {
@@ -482,7 +492,7 @@ const AddSpocInVisitDetail = ({
               </Grid>
               <Grid item xs={12} lg={6}>
                 <UploadFile
-                  title="Upload SPOC Photo"
+                  title="Upload Photo"
                   styles={{ height: "40px", borderRadius: "15px" }}
                   formValues={spocForm}
                   setFormValues={setSpocForm}

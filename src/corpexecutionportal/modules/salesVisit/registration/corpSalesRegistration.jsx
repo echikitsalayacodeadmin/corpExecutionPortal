@@ -78,7 +78,10 @@ const CorpSalesRegistration = () => {
       if (result?.data && formValues.photoUrl !== "") {
         handleUpload(result?.data?.corpSalesId);
       } else {
-        navigate(-1);
+        navigate.replace(
+          `/corp/salesvisit/detail/${result?.data?.corpSalesId}`,
+          { replace: true }
+        );
       }
       enqueueSnackbar("Successfully Saved", { variant: "success" });
     } else {
@@ -102,7 +105,9 @@ const CorpSalesRegistration = () => {
     const result = await uploadFile(url, formData);
     if (result.data) {
       enqueueSnackbar("Successfully Uploaded!", { variant: "success" });
-      navigate(`/corp/salesvisit/detail/${result?.data?.corpSalesId}`);
+      navigate(`/corp/salesvisit/detail/${result?.data?.corpSalesId}`, {
+        replace: true,
+      });
     } else {
       enqueueSnackbar("An error occured while uploading photo", {
         variant: "error",

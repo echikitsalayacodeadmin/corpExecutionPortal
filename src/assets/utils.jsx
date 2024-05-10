@@ -292,3 +292,22 @@ export const capitalizeEachWord = (sentence) => {
   });
   return capitalizedWords.join(" ");
 };
+
+export const getColorOfNextVisitDate = (nextVisitDate) => {
+  if (!nextVisitDate) {
+    return "#000000";
+  }
+  const currentDate = new Date();
+  const nextVisit = new Date(nextVisitDate);
+  const differenceInDays = Math.floor(
+    (nextVisit - currentDate) / (1000 * 60 * 60 * 24)
+  );
+  console.log({ differenceInDays });
+  if (differenceInDays >= 3) {
+    return "green";
+  } else if (differenceInDays <= 2 && differenceInDays > 0) {
+    return "orange";
+  } else {
+    return "red";
+  }
+};

@@ -10,6 +10,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import SaveIcon from "@mui/icons-material/Save";
 import InfoIcon from "@mui/icons-material/Info";
@@ -24,897 +26,17 @@ import { CustomTypographyBold } from "../../../../../assets/customTypography";
 import GlobalDateLayout from "../../../../../assets/globalDateLayout/globalDateLayout";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import dayjs from "dayjs";
-import { isBrowser, isMobile } from "react-device-detect";
+import { isBrowser, isDesktop, isMobile } from "react-device-detect";
 
-const servicesFields = {
-  62502: [
-    // {
-    //   label: "Interested Yes or No",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Due Date",
-      fieldName: "dueDate",
-      type: "date",
-    },
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62503: [
-    // {
-    //   label: "Interested Yes or No",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Monthly Influx",
-      fieldName: "required",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Current Service Provider",
-      fieldName: "currentServiceProvider",
-      type: "textField",
-      dataType: "string",
-    },
-
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62504: [
-    // {
-    //   label: "Interested Yes or No",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Type of Policy",
-      fieldName: "typeOfPolicy",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Number of Lives",
-      fieldName: "numberOfLives",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Due Date",
-      fieldName: "dueDate",
-      type: "date",
-    },
-    {
-      label: "Current Player",
-      fieldName: "currentServiceProvider",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Descision Making",
-      fieldName: "decisionMaking",
-      type: "textField",
-      dataType: "string",
-    },
-
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62512: [
-    // {
-    //   label: "Interested Yes or No",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Current Player",
-      fieldName: "currentServiceProvider",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Number of Staff Needed",
-      fieldName: "noOfStaffNeeded",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Doctor Type Required",
-      fieldName: "doctorTypeRequired",
-      type: "textField",
-      dataType: "string",
-    },
-
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62508: [
-    // {
-    //   label: "Interested in Medicines or Not",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Current Player",
-      fieldName: "currentServiceProvider",
-      type: "textField",
-      dataType: "string",
-    },
-
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62505: [
-    // {
-    //   label: "Interested or Not",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Type of Request",
-      fieldName: "typeOfRequest",
-      type: "textField",
-      dataType: "string",
-    },
-
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62509: [
-    // {
-    //   label: "Interested or Not",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "# of training needed",
-      fieldName: "noOfTrainingNeeded",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  62497: [
-    // {
-    //   label: "Interested or Not",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Type of Request",
-      fieldName: "typeOfRequest",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Emergency Tie up",
-      fieldName: "emergencyTieUp",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Current Service Provider",
-      fieldName: "currentServiceProvider",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Number of accidents in month",
-      fieldName: "noOfAccidentsInMonth",
-      type: "textField",
-      dataType: "number",
-    },
-
-    {
-      label: "Confidence level",
-      fieldName: "confidenceLeveLStatus",
-      type: "dropdown",
-      options: [
-        { value: "CONFIRMED", label: "Confirmed" },
-        { value: "GOOD_CONFIDENCE", label: "Good Confidence" },
-        { value: "MAY_BE", label: "May Be" },
-        { value: "DIFFICULT", label: "Difficult" },
-        { value: "LOST", label: "Lost" },
-        { value: "DONE", label: "Done" },
-        { value: "JUST_A_LEAD", label: "Just a Lead" },
-        {
-          value: "VENDOR_REGISTRATION_STARTED",
-          label: "Vendor Registration Started",
-        },
-        { value: "DUE_LATER", label: "Due Later" },
-      ],
-    },
-    {
-      label: "Estimated Business Size",
-      fieldName: "estimatedBusinessSize",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-  default: [
-    // {
-    //   label: "Interested or Not",
-    //   fieldName: "corpRequirementStatus",
-    //   type: "dropdown",
-    //   options: [
-    //     { value: "YES", label: "Yes" },
-    //     { value: "NO", label: "No" },
-    //   ],
-    // },
-    {
-      label: "Current Service Provider",
-      fieldName: "currentServiceProvider",
-      type: "textField",
-      dataType: "string",
-    },
-    {
-      label: "Last Amount",
-      fieldName: "lastAmount",
-      type: "textField",
-      dataType: "number",
-    },
-    {
-      label: "Due Date",
-      fieldName: "dueDate",
-      type: "date",
-    },
-    {
-      label: "Status",
-      fieldName: "status",
-      type: "dropdown",
-      options: [
-        {
-          label: "INTERESTED",
-          value: "INTERESTED",
-        },
-        {
-          label: "NOT INTERESTED",
-          value: "NOT_INTERESTED",
-        },
-
-        {
-          label: "ONE_MORE_MEETING",
-          value: "ONE_MORE_MEETING",
-        },
-        {
-          label: "QUOTATION_ASKED",
-          value: "QUOTATION_ASKED",
-        },
-        {
-          label: "QUOTATION_SENT",
-          value: "QUOTATION_SENT",
-        },
-        {
-          label: "NEGOTIATION",
-          value: "NEGOTIATION",
-        },
-        {
-          label: "QUOTATION_APPROVED",
-          value: "QUOTATION_APPROVED",
-        },
-        {
-          label: "QUOTATION_REJECTED",
-          value: "QUOTATION_REJECTED",
-        },
-        {
-          label: "ORDER_LOST",
-          value: "ORDER_LOST",
-        },
-      ],
-    },
-    {
-      label: "Remarks",
-      fieldName: "remarks",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
-  ],
-};
-
-const getServiceFields = (serviceId) => {
-  return servicesFields.hasOwnProperty(serviceId)
-    ? servicesFields[serviceId]
-    : servicesFields.default;
-};
-
-const ServiceInfo = ({ data, setFetch }) => {
+const ServiceInfo = ({ data }) => {
   const navigate = useNavigate();
   const { itemId } = useParams();
   const corpSalesId = itemId;
   const userId = localStorage.getItem("USER_ID_CORP_SALES");
   const userName = localStorage.getItem("USER_NAME_CORP_SALES");
-  // const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   // const [selectedRow, setSelectedRow] = useState("");
+  const [showServices, setShowServices] = useState(false);
   const [rows, setRows] = useState([]);
 
   const fetchServices = async () => {
@@ -925,34 +47,37 @@ const ServiceInfo = ({ data, setFetch }) => {
       const temp = result.data.map((item) => ({
         ...item,
         testName: item.serviceName,
-        status: data?.[item.id]?.status || null,
-        modalType:
-          item.serviceName === "Paramedical Staff"
-            ? "3"
-            : item.serviceName === "Doctor's visit"
-            ? "2"
-            : "1",
-
-        // required: data?.[item.id]?.required || "",
-        // lastPlayer: data?.[item.id]?.lastPlayer || "",
-        // lastAmount: data?.[item.id]?.lastAmount || "",
-        // dueDate: data?.[item.id]?.dueDate
-        //   ? new Date(data?.[item.id]?.dueDate)
-        //   : null,
-        // remarks: data?.[item.id]?.remarks || "",
-        // confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus || "",
-        // corpRequirementStatus: data?.[item.id]?.corpRequirementStatus || "",
-        // estimatedBusinessSize: data?.[item.id]?.estimatedBusinessSize || "",
-        // typeOfPolicy: data?.[item.id]?.typeOfPolicy || "",
-        // numberOfLives: data?.[item.id]?.numberOfLives || "",
-        // decisionMaking: data?.[item.id]?.decisionMaking || "",
-        // currentServiceProvider: data?.[item.id]?.currentServiceProvider || "",
-        // noOfStaffNeeded: data?.[item.id]?.noOfStaffNeeded || "",
-        // doctorTypeRequired: data?.[item.id]?.doctorTypeRequired || "",
-        // typeOfRequest: data?.[item.id]?.typeOfRequest || "",
-        // noOfTrainingNeeded: data?.[item.id]?.noOfTrainingNeeded || "",
-        // emergencyTieUp: data?.[item.id]?.emergencyTieUp || "",
-        // noOfAccidentsInMonth: data?.[item.id]?.noOfAccidentsInMonth || "",
+        user: data?.[item.id]?.user,
+        list: data?.[item.id]?.list,
+        decisionMakingCriteria: data?.[item.id]?.decisionMakingCriteria,
+        closureProcedure: data?.[item.id]?.closureProcedure,
+        dueDate: data?.[item.id]?.dueDate,
+        frequency: data?.[item.id]?.frequency,
+        location: data?.[item.id]?.location,
+        serviceProvider: data?.[item.id]?.serviceProvider,
+        oldRate: data?.[item.id]?.oldRate,
+        interestReason: data?.[item.id]?.interestReason,
+        decisionOwner: data?.[item.id]?.decisionOwner,
+        painPoint: data?.[item.id]?.painPoint,
+        reasonForStarting: data?.[item.id]?.reasonForStarting,
+        tentativeBudget: data?.[item.id]?.tentativeBudget,
+        degree: data?.[item.id]?.degree,
+        timings: data?.[item.id]?.timings,
+        monthlyConsumption: data?.[item.id]?.monthlyConsumption,
+        orderCycle: data?.[item.id]?.orderCycle,
+        reasonForShift: data?.[item.id]?.reasonForShift,
+        remark: data?.[item.id]?.remark,
+        csrExecutedBy: data?.[item.id]?.csrExecutedBy,
+        typeOfTraining: data?.[item.id]?.typeOfTraining,
+        noOfPeople: data?.[item.id]?.noOfPeople,
+        typeOfService: data?.[item.id]?.typeOfService,
+        typeOfPolicy: data?.[item.id]?.typeOfPolicy,
+        numberOfLives: data?.[item.id]?.numberOfLives,
+        insuranceRequestType: data?.[item.id]?.insuranceRequestType,
+        status: data?.[item.id]?.status,
+        userId: data?.[item.id]?.userId,
+        userName: data?.[item.id]?.userName,
+        confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus,
       }));
       setRows(temp);
     } else {
@@ -963,405 +88,311 @@ const ServiceInfo = ({ data, setFetch }) => {
     fetchServices();
   }, [data]);
 
-  // const [openModal, setOpenModal] = useState(false);
-  // const [openModalQuote, setOpenModalQuote] = useState(false);
+  const handleSave = async (data) => {
+    const obj = {
+      user: data.user || null,
+      list: data.list || null,
+      decisionMakingCriteria: data.decisionMakingCriteria || null,
+      closureProcedure: data.closureProcedure || null,
+      dueDate: data.dueDate || null,
+      frequency: data.frequency || null,
+      location: data.location || null,
+      serviceProvider: data.serviceProvider || null,
+      oldRate: data.oldRate || null,
+      interestReason: data.interestReason || null,
+      decisionOwner: data.decisionOwner || null,
+      painPoint: data.painPoint || null,
+      reasonForStarting: data.reasonForStarting || null,
+      tentativeBudget: data.tentativeBudget || null,
+      degree: data.degree || null,
+      timings: data.timings || null,
+      monthlyConsumption: data.monthlyConsumption || null,
+      orderCycle: data.orderCycle || null,
+      reasonForShift: data.reasonForShift || null,
+      remark: data.remark || null,
+      csrExecutedBy: data.csrExecutedBy || null,
+      typeOfTraining: data.typeOfTraining || null,
+      noOfPeople: data.noOfPeople || null,
+      typeOfService: data.typeOfService || null,
+      typeOfPolicy: data.typeOfPolicy || null,
+      numberOfLives: data.numberOfLives || null,
+      insuranceRequestType: data.insuranceRequestType || null,
+      status: data.status || null,
+      userId: userId || null,
+      userName: userName || null,
+      confidenceLeveLStatus: data.confidenceLeveLStatus || null,
+    };
 
-  // const [moreInfoObject, setMoreInfoObject] = useState({
-  //   status: { label: "", value: "" },
-  //   required: "",
-  //   lastPlayer: "",
-  //   lastAmount: "",
-  //   dueDate: dayjs().format("YYYY-MM-DD"),
-  //   remarks: "",
-  //   confidenceLeveLStatus: { label: "", value: "" },
-  //   corpRequirementStatus: { label: "", value: "" },
-  //   estimatedBusinessSize: "",
-  //   typeOfPolicy: "",
-  //   numberOfLives: "",
-  //   decisionMaking: "",
-  //   currentServiceProvider: "",
-  //   noOfStaffNeeded: "",
-  //   doctorTypeRequired: "",
-  //   typeOfRequest: "",
-  //   noOfTrainingNeeded: "",
-  //   emergencyTieUp: "",
-  //   noOfAccidentsInMonth: "",
-  //   isEdit: false,
-  // });
-  // const handleSave = async (data) => {
-  //   const obj = {
-  //     status: data?.status?.value || null,
-  //     required: data.required,
-  //     lastPlayer: data.lastPlayer,
-  //     lastAmount: data.lastAmount,
-  //     dueDate: data.dueDate,
-  //     remarks: data.remarks,
-  //     userId: userId,
-  //     userName: userName,
-  //     confidenceLeveLStatus: data?.confidenceLeveLStatus?.value || null,
-  //     corpRequirementStatus: data?.corpRequirementStatus || null,
-  //     estimatedBusinessSize: data.estimatedBusinessSize,
-  //     typeOfPolicy: data.typeOfPolicy,
-  //     numberOfLives: data.numberOfLives,
-  //     decisionMaking: data.decisionMaking,
-  //     currentServiceProvider: data.currentServiceProvider,
-  //     noOfStaffNeeded: data.noOfStaffNeeded,
-  //     doctorTypeRequired: data.doctorTypeRequired,
-  //     typeOfRequest: data.typeOfRequest,
-  //     noOfTrainingNeeded: data.noOfTrainingNeeded,
-  //     emergencyTieUp: data.emergencyTieUp,
-  //     noOfAccidentsInMonth: data.noOfAccidentsInMonth,
-  //   };
-
-  //   const url =
-  //     BASE_URL +
-  //     `corpSales/service/info?corpId=${corpSalesId}&serviceId=${data?.id}`;
-  //   const result = await saveData(url, obj);
-  //   if (result.data) {
-  //     enqueueSnackbar("Successfully Saved", {
-  //       variant: "success",
-  //     });
-  //     setFetch(true);
-  //   } else {
-  //     enqueueSnackbar("An Error Occured.", {
-  //       variant: "error",
-  //     });
-  //   }
-  // };
+    const url =
+      BASE_URL +
+      `corpSales/service/info?corpId=${corpSalesId}&serviceId=${data?.id}`;
+    const result = await saveData(url, obj);
+    if (result.data) {
+      enqueueSnackbar("Successfully Saved", {
+        variant: "success",
+      });
+    } else {
+      enqueueSnackbar("An Error Occured.", {
+        variant: "error",
+      });
+    }
+  };
 
   // console.log({ rows, data, selectedRow, moreInfoObject });
 
   return (
     <Fragment>
-      {rows.map((obj) => (
-        <Grid
-          container
-          key={obj.id}
-          sx={{
-            background: "#FFFFFF",
-            border: "1px solid #000",
-            marginBlock: "20px",
-            padding: "10px",
-            alignItems: "center",
-            borderRadius: "15px",
-          }}
-        >
+      <Box sx={{}}>
+        <Grid container>
           <Grid item xs={12} lg={12}>
-            <Typography sx={{ fontWeight: "bold" }}>{obj.testName}</Typography>
-          </Grid>
-
-          <Grid item xs={6} lg={3}>
-            <Typography>First Time User</Typography>
-          </Grid>
-
-          <Grid item xs={6} lg={3}>
-            <Typography>Quotation Asked</Typography>
-          </Grid>
-          <Grid item xs={6} lg={3}>
-            <Typography>Good Confidence</Typography>
-          </Grid>
-
-          <Grid item xs={3} lg={2}>
-            <CustomButtonBlue
-              onClick={() => {
-                const query = {
-                  serviceId: obj.id,
-                  corpId: corpSalesId,
-                  serviceName: obj.testName,
-                };
-                navigate(
-                  `/corp/salesvisit/serviceslogs/${encodeURIComponent(
-                    JSON.stringify(query)
-                  )}`
-                );
-              }}
-              title="View"
-            />
-          </Grid>
-          <Grid
-            item
-            xs={3}
-            lg={1}
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <Tooltip title="More Info">
-              <IconButton
-                onClick={() => {
-                  navigate(
-                    `/corp/salesvisit/serviceform/${encodeURIComponent(
-                      JSON.stringify(obj)
-                    )}`
-                  );
-                }}
-              >
-                <InfoIcon style={{ color: "#127DDD" }} />
-              </IconButton>
-            </Tooltip>
-            {/* <Tooltip title="View Quotations">
-              <IconButton
-                onClick={() => {
-                  const query = {
-                    corpId: corpSalesId,
-                    serviceName: obj.testName,
-                  };
-                  navigate(
-                    `/corp/salesvisit/quotationlist/${encodeURIComponent(
-                      JSON.stringify(query)
-                    )}`
-                  );
-                }}
-              >
-                <RemoveRedEyeIcon style={{ color: "#127DDD" }} />
-              </IconButton>
-            </Tooltip> */}
-          </Grid>
-        </Grid>
-      ))}
-
-      {/* <Portal>
-        <Modal
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          open={openModal}
-          onClose={() => {
-            setOpenModal(false);
-            setMoreInfoObject({
-              id: "",
-              status: { label: "", value: "" },
-              required: "",
-              lastPlayer: "",
-              lastAmount: "",
-              dueDate: dayjs().format("YYYY-MM-DD"),
-              remarks: "",
-              confidenceLeveLStatus: { label: "", value: "" },
-              corpRequirementStatus: "",
-              estimatedBusinessSize: "",
-              typeOfPolicy: "",
-              numberOfLives: "",
-              decisionMaking: "",
-              currentServiceProvider: "",
-              noOfStaffNeeded: "",
-              doctorTypeRequired: "",
-              typeOfRequest: "",
-              noOfTrainingNeeded: "",
-              emergencyTieUp: "",
-              noOfAccidentsInMonth: "",
-              isEdit: false,
-            });
-          }}
-          sx={{
-            "& .MuiBackdrop-root": {
-              backgroundColor: "rgba(187, 187, 187, 0.1)",
-            },
-          }}
-        >
-          <Box
-            sx={{
-              backgroundColor: "#fff",
-              boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-              padding: "15px",
-              width: "365px",
-              minHeight: "70vh",
-            }}
-          >
-            <Box display="flex" justifyContent="flex-end">
-              <IconButton
-                onClick={() => {
-                  setOpenModal(false);
-                  setMoreInfoObject({
-                    id: "",
-                    status: { label: "", value: "" },
-                    required: "",
-                    lastPlayer: "",
-                    lastAmount: "",
-                    dueDate: dayjs().format("YYYY-MM-DD"),
-                    remarks: "",
-                    confidenceLeveLStatus: { label: "", value: "" },
-                    corpRequirementStatus: "",
-                    estimatedBusinessSize: "",
-                    typeOfPolicy: "",
-                    numberOfLives: "",
-                    decisionMaking: "",
-                    currentServiceProvider: "",
-                    noOfStaffNeeded: "",
-                    doctorTypeRequired: "",
-                    typeOfRequest: "",
-                    noOfTrainingNeeded: "",
-                    emergencyTieUp: "",
-                    noOfAccidentsInMonth: "",
-                    isEdit: false,
-                  });
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Box>
-
             <Box
-              sx={{ textAlign: "center", marginTop: "-30px", marginBottom: 2 }}
+              onClick={() => {
+                setShowServices(!showServices);
+              }}
+              sx={{
+                display: "flex",
+                minWidth: "300px",
+                justifyContent: "space-between",
+                alignItems: "center",
+                cursor: "pointer",
+                backgroundColor: "#F5F5F5",
+              }}
             >
               <Typography sx={{ fontWeight: "bold" }}>
-                {selectedRow?.testName}
+                Services Information
               </Typography>
-            </Box>
 
-            <Grid
-              container
-              sx={{ justifyContent: "space-between" }}
-              spacing={2}
-            >
-              {getServiceFields(selectedRow.id)?.map((val, index) => (
-                <Grid item xs={12} lg={12} key={index}>
-                  {val.type === "dropdown" && (
-                    <CustomAutocomplete
-                      label={val?.label}
-                      placeholder={val?.label}
-                      options={val?.options || []}
-                      value={moreInfoObject?.[val?.fieldName]}
-                      onChange={(event, newValue, reason) => {
-                        setMoreInfoObject({
-                          ...moreInfoObject,
-                          [val.fieldName]: newValue || "",
-                        });
-                        if (reason === "clear") {
-                          setMoreInfoObject({
-                            ...moreInfoObject,
-                            [val.fieldName]: { label: "", value: "" },
-                          });
-                        }
-                      }}
-                    />
-                  )}
-                  {val.type === "textField" && val.dataType === "string" && (
-                    <TextField
-                      fullWidth
-                      size="small"
-                      label={val?.label}
-                      placeholder={val?.label}
-                      value={moreInfoObject?.[val?.fieldName] || ""}
-                      onChange={(e) => {
-                        setMoreInfoObject({
-                          ...moreInfoObject,
-                          [val.fieldName]: e.target.value,
-                        });
-                      }}
-                    />
-                  )}
-                  {val.type === "textField" && val.dataType === "number" && (
-                    <TextField
-                      fullWidth
-                      size="small"
-                      label={val?.label}
-                      placeholder={val?.label}
-                      value={moreInfoObject?.[val?.fieldName] || ""}
-                      onChange={(e) => {
-                        const inputValue = e.target.value;
-                        if (
-                          inputValue === "" ||
-                          (!isNaN(inputValue) && parseInt(inputValue))
-                        ) {
-                          setMoreInfoObject({
-                            ...moreInfoObject,
-                            [val.fieldName]: inputValue,
-                          });
-                        }
-                      }}
-                    />
-                  )}
-                  {val.type === "textFieldMultiline" && (
-                    <TextField
-                      multiline
-                      maxRows={5}
-                      fullWidth
-                      size="small"
-                      label={val?.label}
-                      placeholder={val?.label}
-                      value={moreInfoObject?.[val?.fieldName]}
-                      onChange={(e) => {
-                        setMoreInfoObject({
-                          ...moreInfoObject,
-                          [val.fieldName]: e.target.value,
-                        });
-                      }}
-                      inputProps={{
-                        style: {
-                          minHeight: "130px",
-                        },
-                      }}
-                    />
-                  )}
-                  {val.type === "date" && (
-                    <GlobalDateLayout
-                      label={val?.label}
-                      placeholder={val?.label}
-                      initialDate={moreInfoObject?.[val?.fieldName]}
-                      formValues={moreInfoObject}
-                      setFormValues={setMoreInfoObject}
-                      property={val.fieldName}
-                    />
-                  )}
-                </Grid>
-              ))}
-              <Grid
-                item
-                xs={12}
-                lg={12}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+              <IconButton
+                onClick={() => {
+                  setShowServices(!showServices);
                 }}
               >
-                <CustomButtonBlue
-                  title="Save"
-                  onClick={() => {
-                    const newRow = { ...moreInfoObject };
-                    // console.log({ newRow });
-                    const updatedRows = rows.map((row) =>
-                      row.id === selectedRow.id ? { ...row, ...newRow } : row
-                    );
-                    // console.log({ updatedRows });
-                    const modifiedRow = updatedRows.find(
-                      (item) => item.id === selectedRow.id
-                    );
+                {showServices === false ? (
+                  <ExpandMoreIcon />
+                ) : (
+                  <ExpandLessIcon />
+                )}
+              </IconButton>
+            </Box>
+          </Grid>
+        </Grid>
 
-                    handleSave(modifiedRow);
+        {showServices &&
+          rows.map((obj) => (
+            <Grid
+              container
+              spacing={1}
+              key={obj.id}
+              sx={{
+                background: "#FFFFFF",
+                border: "1px solid #000",
+                marginBlock: "20px",
+                padding: "10px",
+                alignItems: "center",
+                borderRadius: "15px",
+              }}
+            >
+              <Grid item xs={7} lg={12}>
+                <Typography sx={{ fontWeight: "bold" }}>
+                  {obj.testName}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={5} lg={3}>
+                <Typography
+                  sx={{ fontWeight: "bold", textTransform: "capitalize" }}
+                >
+                  {obj?.user?.replace(/_/g, " ")?.toLowerCase()}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={8} lg={3}>
+                <CustomAutocomplete
+                  required={true}
+                  asterickColor={"red"}
+                  fullWidth
+                  size="small"
+                  options={[
+                    "INTERESTED",
+                    "NOT_INTERESTED",
+                    "ONE_MORE_MEETING",
+                    "QUOTATION_ASKED",
+                    "QUOTATION_SENT",
+                    "NEGOTIATION",
+                    "QUOTATION_APPROVED",
+                    "QUOTATION_REJECTED",
+                    "ORDER_LOST",
+                  ]}
+                  getOptionLabel={(option) => option}
+                  value={obj?.status || ""}
+                  onChange={(event, newValue, reason) => {
+                    const updatedRows = rows.map((row) =>
+                      row.id === obj.id ? { ...obj, status: newValue } : row
+                    );
                     setRows(updatedRows);
-                    setOpenModal(false);
-                    setMoreInfoObject({
-                      id: "",
-                      status: { label: "", value: "" },
-                      required: "",
-                      lastPlayer: "",
-                      lastAmount: "",
-                      dueDate: dayjs().format("YYYY-MM-DD"),
-                      remarks: "",
-                      confidenceLeveLStatus: { label: "", value: "" },
-                      corpRequirementStatus: "",
-                      estimatedBusinessSize: "",
-                      typeOfPolicy: "",
-                      numberOfLives: "",
-                      decisionMaking: "",
-                      currentServiceProvider: "",
-                      noOfStaffNeeded: "",
-                      doctorTypeRequired: "",
-                      typeOfRequest: "",
-                      noOfTrainingNeeded: "",
-                      emergencyTieUp: "",
-                      noOfAccidentsInMonth: "",
-                      isEdit: false,
-                    });
+                    if (reason === "clear") {
+                      const updatedRows = rows.map((row) =>
+                        row.id === obj.id
+                          ? {
+                              ...obj,
+                              status: null,
+                            }
+                          : row
+                      );
+                      setRows(updatedRows);
+                    }
                   }}
+                  label="Status"
+                  placeholder="Status"
                 />
               </Grid>
+              {isMobile && (
+                <Grid
+                  item
+                  xs={4}
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Tooltip title="More Info">
+                    <IconButton
+                      onClick={() => {
+                        const query = {
+                          data: obj,
+                          corpId: corpSalesId,
+                        };
+                        navigate(
+                          `/corp/salesvisit/serviceform/${encodeURIComponent(
+                            JSON.stringify(query)
+                          )}`
+                        );
+                      }}
+                    >
+                      <InfoIcon style={{ color: "#127DDD" }} />
+                    </IconButton>
+                  </Tooltip>
+                  <IconButton
+                    sx={{
+                      ":disabled": {
+                        backgroundColor: obj.status ? null : "lightgray",
+                      },
+                    }}
+                    disabled={obj.status ? false : true}
+                    onClick={() => {
+                      handleSave(obj);
+                    }}
+                  >
+                    <SaveIcon
+                      style={{
+                        color: obj.status ? "#127DDD" : "#FFF",
+                      }}
+                    />
+                  </IconButton>
+                </Grid>
+              )}
+              <Grid item xs={8} lg={3}>
+                <CustomAutocomplete
+                  required={true}
+                  asterickColor={"red"}
+                  fullWidth
+                  size="small"
+                  options={[
+                    "CONFIRMED",
+                    "GOOD_CONFIDENCE",
+                    "MAY_BE",
+                    "DIFFICULT",
+                    "LOST",
+                    "DONE",
+                    "JUST_A_LEAD",
+                    "VENDOR_REGISTRATION_STARTED",
+                    "DUE_LATER",
+                  ]}
+                  getOptionLabel={(option) => option}
+                  value={obj?.confidenceLeveLStatus || ""}
+                  onChange={(event, newValue, reason) => {
+                    const updatedRows = rows.map((row) =>
+                      row.id === obj.id
+                        ? { ...obj, confidenceLeveLStatus: newValue }
+                        : row
+                    );
+                    setRows(updatedRows);
+                    if (reason === "clear") {
+                      const updatedRows = rows.map((row) =>
+                        row.id === obj.id
+                          ? {
+                              ...obj,
+                              confidenceLeveLStatus: null,
+                            }
+                          : row
+                      );
+                      setRows(updatedRows);
+                    }
+                  }}
+                  label="Confidence level"
+                  placeholder="Confidence level"
+                />
+              </Grid>
+
+              <Grid item xs={4} lg={2}>
+                <CustomButtonBlue
+                  onClick={() => {
+                    const query = {
+                      serviceId: obj.id,
+                      corpId: corpSalesId,
+                      serviceName: obj.testName,
+                    };
+                    navigate(
+                      `/corp/salesvisit/serviceslogs/${encodeURIComponent(
+                        JSON.stringify(query)
+                      )}`
+                    );
+                  }}
+                  title="View"
+                />
+              </Grid>
+              {isDesktop && (
+                <Grid
+                  item
+                  lg={1}
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Tooltip title="More Info">
+                    <IconButton
+                      onClick={() => {
+                        const query = {
+                          data: obj,
+                          corpId: corpSalesId,
+                        };
+                        navigate(
+                          `/corp/salesvisit/serviceform/${encodeURIComponent(
+                            JSON.stringify(query)
+                          )}`
+                        );
+                      }}
+                    >
+                      <InfoIcon style={{ color: "#127DDD" }} />
+                    </IconButton>
+                  </Tooltip>
+                  <IconButton
+                    sx={{
+                      ":disabled": {
+                        backgroundColor: obj.status ? null : "lightgray",
+                      },
+                    }}
+                    disabled={obj.status ? false : true}
+                    onClick={() => {
+                      handleSave(obj);
+                    }}
+                  >
+                    <SaveIcon
+                      style={{
+                        color: obj.status ? "#127DDD" : "#FFF",
+                      }}
+                    />
+                  </IconButton>
+                </Grid>
+              )}
             </Grid>
-          </Box>
-        </Modal>
-      </Portal> */}
+          ))}
+      </Box>
     </Fragment>
   );
 };

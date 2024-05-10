@@ -11,7 +11,10 @@ import {
   saveDataGlobal,
   uploadFileGlobal,
 } from "../../assets/services/api/postApiCalls";
-import { updateDataPutGlobal } from "../../assets/services/api/putApi";
+import {
+  updateDataPutGlobal,
+  updatePutGlobalUploadFile,
+} from "../../assets/services/api/putApi";
 
 export const getData = async (url) => {
   let authHeader_local = localStorage.getItem("AUTHHEADER_CORP_EXECUTION");
@@ -73,6 +76,17 @@ export const deleteDataWithObj = async (url, payload) => {
 export const updateDatePut = async (url, payload) => {
   let authHeader_local = localStorage.getItem("AUTHHEADER_CORP_EXECUTION");
   const response = await updateDataPutGlobal(url, payload, authHeader_local);
+
+  return response;
+};
+
+export const updateDatePutMultipart = async (url, payload) => {
+  let authHeader_local = localStorage.getItem("AUTHHEADER_CORP_EXECUTION");
+  const response = await updatePutGlobalUploadFile(
+    url,
+    payload,
+    authHeader_local
+  );
 
   return response;
 };

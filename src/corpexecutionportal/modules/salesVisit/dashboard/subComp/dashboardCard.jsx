@@ -7,6 +7,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { getColorOfNextVisitDate } from "../../../../../assets/utils";
 
 const getServicesStatusSymbol = (status) => {
   return status === "INTERESTED"
@@ -76,7 +77,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
               {data?.priority && `(${data?.priority})`}
             </Typography>
           </Grid>
-          {data?.corpSalesVisitEntities?.[1]?.nextVisitDate ? (
+          {data.lastVisitDate ? (
             <Grid
               item
               xs={6}
@@ -85,16 +86,24 @@ const DashboardCard = ({ data, serviceMapping }) => {
             >
               <Typography>Last:</Typography>
               <Typography sx={styles.subTitle}>
-                {data?.corpSalesVisitEntities?.[1]?.nextVisitDate}
+                {data?.lastVisitDate}
               </Typography>
             </Grid>
           ) : null}
 
-          {data?.corpSalesVisitEntities?.[0]?.nextVisitDate ? (
+          {data.nextVisitDate ? (
             <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
               <Typography>Next:</Typography>
-              <Typography sx={styles.subTitle}>
-                {data?.corpSalesVisitEntities?.[0]?.nextVisitDate}
+              <Typography
+                sx={{
+                  textTransform: "capitalize",
+                  alignProperty: "center",
+                  fontSize: "17px",
+                  marginInline: "5px",
+                  color: getColorOfNextVisitDate(data?.nextVisitDate),
+                }}
+              >
+                {data?.nextVisitDate}
               </Typography>
             </Grid>
           ) : null}
@@ -105,30 +114,6 @@ const DashboardCard = ({ data, serviceMapping }) => {
               <Typography sx={styles.subTitle}>{data?.totalVisits}</Typography>
             </Grid>
           ) : null}
-          {/* {data?.priority ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography>{`${data?.priority}`}</Typography>
-            </Grid>
-          ) : null} */}
-
-          {data?.interested ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography>
-                {data?.interested === true
-                  ? "Interested"
-                  : data?.interested === false
-                  ? "Not Interested"
-                  : null}
-              </Typography>
-            </Grid>
-          ) : null}
-          {/* {data?.userName ? (
-            <Grid item xs={6} lg={6} sx={{ display: "flex" }}>
-              <Typography
-                sx={styles.subTitle}
-              >{`User : ${data?.userName}`}</Typography>
-            </Grid>
-          ) : null} */}
 
           <Grid
             item
@@ -142,33 +127,6 @@ const DashboardCard = ({ data, serviceMapping }) => {
               </Typography>
             ))}
           </Grid>
-          {/* <Grid
-            item
-            xs={12}
-            lg={12}
-            sx={{ display: "flex", gap: "5px", flexWrap: "wrap" }}
-          >
-            {requiredServices &&
-              Object.keys(requiredServices).map((key) => {
-                const info = requiredServices[key];
-
-                return (
-                  info?.status && (
-                    <Typography key={key}>
-                      {`${
-                        serviceMapping?.find(
-                          (item) => parseInt(item?.id) === parseInt(key)
-                        )?.serviceName
-                      }${
-                        info?.status
-                          ? `(${getServicesStatusSymbol(info?.status)})`
-                          : ""
-                      }`}
-                    </Typography>
-                  )
-                );
-              })}
-          </Grid> */}
         </Grid>
       </NavLink>
     </Fragment>
