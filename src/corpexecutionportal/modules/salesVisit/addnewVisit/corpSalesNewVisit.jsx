@@ -100,9 +100,6 @@ const CorpSalesNewVisit = () => {
 
   const formData = new FormData();
   formData.append("corpSalesId", formValues.corpSalesId);
-  formData.append("interested", formValues.interested);
-  formData.append("quotationAsked", formValues.quotationAsked);
-  formData.append("anotherVisitRequired", formValues.anoterVisitRequired);
   formData.append("interestedRemark", formValues?.interestedRemark);
   formData.append("visitType", formValues?.visitType || null);
   formData.append("userId", userId);
@@ -130,6 +127,7 @@ const CorpSalesNewVisit = () => {
       enqueueSnackbar("Successfully Saved", {
         variant: "success",
       });
+      navigate(-1);
     } else if (result && result?.error) {
       enqueueSnackbar("An error occured", {
         variant: "error",
@@ -155,85 +153,11 @@ const CorpSalesNewVisit = () => {
           />
         </Grid>
 
-        <Grid item xs={6} lg={6}>
+        <Grid item xs={7} lg={6}>
           <VisitType formValues={formValues} setFormValues={setFormValues} />
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          lg={6}
-          sx={{ display: "flex", alignItems: "center", gap: "10px" }}
-        >
-          <Typography>Interested ?</Typography>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formValues.interested === true}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    interested: e.target.checked
-                      ? true
-                      : formValues.interested === false
-                      ? false
-                      : null,
-                  })
-                }
-              />
-            }
-            label="Yes"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={formValues.interested === false}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    interested: e.target.checked
-                      ? false
-                      : formValues.interested === true
-                      ? true
-                      : null,
-                  })
-                }
-              />
-            }
-            label="No"
-          />
-        </Grid>
-        <Grid item xs={12} lg={6}>
-          <FormControlLabel
-            label="Another Visit Asked"
-            labelPlacement="start"
-            sx={{ marginLeft: "2px" }}
-            control={
-              <Box sx={{ marginRight: "10px" }}>
-                <IOSSwitch
-                  checked={formValues.anoterVisitRequired}
-                  onChange={(e) => {
-                    setFormValues({
-                      ...formValues,
-                      anoterVisitRequired: e.target.checked,
-                    });
-                  }}
-                />
-              </Box>
-            }
-          />
-        </Grid>
-
-        <Grid item xs={6} lg={6}>
-          <GlobalDateLayout
-            label={"Sales Date"}
-            initialDate={formValues.auditMonth}
-            formValues={formValues}
-            setFormValues={setFormValues}
-            property={"auditMonth"}
-          />
-        </Grid>
-        <Grid item xs={6} lg={6}>
+        <Grid item xs={5} lg={6}>
           <GlobalDateLayout
             label={"Next Visit Date"}
             initialDate={formValues.nextVisitDate}
@@ -267,10 +191,10 @@ const CorpSalesNewVisit = () => {
         <Grid item xs={12} lg={12}>
           <TextField
             multiline
-            label="Remark"
+            label="Key Higlights"
             size="small"
             fullWidth
-            placeholder="Enter Remark"
+            placeholder="Key Higlights"
             value={formValues.interestedRemark}
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             onChange={(e) =>

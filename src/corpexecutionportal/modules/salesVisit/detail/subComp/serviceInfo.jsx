@@ -913,8 +913,8 @@ const ServiceInfo = ({ data, setFetch }) => {
   const corpSalesId = itemId;
   const userId = localStorage.getItem("USER_ID_CORP_SALES");
   const userName = localStorage.getItem("USER_NAME_CORP_SALES");
-  const { enqueueSnackbar } = useSnackbar();
-  const [selectedRow, setSelectedRow] = useState("");
+  // const { enqueueSnackbar } = useSnackbar();
+  // const [selectedRow, setSelectedRow] = useState("");
   const [rows, setRows] = useState([]);
 
   const fetchServices = async () => {
@@ -933,26 +933,26 @@ const ServiceInfo = ({ data, setFetch }) => {
             ? "2"
             : "1",
 
-        required: data?.[item.id]?.required || "",
-        lastPlayer: data?.[item.id]?.lastPlayer || "",
-        lastAmount: data?.[item.id]?.lastAmount || "",
-        dueDate: data?.[item.id]?.dueDate
-          ? new Date(data?.[item.id]?.dueDate)
-          : null,
-        remarks: data?.[item.id]?.remarks || "",
-        confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus || "",
-        corpRequirementStatus: data?.[item.id]?.corpRequirementStatus || "",
-        estimatedBusinessSize: data?.[item.id]?.estimatedBusinessSize || "",
-        typeOfPolicy: data?.[item.id]?.typeOfPolicy || "",
-        numberOfLives: data?.[item.id]?.numberOfLives || "",
-        decisionMaking: data?.[item.id]?.decisionMaking || "",
-        currentServiceProvider: data?.[item.id]?.currentServiceProvider || "",
-        noOfStaffNeeded: data?.[item.id]?.noOfStaffNeeded || "",
-        doctorTypeRequired: data?.[item.id]?.doctorTypeRequired || "",
-        typeOfRequest: data?.[item.id]?.typeOfRequest || "",
-        noOfTrainingNeeded: data?.[item.id]?.noOfTrainingNeeded || "",
-        emergencyTieUp: data?.[item.id]?.emergencyTieUp || "",
-        noOfAccidentsInMonth: data?.[item.id]?.noOfAccidentsInMonth || "",
+        // required: data?.[item.id]?.required || "",
+        // lastPlayer: data?.[item.id]?.lastPlayer || "",
+        // lastAmount: data?.[item.id]?.lastAmount || "",
+        // dueDate: data?.[item.id]?.dueDate
+        //   ? new Date(data?.[item.id]?.dueDate)
+        //   : null,
+        // remarks: data?.[item.id]?.remarks || "",
+        // confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus || "",
+        // corpRequirementStatus: data?.[item.id]?.corpRequirementStatus || "",
+        // estimatedBusinessSize: data?.[item.id]?.estimatedBusinessSize || "",
+        // typeOfPolicy: data?.[item.id]?.typeOfPolicy || "",
+        // numberOfLives: data?.[item.id]?.numberOfLives || "",
+        // decisionMaking: data?.[item.id]?.decisionMaking || "",
+        // currentServiceProvider: data?.[item.id]?.currentServiceProvider || "",
+        // noOfStaffNeeded: data?.[item.id]?.noOfStaffNeeded || "",
+        // doctorTypeRequired: data?.[item.id]?.doctorTypeRequired || "",
+        // typeOfRequest: data?.[item.id]?.typeOfRequest || "",
+        // noOfTrainingNeeded: data?.[item.id]?.noOfTrainingNeeded || "",
+        // emergencyTieUp: data?.[item.id]?.emergencyTieUp || "",
+        // noOfAccidentsInMonth: data?.[item.id]?.noOfAccidentsInMonth || "",
       }));
       setRows(temp);
     } else {
@@ -963,73 +963,73 @@ const ServiceInfo = ({ data, setFetch }) => {
     fetchServices();
   }, [data]);
 
-  const [openModal, setOpenModal] = useState(false);
-  const [openModalQuote, setOpenModalQuote] = useState(false);
+  // const [openModal, setOpenModal] = useState(false);
+  // const [openModalQuote, setOpenModalQuote] = useState(false);
 
-  const [moreInfoObject, setMoreInfoObject] = useState({
-    status: { label: "", value: "" },
-    required: "",
-    lastPlayer: "",
-    lastAmount: "",
-    dueDate: dayjs().format("YYYY-MM-DD"),
-    remarks: "",
-    confidenceLeveLStatus: { label: "", value: "" },
-    corpRequirementStatus: { label: "", value: "" },
-    estimatedBusinessSize: "",
-    typeOfPolicy: "",
-    numberOfLives: "",
-    decisionMaking: "",
-    currentServiceProvider: "",
-    noOfStaffNeeded: "",
-    doctorTypeRequired: "",
-    typeOfRequest: "",
-    noOfTrainingNeeded: "",
-    emergencyTieUp: "",
-    noOfAccidentsInMonth: "",
-    isEdit: false,
-  });
-  const handleSave = async (data) => {
-    const obj = {
-      status: data?.status?.value || null,
-      required: data.required,
-      lastPlayer: data.lastPlayer,
-      lastAmount: data.lastAmount,
-      dueDate: data.dueDate,
-      remarks: data.remarks,
-      userId: userId,
-      userName: userName,
-      confidenceLeveLStatus: data?.confidenceLeveLStatus?.value || null,
-      corpRequirementStatus: data?.corpRequirementStatus || null,
-      estimatedBusinessSize: data.estimatedBusinessSize,
-      typeOfPolicy: data.typeOfPolicy,
-      numberOfLives: data.numberOfLives,
-      decisionMaking: data.decisionMaking,
-      currentServiceProvider: data.currentServiceProvider,
-      noOfStaffNeeded: data.noOfStaffNeeded,
-      doctorTypeRequired: data.doctorTypeRequired,
-      typeOfRequest: data.typeOfRequest,
-      noOfTrainingNeeded: data.noOfTrainingNeeded,
-      emergencyTieUp: data.emergencyTieUp,
-      noOfAccidentsInMonth: data.noOfAccidentsInMonth,
-    };
+  // const [moreInfoObject, setMoreInfoObject] = useState({
+  //   status: { label: "", value: "" },
+  //   required: "",
+  //   lastPlayer: "",
+  //   lastAmount: "",
+  //   dueDate: dayjs().format("YYYY-MM-DD"),
+  //   remarks: "",
+  //   confidenceLeveLStatus: { label: "", value: "" },
+  //   corpRequirementStatus: { label: "", value: "" },
+  //   estimatedBusinessSize: "",
+  //   typeOfPolicy: "",
+  //   numberOfLives: "",
+  //   decisionMaking: "",
+  //   currentServiceProvider: "",
+  //   noOfStaffNeeded: "",
+  //   doctorTypeRequired: "",
+  //   typeOfRequest: "",
+  //   noOfTrainingNeeded: "",
+  //   emergencyTieUp: "",
+  //   noOfAccidentsInMonth: "",
+  //   isEdit: false,
+  // });
+  // const handleSave = async (data) => {
+  //   const obj = {
+  //     status: data?.status?.value || null,
+  //     required: data.required,
+  //     lastPlayer: data.lastPlayer,
+  //     lastAmount: data.lastAmount,
+  //     dueDate: data.dueDate,
+  //     remarks: data.remarks,
+  //     userId: userId,
+  //     userName: userName,
+  //     confidenceLeveLStatus: data?.confidenceLeveLStatus?.value || null,
+  //     corpRequirementStatus: data?.corpRequirementStatus || null,
+  //     estimatedBusinessSize: data.estimatedBusinessSize,
+  //     typeOfPolicy: data.typeOfPolicy,
+  //     numberOfLives: data.numberOfLives,
+  //     decisionMaking: data.decisionMaking,
+  //     currentServiceProvider: data.currentServiceProvider,
+  //     noOfStaffNeeded: data.noOfStaffNeeded,
+  //     doctorTypeRequired: data.doctorTypeRequired,
+  //     typeOfRequest: data.typeOfRequest,
+  //     noOfTrainingNeeded: data.noOfTrainingNeeded,
+  //     emergencyTieUp: data.emergencyTieUp,
+  //     noOfAccidentsInMonth: data.noOfAccidentsInMonth,
+  //   };
 
-    const url =
-      BASE_URL +
-      `corpSales/service/info?corpId=${corpSalesId}&serviceId=${data?.id}`;
-    const result = await saveData(url, obj);
-    if (result.data) {
-      enqueueSnackbar("Successfully Saved", {
-        variant: "success",
-      });
-      setFetch(true);
-    } else {
-      enqueueSnackbar("An Error Occured.", {
-        variant: "error",
-      });
-    }
-  };
+  //   const url =
+  //     BASE_URL +
+  //     `corpSales/service/info?corpId=${corpSalesId}&serviceId=${data?.id}`;
+  //   const result = await saveData(url, obj);
+  //   if (result.data) {
+  //     enqueueSnackbar("Successfully Saved", {
+  //       variant: "success",
+  //     });
+  //     setFetch(true);
+  //   } else {
+  //     enqueueSnackbar("An Error Occured.", {
+  //       variant: "error",
+  //     });
+  //   }
+  // };
 
-  console.log({ rows, data, selectedRow, moreInfoObject });
+  // console.log({ rows, data, selectedRow, moreInfoObject });
 
   return (
     <Fragment>
@@ -1065,11 +1065,12 @@ const ServiceInfo = ({ data, setFetch }) => {
             <CustomButtonBlue
               onClick={() => {
                 const query = {
+                  serviceId: obj.id,
                   corpId: corpSalesId,
                   serviceName: obj.testName,
                 };
                 navigate(
-                  `/corp/salesvisit/quotationlist/${encodeURIComponent(
+                  `/corp/salesvisit/serviceslogs/${encodeURIComponent(
                     JSON.stringify(query)
                   )}`
                 );
@@ -1077,7 +1078,12 @@ const ServiceInfo = ({ data, setFetch }) => {
               title="View"
             />
           </Grid>
-          <Grid item xs={3} lg={1}>
+          <Grid
+            item
+            xs={3}
+            lg={1}
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
             <Tooltip title="More Info">
               <IconButton
                 onClick={() => {
@@ -1091,6 +1097,23 @@ const ServiceInfo = ({ data, setFetch }) => {
                 <InfoIcon style={{ color: "#127DDD" }} />
               </IconButton>
             </Tooltip>
+            {/* <Tooltip title="View Quotations">
+              <IconButton
+                onClick={() => {
+                  const query = {
+                    corpId: corpSalesId,
+                    serviceName: obj.testName,
+                  };
+                  navigate(
+                    `/corp/salesvisit/quotationlist/${encodeURIComponent(
+                      JSON.stringify(query)
+                    )}`
+                  );
+                }}
+              >
+                <RemoveRedEyeIcon style={{ color: "#127DDD" }} />
+              </IconButton>
+            </Tooltip> */}
           </Grid>
         </Grid>
       ))}

@@ -8,7 +8,7 @@ const VisitType = ({ formValues, setFormValues }) => {
   });
   const handleChangeVisitType = (event, newValue, reason) => {
     setSelectedValue(newValue);
-    setFormValues({ ...formValues, visitType: newValue.value });
+    setFormValues({ ...formValues, visitType: newValue?.value || "" });
     if (reason === "clear") {
       setSelectedValue({
         value: "",

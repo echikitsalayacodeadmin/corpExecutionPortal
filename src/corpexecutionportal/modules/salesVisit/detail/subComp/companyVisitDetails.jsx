@@ -1,10 +1,23 @@
-import { Box, Grid, IconButton, Typography } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Grid,
+  IconButton,
+  Portal,
+  Typography,
+} from "@mui/material";
+import React, { Fragment, useEffect, useState } from "react";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useNavigate } from "react-router-dom";
 import DownloadIcon from "@mui/icons-material/Download";
+import { RemoveRedEye } from "@mui/icons-material";
+import { BASE_URL } from "../../../../../assets/constants";
+import { getData } from "../../../../assets/corpServices";
 
 const CompanyVisitDetails = ({ data, onlyView = false }) => {
   const navigate = useNavigate();
@@ -14,6 +27,27 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
       window.open(url, "_blank");
     }
   };
+  const [visitDetail, setVisitDetail] = useState();
+  const fetchVisitDetail = async () => {
+    if (data?.corpSalesId) {
+      const url =
+        BASE_URL + `corpSales/corp/visits?corpSalesId=${data?.corpSalesId}`;
+      const result = await getData(url);
+      if (result.data) {
+        setVisitDetail(result.data);
+      } else {
+        setVisitDetail([]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchVisitDetail();
+  }, [data]);
+
+  const [openPhoto, setOpenPhoto] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+
   return (
     <Fragment>
       <Box sx={{}}>
@@ -75,8 +109,8 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
         </Grid>
 
         {showSalesVisit &&
-          data?.corpSalesVisitEntities?.length > 0 &&
-          data?.corpSalesVisitEntities?.map((item, index) => (
+          visitDetail?.length > 0 &&
+          visitDetail?.map((item, index) => (
             <Grid
               key={index}
               container
@@ -149,16 +183,57 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 sx={{ display: "flex", flexWrap: "wrap", marginTop: 1 }}
               >
                 <CustomButtonBlue
-                  startIcon={<DownloadIcon />}
+                  startIcon={<RemoveRedEye />}
                   disabled={item?.photoUrl ? false : true}
                   title="Photo"
                   onClick={() => {
-                    handleDownload(item?.photoUrl);
+                    setOpenPhoto(true);
+                    setImageUrl(item?.photoUrl);
                   }}
                 />
               </Grid>
             </Grid>
           ))}
+
+        <Portal>
+          <Dialog
+            fullWidth={true}
+            maxWidth={"lg"}
+            open={openPhoto}
+            onClose={() => {
+              setOpenPhoto(false);
+              setImageUrl("");
+            }}
+          >
+            <DialogContent>
+              <img src={imageUrl} alt="image" width="100%" />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  setOpenPhoto(false);
+                  setImageUrl("");
+                }}
+              >
+                Close
+              </Button>
+              <IconButton
+                sx={{
+                  backgroundColor: "#127DDD",
+                  ":hover": {
+                    backgroundColor: "#1f63a1",
+                  },
+                }}
+                onClick={() => {
+                  handleDownload(imageUrl);
+                }}
+              >
+                <DownloadIcon sx={{ color: "#FFFFFF" }} />
+              </IconButton>
+            </DialogActions>
+          </Dialog>
+        </Portal>
+
         {showSalesVisit && (
           <Grid item xs={12} lg={12}>
             {onlyView === true ? null : (

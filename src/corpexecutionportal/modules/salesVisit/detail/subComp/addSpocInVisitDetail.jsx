@@ -3,10 +3,14 @@ import {
   deleteDataWithObj,
   updateDatePut,
 } from "../../../../assets/corpServices";
+import DownloadIcon from "@mui/icons-material/Download";
 import { BASE_URL } from "../../../../../assets/constants";
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
   FormControlLabel,
   Grid,
   IconButton,
@@ -28,6 +32,7 @@ import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import UploadFile from "../../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
+import { RemoveRedEye } from "@mui/icons-material";
 
 const AddSpocInVisitDetail = ({
   formValues,
@@ -151,6 +156,9 @@ const AddSpocInVisitDetail = ({
     }
   };
 
+  const [openPhoto, setOpenPhoto] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+
   return (
     <Fragment>
       <Box sx={{ marginBlock: 2 }}>
@@ -230,7 +238,15 @@ const AddSpocInVisitDetail = ({
                     </Typography>
                   </Grid>
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                    <Button variant="contained">Photo</Button>
+                    <CustomButtonBlue
+                      title="Photo"
+                      onClick={() => {
+                        setOpenPhoto(true);
+                        setImageUrl(spoc.photo || "");
+                      }}
+                      startIcon={<RemoveRedEye />}
+                      variant="contained"
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -255,6 +271,45 @@ const AddSpocInVisitDetail = ({
           </Box>
         )}
       </Box>
+
+      <Portal>
+        <Dialog
+          fullWidth={true}
+          maxWidth={"lg"}
+          open={openPhoto}
+          onClose={() => {
+            setOpenPhoto(false);
+            setImageUrl("");
+          }}
+        >
+          <DialogContent>
+            <img src={imageUrl} alt="image" width="100%" />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpenPhoto(false);
+                setImageUrl("");
+              }}
+            >
+              Close
+            </Button>
+            <IconButton
+              sx={{
+                backgroundColor: "#127DDD",
+                ":hover": {
+                  backgroundColor: "#1f63a1",
+                },
+              }}
+              onClick={() => {
+                handleDownload(imageUrl);
+              }}
+            >
+              <DownloadIcon sx={{ color: "#FFFFFF" }} />
+            </IconButton>
+          </DialogActions>
+        </Dialog>
+      </Portal>
 
       <Portal>
         <Modal

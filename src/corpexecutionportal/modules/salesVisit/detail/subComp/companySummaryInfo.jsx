@@ -1,10 +1,21 @@
-import { Button, Grid, IconButton, Tooltip, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Grid,
+  IconButton,
+  Portal,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import React, { Fragment, useState } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import CreateIcon from "@mui/icons-material/Create";
 import { useNavigate } from "react-router-dom";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import { CustomTypographyBold } from "../../../../../assets/customTypography";
+import { RemoveRedEye } from "@mui/icons-material";
 
 const CompanySummaryInfo = ({ data }) => {
   const navigate = useNavigate();
@@ -13,6 +24,7 @@ const CompanySummaryInfo = ({ data }) => {
       window.open(url, "_blank");
     }
   };
+  const [open, setOpen] = useState(false);
   return (
     <Fragment>
       <CustomTypographyBold>Company Information</CustomTypographyBold>
@@ -95,10 +107,10 @@ const CompanySummaryInfo = ({ data }) => {
             >
               {data?.photoUrl === "" || data?.photoUrl === null ? null : (
                 <CustomButtonBlue
-                  startIcon={<DownloadIcon />}
+                  startIcon={<RemoveRedEye />}
                   title="Photo"
                   onClick={() => {
-                    handleDownload(data?.photoUrl);
+                    setOpen(true);
                   }}
                 />
               )}
@@ -117,6 +129,43 @@ const CompanySummaryInfo = ({ data }) => {
           </Tooltip>
         </Grid>
       </Grid>
+
+      <Portal>
+        <Dialog
+          fullWidth={true}
+          maxWidth={"lg"}
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+        >
+          <DialogContent>
+            <img src={data?.photoUrl} alt="image" width="100%" />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              Close
+            </Button>
+            <IconButton
+              sx={{
+                backgroundColor: "#127DDD",
+                ":hover": {
+                  backgroundColor: "#1f63a1",
+                },
+              }}
+              onClick={() => {
+                handleDownload(data?.photoUrl);
+              }}
+            >
+              <DownloadIcon sx={{ color: "#FFFFFF" }} />
+            </IconButton>
+          </DialogActions>
+        </Dialog>
+      </Portal>
     </Fragment>
   );
 };
