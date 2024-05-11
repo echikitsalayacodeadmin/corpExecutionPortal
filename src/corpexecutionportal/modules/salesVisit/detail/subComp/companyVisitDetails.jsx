@@ -201,7 +201,6 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 <Typography sx={styles.heading}>Next Visit Date -</Typography>
                 <Typography
                   sx={{
-                    color: "#127DDD",
                     fontWeight: "bold",
                     textTransform: "capitalize",
                     color: item.color,
