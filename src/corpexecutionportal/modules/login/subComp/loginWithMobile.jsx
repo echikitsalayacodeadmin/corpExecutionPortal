@@ -5,49 +5,53 @@ import {
   Card,
   CardContent,
   CardHeader,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  OutlinedInput,
   Stack,
   TextField,
 } from "@mui/material";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { authenticateUser } from "../../../services/loginservices";
+import {
+  authenticateMobileUser,
+  sendOTP,
+} from "../../../services/loginservices";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import CustomButtonWhite from "../../../../assets/customButtonWhite";
 
 const LoginWithMobile = ({ setIsMobileLogin, isMobileLogin }) => {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [otpSentTime, setOtpSentTime] = useState(null);
   const [otpSent, setOtpSent] = useState(false);
-  const handleSendOTP = () => {
-    // Logic to send OTP
-    // Set otpSent to true and set otpSentTime to current time
-    setOtpSent(true);
+
+  const handleSendOTP = async (e) => {
+    e.preventDefault();
+    const payload = {
+      username: mobileNumber,
+      role: "CORPSALES_ADMIN",
+      portal: "CORP_SALES",
+    };
+    sendOTP(payload, enqueueSnackbar, setOtpSent);
     setOtpSentTime(Date.now());
   };
 
-  const handleResendOTP = () => {
-    // Logic to resend OTP
-    // Set otpSent to true and set otpSentTime to current time
-    setOtpSent(true);
-    setOtpSentTime(Date.now());
+  const handleResendOTP = async (e) => {
+    e.preventDefault();
   };
 
-  const calculateRemainingTime = () => {
-    if (!otpSent) return 0; // Return 0 if OTP is not sent
-    const currentTime = Date.now();
-    const elapsedTime = currentTime - otpSentTime;
-    const remainingTime = 60 * 1000 - elapsedTime; // 60 seconds in milliseconds
-    return remainingTime < 0 ? 0 : remainingTime; // Ensure remaining time is not negative
-  };
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  const handleFormSubmit = () => {};
+    const payload = {
+      username: mobileNumber,
+      password: otp,
+      role: "CORPSALES_ADMIN",
+      portal: "CORP_SALES",
+    };
+    authenticateMobileUser(payload, navigate, enqueueSnackbar);
+  };
   return (
     <Fragment>
       <Box>
@@ -68,7 +72,7 @@ const LoginWithMobile = ({ setIsMobileLogin, isMobileLogin }) => {
             }}
           />
           <CardContent>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={handleLogin}>
               <Stack spacing={2}>
                 <TextField
                   placeholder={"Mobile Number"}
@@ -91,19 +95,12 @@ const LoginWithMobile = ({ setIsMobileLogin, isMobileLogin }) => {
                 />
                 <Box display="flex" justifyContent="space-between">
                   <CustomButtonWhite
-                    disabled={!otpSent || calculateRemainingTime() > 0} // Enable if OTP is sent and remaining time is 0
-                    onClick={handleResendOTP} // Function to resend OTP
                     styles={{ width: "45%" }}
-                    title={`Resend ${
-                      calculateRemainingTime() > 0
-                        ? `(${Math.ceil(calculateRemainingTime() / 1000)}s)`
-                        : ""
-                    }`}
+                    title={`Resend `}
                   />
 
                   <CustomButtonBlue
-                    disabled={mobileNumber.length !== 10} // Disable if mobile number is not 10 digits long
-                    onClick={handleSendOTP} // Function to send OTP
+                    onClick={handleSendOTP}
                     styles={{ width: "45%" }}
                     title="Send OTP"
                   />

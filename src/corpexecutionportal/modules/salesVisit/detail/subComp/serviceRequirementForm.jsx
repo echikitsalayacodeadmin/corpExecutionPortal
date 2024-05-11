@@ -173,7 +173,7 @@ const servicesFields = {
           label: "Interest Reason",
           fieldName: "interestReason",
           type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          options: ["JUST_FOR_QUOTATION", "EXPLORING", "INTERESTING", "ALL_IN"],
         },
         {
           label: "Pain Point",
@@ -266,16 +266,16 @@ const servicesFields = {
           dataType: "string",
         },
         {
-          label: "Old Rate",
-          fieldName: "oldRate",
+          label: "Reason For Shift",
+          fieldName: "reasonForShift",
           type: "textField",
           dataType: "string",
         },
         {
-          label: "Interest Reason",
-          fieldName: "interestReason",
-          type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          label: "Tentative Budget",
+          fieldName: "tentativeBudget",
+          type: "textField",
+          dataType: "string",
         },
         {
           label: "Pain Point",
@@ -306,7 +306,7 @@ const servicesFields = {
       label: "Degree",
       fieldName: "degree",
       type: "dropdown",
-      options: ["MBBS", "AFIH", "BOTH"],
+      options: ["MBBS", "AFIH", "MBBS_AND_AFIH"],
     },
     {
       label: "Procedure of closure",
@@ -329,13 +329,20 @@ const servicesFields = {
       label: "Timing",
       fieldName: "timings",
       type: "dropdown",
-      options: ["1hr", "2hr", "4hr", "8hr"],
+      options: ["ONE_HOUR", "TWO_HOUR", "THREE_HOUR", "EIGHT_HOUR"],
     },
     {
       label: "Frequency",
       fieldName: "frequency",
       type: "dropdown",
-      options: ["1/week", "2/week", "3/week", "4/week", "5/week", "Full Time"],
+      options: [
+        "ONE_PER_WEEK",
+        "TWO_PER_WEEK",
+        "THREE_PER_WEEK",
+        "FOUR_PER_WEEK",
+        "FIVE_PER_WEEK",
+        "FULL_TIME",
+      ],
     },
     {
       label: "Location",
@@ -361,16 +368,16 @@ const servicesFields = {
           dataType: "string",
         },
         {
-          label: "Old Rate",
-          fieldName: "oldRate",
+          label: "Reason For Shift",
+          fieldName: "reasonForShift",
           type: "textField",
           dataType: "string",
         },
         {
-          label: "Interest Reason",
-          fieldName: "interestReason",
-          type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          label: "Tentative Budget",
+          fieldName: "tentativeBudget",
+          type: "textField",
+          dataType: "string",
         },
         {
           label: "Pain Point",
@@ -442,8 +449,7 @@ const servicesFields = {
     {
       label: "Due/Tentative Date",
       fieldName: "dueDate",
-      type: "textField",
-      dataType: "string",
+      type: "date",
     },
     {
       label: "Decision Owner",
@@ -490,7 +496,7 @@ const servicesFields = {
       type: "date",
     },
     {
-      label: "Remark",
+      label: "Key Highlights",
       fieldName: "remark",
       type: "textFieldMultiline",
       dataType: "string",
@@ -522,7 +528,7 @@ const servicesFields = {
           label: "Interest Reason",
           fieldName: "interestReason",
           type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          options: ["JUST_FOR_QUOTATION", "EXPLORING", "INTERESTING", "ALL_IN"],
         },
         {
           label: "Pain Point",
@@ -600,7 +606,7 @@ const servicesFields = {
           label: "Interest Reason",
           fieldName: "interestReason",
           type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          options: ["JUST_FOR_QUOTATION", "EXPLORING", "INTERESTING", "ALL_IN"],
         },
         {
           label: "Pain Point",
@@ -684,7 +690,7 @@ const servicesFields = {
           label: "Interest Reason",
           fieldName: "interestReason",
           type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          options: ["JUST_FOR_QUOTATION", "EXPLORING", "INTERESTING", "ALL_IN"],
         },
         {
           label: "Pain Point",
@@ -718,7 +724,7 @@ const servicesFields = {
       options: ["NEW", "OLD"],
     },
     {
-      label: "Remark",
+      label: "Key Highlights",
       fieldName: "remark",
       type: "textFieldMultiline",
       dataType: "string",
@@ -740,7 +746,7 @@ const servicesFields = {
     {
       label: "Request Type",
       fieldName: "insuranceRequestType",
-      type: "drowpDown",
+      type: "dropdown",
       options: ["RENEWAL", "NEW"],
     },
     {
@@ -782,7 +788,7 @@ const servicesFields = {
           label: "Interest Reason",
           fieldName: "interestReason",
           type: "dropdown",
-          options: ["Just for Quotation", "Exploring", "Interested", "All In"],
+          options: ["JUST_FOR_QUOTATION", "EXPLORING", "INTERESTING", "ALL_IN"],
         },
         {
           label: "Pain Point",
@@ -827,7 +833,7 @@ const servicesFields = {
       type: "date",
     },
     {
-      label: "Remark",
+      label: "Key Highlights",
       fieldName: "remark",
       type: "textFieldMultiline",
       dataType: "string",

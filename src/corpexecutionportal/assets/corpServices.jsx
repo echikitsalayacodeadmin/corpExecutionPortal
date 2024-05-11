@@ -9,6 +9,7 @@ import {
 } from "../../assets/services/api/patchApi";
 import {
   saveDataGlobal,
+  saveDataWithoutTokenGlobal,
   uploadFileGlobal,
 } from "../../assets/services/api/postApiCalls";
 import {
@@ -26,6 +27,10 @@ export const saveData = async (url, payload) => {
   let authHeader_local = localStorage.getItem("AUTHHEADER_CORP_EXECUTION");
   const response = await saveDataGlobal(url, payload, authHeader_local);
 
+  return response;
+};
+export const saveDataWithoutToken = async (url, payload) => {
+  const response = await saveDataWithoutTokenGlobal(url, payload);
   return response;
 };
 

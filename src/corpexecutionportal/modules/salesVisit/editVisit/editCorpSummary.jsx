@@ -89,9 +89,34 @@ const EditCorpSummary = () => {
         variant: "success",
       });
       fetchCorpDetails(setFormValues, setIsLoading, corpSalesId);
-      navigate(-1);
+      if (result?.data && formValues.photoUrl !== "") {
+        handleUpload(result?.data?.corpSalesId);
+      } else {
+        navigate(-1);
+      }
     } else if (result && result?.error) {
       enqueueSnackbar("An Error Occured", {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleUpload = async (corpSalesId) => {
+    const formData = new FormData();
+    formValues.photoUrl.file
+      ? formData.append("file", formValues.photoUrl.file)
+      : null;
+    const url =
+      BASE_URL +
+      "corpSales/upload?corpSalesId=" +
+      corpSalesId +
+      "&fileType=PHOTO";
+    const result = await uploadFile(url, formData);
+    if (result.data) {
+      enqueueSnackbar("Successfully Uploaded!", { variant: "success" });
+      navigate(-1);
+    } else {
+      enqueueSnackbar("An error occured while uploading photo", {
         variant: "error",
       });
     }
