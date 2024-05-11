@@ -72,7 +72,6 @@ const LoginWithMobile = ({ setIsMobileLogin, isMobileLogin }) => {
               <Stack spacing={2}>
                 <TextField
                   placeholder={"Mobile Number"}
-                  label={"Mobile Number"}
                   required
                   value={mobileNumber}
                   onChange={(e) => {
