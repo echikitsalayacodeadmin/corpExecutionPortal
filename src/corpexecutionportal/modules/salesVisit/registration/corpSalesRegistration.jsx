@@ -110,6 +110,31 @@ const CorpSalesRegistration = () => {
     }
   };
 
+  const handleAddSpoc = async () => {
+    const formData = new FormData();
+    formData.append("corpSalesId", formValues.corpSalesId);
+    formData.append("name", spocForm.name);
+    formData.append("mobile", spocForm?.mobile);
+    formData.append("email", spocForm?.email);
+    formData.append("designation", spocForm?.designation);
+    formData.append("decisionMaker", spocForm?.isDecisionMaker);
+    formData.append("file", spocForm?.spocPhotoUrl.file);
+
+    const url = BASE_URL + "corpSales/add/spoc";
+    const result = await uploadFile(url, formData);
+    if (result && result.data) {
+      console.log("SUCCESS POST", result.data);
+      enqueueSnackbar("Successfully Added", {
+        variant: "success",
+      });
+      handleClose();
+    } else if (result && result.error) {
+      enqueueSnackbar("An Error Occured", {
+        variant: "error",
+      });
+    }
+  };
+
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -250,7 +275,7 @@ const CorpSalesRegistration = () => {
             label="Remark"
             size="small"
             fullWidth
-            placeholder="Enter Remark"
+            placeholder="Key Highlight"
             value={formValues.interestedRemark}
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             onChange={(e) =>

@@ -94,43 +94,8 @@ const CompanySummaryInfo = ({ data }) => {
               <Typography sx={styles.data}>{data?.subLocation}</Typography>
             </Grid>
             <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
-              <Typography sx={styles.heading}>Remark -</Typography>
+              <Typography sx={styles.heading}>Key Highlight -</Typography>
               <Typography sx={styles.data}>{data?.interestedRemark}</Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={12}
-              md={12}
-              sm={12}
-              sx={{
-                display: "flex",
-                marginBlock: "2px",
-                gap: "10px",
-                flexWrap: "wrap",
-              }}
-            >
-              {data?.photoUrl === "" || data?.photoUrl === null ? null : (
-                <IconButton
-                  sx={{
-                    backgroundColor: "#127DDD",
-                    ":hover": {
-                      backgroundColor: "#1f63a1",
-                    },
-                    p: 0.7,
-                    ":disabled": {
-                      backgroundColor: "lightgray",
-                    },
-                  }}
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  <ImageIcon
-                    sx={{ color: "#FFFFFF", height: "20px", width: "20px" }}
-                  />
-                </IconButton>
-              )}
             </Grid>
           </Grid>
         </Grid>
@@ -144,6 +109,27 @@ const CompanySummaryInfo = ({ data }) => {
               <CreateIcon />
             </IconButton>
           </Tooltip>
+          {data?.photoUrl === "" || data?.photoUrl === null ? null : (
+            <IconButton
+              sx={{
+                backgroundColor: "#127DDD",
+                ":hover": {
+                  backgroundColor: "#1f63a1",
+                },
+                p: 0.7,
+                ":disabled": {
+                  backgroundColor: "lightgray",
+                },
+              }}
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              <ImageIcon
+                sx={{ color: "#FFFFFF", height: "20px", width: "20px" }}
+              />
+            </IconButton>
+          )}
         </Grid>
       </Grid>
 

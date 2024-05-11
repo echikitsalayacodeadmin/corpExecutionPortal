@@ -181,8 +181,8 @@ const ServiceInfo = ({ data }) => {
           rows.map((obj) => (
             <Grid
               container
-              rowSpacing={0.5}
               columnSpacing={1}
+              rowSpacing={2}
               key={obj.id}
               sx={{
                 background: "#FFFFFF",
@@ -209,8 +209,6 @@ const ServiceInfo = ({ data }) => {
 
               <Grid item xs={8} lg={2}>
                 <CustomAutocomplete
-                  required={true}
-                  asterickColor={"red"}
                   fullWidth
                   size="small"
                   options={[
@@ -289,8 +287,6 @@ const ServiceInfo = ({ data }) => {
               )}
               <Grid item xs={8} lg={2}>
                 <CustomAutocomplete
-                  required={true}
-                  asterickColor={"red"}
                   fullWidth
                   size="small"
                   options={[

@@ -298,7 +298,7 @@ const SalesVisitDashboard = () => {
         title="Dashboard"
         onDownloadClick={() =>
           fetchMisData(
-            status,
+            // status,
             userId,
             fromDate,
             toDate,

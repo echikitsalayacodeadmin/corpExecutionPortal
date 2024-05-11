@@ -7,8 +7,10 @@ import {
   DialogContent,
   Fab,
   Grid,
+  IconButton,
   Portal,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import BasicInfo from "./subComp/basicInfo";
 import Ohc from "./subComp/ohc";
@@ -28,6 +30,7 @@ import {
   updateData,
   updateDataFile,
 } from "../../../assets/corpServices";
+import { isMobile } from "react-device-detect";
 
 const calculateTestListRowFields = (dialogData) => {
   const pricePerEmp = dialogData?.testList?.reduce(
@@ -408,6 +411,14 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
     }
   };
 
+  const generatePdfUrlForMobile = async () => {
+    const blob = await pdf(<MyDocument data={formValues} />).toBlob();
+    const blobURL = URL.createObjectURL(blob);
+    if (blobURL) {
+      window.open(blobURL, "_blank");
+    }
+  };
+
   if (isLoading) {
     return (
       <Box
@@ -430,7 +441,11 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
           color="primary"
           aria-label="add"
           onClick={() => {
-            handleOpenPdf();
+            if (isMobile) {
+              generatePdfUrlForMobile();
+            } else {
+              handleOpenPdf();
+            }
           }}
           sx={{
             position: "fixed",
@@ -509,7 +524,13 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
           >
             <CustomButtonBlue
               title={"View PDF"}
-              onClick={handleOpenPdf}
+              onClick={() => {
+                if (isMobile) {
+                  generatePdfUrlForMobile();
+                } else {
+                  handleOpenPdf();
+                }
+              }}
               styles={{ width: "200px" }}
             />
           </Grid>
@@ -573,6 +594,17 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
             open={openPdf}
             onClose={handleClosePdf}
           >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <IconButton onClick={handleClosePdf}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
             <DialogContent sx={{ height: "80vh" }}>
               <PdfMain data={formValues} />
             </DialogContent>

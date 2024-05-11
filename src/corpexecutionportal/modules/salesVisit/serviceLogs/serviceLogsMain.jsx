@@ -32,6 +32,22 @@ const ServiceLogsMain = () => {
       <MainPageLayoutWithBack title={`${data.serviceName} Logs`}>
         <Grid container>
           <Grid item xs={12} lg={12}>
+            {serviceLog?.length === 0 && (
+              <Grid
+                container
+                sx={{
+                  border: "1px solid #000",
+                  padding: 1,
+                  borderRadius: "15px",
+                  marginBottom: 1,
+                  alignItems: "center",
+                }}
+              >
+                <Grid item xs={12} lg={12}>
+                  <Typography>No Logs</Typography>
+                </Grid>
+              </Grid>
+            )}
             {serviceLog?.map((item, index) => (
               <Grid
                 key={index}

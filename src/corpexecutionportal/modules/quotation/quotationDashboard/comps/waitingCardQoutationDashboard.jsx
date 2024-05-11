@@ -112,9 +112,6 @@ const WaitingCardQoutationDashboard = ({ data }) => {
                 )}`
               );
             }}
-            startIcon={<RemoveRedEyeIcon />}
-            size="small"
-            variant="contained"
             sx={{ borderRadius: "10px", textTransform: "capitalize" }}
           >
             <EditIcon />

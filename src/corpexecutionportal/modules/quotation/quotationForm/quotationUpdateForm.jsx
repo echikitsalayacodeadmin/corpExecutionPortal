@@ -33,6 +33,7 @@ import CustomButtonWhite from "../../../../assets/customButtonWhite";
 import { useParams } from "react-router-dom";
 import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
+import { isMobile } from "react-device-detect";
 
 const calculateTestListRowFields = (dialogData) => {
   const pricePerEmp = dialogData?.testList?.reduce(
@@ -278,11 +279,13 @@ const QuotationUpdateForm = () => {
       quotationExpirationDate: formValues.quotationExpirationDate,
       quotationStatus: formValues.quotationStatus,
       quotationTableDataVMS:
-        formValues.quotationTableDataVMS?.[0]?.quotationDataVMS?.length > 0
+        formValues?.quotationTableDataVMS?.[0]?.quotationDataVMS?.length > 0
           ? formValues?.quotationTableDataVMS
           : null,
       ohcVM:
-        formValues.ohcVM.ohcCategoryVMS.length > 0 ? formValues.ohcVM : null,
+        formValues?.ohcVM?.ohcCategoryVMS?.length > 0
+          ? formValues?.ohcVM
+          : null,
       corpId: routerDetail?.corpId,
       quotationUrl: formValues.quotationUrl,
       isActive: true,
@@ -401,6 +404,14 @@ const QuotationUpdateForm = () => {
     setOpenPdf(false);
   };
 
+  const generatePdfUrlForMobile = async () => {
+    const blob = await pdf(<MyDocument data={formValues} />).toBlob();
+    const blobURL = URL.createObjectURL(blob);
+    if (blobURL) {
+      window.open(blobURL, "_blank");
+    }
+  };
+
   if (isLoading) {
     return (
       <Box
@@ -424,7 +435,11 @@ const QuotationUpdateForm = () => {
           color="primary"
           aria-label="add"
           onClick={() => {
-            handleOpenPdf();
+            if (isMobile) {
+              generatePdfUrlForMobile();
+            } else {
+              handleOpenPdf();
+            }
           }}
           sx={{
             position: "fixed",
@@ -486,7 +501,13 @@ const QuotationUpdateForm = () => {
           >
             <CustomButtonBlue
               title={"View PDF"}
-              onClick={handleOpenPdf}
+              onClick={() => {
+                if (isMobile) {
+                  generatePdfUrlForMobile();
+                } else {
+                  handleOpenPdf();
+                }
+              }}
               styles={{ width: "200px" }}
             />
           </Grid>
@@ -657,6 +678,17 @@ const QuotationUpdateForm = () => {
             open={openPdf}
             onClose={handleClosePdf}
           >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              <IconButton onClick={handleClosePdf}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
             <DialogContent sx={{ height: "80vh" }}>
               <PdfMain data={formValues} />
             </DialogContent>
