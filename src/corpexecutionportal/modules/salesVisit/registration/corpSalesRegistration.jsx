@@ -186,9 +186,9 @@ const CorpSalesRegistration = () => {
             property={"subLocation"}
           />
         </Grid>
-        <Grid item xs={12} lg={12}>
+        {/* <Grid item xs={12} lg={12}>
           <AddSpocComp formValues={formValues} setFormValues={setFormValues} />
-        </Grid>
+        </Grid> */}
         <Grid item xs={6} lg={6}>
           <TextField
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
