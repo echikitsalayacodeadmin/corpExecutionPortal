@@ -31,11 +31,21 @@ const SubLocation = ({ formValues, setFormValues, property }) => {
           "Machal Indore",
           "Within City",
         ]}
+        freeSolo={true}
         label="Sub Location"
         getOptionLabel={(option) => option}
         placeholder="Sub Location"
         value={selectedValue}
         onChange={handleChangeSubLoaction}
+        onInputChange={(event, newInputValue, reason) => {
+          setSelectedValue(newInputValue);
+          setFormValues({ ...formValues, [property]: newInputValue });
+
+          if (reason === "clear") {
+            setSelectedValue("");
+            setFormValues({ ...formValues, [property]: "" });
+          }
+        }}
       />
     </Fragment>
   );

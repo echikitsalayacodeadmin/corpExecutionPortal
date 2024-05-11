@@ -299,16 +299,17 @@ export const getColorOfNextVisitDate = (nextVisitDate) => {
   }
   const currentDate = new Date();
   const nextVisit = new Date(nextVisitDate);
-  const differenceInDays = Math.floor(
-    (nextVisit - currentDate) / (1000 * 60 * 60 * 24)
-  );
+  if (currentDate > nextVisit) {
+    console.log("red");
+    return "red";
+  }
+  const difference = Math.abs(nextVisit - currentDate);
+  const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
   console.log({ differenceInDays });
   if (differenceInDays >= 3) {
     return "green";
   } else if (differenceInDays <= 2 && differenceInDays > 0) {
     return "orange";
-  } else {
-    return "red";
   }
 };
 

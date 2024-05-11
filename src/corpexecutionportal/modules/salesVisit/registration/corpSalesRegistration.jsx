@@ -53,6 +53,7 @@ const CorpSalesRegistration = () => {
     priority: "",
     location: "",
     subLocation: "",
+    remark: "",
   });
 
   const obj = {
@@ -67,6 +68,7 @@ const CorpSalesRegistration = () => {
     location: formValues.location,
     subLocation: formValues.subLocation,
     priority: formValues.priority,
+    remark: formValues.remark,
   };
 
   const handleSubmit = async () => {
@@ -184,6 +186,9 @@ const CorpSalesRegistration = () => {
             property={"subLocation"}
           />
         </Grid>
+        <Grid item xs={12} lg={12}>
+          <AddSpocComp formValues={formValues} setFormValues={setFormValues} />
+        </Grid>
         <Grid item xs={6} lg={6}>
           <TextField
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
@@ -249,12 +254,12 @@ const CorpSalesRegistration = () => {
             size="small"
             fullWidth
             placeholder="Enter Remark"
-            value={formValues.interestedRemark}
+            value={formValues.remark}
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             onChange={(e) =>
               setFormValues({
                 ...formValues,
-                interestedRemark: e.target.value,
+                remark: e.target.value,
               })
             }
             inputProps={{
