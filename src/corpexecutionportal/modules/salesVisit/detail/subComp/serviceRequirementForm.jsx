@@ -55,7 +55,7 @@ const servicesFields = {
       label: "Location",
       fieldName: "location",
       type: "dropdown",
-      options: ["ONSITE", "OFFSITE"],
+      options: ["ON_SITE", "OFF_SITE"],
     },
     {
       label: "Decision Owner",
@@ -246,7 +246,7 @@ const servicesFields = {
       label: "Location",
       fieldName: "location",
       type: "dropdown",
-      options: ["Onesite", "Offsite"],
+      options: ["ON_SITE", "OFF_SITE"],
     },
     {
       label: "Decision Owner",
@@ -341,7 +341,7 @@ const servicesFields = {
       label: "Location",
       fieldName: "location",
       type: "dropdown",
-      options: ["Onesite", "Offsite"],
+      options: ["ON_SITE", "OFF_SITE"],
     },
     {
       label: "Decision Owner",
