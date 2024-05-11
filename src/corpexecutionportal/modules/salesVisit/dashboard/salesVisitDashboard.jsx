@@ -5,6 +5,7 @@ import {
   Container,
   Grid,
   LinearProgress,
+  Typography,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
@@ -52,7 +53,7 @@ const SalesVisitDashboard = () => {
       ? dayjs(_storedData.toDate).format("YYYY-MM-DD")
       : dayjs().format("YYYY-MM-DD");
 
-    const _status = _storedData?.status || "";
+    // const _status = _storedData?.status || "";
     const _userId = _storedData?.userId || "";
     const _selectedUserName = _storedData?.selectedUserName || "";
     const _selectedLocation = _storedData?.selectedLocation || "";
@@ -60,7 +61,7 @@ const SalesVisitDashboard = () => {
     const _selectedColor = _storedData?.selectedColor || "";
     setFromDate(_fromDate);
     setToDate(_toDate);
-    setStatus(_status);
+    // setStatus(_status);
     setUserId(_userId);
     setSelectedUserName(_selectedUserName);
     setselectedLocation(_selectedLocation);
@@ -68,7 +69,7 @@ const SalesVisitDashboard = () => {
     setSelectedColor(_selectedColor);
 
     fetchData(
-      _status,
+      // _status,
       _userId,
       _selectedUserName,
       _fromDate,
@@ -80,7 +81,7 @@ const SalesVisitDashboard = () => {
   }, []);
 
   const fetchData = async (
-    _status,
+    // _status,
     _userId,
     _selectedUserName,
     _fromDate,
@@ -100,8 +101,8 @@ const SalesVisitDashboard = () => {
 
       const tempList = result?.data?.filter((item) => {
         return (
-          (_status === "Interested" ? item?.interested === true : true) &&
-          (_status === "NotInterested" ? item?.interested === false : true) &&
+          // (_status === "Interested" ? item?.interested === true : true) &&
+          // (_status === "NotInterested" ? item?.interested === false : true) &&
           // (_userId ? item.userId === _userId : true) &&
           (_selectedPriority ? item.priority === _selectedPriority : true) &&
           (_selectedLocation ? item.location === _selectedLocation : true) &&
@@ -125,7 +126,7 @@ const SalesVisitDashboard = () => {
     }
   };
   const fetchMisData = async (
-    _status,
+    // _status,
     _userId,
     _fromDate,
     _toDate,
@@ -141,17 +142,17 @@ const SalesVisitDashboard = () => {
     if (_selectedLocation !== null || _selectedLocation !== "") {
       url += _selectedLocation ? `&location=${_selectedLocation}` : "";
     }
-    if (_status !== "") {
-      _status
-        ? (url += `&interested=${
-            _status === "Interested"
-              ? true
-              : _status === "NotInterested"
-              ? false
-              : null
-          }`)
-        : null;
-    }
+    // if (_status !== "") {
+    //   _status
+    //     ? (url += `&interested=${
+    //         _status === "Interested"
+    //           ? true
+    //           : _status === "NotInterested"
+    //           ? false
+    //           : null
+    //       }`)
+    //     : null;
+    // }
     const result = await getData(url);
     if (result?.data) {
       const temp = result?.data?.map((item, index) => ({
@@ -198,7 +199,7 @@ const SalesVisitDashboard = () => {
     dayjs().subtract(7, "day").format("YYYY-MM-DD")
   );
   const [toDate, setToDate] = useState(dayjs().format("YYYY-MM-DD"));
-  const [status, setStatus] = useState("");
+  // const [status, setStatus] = useState("");
   const [companyList, setCompanyList] = useState([]);
   const [companyListStatic, setCompanyListStatic] = useState([]);
   const [userId, setUserId] = useState("");
@@ -213,8 +214,8 @@ const SalesVisitDashboard = () => {
     setCompanyList(
       companyListStatic.filter((item) => {
         return (
-          (status === "Interested" ? item?.interested === true : true) &&
-          (status === "NotInterested" ? item?.interested === false : true) &&
+          // (status === "Interested" ? item?.interested === true : true) &&
+          // (status === "NotInterested" ? item?.interested === false : true) &&
           // (userId ? item.userId === userId : true) &&
           (selectedPriority ? item.priority === selectedPriority : true) &&
           (selectedLocation ? item.location === selectedLocation : true) &&
@@ -231,7 +232,7 @@ const SalesVisitDashboard = () => {
     );
   }, [
     companyListStatic,
-    status,
+    // status,
     userId,
     status,
     selectedPriority,
@@ -241,7 +242,7 @@ const SalesVisitDashboard = () => {
 
   useEffect(() => {
     fetchData(
-      status,
+      // status,
       userId,
       fromDate,
       toDate,
@@ -254,7 +255,7 @@ const SalesVisitDashboard = () => {
     const filtersData = {
       fromDate,
       toDate,
-      status,
+      // status,
       userId,
       selectedUserName,
       selectedPriority,
@@ -268,7 +269,7 @@ const SalesVisitDashboard = () => {
   }, [
     fromDate,
     toDate,
-    status,
+    // status,
     userId,
     selectedUserName,
     selectedLocation,
@@ -365,7 +366,7 @@ const SalesVisitDashboard = () => {
               setSelectedValue={setselectedLocation}
             />
           </Grid>
-          <Grid item xs={4} lg={2}>
+          {/* <Grid item xs={4} lg={2}>
             <CustomSelect
               label="Status"
               placeholder={"Status"}
@@ -377,7 +378,7 @@ const SalesVisitDashboard = () => {
                 { label: "Not Interested", value: "NotInterested" },
               ]}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={4} lg={2}>
             <CustomAutocomplete
               options={["green", "orange", "red"]}
@@ -391,11 +392,31 @@ const SalesVisitDashboard = () => {
                   setSelectedColor("");
                 }
               }}
+              renderOption={(props, option) => (
+                <Box
+                  {...props}
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: option,
+                    }}
+                  >
+                    {option === "green"
+                      ? `Green (>= 3 Days)`
+                      : option === "orange"
+                      ? `Orange (<=2 Days)`
+                      : `Red (Late)`}
+                  </Typography>
+                </Box>
+              )}
             />
           </Grid>
-          <Grid item xs={4} lg={1}>
+          {/* <Grid item xs={4} lg={1}>
             <CustomButtonBlue title={"Next 7 Days"} />
-          </Grid>
+          </Grid> */}
         </Grid>
         <SearchBarCompany
           setTokenListStatic={setCompanyListStatic}

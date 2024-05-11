@@ -9,27 +9,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import CompanyName from "./subComp/companyName";
 import SelectLocation from "../../../global/selectLocation/selectLocation";
-import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
-import GlobalTimeLayout from "../../../../assets/globalTimeLayout/globalTimeLayout";
-import AddPotentialServices from "./subComp/addPotentialServices";
-import AddSpocComp from "./subComp/addSpocComp";
-import SelectKam from "../../../global/selectKam/selectKam";
-import CustomSelect from "../../../../assets/customSelect";
-import { IOSSwitch } from "../../../../assets/customSwitch";
 import UploadFile from "../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import { saveData, uploadFile } from "../../../assets/corpServices";
-import dayjs from "dayjs";
-import CustomAutocomplete from "../../../../assets/customAutocomplete";
-import VisitType from "./subComp/visitType";
 import Priority from "./subComp/priority";
 import SubLocation from "./subComp/subLocation";
+import AddSpocCompRegistration from "./subComp/addSpocCompRegistration";
 
 const CorpSalesRegistration = () => {
   const navigate = useNavigate();
@@ -47,6 +38,7 @@ const CorpSalesRegistration = () => {
     noOfPlants: "",
     onRollEmployees: "",
     offRollEmployees: "",
+    spocList: [],
     photoUrl: "",
     userId: 0,
     userName: "",
@@ -65,10 +57,11 @@ const CorpSalesRegistration = () => {
     offRollEmployees: formValues.offRollEmployees,
     userId: userId,
     userName: userName,
+    spocList: formValues.spocList,
     location: formValues.location,
     subLocation: formValues.subLocation,
     priority: formValues.priority,
-    remark: formValues.remark,
+    interestedRemark: formValues.interestedRemark,
   };
 
   const handleSubmit = async () => {
@@ -187,7 +180,11 @@ const CorpSalesRegistration = () => {
           />
         </Grid>
         {/* <Grid item xs={12} lg={12}>
-          <AddSpocComp formValues={formValues} setFormValues={setFormValues} />
+          <AddSpocCompRegistration
+            formValues={formValues}
+            setFormValues={setFormValues}
+            onlyView={false}
+          />
         </Grid> */}
         <Grid item xs={6} lg={6}>
           <TextField
@@ -254,7 +251,7 @@ const CorpSalesRegistration = () => {
             size="small"
             fullWidth
             placeholder="Enter Remark"
-            value={formValues.remark}
+            value={formValues.interestedRemark}
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             onChange={(e) =>
               setFormValues({

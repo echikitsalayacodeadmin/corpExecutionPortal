@@ -222,7 +222,7 @@ const AddSpocInVisitDetail = ({
               }}
             >
               <Grid item xs={10} lg={10}>
-                <Grid container spacing={1}>
+                <Grid container>
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                     <Typography sx={styles.heading}>Name -</Typography>
                     <Typography sx={styles.data}>{spoc.name}</Typography>

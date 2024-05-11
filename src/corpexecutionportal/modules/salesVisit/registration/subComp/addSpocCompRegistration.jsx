@@ -1,5 +1,18 @@
+import React, { Fragment, useState } from "react";
+import {
+  deleteDataWithObj,
+  updateDatePut,
+  updateDatePutMultipart,
+  uploadFile,
+} from "../../../../assets/corpServices";
+import DownloadIcon from "@mui/icons-material/Download";
+import { BASE_URL } from "../../../../../assets/constants";
 import {
   Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
   FormControlLabel,
   Grid,
   IconButton,
@@ -10,21 +23,27 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import ImageIcon from "@mui/icons-material/Image";
+import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import CloseIcon from "@mui/icons-material/Close";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import { isMobile } from "react-device-detect";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useParams } from "react-router-dom";
+import { useSnackbar } from "notistack";
+import UploadFile from "../../../../global/uploadFile";
+import { useFileUpload } from "use-file-upload";
+import { RemoveRedEye } from "@mui/icons-material";
 
-const AddSpocComp = ({
+const AddSpocInVisitDetail = ({
   formValues,
   setFormValues,
   onlyView = false,
-  removeEdit = true,
 }) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [files, selectFiles] = useFileUpload();
   const [showSpocList, setShowSpocList] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const validateEmail = (email) => {
@@ -39,7 +58,8 @@ const AddSpocComp = ({
     email: "",
     mobile: "",
     designation: "",
-    isDecisionMaker: "No",
+    decisionMaker: "No",
+    file: "",
   });
   const [open, setOpen] = useState(false);
   const [editedIndex, setEditedIndex] = useState(null);
@@ -55,11 +75,14 @@ const AddSpocComp = ({
         email: "",
         mobile: "",
         designation: "",
-        isDecisionMaker: "No",
+        decisionMaker: "No",
+        file: "",
       });
       setEditedIndex(null);
     }
   };
+
+  console.log({ spocForm });
 
   const handleClose = () => {
     setOpen(false);
@@ -69,7 +92,8 @@ const AddSpocComp = ({
       email: "",
       mobile: "",
       designation: "",
-      isDecisionMaker: "No",
+      decisionMaker: "No",
+      file: "",
     });
   };
 
@@ -88,129 +112,180 @@ const AddSpocComp = ({
     handleClose();
   };
 
-  const deleteSpoc = (index) => {
+  const deleteSpoc = (index, id) => {
     const updatedSpocList = [...formValues.spocList];
     updatedSpocList.splice(index, 1);
     setFormValues({ ...formValues, spocList: updatedSpocList });
+    handleDeleteSpoc(id);
   };
+
+  const [openPhoto, setOpenPhoto] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
+
   return (
     <Fragment>
-      <Grid container>
-        <Grid item xs={12} lg={12}>
-          <Box
-            sx={{
-              display: "flex",
-              gap: "10px",
-              minWidth: "300px",
-            }}
-          >
+      <Box>
+        <Grid container>
+          <Grid item xs={12} lg={12}>
             <Box
               sx={{
-                p: 1,
-                height: "40px",
-                minWidth: "150px",
-                border: "1px solid #000",
-                borderRadius: "15px",
-                backgroundColor: "#FFFFFF",
-                textAlign: "center",
-              }}
-            >
-              <Typography>Corp SPOC List</Typography>
-            </Box>
-            <IconButton
-              sx={{
-                height: "40px",
-                marginRight: "15px",
-                backgroundColor: "#127DDD",
-                ":hover": {
-                  backgroundColor: "#1f63a1",
-                },
+                display: "flex",
+                marginBottom: 1,
+                minWidth: "300px",
+                alignItems: "center",
+                cursor: "pointer",
+                justifyContent: "space-between",
+                backgroundColor: "#F5F5F5",
               }}
               onClick={() => {
                 setShowSpocList(!showSpocList);
               }}
             >
-              {showSpocList === false ? (
-                <ExpandMoreIcon style={{ color: "#FFF" }} />
-              ) : (
-                <ExpandLessIcon style={{ color: "#FFF" }} />
-              )}
-            </IconButton>
+              <Typography sx={{ fontWeight: "bold" }}>
+                SPOC Information
+              </Typography>
+
+              <IconButton
+                onClick={() => {
+                  setShowSpocList(!showSpocList);
+                }}
+              >
+                {showSpocList === false ? (
+                  <ExpandMoreIcon />
+                ) : (
+                  <ExpandLessIcon />
+                )}
+              </IconButton>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {showSpocList &&
+          formValues?.spocList?.length > 0 &&
+          formValues?.spocList?.map((spoc, index) => (
+            <Grid
+              key={index}
+              container
+              sx={{
+                backgroundColor: "#fff",
+                border: "1px solid #777777",
+                padding: "10px",
+                borderRadius: "15px",
+                marginBottom: "10px",
+              }}
+            >
+              <Grid item xs={10} lg={10}>
+                <Grid container>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Name -</Typography>
+                    <Typography sx={styles.data}>{spoc.name}</Typography>
+                  </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Mobile -</Typography>
+                    <Typography sx={styles.data}>{spoc.mobile}</Typography>
+                  </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Email Id -</Typography>
+                    <Typography sx={styles.data}>{spoc.email}</Typography>
+                  </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Designation -</Typography>
+                    <Typography sx={styles.data}>{spoc.designation}</Typography>
+                  </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>
+                      Decision Maker -
+                    </Typography>
+                    <Typography sx={styles.data}>
+                      {spoc.isDecisionMaker ? "Yes" : "No"}
+                    </Typography>
+                  </Grid>
+                  {/* <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <IconButton
+                      sx={{
+                        backgroundColor: "#127DDD",
+                        ":hover": {
+                          backgroundColor: "#1f63a1",
+                        },
+                        ":disabled": {
+                          backgroundColor: "lightgray",
+                        },
+                        p: 0.7,
+                      }}
+                      disabled={spoc.imageUrl ? false : true}
+                      onClick={() => {
+                        setOpenPhoto(true);
+                        setImageUrl(spoc.imageUrl || "");
+                      }}
+                    >
+                      <ImageIcon
+                        sx={{ color: "#FFFFFF", height: "20px", width: "20px" }}
+                      />
+                    </IconButton>
+                  </Grid> */}
+                </Grid>
+              </Grid>
+              <Grid item xs={2} lg={2} sx={{ textAlign: "end" }}>
+                {onlyView === true ? null : (
+                  <IconButton onClick={() => deleteSpoc(index, spoc.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
+          ))}
+
+        {showSpocList && (
+          <Box sx={{ marginTop: 1 }}>
             <CustomButtonBlue
-              title="Add SPOC"
+              title="Add New SPOC"
               onClick={() => {
                 handleOpen();
               }}
               styles={{ width: "150px", height: "40px" }}
             />
           </Box>
-        </Grid>
-      </Grid>
+        )}
+      </Box>
 
-      {showSpocList &&
-        formValues?.spocList?.length > 0 &&
-        formValues?.spocList?.map((spoc, index) => (
-          <Grid
-            key={index}
-            container
-            sx={{
-              backgroundColor: "#fff",
-              border: "1px solid #777777",
-              padding: "10px",
-              borderRadius: "15px",
-              marginBlock: "10px",
-            }}
-          >
-            <Grid item xs={10} lg={10}>
-              <Grid container>
-                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                  <Typography sx={styles.heading}>Name -</Typography>
-                  <Typography sx={styles.data}>{spoc.name}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                  <Typography sx={styles.heading}>Mobile -</Typography>
-                  <Typography sx={styles.data}>{spoc.mobile}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                  <Typography sx={styles.heading}>Email Id -</Typography>
-                  <Typography sx={styles.data}>{spoc.email}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                  <Typography sx={styles.heading}>Designation -</Typography>
-                  <Typography sx={styles.data}>{spoc.designation}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                  <Typography sx={styles.heading}>Decision Maker -</Typography>
-                  <Typography sx={styles.data}>
-                    {spoc.isDecisionMaker ? "Yes" : "No"}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={1} lg={1} sx={{ textAlign: "end" }}>
-              {onlyView === true ? null : (
-                <IconButton onClick={() => deleteSpoc(index)}>
-                  <DeleteIcon />
-                </IconButton>
-              )}
-            </Grid>
-            <Grid item xs={1} lg={1} sx={{ textAlign: "end" }}>
-              {removeEdit === true ? null : (
-                <IconButton onClick={() => handleOpen(index)}>
-                  <EditIcon />
-                </IconButton>
-              )}
-            </Grid>
-          </Grid>
-        ))}
-      {onlyView && (
-        <Box sx={{ "& > :not(style)": { mb: 1 } }}>
-          <Fab color="primary" variant="extended" onClick={() => handleOpen()}>
-            <AddIcon sx={{ mr: 1 }} />
-            Add New Spoc
-          </Fab>
-        </Box>
-      )}
+      <Portal>
+        <Dialog
+          fullWidth={true}
+          maxWidth={"lg"}
+          open={openPhoto}
+          onClose={() => {
+            setOpenPhoto(false);
+            setImageUrl("");
+          }}
+        >
+          <DialogContent>
+            <img src={imageUrl} alt="image" width="100%" />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpenPhoto(false);
+                setImageUrl("");
+              }}
+            >
+              Close
+            </Button>
+            <IconButton
+              sx={{
+                backgroundColor: "#127DDD",
+                ":hover": {
+                  backgroundColor: "#1f63a1",
+                },
+              }}
+              onClick={() => {
+                handleDownload(imageUrl);
+              }}
+            >
+              <DownloadIcon sx={{ color: "#FFFFFF" }} />
+            </IconButton>
+          </DialogActions>
+        </Dialog>
+      </Portal>
 
       <Portal>
         <Modal
@@ -236,7 +311,6 @@ const AddSpocComp = ({
               width: isMobile ? "365px" : "665px",
             }}
           >
-            {/* <Box sx={{ minHeight: "130px" }}> */}
             <Box display="flex" justifyContent="flex-end">
               <IconButton onClick={handleClose}>
                 <CloseIcon />
@@ -350,16 +424,16 @@ const AddSpocComp = ({
                 <Typography sx={{ mb: 1 }}>Descision Maker</Typography>
                 <RadioGroup
                   value={
-                    spocForm.isDecisionMaker === true
+                    spocForm.decisionMaker === true
                       ? "Yes"
-                      : spocForm.isDecisionMaker === false
+                      : spocForm.decisionMaker === false
                       ? "No"
                       : ""
                   }
                   onChange={(e) => {
                     setSpocForm({
                       ...spocForm,
-                      isDecisionMaker:
+                      decisionMaker:
                         e.target.value === "Yes"
                           ? true
                           : e.target.value === "No"
@@ -381,6 +455,27 @@ const AddSpocComp = ({
                     />
                   </Box>
                 </RadioGroup>
+              </Grid>
+              <Grid item xs={12} lg={6}>
+                <UploadFile
+                  title="Upload Photo"
+                  styles={{ height: "40px", borderRadius: "15px" }}
+                  formValues={spocForm}
+                  setFormValues={setSpocForm}
+                  property={"file"}
+                  onClick={() =>
+                    selectFiles(
+                      { accept: "*" },
+                      ({ name, size, source, file }) => {
+                        const filedata = { name, size, source, file };
+                        setSpocForm((spocForm) => ({
+                          ...spocForm,
+                          spocPhotoUrl: filedata,
+                        }));
+                      }
+                    )
+                  }
+                />
               </Grid>
               <Grid item xs={12} lg={12} sx={{ textAlign: "center" }}>
                 <CustomButtonBlue
@@ -411,4 +506,4 @@ const styles = {
   },
 };
 
-export default AddSpocComp;
+export default AddSpocInVisitDetail;

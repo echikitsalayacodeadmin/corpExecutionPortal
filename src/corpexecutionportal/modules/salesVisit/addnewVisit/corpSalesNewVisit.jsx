@@ -22,22 +22,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import { fetchCorpDetails } from "../../../services/salesVisitServices";
-import {
-  getData,
-  saveData,
-  updateData,
-  uploadFile,
-} from "../../../assets/corpServices";
-import CompanyVisitDetails from "../detail/subComp/companyVisitDetails";
-import CustomButtonBlue from "../../../../assets/customButtonBlue";
-
-import AddPotentialServices from "../registration/subComp/addPotentialServices";
-import AddSpocComp from "../registration/subComp/addSpocComp";
-import CompanyName from "../editVisit/subComp/companyName";
+import { getData, uploadFile } from "../../../assets/corpServices";
 import UploadFile from "../../../global/uploadFile";
 import dayjs from "dayjs";
 import VisitType from "../registration/subComp/visitType";
-import Priority from "../registration/subComp/priority";
 
 const CorpSalesNewVisit = () => {
   const { itemId } = useParams();

@@ -41,36 +41,34 @@ const ServiceLogsMain = () => {
                   padding: 1,
                   borderRadius: "15px",
                   marginBottom: 1,
+                  alignItems: "center",
                 }}
               >
-                <Grid item xs={6} lg={3}>
+                <Grid item xs={6} lg={2}>
                   <Typography sx={{ fontWeight: "bold" }}>
                     {item.userName}
                   </Typography>
                 </Grid>
-                <Grid item xs={6} lg={3}>
+                <Grid item xs={6} lg={2}>
                   <Typography sx={{ fontWeight: "bold" }}>
                     {item.date}
                   </Typography>
                 </Grid>
-                <Grid item xs={6} lg={3}>
+                <Grid item xs={10} lg={7}>
                   <Typography
                     sx={{ textTransform: "capitalize", fontWeight: "bold" }}
                   >
-                    Prev:
-                    {item?.previousStatus?.replace(/_/g, " ")?.toLowerCase()}
+                    {item?.previousStatus === null
+                      ? `(null)`
+                      : item?.previousStatus
+                          ?.replace(/_/g, " ")
+                          ?.toLowerCase()}{" "}
+                    → {item?.currentStatus?.replace(/_/g, " ")?.toLowerCase()}
                   </Typography>
                 </Grid>
-                <Grid item xs={6} lg={3}>
-                  <Typography
-                    sx={{ textTransform: "capitalize", fontWeight: "bold" }}
-                  >
-                    Current:
-                    {item?.currentStatus?.replace(/_/g, " ")?.toLowerCase()}
-                  </Typography>
-                </Grid>
+
                 {item?.currentStatus === "QUOTATION_SENT" && (
-                  <Grid item xs={12} lg={12}>
+                  <Grid item xs={2} lg={1}>
                     <IconButton
                       onClick={() => {
                         const query = {

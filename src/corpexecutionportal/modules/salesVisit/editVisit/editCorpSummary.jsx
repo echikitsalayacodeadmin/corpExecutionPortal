@@ -55,6 +55,7 @@ const EditCorpSummary = () => {
     registrationDate: dayjs().format("YYYY-MM-DD"),
     userName: "",
     location: "",
+    subLocation: "",
     priority: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +76,9 @@ const EditCorpSummary = () => {
     auditMonth: formValues.auditMonth,
     prospectiveServices: formValues.prospectiveServices || [],
     location: formValues?.location || null,
+    subLocation: formValues?.subLocation || null,
     priority: formValues?.priority || null,
+    interestedRemark: formValues.interestedRemark,
   };
 
   const handleUpdate = async () => {

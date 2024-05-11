@@ -181,7 +181,8 @@ const ServiceInfo = ({ data }) => {
           rows.map((obj) => (
             <Grid
               container
-              spacing={1}
+              rowSpacing={0.5}
+              columnSpacing={1}
               key={obj.id}
               sx={{
                 background: "#FFFFFF",
@@ -192,13 +193,13 @@ const ServiceInfo = ({ data }) => {
                 borderRadius: "15px",
               }}
             >
-              <Grid item xs={7} lg={12}>
+              <Grid item xs={12} lg={12}>
                 <Typography sx={{ fontWeight: "bold" }}>
                   {obj.testName}
                 </Typography>
               </Grid>
 
-              <Grid item xs={5} lg={3}>
+              <Grid item xs={12} lg={3}>
                 <Typography
                   sx={{ fontWeight: "bold", textTransform: "capitalize" }}
                 >
@@ -206,7 +207,7 @@ const ServiceInfo = ({ data }) => {
                 </Typography>
               </Grid>
 
-              <Grid item xs={8} lg={3}>
+              <Grid item xs={8} lg={2}>
                 <CustomAutocomplete
                   required={true}
                   asterickColor={"red"}
@@ -286,7 +287,7 @@ const ServiceInfo = ({ data }) => {
                   />
                 </Grid>
               )}
-              <Grid item xs={8} lg={3}>
+              <Grid item xs={8} lg={2}>
                 <CustomAutocomplete
                   required={true}
                   asterickColor={"red"}
@@ -351,7 +352,7 @@ const ServiceInfo = ({ data }) => {
               {isDesktop && (
                 <Grid
                   item
-                  lg={1}
+                  lg={3}
                   sx={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <Tooltip title="More Info">
@@ -371,23 +372,22 @@ const ServiceInfo = ({ data }) => {
                       <InfoIcon style={{ color: "#127DDD" }} />
                     </IconButton>
                   </Tooltip>
-                  <IconButton
-                    sx={{
-                      ":disabled": {
-                        backgroundColor: obj.status ? null : "lightgray",
-                      },
-                    }}
-                    disabled={obj.status ? false : true}
+
+                  <CustomButtonBlue
                     onClick={() => {
-                      handleSave(obj);
+                      const query = {
+                        serviceId: obj.id,
+                        corpId: corpSalesId,
+                        serviceName: obj.testName,
+                      };
+                      navigate(
+                        `/corp/salesvisit/serviceslogs/${encodeURIComponent(
+                          JSON.stringify(query)
+                        )}`
+                      );
                     }}
-                  >
-                    <SaveIcon
-                      style={{
-                        color: obj.status ? "#127DDD" : "#FFF",
-                      }}
-                    />
-                  </IconButton>
+                    title="View"
+                  />
                 </Grid>
               )}
             </Grid>

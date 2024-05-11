@@ -95,7 +95,7 @@ const CompanySummaryInfo = ({ data }) => {
             </Grid>
             <Grid item xs={12} lg={6} md={6} sm={6} sx={{ display: "flex" }}>
               <Typography sx={styles.heading}>Remark -</Typography>
-              <Typography sx={styles.data}>{data?.remark}</Typography>
+              <Typography sx={styles.data}>{data?.interestedRemark}</Typography>
             </Grid>
             <Grid
               item
