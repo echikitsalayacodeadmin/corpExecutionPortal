@@ -259,10 +259,10 @@ const AddSpocInVisitDetail = ({
                         },
                         p: 0.7,
                       }}
-                      disabled={spoc.photo ? false : true}
+                      disabled={spoc.imageUrl ? false : true}
                       onClick={() => {
                         setOpenPhoto(true);
-                        setImageUrl(spoc.photo || "");
+                        setImageUrl(spoc.imageUrl || "");
                       }}
                     >
                       <ImageIcon
