@@ -272,7 +272,7 @@ const CorpSalesRegistration = () => {
         <Grid item xs={12} lg={12}>
           <TextField
             multiline
-            label="Remark"
+            label="Key Highlight"
             size="small"
             fullWidth
             placeholder="Key Highlight"
