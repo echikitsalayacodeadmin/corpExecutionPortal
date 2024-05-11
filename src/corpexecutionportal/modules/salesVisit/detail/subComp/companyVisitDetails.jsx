@@ -19,6 +19,7 @@ import { RemoveRedEye } from "@mui/icons-material";
 import { BASE_URL } from "../../../../../assets/constants";
 import { getData } from "../../../../assets/corpServices";
 import { assignColors } from "../../../../../assets/utils";
+import ImageIcon from "@mui/icons-material/Image";
 
 const CompanyVisitDetails = ({ data, onlyView = false }) => {
   const navigate = useNavigate();
@@ -226,15 +227,27 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 lg={12}
                 sx={{ display: "flex", flexWrap: "wrap", marginTop: 1 }}
               >
-                <CustomButtonBlue
-                  startIcon={<RemoveRedEye />}
+                <IconButton
+                  sx={{
+                    backgroundColor: "#127DDD",
+                    ":hover": {
+                      backgroundColor: "#1f63a1",
+                    },
+                    ":disabled": {
+                      backgroundColor: "lightgray",
+                    },
+                    p: 0.7,
+                  }}
                   disabled={item?.photoUrl ? false : true}
-                  title="Photo"
                   onClick={() => {
                     setOpenPhoto(true);
                     setImageUrl(item?.photoUrl);
                   }}
-                />
+                >
+                  <ImageIcon
+                    sx={{ color: "#FFFFFF", height: "20px", width: "20px" }}
+                  />
+                </IconButton>
               </Grid>
             </Grid>
           ))}

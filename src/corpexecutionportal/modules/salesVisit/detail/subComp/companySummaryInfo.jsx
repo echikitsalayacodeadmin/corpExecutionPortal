@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import { CustomTypographyBold } from "../../../../../assets/customTypography";
 import { RemoveRedEye } from "@mui/icons-material";
+import ImageIcon from "@mui/icons-material/Image";
 
 const CompanySummaryInfo = ({ data }) => {
   const navigate = useNavigate();
@@ -106,13 +107,25 @@ const CompanySummaryInfo = ({ data }) => {
               }}
             >
               {data?.photoUrl === "" || data?.photoUrl === null ? null : (
-                <CustomButtonBlue
-                  startIcon={<RemoveRedEye />}
-                  title="Photo"
+                <IconButton
+                  sx={{
+                    backgroundColor: "#127DDD",
+                    ":hover": {
+                      backgroundColor: "#1f63a1",
+                    },
+                    p: 0.7,
+                    ":disabled": {
+                      backgroundColor: "lightgray",
+                    },
+                  }}
                   onClick={() => {
                     setOpen(true);
                   }}
-                />
+                >
+                  <ImageIcon
+                    sx={{ color: "#FFFFFF", height: "20px", width: "20px" }}
+                  />
+                </IconButton>
               )}
             </Grid>
           </Grid>

@@ -854,7 +854,7 @@ const ServiceRequirementForm = () => {
     list: "",
     decisionMakingCriteria: "",
     closureProcedure: "",
-    dueDate: "",
+    dueDate: null,
     frequency: "",
     location: "",
     serviceProvider: "",
@@ -971,6 +971,8 @@ const ServiceRequirementForm = () => {
     }
   };
 
+  console.log({ formValues });
+
   return (
     <Fragment>
       <MainPageLayoutWithBack title={`${data?.serviceName} Form`}>
@@ -1061,7 +1063,7 @@ const ServiceRequirementForm = () => {
                   label={val?.label}
                   placeholder={val?.label}
                   property={val.fieldName}
-                  initialDate={formValues?.[val?.fieldName]}
+                  initialDate={formValues?.[val?.fieldName] || null}
                   formValues={formValues}
                   setFormValues={setFormValues}
                   disablePast={true}
@@ -1102,11 +1104,11 @@ const ServiceRequirementForm = () => {
                       </Box>
                     </RadioGroup>
                   </FormControl>
-                  {val[formValues.typeOfUser]?.map((subVal, subIndex) => (
+                  {val?.[formValues?.user]?.map((subVal, subIndex) => (
                     <Grid
                       sx={{
                         marginBottom:
-                          subIndex === val[formValues.typeOfUser].length - 1
+                          subIndex === val?.[formValues.user]?.length - 1
                             ? -2
                             : 2,
                       }}
@@ -1166,6 +1168,7 @@ const ServiceRequirementForm = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              marginTop: 2,
             }}
           >
             <CustomButtonBlue

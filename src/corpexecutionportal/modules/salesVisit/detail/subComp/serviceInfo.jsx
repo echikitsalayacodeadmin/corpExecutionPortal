@@ -269,23 +269,21 @@ const ServiceInfo = ({ data }) => {
                       <InfoIcon style={{ color: "#127DDD" }} />
                     </IconButton>
                   </Tooltip>
-                  <IconButton
-                    sx={{
-                      ":disabled": {
-                        backgroundColor: obj.status ? null : "lightgray",
-                      },
-                    }}
-                    disabled={obj.status ? false : true}
+                  <CustomButtonBlue
                     onClick={() => {
-                      handleSave(obj);
+                      const query = {
+                        serviceId: obj.id,
+                        corpId: corpSalesId,
+                        serviceName: obj.testName,
+                      };
+                      navigate(
+                        `/corp/salesvisit/serviceslogs/${encodeURIComponent(
+                          JSON.stringify(query)
+                        )}`
+                      );
                     }}
-                  >
-                    <SaveIcon
-                      style={{
-                        color: obj.status ? "#127DDD" : "#FFF",
-                      }}
-                    />
-                  </IconButton>
+                    title="View"
+                  />
                 </Grid>
               )}
               <Grid item xs={8} lg={3}>
@@ -332,21 +330,23 @@ const ServiceInfo = ({ data }) => {
               </Grid>
 
               <Grid item xs={4} lg={2}>
-                <CustomButtonBlue
-                  onClick={() => {
-                    const query = {
-                      serviceId: obj.id,
-                      corpId: corpSalesId,
-                      serviceName: obj.testName,
-                    };
-                    navigate(
-                      `/corp/salesvisit/serviceslogs/${encodeURIComponent(
-                        JSON.stringify(query)
-                      )}`
-                    );
+                <IconButton
+                  sx={{
+                    ":disabled": {
+                      backgroundColor: obj.status ? null : "lightgray",
+                    },
                   }}
-                  title="View"
-                />
+                  disabled={obj.status ? false : true}
+                  onClick={() => {
+                    handleSave(obj);
+                  }}
+                >
+                  <SaveIcon
+                    style={{
+                      color: obj.status ? "#127DDD" : "#FFF",
+                    }}
+                  />
+                </IconButton>
               </Grid>
               {isDesktop && (
                 <Grid

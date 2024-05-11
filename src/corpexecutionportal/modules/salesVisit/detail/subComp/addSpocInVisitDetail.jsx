@@ -23,6 +23,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import ImageIcon from "@mui/icons-material/Image";
 import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -247,15 +248,27 @@ const AddSpocInVisitDetail = ({
                     </Typography>
                   </Grid>
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                    <CustomButtonBlue
-                      title="Photo"
+                    <IconButton
+                      sx={{
+                        backgroundColor: "#127DDD",
+                        ":hover": {
+                          backgroundColor: "#1f63a1",
+                        },
+                        ":disabled": {
+                          backgroundColor: "lightgray",
+                        },
+                        p: 0.7,
+                      }}
+                      disabled={spoc.photo ? false : true}
                       onClick={() => {
                         setOpenPhoto(true);
                         setImageUrl(spoc.photo || "");
                       }}
-                      startIcon={<RemoveRedEye />}
-                      variant="contained"
-                    />
+                    >
+                      <ImageIcon
+                        sx={{ color: "#FFFFFF", height: "20px", width: "20px" }}
+                      />
+                    </IconButton>
                   </Grid>
                 </Grid>
               </Grid>
