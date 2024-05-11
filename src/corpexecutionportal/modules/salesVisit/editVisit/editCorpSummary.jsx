@@ -12,13 +12,6 @@ import {
 import React, { Fragment, useEffect, useState } from "react";
 import CompanyName from "./subComp/companyName";
 import SelectLocation from "../../../global/selectLocation/selectLocation";
-import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
-import GlobalTimeLayout from "../../../../assets/globalTimeLayout/globalTimeLayout";
-import AddPotentialServices from "./subComp/addPotentialServices";
-import AddSpocComp from "./subComp/addSpocComp";
-import SelectKam from "../../../global/selectKam/selectKam";
-import CustomSelect from "../../../../assets/customSelect";
-import { IOSSwitch } from "../../../../assets/customSwitch";
 import UploadFile from "../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
 import { useNavigate, useParams } from "react-router-dom";
