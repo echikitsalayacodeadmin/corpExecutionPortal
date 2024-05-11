@@ -183,50 +183,50 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                 borderRadius: 5,
                 padding: 1,
                 marginBlock: 1,
-                alignItems: "center",
               }}
             >
-              <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>Visit Type -</Typography>
-                <Typography sx={styles.data}>
-                  {item?.visitType?.replace(/_/g, " ")}
-                </Typography>
-              </Grid>
+              <Grid item xs={11} lg={11}>
+                <Grid container sx={{ alignItems: "center" }}>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Visit Type -</Typography>
+                    <Typography sx={styles.data}>
+                      {item?.visitType?.replace(/_/g, " ")}
+                    </Typography>
+                  </Grid>
 
-              <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>Visit Date -</Typography>
-                <Typography sx={styles.data}>{item?.visitDate}</Typography>
-              </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Visit Date -</Typography>
+                    <Typography sx={styles.data}>{item?.visitDate}</Typography>
+                  </Grid>
 
-              <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
-                <Typography sx={styles.heading}>Next Visit Date -</Typography>
-                <Typography
-                  sx={{
-                    fontWeight: "bold",
-                    textTransform: "capitalize",
-                    color: item.color,
-                  }}
-                >
-                  {item?.nextVisitDate}
-                </Typography>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>
+                      Next Visit Date -
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        textTransform: "capitalize",
+                        color: item.color,
+                      }}
+                    >
+                      {item?.nextVisitDate}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    lg={12}
+                    sx={{ display: "flex", flexWrap: "wrap" }}
+                  >
+                    <Typography sx={styles.heading}>Key Highlights:</Typography>
+                    <Typography sx={styles.data}>
+                      {item?.interestedRemark}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                lg={12}
-                sx={{ display: "flex", flexWrap: "wrap" }}
-              >
-                <Typography sx={styles.heading}>Key Highlights:</Typography>
-                <Typography sx={styles.data}>
-                  {item?.interestedRemark}
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                lg={12}
-                sx={{ display: "flex", flexWrap: "wrap", marginTop: 1 }}
-              >
+              <Grid item xs={1} lg={1}>
                 <IconButton
                   sx={{
                     backgroundColor: "#127DDD",
