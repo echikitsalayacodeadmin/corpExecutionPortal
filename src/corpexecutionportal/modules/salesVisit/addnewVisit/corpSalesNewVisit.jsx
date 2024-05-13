@@ -21,7 +21,6 @@ import { useFileUpload } from "use-file-upload";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
-import { fetchCorpDetails } from "../../../services/salesVisitServices";
 import { getData, uploadFile } from "../../../assets/corpServices";
 import UploadFile from "../../../global/uploadFile";
 import dayjs from "dayjs";
