@@ -16,6 +16,7 @@ const SelectKam = ({
   setFormValues,
   property,
 }) => {
+  const userName = localStorage.getItem("USER_NAME_CORP_SALES");
   const [selectedValue, setSelectedValue] = useState([]);
   const [kamList, setKamList] = useState([]);
 
@@ -23,7 +24,7 @@ const SelectKam = ({
     const url = BASE_URL + `patient/role?role=CORPSALES_USER`;
     const result = await getData(url);
     if (result?.data) {
-      setKamList(result?.data);
+      setKamList(result?.data.filter((item) => item.name !== userName));
     } else {
       setKamList([]);
     }

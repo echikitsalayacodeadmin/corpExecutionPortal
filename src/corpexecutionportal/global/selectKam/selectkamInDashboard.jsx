@@ -9,6 +9,7 @@ const SelectkamInDashboard = ({
   userId,
   setUserId,
 }) => {
+  const userName = localStorage.getItem("USER_NAME_CORP_SALES");
   const [selectedValue, setSelectedValue] = useState(null);
   const [kamList, setKamList] = useState([]);
   const fetchData = async () => {
@@ -16,7 +17,7 @@ const SelectkamInDashboard = ({
     const result = await getData(url);
 
     if (result?.data) {
-      setKamList(result?.data);
+      setKamList(result?.data.filter((item) => item.name !== userName));
     } else {
       setKamList([]);
     }

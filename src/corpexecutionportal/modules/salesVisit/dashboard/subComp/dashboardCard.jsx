@@ -124,7 +124,8 @@ const DashboardCard = ({ data, serviceMapping }) => {
           >
             {userAndCount?.map(({ name, count }) => (
               <Typography key={name}>
-                {data?.userId?.toString() === name ? name + "*" : name}({count})
+                {data?.userName?.toString() === name ? name + "*" : name}(
+                {count})
               </Typography>
             ))}
           </Grid>
