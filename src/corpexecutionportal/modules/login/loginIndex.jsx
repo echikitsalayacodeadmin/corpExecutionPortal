@@ -26,7 +26,7 @@ const LoginIndex = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [isMobileLogin, setIsMobileLogin] = useState(false);
+  const [isMobileLogin, setIsMobileLogin] = useState(true);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
