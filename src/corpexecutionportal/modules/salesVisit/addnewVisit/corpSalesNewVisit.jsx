@@ -46,7 +46,7 @@ const CorpSalesNewVisit = () => {
     userId: 0,
     childUserId: [0],
     userName: "",
-    visitPhotoUrl: "",
+    visitPhotoUrl: { source: "", file: "" },
     nextVisitDate: null,
   });
   const [isLoading, setIsLoading] = useState(false);

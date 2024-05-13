@@ -313,6 +313,26 @@ export const getColorOfNextVisitDate = (nextVisitDate) => {
   }
 };
 
+export const getColorOfNextVisitDateInVisitDetail = (nextVisitDate) => {
+  if (!nextVisitDate) {
+    return "#000000";
+  }
+  const currentDate = new Date();
+  const nextVisit = new Date(nextVisitDate);
+  if (currentDate > nextVisit) {
+    console.log("red");
+    return "red";
+  }
+  const difference = Math.abs(nextVisit - currentDate);
+  const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
+  console.log({ differenceInDays });
+  if (differenceInDays >= 3) {
+    return "green";
+  } else if (differenceInDays <= 2 && differenceInDays > 0) {
+    return "green";
+  }
+};
+
 export const assignColors = (visits) => {
   // Convert date strings to Date objects
   visits.forEach((visit) => {
@@ -341,7 +361,9 @@ export const assignColors = (visits) => {
   }
 
   // Assign color for the most recent visit
-  visits[0].color = getColorOfNextVisitDate(visits[0].nextVisitDate);
+  visits[0].color = getColorOfNextVisitDateInVisitDetail(
+    visits[0].nextVisitDate
+  );
 
   // Convert Date objects back to strings
   visits.forEach((visit) => {
