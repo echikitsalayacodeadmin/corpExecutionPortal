@@ -333,7 +333,8 @@ export const assignColors = (visits) => {
       prevVisitDate.toISOString().slice(0, 10) ===
       currentNextVisitDate.toISOString().slice(0, 10)
     ) {
-      visits[i].color = "orange";
+      // visits[i].color = "orange";
+      visits[i].color = "green";
     } else {
       visits[i].color = "green";
     }

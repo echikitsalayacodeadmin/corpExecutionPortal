@@ -29,7 +29,7 @@ const GlobalTopNavbars = () => {
       <AppBar position="fixed" color="default">
         <Container maxWidth={false}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Typography variant="h6">Unocare | Camp Portal</Typography>
+            <Typography variant="h6">Unocare | Sales Portal</Typography>
             {/* <Box
               sx={{
                 flexGrow: 1,

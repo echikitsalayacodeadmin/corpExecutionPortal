@@ -48,7 +48,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.service)}`}</ShowCount>,
       path: "/corp/executionplanning",
       xsgridwidth: 12,
-      disabled: true,
+      disabled: false,
     },
     {
       id: 5,

@@ -40,7 +40,7 @@ const TopNavbar = () => {
       <AppBar position="fixed" color="default">
         <Container maxWidth={false}>
           <Toolbar disableGutters>
-            <Typography variant="h6">Unocare </Typography>
+            <Typography variant="h6">Unocare</Typography>
             <Box
               sx={{
                 flexGrow: 1,

@@ -39,7 +39,7 @@ const CorpSalesRegistration = () => {
     onRollEmployees: "",
     offRollEmployees: "",
     spocList: [],
-    photoUrl: "",
+    photoUrl: { source: "", file: "" },
     userId: 0,
     userName: "",
     priority: "",
@@ -70,7 +70,7 @@ const CorpSalesRegistration = () => {
     const result = await saveData(url, obj);
     if (result && result.data) {
       setIsDisabled(false);
-      if (result?.data && formValues.photoUrl !== "") {
+      if (result?.data && formValues.photoUrl.file !== "") {
         handleUpload(result?.data?.corpSalesId);
       } else {
         navigate.replace(
