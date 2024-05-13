@@ -15,21 +15,23 @@ import { IOSSwitch } from "../../../assets/customSwitch";
 import GlobalDateLayout from "../../../assets/globalDateLayout/globalDateLayout";
 import CompanySummaryInfo from "../salesVisit/detail/subComp/companySummaryInfo";
 import { useSnackbar } from "notistack";
+import { BASE_URL } from "../../../assets/constants";
+import { saveData } from "../../assets/corpServices";
 
 const OrderDetailMain = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { itemId } = useParams();
   const query = itemId;
+
+  const data = JSON.parse(decodeURIComponent(query));
+
   const [details, setDetails] = useState("");
 
   useEffect(() => {
-    const data = query?.details
-      ? JSON.parse(decodeURIComponent(router.query.details))
-      : null;
     setDetails(data);
     setDeliveryDate(
-      data?.deliveryDate !== null
+      data?.deliveryDate
         ? new Date(data?.deliveryDate)
         : new Date().toISOString().slice(0, 10)
     );
@@ -37,13 +39,11 @@ const OrderDetailMain = () => {
       ...formValues,
       deliveryInstruction: data?.deliveryInstruction || "",
     });
-  }, [router?.query?.details]);
+  }, [query?.details]);
 
   console.log({ details });
 
-  const [deliveryDate, setDeliveryDate] = useState(
-    new Date().toISOString().slice(0, 10)
-  );
+  const [deliveryDate, setDeliveryDate] = useState(null);
   const [formValues, setFormValues] = useState({
     deliveryInstruction: "",
     serviceStarted: false,
@@ -79,16 +79,22 @@ const OrderDetailMain = () => {
   return (
     <Fragment>
       <MainPageLayoutWithBack title={"Order Confirmed Detail"}>
-        <CompanySummaryInfo details={details} />
+        <CompanySummaryInfo data={details} />
         <Grid container spacing={2}>
-          <Grid item xs={4} lg={4}>
+          <Grid item xs={12} lg={4}>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              Delivery Date
+            </Typography>
             <GlobalDateLayout
-              title="Delivery Date"
               setDate={setDeliveryDate}
               initialDate={deliveryDate}
             />
           </Grid>
-          <Grid item xs={8} lg={8}>
+          <Grid item xs={12} lg={8}>
             <Typography
               sx={{
                 fontWeight: "bold",

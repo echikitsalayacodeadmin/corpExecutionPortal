@@ -6,6 +6,7 @@ import GlobalDateLayout from "../../../assets/globalDateLayout/globalDateLayout"
 import SearchBarCompany from "../../global/searchBarCompany/searchBarCompany";
 import { BASE_URL } from "../../../assets/constants";
 import { getData } from "../../assets/corpServices";
+import DashboardCard from "../salesVisit/dashboard/subComp/dashboardCard";
 
 const OrderConfirmMain = () => {
   const _storedData =
