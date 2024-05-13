@@ -12,8 +12,7 @@ const SelectkamInDashboard = ({
   const [selectedValue, setSelectedValue] = useState(null);
   const [kamList, setKamList] = useState([]);
   const fetchData = async () => {
-    const url =
-      "https://apibackend.uno.care/api/patient/role?role=CORPSALES_USER";
+    const url = BASE_URL + `patient/role?role=CORPSALES_USER`;
     const result = await getData(url);
 
     if (result?.data) {

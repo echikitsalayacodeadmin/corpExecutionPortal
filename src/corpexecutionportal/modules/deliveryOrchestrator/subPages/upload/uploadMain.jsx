@@ -535,7 +535,7 @@ const UploadMain = () => {
 
   const fetchInstantList = async () => {
     setIsLoading(true);
-    const url = `https://apitest.uno.care/api/task/uploadfilesstatustracker?corpId=${corpId}`;
+    const url = BASE_URL + `task/uploadfilesstatustracker?corpId=${corpId}`;
     const response = await getData(url);
     if (response.data) {
       setIsLoading(false);

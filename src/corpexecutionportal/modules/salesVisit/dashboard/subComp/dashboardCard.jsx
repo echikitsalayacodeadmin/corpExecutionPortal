@@ -8,6 +8,7 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { getColorOfNextVisitDate } from "../../../../../assets/utils";
+import dayjs from "dayjs";
 
 const getServicesStatusSymbol = (status) => {
   return status === "INTERESTED"
@@ -86,7 +87,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
             >
               <Typography>Last:</Typography>
               <Typography sx={styles.subTitle}>
-                {data?.lastVisitDate}
+                {dayjs(data?.lastVisitDate).format("DD-MM-YYYY")}
               </Typography>
             </Grid>
           ) : null}
@@ -103,7 +104,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
                   color: getColorOfNextVisitDate(data?.nextVisitDate),
                 }}
               >
-                {data?.nextVisitDate}
+                {dayjs(data?.nextVisitDate).format("DD-MM-YYYY")}
               </Typography>
             </Grid>
           ) : null}
