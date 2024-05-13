@@ -19,7 +19,6 @@ import { useSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import { saveData, updateData, uploadFile } from "../../../assets/corpServices";
 import { fetchCorpDetails } from "../../../services/salesVisitServices";
-import CompanyVisitDetails from "../detail/subComp/companyVisitDetails";
 import dayjs from "dayjs";
 import Priority from "../registration/subComp/priority";
 import SubLocation from "../registration/subComp/subLocation";
@@ -43,7 +42,7 @@ const EditCorpSummary = () => {
     offRollEmployees: "",
     prospectiveServices: [],
     auditMonth: dayjs().format("YYYY-MM-DD"),
-    photoUrl: "",
+    photoUrl: { source: "", file: "" },
     interested: false,
     quotationAsked: false,
     anoterVisitRequired: false,
@@ -81,6 +80,8 @@ const EditCorpSummary = () => {
     interestedRemark: formValues.interestedRemark,
   };
 
+  console.log({ formValues });
+
   const handleUpdate = async () => {
     const url = BASE_URL + "corpSales/edit";
     const result = await updateData(url, Obj2);
@@ -89,7 +90,7 @@ const EditCorpSummary = () => {
         variant: "success",
       });
       fetchCorpDetails(setFormValues, setIsLoading, corpSalesId);
-      if (result?.data && formValues.photoUrl !== "") {
+      if (result?.data && formValues.photoUrl.file !== "") {
         handleUpload(result?.data?.corpSalesId);
       } else {
         navigate(-1);
@@ -237,6 +238,7 @@ const EditCorpSummary = () => {
 
         <Grid item xs={12} lg={6}>
           <UploadFile
+            editPhoto={true}
             title="Upload Photo"
             styles={{ height: "40px", borderRadius: "15px" }}
             formValues={formValues}
@@ -247,7 +249,7 @@ const EditCorpSummary = () => {
                 const filedata = { name, size, source, file };
                 setFormValues((prevFormValues) => ({
                   ...prevFormValues,
-                  photoUrl: filedata,
+                  photoUrl: { source: filedata.source, file: filedata.file },
                 }));
               })
             }

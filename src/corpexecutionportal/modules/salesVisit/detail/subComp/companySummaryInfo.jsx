@@ -109,7 +109,8 @@ const CompanySummaryInfo = ({ data }) => {
               <CreateIcon />
             </IconButton>
           </Tooltip>
-          {data?.photoUrl === "" || data?.photoUrl === null ? null : (
+          {data?.photoUrl?.source === "" ||
+          data?.photoUrl?.source === null ? null : (
             <IconButton
               sx={{
                 backgroundColor: "#127DDD",
@@ -143,7 +144,7 @@ const CompanySummaryInfo = ({ data }) => {
           }}
         >
           <DialogContent>
-            <img src={data?.photoUrl} alt="image" width="100%" />
+            <img src={data?.photoUrl?.source} alt="image" width="100%" />
           </DialogContent>
           <DialogActions>
             <Button
@@ -161,7 +162,7 @@ const CompanySummaryInfo = ({ data }) => {
                 },
               }}
               onClick={() => {
-                handleDownload(data?.photoUrl);
+                handleDownload(data?.photoUrl?.source);
               }}
             >
               <DownloadIcon sx={{ color: "#FFFFFF" }} />

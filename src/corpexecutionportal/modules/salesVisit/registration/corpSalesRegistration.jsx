@@ -45,7 +45,7 @@ const CorpSalesRegistration = () => {
     priority: "",
     location: "",
     subLocation: "",
-    remark: "",
+    interestedRemark: "",
   });
 
   const obj = {
@@ -281,7 +281,7 @@ const CorpSalesRegistration = () => {
             onChange={(e) =>
               setFormValues({
                 ...formValues,
-                remark: e.target.value,
+                interestedRemark: e.target.value,
               })
             }
             inputProps={{

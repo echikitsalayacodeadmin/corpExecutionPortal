@@ -32,10 +32,14 @@ export const fetchCorpDetails = async (
       modifiedData = {
         ...result.data,
         [field]: emptyArray || emptyString,
+        photoUrl: { source: result.data.photoUrl, file: "" },
       };
       setCorpDetail(modifiedData);
     } else {
-      setCorpDetail(result?.data);
+      setCorpDetail({
+        ...result?.data,
+        photoUrl: { source: result.data.photoUrl, file: "" },
+      });
     }
   } else {
     setIsLoading(false);
