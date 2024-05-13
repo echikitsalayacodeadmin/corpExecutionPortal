@@ -78,6 +78,7 @@ export const authenticateMobileUser = async (
       variant: "error",
     });
   } else {
+    console.log("logged in");
     let token = await response?.data?.token;
     let userData = await jwtDecode(token);
     localStorage.setItem("AUTHHEADER_CORP_EXECUTION", token);
@@ -96,21 +97,26 @@ export const authenticateMobileUser = async (
       "PERMISSION_CORP_SALES",
       userData?.permissions ? JSON.stringify(userData?.permissions) : null
     );
+    const requiredRoles = ["CORPSALES_ADMIN", "CORPSALES_USER"];
+
+    const hasRequiredRole = userData.roles.some((role) =>
+      requiredRoles.includes(role)
+    );
     if (
       userData.role === "CORPSALES_ADMIN" ||
-      userData.role === "CORPSALES_USER"
+      userData.role === "CORPSALES_USER" ||
+      hasRequiredRole
     ) {
       navigate("/corp/home");
-      enqueueSnackbar(`${response.error.response.data.message}`, {
+      enqueueSnackbar(`Successfully Logged In`, {
         variant: "success",
       });
     } else {
       localStorage.clear();
       navigate("/");
-      enqueueSnackbar(`${response.error.response.data.message}`, {
+      enqueueSnackbar(`You are not authorized to login`, {
         variant: "error",
       });
     }
-    navigate("/corp/home");
   }
 };
