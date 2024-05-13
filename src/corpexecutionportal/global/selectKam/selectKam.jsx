@@ -24,7 +24,7 @@ const SelectKam = ({
     const url = BASE_URL + `patient/role?role=CORPSALES_USER`;
     const result = await getData(url);
     if (result?.data) {
-      setKamList(result?.data.filter((item) => item.name !== userName));
+      setKamList(result?.data);
     } else {
       setKamList([]);
     }
