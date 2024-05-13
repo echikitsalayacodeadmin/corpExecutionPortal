@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [corpList, setCorpList] = useState([]);
 
   const fetchCorps = async () => {
-    const url = BASE_URL + "task/corp/all";
+    const url = BASE_URL + "task/statusCount";
     const result = await getData(url);
     if (result.data) {
       setCorpList(result.data);
@@ -26,6 +26,21 @@ const Dashboard = () => {
   useEffect(() => {
     fetchCorps();
   }, []);
+  // const [corpList, setCorpList] = useState([]);
+
+  // const fetchCorps = async () => {
+  //   const url = BASE_URL + "task/corp/all";
+  //   const result = await getData(url);
+  //   if (result.data) {
+  //     setCorpList(result.data);
+  //   } else {
+  //     setCorpList([]);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCorps();
+  // }, []);
 
   return (
     <Fragment>

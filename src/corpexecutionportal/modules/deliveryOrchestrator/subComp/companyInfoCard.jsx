@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import { CustomTypographyBold } from "../../../../assets/customTypography";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -25,47 +25,129 @@ const CompanyInfoCard = ({ data }) => {
           alignItems: "center",
         }}
       >
-        <Grid item xs={6} lg={6}>
+        <Grid item xs={12} lg={12}>
           <CustomTypographyBold>{data?.corpName}</CustomTypographyBold>
         </Grid>
         <Grid item xs={3} lg={3}>
+          <CustomTypographyBold>DATA SHEET</CustomTypographyBold>
           <Box
             sx={{
-              width: "200px",
-              backgroundColor: "lightgreen",
-              p: 0.5,
-              borderRadius: 3,
+              backgroundColor: "green",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              Done : {data?.statusCount?.SHEET?.DONE || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "yellow",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
               textAlign: "center",
             }}
           >
-            <CustomTypographyBold>{data?.status}</CustomTypographyBold>
+            <Typography sx={{ fontWeight: "bold" }}>
+              Pending : {data?.statusCount?.SHEET?.PENDING}
+            </Typography>
           </Box>
         </Grid>
-        {data.status === "DISPATCH" ? null : (
-          <Grid item xs={3} lg={3}>
-            <Box
-              sx={{
-                width: "200px",
-                backgroundColor: "yellow",
-                p: 0.5,
-                borderRadius: 3,
-                textAlign: "center",
-              }}
-            >
-              <CustomTypographyBold>
-                {data.status === "CAMP EXECUTED"
-                  ? "SHEET"
-                  : data.status === "SHEET"
-                  ? "UPLOADED"
-                  : data.status === "UPLOADED"
-                  ? "REPORTING"
-                  : data.status === "REPORTING"
-                  ? "DISPATCH"
-                  : null}
-              </CustomTypographyBold>
-            </Box>
-          </Grid>
-        )}
+        <Grid item xs={3} lg={3}>
+          <CustomTypographyBold>UPLOADED</CustomTypographyBold>
+          <Box
+            sx={{
+              backgroundColor: "green",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              Done : {data?.statusCount?.UPLOADED?.DONE || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "yellow",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>
+              Pending : {data?.statusCount?.UPLOADED?.PENDING}
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={3} lg={3}>
+          <CustomTypographyBold>REPORTING</CustomTypographyBold>
+          <Box
+            sx={{
+              backgroundColor: "green",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              Done : {data?.statusCount?.REPORTING?.DONE || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "yellow",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>
+              Pending : {data?.statusCount?.REPORTING?.PENDING}
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={3} lg={3}>
+          <CustomTypographyBold>DISPATCH</CustomTypographyBold>
+          <Box
+            sx={{
+              backgroundColor: "green",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              Done : {data?.statusCount?.DISPATCH?.DONE || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "yellow",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold" }}>
+              Pending : {data?.statusCount?.DISPATCH?.PENDING}
+            </Typography>
+          </Box>
+        </Grid>
       </Grid>
     </NavLink>
   );

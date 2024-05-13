@@ -78,7 +78,7 @@ const servicesFields = {
           label: "Old Rate",
           fieldName: "oldRate",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Interest Reason",
@@ -104,7 +104,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -167,7 +167,7 @@ const servicesFields = {
           label: "Old Rate",
           fieldName: "oldRate",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Interest Reason",
@@ -193,7 +193,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -275,7 +275,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Pain Point",
@@ -295,7 +295,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -377,7 +377,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Pain Point",
@@ -397,7 +397,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -476,7 +476,7 @@ const servicesFields = {
       label: "Budget",
       fieldName: "tentativeBudget",
       type: "textField",
-      dataType: "string",
+      dataType: "number",
     },
     {
       label: "Frequency",
@@ -522,7 +522,7 @@ const servicesFields = {
           label: "Old Rate",
           fieldName: "oldRate",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Interest Reason",
@@ -548,7 +548,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -600,7 +600,7 @@ const servicesFields = {
           label: "Old Rate",
           fieldName: "oldRate",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Interest Reason",
@@ -626,7 +626,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -661,7 +661,7 @@ const servicesFields = {
       label: "No Of People",
       fieldName: "noOfPeople",
       type: "textField",
-      dataType: "string",
+      dataType: "number",
     },
     {
       label: "Decision Owner",
@@ -684,7 +684,7 @@ const servicesFields = {
           label: "Old Rate",
           fieldName: "oldRate",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Interest Reason",
@@ -710,7 +710,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -733,7 +733,7 @@ const servicesFields = {
       label: "Budget",
       fieldName: "tentativeBudget",
       type: "textField",
-      dataType: "string",
+      dataType: "number",
     },
   ],
   62504: [
@@ -753,7 +753,7 @@ const servicesFields = {
       label: "# Lifes",
       fieldName: "numberOfLives",
       type: "textField",
-      dataType: "string",
+      dataType: "number",
     },
     {
       label: "Type Of Policy",
@@ -782,7 +782,7 @@ const servicesFields = {
           label: "Old Rate",
           fieldName: "oldRate",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
         {
           label: "Interest Reason",
@@ -808,7 +808,7 @@ const servicesFields = {
           label: "Tentative Budget",
           fieldName: "tentativeBudget",
           type: "textField",
-          dataType: "string",
+          dataType: "number",
         },
       ],
       NON_USER: [],
@@ -1156,6 +1156,28 @@ const ServiceRequirementForm = () => {
                                   ...formValues,
                                   [subVal.fieldName]: e.target.value,
                                 });
+                              }}
+                            />
+                          )}
+                        {subVal.type === "textField" &&
+                          subVal.dataType === "number" && (
+                            <TextField
+                              fullWidth
+                              size="small"
+                              label={subVal?.label}
+                              placeholder={subVal?.label}
+                              value={formValues?.[subVal?.fieldName] || ""}
+                              onChange={(e) => {
+                                const inputValue = e.target.value;
+                                if (
+                                  inputValue === "" ||
+                                  (!isNaN(inputValue) && parseInt(inputValue))
+                                ) {
+                                  setFormValues({
+                                    ...formValues,
+                                    [subVal?.fieldName]: inputValue,
+                                  });
+                                }
                               }}
                             />
                           )}
