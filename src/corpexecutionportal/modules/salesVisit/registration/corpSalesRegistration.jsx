@@ -199,13 +199,9 @@ const CorpSalesRegistration = () => {
         </Grid>
         <Grid item xs={12} lg={6}>
           <SubLocation
-            property={"subLocation"}
-            freeSolo={true}
-            fontWeight={"600"}
             formValues={formValues}
             setFormValues={setFormValues}
-            label={"Select Sub Location"}
-            placeholder={"Select Sub Location"}
+            property={"subLocation"}
           />
         </Grid>
         {/* <Grid item xs={12} lg={12}>
