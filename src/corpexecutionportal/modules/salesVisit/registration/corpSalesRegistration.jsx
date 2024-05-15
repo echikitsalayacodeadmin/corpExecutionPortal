@@ -70,13 +70,13 @@ const CorpSalesRegistration = () => {
     const result = await saveData(url, obj);
     if (result && result.data) {
       setIsDisabled(false);
-      if (result?.data && formValues.photoUrl.file !== "") {
+      if (result?.data && formValues.photoUrl.file) {
         handleUpload(result?.data?.corpSalesId);
       } else {
-        navigate.replace(
-          `/corp/salesvisit/detail/${result?.data?.corpSalesId}`,
-          { replace: true }
-        );
+        console.log({ AAA: "JJJJ" });
+        navigate(`/corp/salesvisit/detail/${result?.data?.corpSalesId}`, {
+          replace: true,
+        });
       }
       enqueueSnackbar("Successfully Saved", { variant: "success" });
     } else {
@@ -199,9 +199,13 @@ const CorpSalesRegistration = () => {
         </Grid>
         <Grid item xs={12} lg={6}>
           <SubLocation
+            property={"subLocation"}
+            freeSolo={true}
+            fontWeight={"600"}
             formValues={formValues}
             setFormValues={setFormValues}
-            property={"subLocation"}
+            label={"Select Sub Location"}
+            placeholder={"Select Sub Location"}
           />
         </Grid>
         {/* <Grid item xs={12} lg={12}>

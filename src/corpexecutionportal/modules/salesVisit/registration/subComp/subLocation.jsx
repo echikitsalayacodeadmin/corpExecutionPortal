@@ -4,49 +4,66 @@ import CustomAutocomplete from "../../../../../assets/customAutocomplete";
 import { BASE_URL } from "../../../../../assets/constants";
 import { getData } from "../../../../assets/corpServices";
 
-const SubLocation = ({ formValues, setFormValues, property }) => {
-  const [selectedValue, setSelectedValue] = useState("");
-  const handleChangeSubLoaction = (event, newValue, reason) => {
-    setSelectedValue(newValue);
-    setFormValues({ ...formValues, [property]: newValue });
-    if (reason === "clear") {
-      setSelectedValue("");
-      setFormValues({ ...formValues, [property]: "" });
+const SubLocation = ({
+  label,
+  placeholder,
+  formValues,
+  setFormValues,
+  selectedValue,
+  setSelectedValue,
+  property,
+  freeSolo = false,
+}) => {
+  const [value, setValue] = useState(null);
+
+  const [subLocationList, setSubLocationList] = useState([]);
+
+  const fetchSubLocation = async () => {
+    const url = BASE_URL + "corpSales/sublocations/all";
+    const result = await getData(url);
+    if (result?.data) {
+      setSubLocationList(result?.data);
+    } else {
+      setSubLocationList([]);
     }
   };
+
   useEffect(() => {
-    setSelectedValue(formValues?.[property] || "");
-  }, [formValues]);
+    fetchSubLocation();
+  }, []);
+
+  const handleInputChange = (newValue) => {
+    if (formValues && setFormValues && property) {
+      setFormValues({ ...formValues, [property]: newValue });
+    } else {
+      setValue(newValue);
+      setSelectedValue(newValue);
+    }
+  };
+
+  useEffect(() => {
+    setValue(formValues?.[property] || selectedValue || null);
+  }, [formValues, selectedValue]);
+
   return (
     <Fragment>
       <CustomAutocomplete
-        options={[
-          "Sector 1 - Pithampur",
-          "Sector 2 - Pithampur",
-          "Sector 3 - Pithampur",
-          "Pahadi Pithampur",
-          "Suhagpur Pithampur",
-          "Pharma SEZ Pithampur",
-          "SEZ 1 Pithampur",
-          "Sanwar Road Indore",
-          "Poleground Indore",
-          "Vijay Nagar Indore",
-          "Machal Indore",
-          "Within City",
-        ]}
-        freeSolo={true}
-        label="Sub Location"
+        label={label}
+        options={subLocationList}
+        value={value}
+        placeholder={placeholder}
         getOptionLabel={(option) => option}
-        placeholder="Sub Location"
-        value={selectedValue}
-        onChange={handleChangeSubLoaction}
-        onInputChange={(event, newInputValue, reason) => {
-          setSelectedValue(newInputValue);
-          setFormValues({ ...formValues, [property]: newInputValue });
-
+        onChange={(event, newValue, reason) => {
+          handleInputChange(newValue);
           if (reason === "clear") {
-            setSelectedValue("");
-            setFormValues({ ...formValues, [property]: "" });
+            handleInputChange(null);
+          }
+        }}
+        freeSolo={freeSolo}
+        onInputChange={(event, newInputValue, reason) => {
+          handleInputChange(newInputValue);
+          if (reason === "clear") {
+            handleInputChange(null);
           }
         }}
       />
