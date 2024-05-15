@@ -334,6 +334,9 @@ export const getColorOfNextVisitDateInVisitDetail = (nextVisitDate) => {
 };
 
 export const assignColors = (visits) => {
+  if (visits.length === 0) {
+    return [];
+  }
   // Convert date strings to Date objects
   visits.forEach((visit) => {
     visit.nextVisitDate = new Date(visit.nextVisitDate);
@@ -359,7 +362,7 @@ export const assignColors = (visits) => {
       visits[i].color = "green";
     }
   }
-
+  console.log({ visits });
   // Assign color for the most recent visit
   visits[0].color = getColorOfNextVisitDateInVisitDetail(
     visits[0].nextVisitDate
