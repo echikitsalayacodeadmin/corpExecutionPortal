@@ -221,6 +221,7 @@ const ServiceInfo = ({ data }) => {
                     "QUOTATION_APPROVED",
                     "QUOTATION_REJECTED",
                     "ORDER_LOST",
+                    "DATA_AWAITED",
                   ]}
                   getOptionLabel={(option) => option}
                   value={obj?.status || ""}
