@@ -259,10 +259,10 @@ const EditCorpSummary = () => {
         <Grid item xs={12} lg={12}>
           <TextField
             multiline
-            label="Remark"
+            label="Key Highlight"
             size="small"
             fullWidth
-            placeholder="Enter Remark"
+            placeholder="Key Highlight"
             value={formValues.interestedRemark || ""}
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             onChange={(e) =>
