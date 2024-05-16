@@ -46,6 +46,20 @@ const CompanyInfoCard = ({ data }) => {
           </Box>
           <Box
             sx={{
+              backgroundColor: "orange",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              WIP : {data?.statusCount?.SHEET?.WORK_IN_PROGRESS || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
               backgroundColor: "yellow",
               padding: "4px",
               borderRadius: "5px",
@@ -54,7 +68,7 @@ const CompanyInfoCard = ({ data }) => {
             }}
           >
             <Typography sx={{ fontWeight: "bold" }}>
-              Pending : {data?.statusCount?.SHEET?.PENDING}
+              Pending : {data?.statusCount?.SHEET?.PENDING || 0}
             </Typography>
           </Box>
         </Grid>
@@ -76,6 +90,20 @@ const CompanyInfoCard = ({ data }) => {
           </Box>
           <Box
             sx={{
+              backgroundColor: "orange",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              WIP : {data?.statusCount?.UPLOADED?.WORK_IN_PROGRESS || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
               backgroundColor: "yellow",
               padding: "4px",
               borderRadius: "5px",
@@ -84,7 +112,7 @@ const CompanyInfoCard = ({ data }) => {
             }}
           >
             <Typography sx={{ fontWeight: "bold" }}>
-              Pending : {data?.statusCount?.UPLOADED?.PENDING}
+              Pending : {data?.statusCount?.UPLOADED?.PENDING || 0}
             </Typography>
           </Box>
         </Grid>
@@ -106,6 +134,20 @@ const CompanyInfoCard = ({ data }) => {
           </Box>
           <Box
             sx={{
+              backgroundColor: "orange",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              WIP : {data?.statusCount?.REPORTING?.WORK_IN_PROGRESS || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
               backgroundColor: "yellow",
               padding: "4px",
               borderRadius: "5px",
@@ -114,7 +156,7 @@ const CompanyInfoCard = ({ data }) => {
             }}
           >
             <Typography sx={{ fontWeight: "bold" }}>
-              Pending : {data?.statusCount?.REPORTING?.PENDING}
+              Pending : {data?.statusCount?.REPORTING?.PENDING || 0}
             </Typography>
           </Box>
         </Grid>
@@ -136,6 +178,20 @@ const CompanyInfoCard = ({ data }) => {
           </Box>
           <Box
             sx={{
+              backgroundColor: "orange",
+              padding: "4px",
+              borderRadius: "5px",
+              width: "120px",
+              textAlign: "center",
+              marginBlock: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", color: "#FFF" }}>
+              WIP : {data?.statusCount?.DISPATCH?.WORK_IN_PROGRESS || 0}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
               backgroundColor: "yellow",
               padding: "4px",
               borderRadius: "5px",
@@ -144,7 +200,7 @@ const CompanyInfoCard = ({ data }) => {
             }}
           >
             <Typography sx={{ fontWeight: "bold" }}>
-              Pending : {data?.statusCount?.DISPATCH?.PENDING}
+              Pending : {data?.statusCount?.DISPATCH?.PENDING || 0}
             </Typography>
           </Box>
         </Grid>

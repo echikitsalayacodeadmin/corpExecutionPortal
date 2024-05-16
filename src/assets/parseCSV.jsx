@@ -1,7 +1,6 @@
-import { Alert, Box, Button, Snackbar, Typography } from "@mui/material";
+import { Button, Box, Stack } from "@mui/material";
 import { useState } from "react";
 import Papa from "papaparse";
-import { Stack } from "@mui/system";
 
 const allowedExtensions = ["csv", "xlsx"];
 
@@ -37,9 +36,22 @@ const ParseCSV = ({ setList, corpId, setSavedFile }) => {
 
       // If input type is correct set the state
       setFile(inputFile);
+      console.log({ inputFile });
       setSavedFile(inputFile);
     }
   };
+
+  const clearFile = () => {
+    setFile("");
+    setList([]);
+    setSavedFile("");
+    // Reset the input field value
+    const input = document.getElementById("csvInput");
+    if (input) {
+      input.value = "";
+    }
+  };
+
   const handleParse = () => {
     // If user clicks the parse button without
     // a file we show a error
@@ -85,6 +97,7 @@ const ParseCSV = ({ setList, corpId, setSavedFile }) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        spacing={2}
       >
         <Button variant="contained" component="label">
           Upload File&nbsp;
@@ -96,6 +109,7 @@ const ParseCSV = ({ setList, corpId, setSavedFile }) => {
           />
         </Button>
         <Button onClick={handleParse}>Preview</Button>
+        {file && <Button onClick={clearFile}>Clear</Button>}
       </Stack>
     </Box>
   );

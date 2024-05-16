@@ -12,6 +12,8 @@ import { useSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
 import CustomButtonBlue from "../../../../../../assets/customButtonBlue";
 import CustomButtonWhite from "../../../../../../assets/customButtonWhite";
+import { BASE_URL } from "../../../../../../assets/constants";
+import { deleteData } from "../../../../../assets/corpServices";
 
 const DeleteSequenceModal = ({ openDialog, setOpenDialog }) => {
   let { itemId } = useParams();

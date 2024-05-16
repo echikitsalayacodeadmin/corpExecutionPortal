@@ -57,10 +57,10 @@ const CorpSalesRegistration = () => {
     offRollEmployees: formValues.offRollEmployees,
     userId: userId,
     userName: userName,
-    spocList: formValues.spocList,
-    location: formValues.location,
-    subLocation: formValues.subLocation,
-    priority: formValues.priority,
+    spocList: formValues.spocList || null,
+    location: formValues.location || null,
+    subLocation: formValues.subLocation || null,
+    priority: formValues.priority || null,
     interestedRemark: formValues.interestedRemark,
   };
 

@@ -41,6 +41,7 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
     { field: "name", headerName: "Name", width: 200 },
   ];
   const { enqueueSnackbar } = useSnackbar();
+  const [originalMasterData, setOriginalMasterData] = useState([]);
   const [masterData, setMasterData] = useState([]);
   const [isListExit, setIsListExist] = useState(false);
   const [sequenceList, setSequenceList] = useState([]);
@@ -54,6 +55,14 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
       console.log({ SUCCESS: response?.data });
       setIsListExist(response?.data?.sequenceList?.length === 0 ? false : true);
       setMasterData(
+        filterUniqueEmployeesByEmpId(response.data.sequenceList)?.map(
+          (item, index) => ({
+            ...item,
+            employeeid: item.empId,
+          })
+        )
+      );
+      setOriginalMasterData(
         filterUniqueEmployeesByEmpId(response.data.sequenceList)?.map(
           (item, index) => ({
             ...item,
@@ -192,26 +201,7 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
           </Stack>
         </Grid>
         <Grid item sx={{ display: { lg: "none" } }} md={2} sm={2} xs={2}></Grid>
-        <Grid
-          item
-          lg={5}
-          md={8}
-          sm={8}
-          xs={8}
-          display="flex"
-          justifyContent={isMobile ? "center" : "flex-end"}
-          alignItems={"center"}
-        >
-          <Button
-            disabled={isListExit === false ? true : false}
-            variant="contained"
-            onClick={() => {
-              setOpenDialog(!openDialog);
-            }}
-          >
-            Delete Sequence
-          </Button>
-        </Grid>
+
         <Grid sx={{ display: { lg: "none" } }} item md={2} sm={2} xs={2}></Grid>
       </Grid>
 
@@ -245,58 +235,71 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
         (masterData.length === 0 ? (
           <Typography>No Sequence Uploaded yet</Typography>
         ) : (
-          <CustomDataGridLayout
-            rows={masterData
-              .filter(
-                (item) =>
-                  item.sno &&
-                  item.sno !== undefined &&
-                  item.employeeid !== "" &&
-                  item.employeeid !== undefined &&
-                  item.name !== "" &&
-                  item.name !== ""
-              )
-              .map((item, index) => ({
-                id: index,
-                ...item,
-              }))}
-            styles={{
-              ".error": {
-                backgroundColor: "#FF0000",
-                "&:hover": {
-                  backgroundColor: "#FF4D4D",
+          <Box>
+            <Button
+              sx={{ marginBlock: 2 }}
+              disabled={isListExit === false ? true : false}
+              variant="contained"
+              onClick={() => {
+                setOpenDialog(!openDialog);
+              }}
+            >
+              Delete Sequence
+            </Button>
+
+            <CustomDataGridLayout
+              rows={masterData
+                .filter(
+                  (item) =>
+                    item.sno &&
+                    item.sno !== undefined &&
+                    item.employeeid !== "" &&
+                    item.employeeid !== undefined &&
+                    item.name !== "" &&
+                    item.name !== ""
+                )
+                .map((item, index) => ({
+                  id: index,
+                  ...item,
+                }))}
+              styles={{
+                ".error": {
+                  backgroundColor: "#FF0000",
+                  "&:hover": {
+                    backgroundColor: "#FF4D4D",
+                  },
                 },
-              },
 
-              width: isMobile ? "100%" : "900px",
-              backgroundColor: "#e7f2fb",
-              borderRadius: "15px",
-              padding: "20px",
-            }}
-            columns={columns}
-            rowHeight={30}
-            Gridheight={isMobile ? "70vh" : "68vh"}
-            disableSelectionOnClick={true}
-            disableRowSelectionOnClick={true}
-            selectionModel={selectedRows.map((row) => row.empId)}
-            onSelectionModelChange={handleSelectionModelChange}
-            getRowClassName={(params) => {
-              const snoCount = rows.filter(
-                (row) => row.sno === params.row.sno
-              ).length;
-              const employeeIdCount = rows.filter(
-                (row) => row.employeeid === params.row.employeeid
-              ).length;
+                width: isMobile ? "100%" : "900px",
+                backgroundColor: "#e7f2fb",
+                borderRadius: "15px",
+                padding: "20px",
+              }}
+              columns={columns}
+              rowHeight={30}
+              Gridheight={isMobile ? "70vh" : "68vh"}
+              disableSelectionOnClick={true}
+              disableRowSelectionOnClick={true}
+              selectionModel={selectedRows.map((row) => row.empId)}
+              onSelectionModelChange={handleSelectionModelChange}
+              getRowClassName={(params) => {
+                const snoCount = rows.filter(
+                  (row) => row.sno === params.row.sno
+                ).length;
+                const employeeIdCount = rows.filter(
+                  (row) => row.employeeid === params.row.employeeid
+                ).length;
 
-              return params.row.employeeid === "" ||
-                params.row.sno === "" ||
-                params.row.name === "" ||
-                snoCount > 1 ||
-                employeeIdCount > 1
-                ? "error"
-                : "";
-            }}
-          />
+                return params.row.employeeid === "" ||
+                  params.row.sno === "" ||
+                  params.row.name === "" ||
+                  snoCount > 1 ||
+                  employeeIdCount > 1
+                  ? "error"
+                  : "";
+              }}
+            />
+          </Box>
         ))}
 
       <DeleteSequenceModal
