@@ -12,7 +12,6 @@ import {
 import React, { Fragment, useEffect, useState } from "react";
 import CompanyName from "./subComp/companyName";
 import SelectLocation from "../../../global/selectLocation/selectLocation";
-import UploadFile from "../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
@@ -22,6 +21,7 @@ import { fetchCorpDetails } from "../../../services/salesVisitServices";
 import dayjs from "dayjs";
 import Priority from "../registration/subComp/priority";
 import SubLocation from "../registration/subComp/subLocation";
+import UploadFilesEdit from "./subComp/uploadFilesEdit";
 
 const EditCorpSummary = () => {
   const { itemId } = useParams();
@@ -130,6 +130,21 @@ const EditCorpSummary = () => {
     });
   }, [isLoading]);
 
+  const handleDeletePhoto = async () => {
+    const url = BASE_URL + `corpSales/removeLogo/${corpSalesId}`;
+    const result = await updateData(url, "");
+    if (result.data) {
+      enqueueSnackbar("Successfully Deleted", {
+        variant: "success",
+      });
+      fetchCorpDetails(setFormValues, setIsLoading, corpSalesId);
+    } else {
+      enqueueSnackbar("An Error Occured", {
+        variant: "error",
+      });
+    }
+  };
+
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -237,7 +252,10 @@ const EditCorpSummary = () => {
         </Grid>
 
         <Grid item xs={12} lg={6}>
-          <UploadFile
+          <UploadFilesEdit
+            onDeleteClick={() => {
+              handleDeletePhoto();
+            }}
             editPhoto={true}
             title="Upload Photo"
             styles={{ height: "40px", borderRadius: "15px" }}
