@@ -43,7 +43,6 @@ const ParseCSV = ({ setList, corpId, setSavedFile }) => {
 
   const clearFile = () => {
     setFile("");
-    setList([]);
     setSavedFile("");
     // Reset the input field value
     const input = document.getElementById("csvInput");
