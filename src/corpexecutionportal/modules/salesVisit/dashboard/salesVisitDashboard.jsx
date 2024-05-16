@@ -281,18 +281,18 @@ const SalesVisitDashboard = () => {
 
   const [rows, setRows] = useState([]);
 
-  const fetchServices = async () => {
-    const url = BASE_URL + "corpSales/services";
-    const result = await getData(url);
-    if (result.data) {
-      setRows(result.data);
-    } else {
-      setRows([]);
-    }
-  };
-  useEffect(() => {
-    fetchServices();
-  }, []);
+  // const fetchServices = async () => {
+  //   const url = BASE_URL + "corpSales/services";
+  //   const result = await getData(url);
+  //   if (result.data) {
+  //     setRows(result.data);
+  //   } else {
+  //     setRows([]);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchServices();
+  // }, []);
 
   return (
     <Fragment>
