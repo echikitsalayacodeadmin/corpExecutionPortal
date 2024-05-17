@@ -8,9 +8,9 @@ export const _fetchEmployeeByEmpIdNew = async (
   setEmployee
 ) => {
   const campCycleId =
-    localStorage.getItem("CAMP_ID") === "null"
+    localStorage.getItem("CAMP_ID_CORP_EXECUTION") === "null"
       ? null
-      : localStorage.getItem("CAMP_ID");
+      : localStorage.getItem("CAMP_ID_CORP_EXECUTION");
   const url =
     BASE_URL +
     `org/detailed/campcycle/${employeeId}?corpId=${corpId}&campCycleId=${

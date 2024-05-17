@@ -9,11 +9,10 @@ export const fetchAllTaskList = async (
   filterValue,
   sequence
 ) => {
-  const campCycleId = "";
-
-  // localStorage.getItem("CAMP_ID_CORP_EXECUTION") === "null"
-  //   ? null
-  //   : localStorage.getItem("CAMP_ID_CORP_EXECUTION");
+  const campCycleId =
+    localStorage.getItem("CAMP_ID_CORP_EXECUTION") === "null"
+      ? null
+      : localStorage.getItem("CAMP_ID_CORP_EXECUTION");
   const url =
     BASE_URL + `task/all?corpId=${corpId}&campCycleId=${campCycleId || ""}`;
   const response = await getData(url);

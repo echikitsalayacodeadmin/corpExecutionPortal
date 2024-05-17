@@ -13,6 +13,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import CustomDataGridLayout from "../../../../../../assets/globalDataGridLayout/customDataGridLayout";
 import ViewReportModal from "./viewReportModal";
 import RenderExpandableCells from "../../../../../../assets/globalDataGridLayout/renderExpandableCells";
+import {
+  formatColumnName,
+  getColumnWidth,
+} from "../../../../../../assets/utils";
 
 const DetailedUploadedFileViewModal = ({
   onClose,

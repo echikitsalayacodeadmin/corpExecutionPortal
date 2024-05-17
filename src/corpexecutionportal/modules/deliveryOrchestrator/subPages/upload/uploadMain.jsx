@@ -50,6 +50,7 @@ const FileTypeUpload = ({
   handleStatusChange,
   showResult,
   setShowResult,
+  totalConsizeDefects,
 }) => {
   const [showSelectedFiles, setShowSelectedFiles] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
@@ -80,10 +81,16 @@ const FileTypeUpload = ({
   const [masterData, setMasterData] = useState([]);
 
   const getAllFilesWithFilter = async (uploadId) => {
+    const campCycleId =
+      localStorage.getItem("CAMP_ID_CORP_EXECUTION") === "null"
+        ? null
+        : localStorage.getItem("CAMP_ID_CORP_EXECUTION");
     setIsLoading(true);
     const url =
       BASE_URL +
-      `org/reporting/upload/reports?corpId=${corpId}&campCycleId=138858`;
+      `org/reporting/upload/reports?corpId=${corpId}&campCycleId=${
+        campCycleId || ""
+      }`;
     const response = await getData(url);
     setIsLoading(false);
     setMasterData(
@@ -174,6 +181,32 @@ const FileTypeUpload = ({
             align: "center",
             headerAlign: "center",
             renderCell,
+          }))
+      : [];
+
+  const columns3 =
+    totalConsizeDefects.length > 0
+      ? Object.keys(totalConsizeDefects[0])
+          .filter((key) => !["fileType", "id"].includes(key))
+          .map((key) => ({
+            field: key,
+            headerName: formatColumnName(key),
+            width:
+              {
+                date: 110,
+                time: 60,
+                matchedNames: 140,
+                unmatchedNames: 160,
+                tokenNotFound: 150,
+                duplicateFiles: 150,
+                failed: 70,
+                uploaded: 90,
+                processed: 100,
+                totalFiles: 110,
+                alreadyExistsInDB: 180,
+              }[key] || 200,
+            align: "center",
+            headerAlign: "center",
           }))
       : [];
 
@@ -470,6 +503,36 @@ const FileTypeUpload = ({
                   />
                 </Box>
               )}
+              <Typography sx={{ fontWeight: "bold" }}>
+                Final Instant Result :-
+              </Typography>
+              {totalConsizeDefects.filter(
+                (item) => item.fileType === fileType.toUpperCase()
+              ).length > 0 && (
+                <Box
+                  sx={{
+                    mb: 1,
+                  }}
+                >
+                  <CustomDataGridLayout
+                    styles={{
+                      // width: isDesktop ? "1240px" : "100%",
+                      backgroundColor: "#e7f2fb",
+                      borderRadius: "15px",
+                    }}
+                    disableRowSelectionOnClick={true}
+                    disableSelectionOnClick={true}
+                    checkboxSelection={false}
+                    hideFooterPagination={false}
+                    rows={totalConsizeDefects.filter(
+                      (item) => item.fileType === fileType.toUpperCase()
+                    )}
+                    rowHeight={30}
+                    columns={columns3}
+                    Gridheight={"24vh"}
+                  />
+                </Box>
+              )}
             </>
           )}
         </Grid>
@@ -532,14 +595,24 @@ const UploadMain = () => {
       setDefects([]);
     }
   };
-
+  const [totalConsizeDefects, setTotalConsizeDefects] = useState([]);
   const fetchInstantList = async () => {
+    const campCycleId =
+      localStorage.getItem("CAMP_ID_CORP_EXECUTION") === "null"
+        ? null
+        : localStorage.getItem("CAMP_ID_CORP_EXECUTION");
     setIsLoading(true);
-    const url = BASE_URL + `task/uploadfilesstatustracker?corpId=${corpId}`;
+    const url =
+      BASE_URL +
+      `task/uploadfilesstatustracker?corpId=${corpId}&campCycleId=${
+        campCycleId || ""
+      }`;
     const response = await getData(url);
     if (response.data) {
       setIsLoading(false);
-      const newTemp = sortArrayByDateTime(response.data).map((item, index) => ({
+      const newTemp = sortArrayByDateTime(
+        response.data.uploadedFileDetailsVMS
+      ).map((item, index) => ({
         id: index,
         machineNo: item.machineNo,
         date: item.date,
@@ -549,6 +622,15 @@ const UploadMain = () => {
         totalFiles: item.totalFiles,
       }));
       setMasterDataConsize(newTemp);
+      setTotalConsizeDefects(
+        response.data.totalUploadedFileDetailsVMS.map((item, index) => ({
+          id: index,
+          date: item.date,
+          time: item.time,
+          fileType: item.fileType,
+          ...item,
+        }))
+      );
     } else {
       setIsLoading(false);
     }
@@ -758,39 +840,30 @@ const UploadMain = () => {
   return (
     <Fragment>
       <MainPageLayoutWithBack title="Upload">
-        <Container
-          maxWidth={false}
-          disableGutters
-          sx={{
-            backgroundColor: "#F5F5F5",
-            minHeight: "80vh",
-            borderRadius: 5,
-          }}
-        >
-          <Box sx={{ p: 2 }}>
-            {reportingTaskNew
-              .filter((val) => val.itemId !== "printStatus")
-              .map((obj, index) => (
-                <FileTypeUpload
-                  key={index}
-                  data={obj}
-                  fileType={obj.itemName
-                    ?.replace(/\s/g, "")
-                    ?.trim()
-                    ?.toUpperCase()}
-                  selectFiles={selectFiles}
-                  selectedFiles={selectedFiles}
-                  setSelectedFiles={setSelectedFiles}
-                  handleSubmitFiles={handleSubmitFiles}
-                  masterDataConsize={masterDataConsize}
-                  corpId={corpId}
-                  handleStatusChange={handleStatusChange}
-                  showResult={showResult}
-                  setShowResult={setShowResult}
-                />
-              ))}
-          </Box>
-        </Container>
+        <Box sx={{ p: 1 }}>
+          {reportingTaskNew
+            .filter((val) => val.itemId !== "printStatus")
+            .map((obj, index) => (
+              <FileTypeUpload
+                key={index}
+                data={obj}
+                fileType={obj.itemName
+                  ?.replace(/\s/g, "")
+                  ?.trim()
+                  ?.toUpperCase()}
+                selectFiles={selectFiles}
+                selectedFiles={selectedFiles}
+                setSelectedFiles={setSelectedFiles}
+                handleSubmitFiles={handleSubmitFiles}
+                masterDataConsize={masterDataConsize}
+                corpId={corpId}
+                handleStatusChange={handleStatusChange}
+                showResult={showResult}
+                setShowResult={setShowResult}
+                totalConsizeDefects={totalConsizeDefects}
+              />
+            ))}
+        </Box>
       </MainPageLayoutWithBack>
     </Fragment>
   );

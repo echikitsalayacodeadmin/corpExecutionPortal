@@ -10,9 +10,9 @@ export const _fetchEmployeeByEmpIdQRReader = async (
   value
 ) => {
   const campCycleId =
-    localStorage.getItem("CAMP_ID") === "null"
+    localStorage.getItem("CAMP_ID_CORP_EXECUTION") === "null"
       ? null
-      : localStorage.getItem("CAMP_ID");
+      : localStorage.getItem("CAMP_ID_CORP_EXECUTION");
   const url =
     BASE_URL +
     `org/detailed/campcycle/${employeeId}?corpId=${corpId}&campCycleId=${
