@@ -50,7 +50,7 @@ const SalesVisitDashboard = () => {
       : dayjs().subtract(7, "day").format("YYYY-MM-DD");
 
     const _toDate = _storedData?.toDate
-      ? dayjs(_storedData.toDate).format("YYYY-MM-DD")
+      ? dayjs(_storedData?.toDate).format("YYYY-MM-DD")
       : dayjs().format("YYYY-MM-DD");
 
     // const _status = _storedData?.status || "";
@@ -90,41 +90,39 @@ const SalesVisitDashboard = () => {
     _selectedLocation,
     _selectedColor
   ) => {
-    if ((_fromDate, _toDate)) {
-      setIsLoading(true);
-      let url =
-        BASE_URL +
-        `corpSales/all?status=VISIT&startDate=${_fromDate}&endDate=${_toDate}`;
+    setIsLoading(true);
+    let url =
+      BASE_URL +
+      `corpSales/all?status=VISIT&startDate=${_fromDate}&endDate=${_toDate}`;
 
-      const result = await getData(url);
-      if (result?.data) {
-        setIsLoading(false);
+    const result = await getData(url);
+    if (result?.data) {
+      setIsLoading(false);
 
-        const tempList = result?.data?.filter((item) => {
-          return (
-            // (_status === "Interested" ? item?.interested === true : true) &&
-            // (_status === "NotInterested" ? item?.interested === false : true) &&
-            // (_userId ? item.userId === _userId : true) &&
-            (_selectedPriority ? item.priority === _selectedPriority : true) &&
-            (_selectedLocation ? item.location === _selectedLocation : true) &&
-            (_selectedUserName
-              ? Object?.keys(item?.mapOfUserAndVisitsCount || {}).includes(
-                  _selectedUserName
-                )
-              : true) &&
-            (_selectedColor
-              ? getColorOfNextVisitDate(item.nextVisitDate) === _selectedColor
-              : true)
-          );
-        });
-        setCompanyList(tempList);
-        setCompanyListStatic(result?.data);
-      } else {
-        setIsLoading(false);
+      const tempList = result?.data?.filter((item) => {
+        return (
+          // (_status === "Interested" ? item?.interested === true : true) &&
+          // (_status === "NotInterested" ? item?.interested === false : true) &&
+          // (_userId ? item.userId === _userId : true) &&
+          (_selectedPriority ? item.priority === _selectedPriority : true) &&
+          (_selectedLocation ? item.location === _selectedLocation : true) &&
+          (_selectedUserName
+            ? Object?.keys(item?.mapOfUserAndVisitsCount || {}).includes(
+                _selectedUserName
+              )
+            : true) &&
+          (_selectedColor
+            ? getColorOfNextVisitDate(item.nextVisitDate) === _selectedColor
+            : true)
+        );
+      });
+      setCompanyList(tempList);
+      setCompanyListStatic(result?.data);
+    } else {
+      setIsLoading(false);
 
-        setCompanyList([]);
-        setCompanyListStatic([]);
-      }
+      setCompanyList([]);
+      setCompanyListStatic([]);
     }
   };
   const fetchMisData = async (
@@ -138,6 +136,7 @@ const SalesVisitDashboard = () => {
     let url =
       BASE_URL +
       `corpSales/mis/report?status=VISIT&userId=${userId}&startDate=${_fromDate}&endDate=${_toDate}`;
+
     if (_selectedPriority !== "") {
       url += _selectedPriority ? `&priority=${_selectedPriority}` : "";
     }
@@ -201,6 +200,7 @@ const SalesVisitDashboard = () => {
     dayjs().subtract(7, "day").format("YYYY-MM-DD")
   );
   const [toDate, setToDate] = useState(dayjs().format("YYYY-MM-DD"));
+
   // const [status, setStatus] = useState("");
   const [companyList, setCompanyList] = useState([]);
   const [companyListStatic, setCompanyListStatic] = useState([]);
@@ -236,7 +236,7 @@ const SalesVisitDashboard = () => {
     companyListStatic,
     // status,
     userId,
-    status,
+    selectedUserName,
     selectedPriority,
     selectedLocation,
     selectedColor,
@@ -246,6 +246,7 @@ const SalesVisitDashboard = () => {
     fetchData(
       // status,
       userId,
+      selectedUserName,
       fromDate,
       toDate,
       selectedPriority,
@@ -257,7 +258,7 @@ const SalesVisitDashboard = () => {
     const filtersData = {
       fromDate,
       toDate,
-      // status,
+
       userId,
       selectedUserName,
       selectedPriority,

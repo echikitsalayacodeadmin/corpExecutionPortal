@@ -45,7 +45,7 @@ const DashboardCard = ({ data, serviceMapping }) => {
         count,
       })
     ) || [];
-  console.log({ userAndCount });
+
   const navigate = useNavigate();
   return (
     <Fragment>

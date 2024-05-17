@@ -42,13 +42,14 @@ const ParseCSV = ({ setList, corpId, setSavedFile }) => {
   };
 
   const clearFile = () => {
-    setFile("");
-    setSavedFile("");
-    // Reset the input field value
-    const input = document.getElementById("csvInput");
-    if (input) {
-      input.value = "";
-    }
+    // setFile("");
+    // setSavedFile("");
+    // // Reset the input field value
+    // const input = document.getElementById("csvInput");
+    // if (input) {
+    //   input.value = "";
+    // }
+    window.location.reload();
   };
 
   const handleParse = () => {

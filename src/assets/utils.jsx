@@ -293,93 +293,6 @@ export const capitalizeEachWord = (sentence) => {
   return capitalizedWords.join(" ");
 };
 
-// export const getColorOfNextVisitDate = (nextVisitDate) => {
-//   if (!nextVisitDate) {
-//     return "#000000";
-//   }
-//   const currentDate = new Date();
-//   const nextVisit = new Date(nextVisitDate);
-//   if (currentDate > nextVisit) {
-//     console.log("red");
-//     return "red";
-//   }
-//   const difference = Math.abs(nextVisit - currentDate);
-//   const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-//   console.log({ differenceInDays });
-//   if (differenceInDays >= 3) {
-//     return "green";
-//   } else if (differenceInDays <= 2 && differenceInDays > 0) {
-//     return "orange";
-//   }
-// };
-
-// export const getColorOfNextVisitDateInVisitDetail = (nextVisitDate) => {
-//   if (!nextVisitDate) {
-//     return "#000000";
-//   }
-//   const currentDate = new Date();
-//   const nextVisit = new Date(nextVisitDate);
-//   console.log({ currentDate, nextVisit });
-//   if (currentDate > nextVisit) {
-//     console.log("red");
-//     return "red";
-//   } else if (currentDate === nextVisit) {
-//     return "green";
-//   }
-//   const difference = Math.abs(nextVisit - currentDate);
-//   const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-//   console.log({ differenceInDays });
-//   if (differenceInDays >= 3) {
-//     return "green";
-//   } else if (differenceInDays <= 2 && differenceInDays > 0) {
-//     return "green";
-//   }
-// };
-
-// export const assignColors = (visits) => {
-//   if (visits.length === 0) {
-//     return [];
-//   }
-//   // Convert date strings to Date objects
-//   visits.forEach((visit) => {
-//     visit.nextVisitDate = new Date(visit.nextVisitDate);
-//     visit.visitDate = new Date(visit.visitDate);
-//   });
-
-//   // Assign colors based on comparisons starting from the second visit
-//   for (let i = 1; i < visits.length; i++) {
-//     const prevVisitDate = visits[i - 1].visitDate;
-//     const currentNextVisitDate = visits[i].nextVisitDate;
-//     if (
-//       prevVisitDate.toISOString().slice(0, 10) >
-//       currentNextVisitDate.toISOString().slice(0, 10)
-//     ) {
-//       visits[i].color = "red";
-//     } else if (
-//       prevVisitDate.toISOString().slice(0, 10) ===
-//       currentNextVisitDate.toISOString().slice(0, 10)
-//     ) {
-//       // visits[i].color = "orange";
-//       visits[i].color = "green";
-//     } else {
-//       visits[i].color = "green";
-//     }
-//   }
-//   console.log({ visits });
-//   // Assign color for the most recent visit
-//   visits[0].color = getColorOfNextVisitDateInVisitDetail(
-//     visits[0].nextVisitDate
-//   );
-
-//   // Convert Date objects back to strings
-//   visits.forEach((visit) => {
-//     visit.nextVisitDate = visit.nextVisitDate.toISOString().slice(0, 10);
-//     visit.visitDate = visit.visitDate.toISOString().slice(0, 10);
-//   });
-
-//   return visits;
-// };
-
 export const getColorOfNextVisitDate = (nextVisitDate) => {
   if (!nextVisitDate) {
     return "#000000";
@@ -389,12 +302,11 @@ export const getColorOfNextVisitDate = (nextVisitDate) => {
   const nextVisit = new Date(nextVisitDate);
   nextVisit.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
   if (currentDate > nextVisit) {
-    console.log("red");
     return "red";
   }
   const difference = Math.abs(nextVisit - currentDate);
   const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-  console.log({ differenceInDays });
+
   if (differenceInDays >= 3) {
     return "green";
   } else if (differenceInDays <= 2 && differenceInDays > 0) {
@@ -410,7 +322,7 @@ export const getColorOfNextVisitDateInVisitDetail = (nextVisitDate) => {
   currentDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
   const nextVisit = new Date(nextVisitDate);
   nextVisit.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
-  console.log({ currentDate, nextVisit });
+
   if (currentDate > nextVisit) {
     console.log("red");
     return "red";
@@ -419,7 +331,7 @@ export const getColorOfNextVisitDateInVisitDetail = (nextVisitDate) => {
   }
   const difference = Math.abs(nextVisit - currentDate);
   const differenceInDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
-  console.log({ differenceInDays });
+
   if (differenceInDays >= 3) {
     return "green";
   } else if (differenceInDays <= 2 && differenceInDays > 0) {

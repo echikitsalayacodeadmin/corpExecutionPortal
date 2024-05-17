@@ -124,7 +124,7 @@ const WaitingCardOrders = ({ data, serviceMapping }) => {
         count,
       })
     ) || [];
-  console.log({ userAndCount });
+
   const navigate = useNavigate();
   return (
     <Fragment>
