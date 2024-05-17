@@ -595,6 +595,7 @@ const UploadMain = () => {
       setDefects([]);
     }
   };
+
   const [totalConsizeDefects, setTotalConsizeDefects] = useState([]);
   const fetchInstantList = async () => {
     const campCycleId =
