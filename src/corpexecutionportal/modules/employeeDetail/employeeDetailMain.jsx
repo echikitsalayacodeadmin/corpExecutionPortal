@@ -22,7 +22,7 @@ const EmployeeDetailMain = ({
 
   const [data, setData] = useState({});
   const [formValues, setFormValues] = useState([]);
-  const [employee, setEmployee] = useState({ name: name, empId: empId });
+  const [employee, setEmployee] = useState({});
 
   const findEmployee = async () => {
     _fetchEmployeeByEmpIdNew(corpId, empId, setEmployee);
@@ -61,7 +61,7 @@ const EmployeeDetailMain = ({
       });
 
       setTimeout(() => {
-        navigate("/camp/analysis");
+        navigate("/corp/analysis");
       }, 1000);
     }
   };
@@ -89,7 +89,7 @@ const EmployeeDetailMain = ({
                   }}
                   borderRadius={2}
                 >
-                  <EmployeeBiodata formValues={employee} />
+                  <EmployeeBiodata formValues={{ name: name, empId: empId }} />
                 </Box>
               </Grid>
 
@@ -134,7 +134,7 @@ const EmployeeDetailMain = ({
                     variant="outlined"
                     size="small"
                     fullWidth
-                    onClick={() => navigate("/camp/analysis")}
+                    onClick={() => navigate("/corp/analysis")}
                   >
                     Reset
                   </Button>
