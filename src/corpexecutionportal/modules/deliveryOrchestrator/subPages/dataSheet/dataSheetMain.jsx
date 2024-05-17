@@ -22,6 +22,7 @@ import { getData, updateData } from "../../../../assets/corpServices";
 import { BASE_URL } from "../../../../../assets/constants";
 import MainPageLayoutWithBack from "../../../../global/templates/mainPageLayoutWithBack";
 import MarkStatusBtn from "../../subComp/markStatusBtn";
+import { downloadCsv } from "../../../../../assets/utils";
 
 const generateSummaryCSV = (data) => {
   let csvContent = `Test Name,Done,\n`;
@@ -272,44 +273,87 @@ const DataSheetMain = () => {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.pftToggle) -
             parseInt(defects?.reportDefectsCountVM?.pftReportUploaded),
+          TotalReportUploaded: parseInt(
+            defects?.reportDefectsCountVM?.pftReportUploaded
+          ),
         }),
       },
       {
         TestName: "AUDIOMETRY",
         TotalRequiredtest:
           defects?.reportDefectsCountVM?.audiometryTestRequired,
-        TotalToggleNotOn:
-          parseInt(defects?.reportDefectsCountVM?.audiometryTestRequired) -
-          parseInt(defects?.reportDefectsCountVM?.audiometryToggle),
-        TotalReportNotUploaded:
-          defects?.reportDefectsCountVM?.audiometryReportUploaded,
+        ...((item.itemId === "copyDefectExecution" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalToggleNotOn:
+            parseInt(defects?.reportDefectsCountVM?.audiometryTestRequired) -
+            parseInt(defects?.reportDefectsCountVM?.audiometryToggle),
+        }),
+        ...((item.itemId === "copyDefectUpload" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalReportNotUploaded:
+            parseInt(defects?.reportDefectsCountVM?.audiometryToggle) -
+            parseInt(defects?.reportDefectsCountVM?.audiometryReportUploaded),
+          TotalReportUploaded: parseInt(
+            defects?.reportDefectsCountVM?.audiometryReportUploaded
+          ),
+        }),
       },
       {
         TestName: "BLOODTEST",
         TotalRequiredtest: defects?.reportDefectsCountVM?.bloodTestRequired,
-        TotalToggleNotOn:
-          parseInt(defects?.reportDefectsCountVM?.bloodTestRequired) -
-          parseInt(defects?.reportDefectsCountVM?.bloodToggle),
-        TotalReportNotUploaded:
-          defects?.reportDefectsCountVM?.bloodReportUploaded,
+        ...((item.itemId === "copyDefectExecution" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalToggleNotOn:
+            parseInt(defects?.reportDefectsCountVM?.bloodTestRequired) -
+            parseInt(defects?.reportDefectsCountVM?.bloodToggle),
+        }),
+        ...((item.itemId === "copyDefectUpload" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalReportNotUploaded:
+            parseInt(defects?.reportDefectsCountVM?.bloodToggle) -
+            parseInt(defects?.reportDefectsCountVM?.bloodReportUploaded),
+          TotalReportUploaded: parseInt(
+            defects?.reportDefectsCountVM?.bloodReportUploaded
+          ),
+        }),
       },
       {
         TestName: "ECG",
         TotalRequiredtest: defects?.reportDefectsCountVM?.ecgTestRequired,
-        TotalToggleNotOn:
-          parseInt(defects?.reportDefectsCountVM?.ecgTestRequired) -
-          parseInt(defects?.reportDefectsCountVM?.ecgToggle),
-        TotalReportNotUploaded:
-          defects?.reportDefectsCountVM?.ecgReportUploaded,
+        ...((item.itemId === "copyDefectExecution" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalToggleNotOn:
+            parseInt(defects?.reportDefectsCountVM?.ecgTestRequired) -
+            parseInt(defects?.reportDefectsCountVM?.ecgToggle),
+        }),
+        ...((item.itemId === "copyDefectUpload" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalReportNotUploaded:
+            parseInt(defects?.reportDefectsCountVM?.ecgToggle) -
+            parseInt(defects?.reportDefectsCountVM?.ecgReportUploaded),
+          TotalReportUploaded: parseInt(
+            defects?.reportDefectsCountVM?.ecgReportUploaded
+          ),
+        }),
       },
       {
         TestName: "XRAY",
         TotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired,
-        TotalToggleNotOn:
-          parseInt(defects?.reportDefectsCountVM?.xrayTestRequired) -
-          parseInt(defects?.reportDefectsCountVM?.xrayToggle),
-        TotalReportNotUploaded:
-          defects?.reportDefectsCountVM?.xrayReportUploaded,
+        ...((item.itemId === "copyDefectExecution" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalToggleNotOn:
+            parseInt(defects?.reportDefectsCountVM?.xrayTestRequired) -
+            parseInt(defects?.reportDefectsCountVM?.xrayToggle),
+        }),
+        ...((item.itemId === "copyDefectUpload" ||
+          item.itemId === "copyDefectFinal") && {
+          TotalReportNotUploaded:
+            parseInt(defects?.reportDefectsCountVM?.xrayToggle) -
+            parseInt(defects?.reportDefectsCountVM?.xrayReportUploaded),
+          TotalReportUploaded: parseInt(
+            defects?.reportDefectsCountVM?.xrayReportUploaded
+          ),
+        }),
       },
     ],
 
