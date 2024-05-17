@@ -36,6 +36,7 @@ import OrderConfirmedDetailCorp from "./corpexecutionportal/pages/orderConfirmed
 import ServiceFormCorp from "./corpexecutionportal/pages/serviceFormCorp";
 import ServiceLogsCorp from "./corpexecutionportal/pages/serviceLogsCorp";
 import QRAnalysisIndex from "./corpexecutionportal/pages/qrAnalysisIndex";
+import EmployeeDetailIndex from "./corpexecutionportal/pages/employeeDetailIndex";
 
 function App() {
   const router = createBrowserRouter(
@@ -133,6 +134,10 @@ function App() {
             <Route path="logout" element={<LogoutCorp />} />
 
             <Route path="analysis" element={<QRAnalysisIndex />} />
+            <Route
+              path="employeedetail/:empid"
+              element={<EmployeeDetailIndex />}
+            />
           </Route>
         </Route>
       </Fragment>

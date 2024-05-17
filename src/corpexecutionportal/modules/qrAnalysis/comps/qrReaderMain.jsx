@@ -4,7 +4,7 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import { useNavigate } from "react-router-dom";
 import { _fetchEmployeeByEmpIdQRReader } from "./service";
 
-const QRReaderMain = ({ corpId = localStorage.getItem("CORPID") }) => {
+const QRReaderMain = () => {
   const [stopDecoding, setStopDecoding] = useState(false);
   const [employee, setEmployee] = useState({});
 
@@ -13,12 +13,16 @@ const QRReaderMain = ({ corpId = localStorage.getItem("CORPID") }) => {
   const handleScanner = async (value) => {
     setStopDecoding(true);
     setTimeout(() => {
-      _fetchEmployeeByEmpIdQRReader(
-        corpId,
-        value?.EMP_ID,
-        setEmployee,
-        navigate,
-        value
+      // _fetchEmployeeByEmpIdQRReader(
+      //   corpId,
+      //   value?.EMP_ID,
+      //   setEmployee,
+      //   navigate,
+      //   value
+      // );
+
+      navigate(
+        `/corp/employeedetail/${value?.EMP_ID}?VITALS_ID=${value?.VITALS_ID}&NAME=${value?.NAME}`
       );
     }, 3000);
   };

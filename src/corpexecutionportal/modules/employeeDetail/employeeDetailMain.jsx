@@ -1,27 +1,28 @@
 import { Fragment, useEffect, useState } from "react";
 import MainPageLayout from "../../global/templates/mainPageLayout";
-import EmployeeBiodata from "../home/comps/employeeBiodata";
 import { Box, Button, Container, Grid, Stack, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
+import EmployeeDetailsNew from "./comps/employeeDetailsNew";
 import {
   _fetchEmployeeByEmpIdNew,
   _fetchEmployeeByVitalsId,
-} from "../../services/homeservices";
+} from "./comps/service";
+import EmployeeBiodata from "./comps/employeeBiodata";
+import { saveData } from "../../assets/corpServices";
 import { BASE_URL } from "../../../assets/constants";
-import { saveData } from "../../assets/campServices";
-import { enqueueSnackbar } from "notistack";
-import EmployeeDetailsNew from "./comps/employeeDetailsNew";
 
 const EmployeeDetailMain = ({
   corpId = localStorage.getItem("CORPID"),
   empId,
   vitalsId,
+  name,
 }) => {
   let navigate = useNavigate();
 
   const [data, setData] = useState({});
   const [formValues, setFormValues] = useState([]);
-  const [employee, setEmployee] = useState({});
+  const [employee, setEmployee] = useState({ name: name, empId: empId });
 
   const findEmployee = async () => {
     _fetchEmployeeByEmpIdNew(corpId, empId, setEmployee);
@@ -31,7 +32,7 @@ const EmployeeDetailMain = ({
     _fetchEmployeeByVitalsId(vitalsId, setData, setFormValues);
   };
   useEffect(() => {
-    findEmployee();
+    //findEmployee();
     findEmployeeByVitalsId();
   }, []);
 

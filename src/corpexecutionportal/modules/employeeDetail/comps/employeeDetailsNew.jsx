@@ -5,7 +5,7 @@ import { CustomSelect } from "./customSelect";
 const EmployeeDetailsNew = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
-      <Box sx={{ width: { lg: "35%", xs: "100%" }, p: 1 }}>
+      <Box sx={{ width: { lg: "40%", xs: "100%" }, p: 1 }}>
         <Grid container spacing={1} border={1}>
           <Grid
             item
