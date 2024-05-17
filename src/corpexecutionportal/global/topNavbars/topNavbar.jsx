@@ -33,6 +33,11 @@ const TopNavbar = () => {
       url: "/corp/home",
       visibility: true,
     },
+    {
+      name: "Analysis",
+      url: "/corp/analysis",
+      visibility: true,
+    },
   ]);
 
   return (

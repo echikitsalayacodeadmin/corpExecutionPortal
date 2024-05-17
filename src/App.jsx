@@ -35,6 +35,7 @@ import AddQuotationDataCorp from "./corpexecutionportal/pages/addQuotationDataCo
 import OrderConfirmedDetailCorp from "./corpexecutionportal/pages/orderConfirmedDetailCorp";
 import ServiceFormCorp from "./corpexecutionportal/pages/serviceFormCorp";
 import ServiceLogsCorp from "./corpexecutionportal/pages/serviceLogsCorp";
+import QRAnalysisIndex from "./corpexecutionportal/pages/qrAnalysisIndex";
 
 function App() {
   const router = createBrowserRouter(
@@ -130,6 +131,8 @@ function App() {
               element={<AccountReceivableCorp />}
             />
             <Route path="logout" element={<LogoutCorp />} />
+
+            <Route path="analysis" element={<QRAnalysisIndex />} />
           </Route>
         </Route>
       </Fragment>
