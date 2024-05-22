@@ -245,8 +245,8 @@ const MisMain = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     typeOfMisReport: "",
-    startDate: dayjs().format("DD-MM-YYYY"),
-    endDate: dayjs().format("DD-MM-YYYY"),
+    startDate: dayjs(new Date()).format("DD-MM-YYYY"),
+    endDate: dayjs(new Date()).format("DD-MM-YYYY"),
     serviceType: "",
   });
 
@@ -259,41 +259,52 @@ const MisMain = () => {
     let url = BASE_URL;
     if (filters.typeOfMisReport === "Reports for KAM Productivity") {
       url += `corpSales/mis/kamProductivity?startDate=${filters?.startDate}&endDate=${filters?.endDate}`;
-    } else if (filters.typeOfMisReport === "Reports for services") {
+    } else if (
+      filters.typeOfMisReport === "Reports for services" &&
+      filters?.serviceType?.id
+    ) {
       url += `corpSales/mis/salesservice/${filters?.serviceType?.id}?startDate=${filters?.startDate}&endDate=${filters?.endDate}`;
     } else if (
       filters.typeOfMisReport === "Report for Corp Current Sales Service Status"
     ) {
       url += `corpSales/mis/corp/latestStatus?startDate=${filters.startDate}&endDate=${filters.endDate}`;
     }
-    const result = await getData(url);
-    if (result.data) {
-      if (filters.typeOfMisReport === "Reports for services") {
-        const specificColumns = columns?.[filters?.serviceType?.id] || [];
-        const csvData = result.data.map((item) => {
-          const filteredItem = {};
-          specificColumns.forEach((field) => {
-            if (item.hasOwnProperty(field)) {
-              filteredItem[field] = item[field];
-            }
+
+    if (url !== "https://apibackend.uno.care/api/") {
+      const result = await getData(url);
+      if (result.data) {
+        if (filters.typeOfMisReport === "Reports for services") {
+          const specificColumns = columns?.[filters?.serviceType?.id] || [];
+          const csvData = result.data.map((item) => {
+            const filteredItem = {};
+            specificColumns.forEach((field) => {
+              if (item.hasOwnProperty(field)) {
+                filteredItem[field] = item[field];
+              }
+            });
+            return filteredItem;
           });
-          return filteredItem;
-        });
-        console.log({ csvData });
-        setMisReport(csvData);
+          console.log({ csvData });
+          setMisReport(csvData);
+        } else {
+          setMisReport(result.data);
+        }
       } else {
-        setMisReport(result.data);
+        enqueueSnackbar(`${result.error.response.data.message}`, {
+          variant: "error",
+        });
       }
-    } else {
-      enqueueSnackbar(`${result.error.response.data.message}`, {
-        variant: "error",
-      });
     }
   };
 
   useEffect(() => {
     fetchSalesServicesMISReport();
-  }, [filters]);
+  }, [
+    filters.startDate,
+    filters.endDate,
+    filters.serviceType,
+    filters.typeOfMisReport,
+  ]);
 
   if (isLoading) {
     return (
@@ -326,6 +337,7 @@ const MisMain = () => {
               value={filters.typeOfMisReport || ""}
               onChange={(event, newValue) => {
                 setFilters({ ...filters, typeOfMisReport: newValue });
+                setMisReport([]);
               }}
             />
           </Grid>
@@ -385,6 +397,7 @@ const MisMain = () => {
         >
           <CustomButtonBlue
             title="Download Report"
+            disabled={misReport.length > 0 ? false : true}
             onClick={() => {
               if (filters.typeOfMisReport === "Reports for services") {
                 downloadCsv(misReport, `Reports_For_services`);
