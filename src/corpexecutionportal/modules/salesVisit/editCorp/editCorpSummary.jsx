@@ -206,9 +206,13 @@ const EditCorpSummary = () => {
         </Grid>
         <Grid item xs={12} lg={6}>
           <SubLocation
+            property={"subLocation"}
+            freeSolo={true}
+            fontWeight={"600"}
             formValues={formValues}
             setFormValues={setFormValues}
-            property={"subLocation"}
+            label={"Select Sub Location"}
+            placeholder={"Select Sub Location"}
           />
         </Grid>
 
@@ -308,6 +312,7 @@ const EditCorpSummary = () => {
           }}
         >
           <Button
+            disabled={formValues.corpName && formValues.priority ? false : true}
             variant="contained"
             sx={{ width: "150px", borderRadius: "15px" }}
             onClick={() => {

@@ -83,7 +83,7 @@ const data = (val) => {
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
       path: "/corp/mis",
       xsgridwidth: 12,
-      disabled: true,
+      disabled: false,
     },
   ];
 };

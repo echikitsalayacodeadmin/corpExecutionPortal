@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import EditCorpSummary from "../modules/salesVisit/editVisit/editCorpSummary";
+import EditCorpSummary from "../modules/salesVisit/editCorp/editCorpSummary";
 import MainPageLayoutWithBack from "../global/templates/mainPageLayoutWithBack";
 
-const EditVisitCorp = () => {
+const EditCorpDetail = () => {
   return (
     <Fragment>
       <MainPageLayoutWithBack title="Edit Company Info">
@@ -12,4 +12,4 @@ const EditVisitCorp = () => {
   );
 };
 
-export default EditVisitCorp;
+export default EditCorpDetail;

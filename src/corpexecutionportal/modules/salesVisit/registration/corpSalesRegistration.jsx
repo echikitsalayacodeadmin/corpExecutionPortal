@@ -308,7 +308,11 @@ const CorpSalesRegistration = () => {
         >
           <Button
             disabled={
-              isDisabled === true || formValues.corpName === "" ? true : false
+              isDisabled === true ||
+              formValues.corpName === "" ||
+              formValues.priority === ""
+                ? true
+                : false
             }
             variant="contained"
             sx={{ width: "150px", borderRadius: "15px" }}

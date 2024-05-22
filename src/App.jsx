@@ -26,7 +26,6 @@ import ExecutionPlanningCorp from "./corpexecutionportal/pages/executionPlanning
 import AccountReceivableCorp from "./corpexecutionportal/pages/accountReceivableCorp";
 import SalesVisitDetailCorp from "./corpexecutionportal/pages/salesVisitDetailCorp";
 import AddNewVisitCorp from "./corpexecutionportal/pages/addNewVisitCorp";
-import EditVisitCorp from "./corpexecutionportal/pages/editVisitCorp";
 import RegisterCorp from "./corpexecutionportal/pages/registerCorp";
 import QuotationCreate from "./corpexecutionportal/pages/quotationCreate";
 import QuotationUpdate from "./corpexecutionportal/pages/quotationUpdate";
@@ -37,6 +36,8 @@ import ServiceFormCorp from "./corpexecutionportal/pages/serviceFormCorp";
 import ServiceLogsCorp from "./corpexecutionportal/pages/serviceLogsCorp";
 import QRAnalysisIndex from "./corpexecutionportal/pages/qrAnalysisIndex";
 import EmployeeDetailIndex from "./corpexecutionportal/pages/employeeDetailIndex";
+import EditCorpDetail from "./corpexecutionportal/pages/editCorpDetail";
+import MisCorp from "./corpexecutionportal/pages/misCorp";
 
 function App() {
   const router = createBrowserRouter(
@@ -59,6 +60,9 @@ function App() {
           <Route element={<CorpAuthLayout />}>
             <Route path="login" element={<LoginCorp />} />
             <Route path="home" element={<HomeCorp />} />
+
+            {/* Delivery Orchestrator */}
+
             <Route
               path="deliveryorchestrator"
               element={<DeliveryOrchestratorCorp />}
@@ -84,6 +88,8 @@ function App() {
               element={<DispatchCorp />}
             />
 
+            {/* Sales Visit */}
+
             <Route path="salesvisit" element={<SalesVisitCorp />} />
             <Route
               path="salesvisit/detail/:itemId"
@@ -97,13 +103,23 @@ function App() {
               path="salesvisit/serviceslogs/:itemId"
               element={<ServiceLogsCorp />}
             />
-            <Route path="registercorp" element={<RegisterCorp />} />
-            <Route path="addnewvisit/:itemId" element={<AddNewVisitCorp />} />
-            <Route path="editvisit/:itemId" element={<EditVisitCorp />} />
+
             <Route
               path="salesvisit/quotationlist/:itemId"
               element={<QuotationListCorp />}
             />
+
+            {/* Register Corp */}
+
+            <Route path="registercorp" element={<RegisterCorp />} />
+
+            {/* Add Visit in Corp */}
+            <Route path="addnewvisit/:itemId" element={<AddNewVisitCorp />} />
+
+            {/* Edit Corp Detail */}
+            <Route path="editcorpdetail/:itemId" element={<EditCorpDetail />} />
+
+            {/* Quotation */}
             <Route path="quotation" element={<QuotationCorp />} />
             <Route
               path="quotation/quotationcreate/:itemId"
@@ -118,22 +134,33 @@ function App() {
               element={<AddQuotationDataCorp />}
             />
 
+            {/* Order Confirmed */}
             <Route path="orderconfirmed" element={<OrderConfirmedCorp />} />
             <Route
               path="orderconfirmed/detailed/:itemId"
               element={<OrderConfirmedDetailCorp />}
             />
+
+            {/* Execution Planning */}
             <Route
               path="executionplanning"
               element={<ExecutionPlanningCorp />}
             />
+
+            {/* Account Receivable  */}
             <Route
               path="accountreceivable"
               element={<AccountReceivableCorp />}
             />
+
+            {/* Mis */}
+
+            <Route path="mis" element={<MisCorp />} />
+
             <Route path="logout" element={<LogoutCorp />} />
 
             <Route path="analysis" element={<QRAnalysisIndex />} />
+
             <Route
               path="employeedetail/:empid"
               element={<EmployeeDetailIndex />}

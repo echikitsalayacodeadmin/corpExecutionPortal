@@ -103,7 +103,7 @@ const CompanySummaryInfo = ({ data }) => {
           <Tooltip title="Click to Edit Company Info">
             <IconButton
               onClick={() => {
-                navigate(`/corp/editvisit/${data?.corpSalesId}`);
+                navigate(`/corp/editcorpdetail/${data?.corpSalesId}`);
               }}
             >
               <CreateIcon />
