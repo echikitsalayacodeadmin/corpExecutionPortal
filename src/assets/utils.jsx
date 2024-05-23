@@ -339,41 +339,96 @@ export const getColorOfNextVisitDateInVisitDetail = (nextVisitDate) => {
   }
 };
 
+// export const assignColors = (visits) => {
+//   if (visits.length === 0) {
+//     return [];
+//   }
+//   // Convert date strings to Date objects
+//   visits.forEach((visit) => {
+//     visit.nextVisitDate = new Date(visit.nextVisitDate);
+//     visit.visitDate = new Date(visit.visitDate);
+//     visit.nextVisitDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+//     visit.visitDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+//   });
+
+//   // Assign colors based on comparisons starting from the second visit
+//   for (let i = 1; i < visits.length; i++) {
+//     const prevVisitDate = visits[i - 1].visitDate;
+//     const currentNextVisitDate = visits[i].nextVisitDate;
+//     if (prevVisitDate > currentNextVisitDate) {
+//       visits[i].color = "red";
+//     } else if (prevVisitDate.getTime() === currentNextVisitDate.getTime()) {
+//       // visits[i].color = "orange";
+//       visits[i].color = "green";
+//     } else {
+//       visits[i].color = "green";
+//     }
+//   }
+//   console.log({ visits });
+//   // Assign color for the most recent visit
+//   visits[0].color = getColorOfNextVisitDateInVisitDetail(
+//     visits[0].nextVisitDate
+//   );
+
+//   // Convert Date objects back to strings
+//   visits.forEach((visit) => {
+//     visit.nextVisitDate = visit.nextVisitDate.toISOString().slice(0, 10);
+//     visit.visitDate = visit.visitDate.toISOString().slice(0, 10);
+//   });
+
+//   return visits;
+// };
+
 export const assignColors = (visits) => {
   if (visits.length === 0) {
     return [];
   }
-  // Convert date strings to Date objects
+
+  // Convert date strings to Date objects, handle null dates
   visits.forEach((visit) => {
-    visit.nextVisitDate = new Date(visit.nextVisitDate);
-    visit.visitDate = new Date(visit.visitDate);
-    visit.nextVisitDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
-    visit.visitDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+    if (visit.nextVisitDate) {
+      visit.nextVisitDate = new Date(visit.nextVisitDate);
+      visit.nextVisitDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+    }
+    if (visit.visitDate) {
+      visit.visitDate = new Date(visit.visitDate);
+      visit.visitDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+    }
   });
 
   // Assign colors based on comparisons starting from the second visit
   for (let i = 1; i < visits.length; i++) {
     const prevVisitDate = visits[i - 1].visitDate;
     const currentNextVisitDate = visits[i].nextVisitDate;
+
+    if (!prevVisitDate || !currentNextVisitDate) {
+      continue; // Skip this visit if any date is null
+    }
+
     if (prevVisitDate > currentNextVisitDate) {
       visits[i].color = "red";
     } else if (prevVisitDate.getTime() === currentNextVisitDate.getTime()) {
-      // visits[i].color = "orange";
       visits[i].color = "green";
     } else {
       visits[i].color = "green";
     }
   }
-  console.log({ visits });
-  // Assign color for the most recent visit
-  visits[0].color = getColorOfNextVisitDateInVisitDetail(
-    visits[0].nextVisitDate
-  );
 
-  // Convert Date objects back to strings
+  // Assign color for the most recent visit
+  if (visits[0].nextVisitDate) {
+    visits[0].color = getColorOfNextVisitDateInVisitDetail(
+      visits[0].nextVisitDate
+    );
+  }
+
+  // Convert Date objects back to strings, handle null dates
   visits.forEach((visit) => {
-    visit.nextVisitDate = visit.nextVisitDate.toISOString().slice(0, 10);
-    visit.visitDate = visit.visitDate.toISOString().slice(0, 10);
+    if (visit.nextVisitDate) {
+      visit.nextVisitDate = visit.nextVisitDate.toISOString().slice(0, 10);
+    }
+    if (visit.visitDate) {
+      visit.visitDate = visit.visitDate.toISOString().slice(0, 10);
+    }
   });
 
   return visits;

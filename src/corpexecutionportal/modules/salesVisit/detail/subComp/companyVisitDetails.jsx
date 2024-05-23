@@ -198,7 +198,9 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                     <Typography sx={styles.heading}>Visit Date -</Typography>
                     <Typography sx={styles.data}>
-                      {dayjs(item?.visitDate).format("DD-MM-YYYY")}
+                      {item?.visitDate
+                        ? dayjs(item?.visitDate).format("DD-MM-YYYY")
+                        : ""}
                     </Typography>
                   </Grid>
 
@@ -213,7 +215,9 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                         color: item.color,
                       }}
                     >
-                      {dayjs(item?.nextVisitDate).format("DD-MM-YYYY")}
+                      {item?.nextVisitDate
+                        ? dayjs(item?.nextVisitDate).format("DD-MM-YYYY")
+                        : ""}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
@@ -222,7 +226,7 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                       sx={{
                         fontWeight: "bold",
                         textTransform: "capitalize",
-                        color: item.color,
+                        color: "#127DDD",
                       }}
                     >
                       {item?.userName}
