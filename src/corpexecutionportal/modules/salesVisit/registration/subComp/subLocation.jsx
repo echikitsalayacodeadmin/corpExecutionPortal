@@ -34,10 +34,10 @@ const SubLocation = ({
 
   const handleInputChange = (newValue) => {
     if (formValues && setFormValues && property) {
-      setFormValues({ ...formValues, [property]: newValue });
+      setFormValues({ ...formValues, [property]: newValue?.trim() });
     } else {
-      setValue(newValue);
-      setSelectedValue(newValue);
+      setValue(newValue?.trim());
+      setSelectedValue(newValue?.trim());
     }
   };
 

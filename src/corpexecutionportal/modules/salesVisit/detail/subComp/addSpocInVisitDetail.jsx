@@ -99,17 +99,6 @@ const AddSpocInVisitDetail = ({
   };
 
   const handleFormSubmit = () => {
-    if (editedIndex !== null) {
-      const updatedSpocList = [...formValues.spocList];
-      updatedSpocList[editedIndex] = spocForm;
-      setFormValues({ ...formValues, spocList: updatedSpocList });
-    } else {
-      setFormValues({
-        ...formValues,
-        spocList: [...formValues.spocList, spocForm],
-      });
-    }
-    setShowSpocList(true);
     handleSubmit();
   };
 
@@ -143,9 +132,20 @@ const AddSpocInVisitDetail = ({
       enqueueSnackbar("Successfully Added", {
         variant: "success",
       });
+      if (editedIndex !== null) {
+        const updatedSpocList = [...formValues.spocList];
+        updatedSpocList[editedIndex] = spocForm;
+        setFormValues({ ...formValues, spocList: updatedSpocList });
+      } else {
+        setFormValues({
+          ...formValues,
+          spocList: [...formValues.spocList, spocForm],
+        });
+      }
+      setShowSpocList(true);
       handleClose();
     } else if (result && result.error) {
-      enqueueSnackbar("An Error Occured", {
+      enqueueSnackbar(`${result.error.response.data.message}`, {
         variant: "error",
       });
     }

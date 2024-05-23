@@ -216,6 +216,18 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
                       {dayjs(item?.nextVisitDate).format("DD-MM-YYYY")}
                     </Typography>
                   </Grid>
+                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                    <Typography sx={styles.heading}>Visit By -</Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        textTransform: "capitalize",
+                        color: item.color,
+                      }}
+                    >
+                      {item?.userName}
+                    </Typography>
+                  </Grid>
                   <Grid
                     item
                     xs={12}

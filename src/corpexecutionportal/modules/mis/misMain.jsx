@@ -44,6 +44,7 @@ const columns = {
     "list",
     "closureProcedure",
     "decisionMakingCriteria",
+    "monthlyInflowNoOfEmp",
     "dueDate",
     "frequency",
     "location",
