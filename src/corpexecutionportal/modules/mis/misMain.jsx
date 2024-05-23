@@ -218,6 +218,7 @@ const columns = {
     "user",
     "serviceProvider",
     "oldRate",
+    "dueDate",
     "interestReason",
     "painPoint",
     "reasonForStarting",
