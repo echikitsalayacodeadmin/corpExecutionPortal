@@ -74,11 +74,11 @@ const DashboardCard = ({ data, serviceMapping }) => {
             sx={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
           >
             <Typography sx={styles.companyName}>
-              {data?.corpName.toLowerCase()}{" "}
+              {data?.corpName?.toLowerCase()}{" "}
               {data?.priority && `(${data?.priority})`}
             </Typography>
           </Grid>
-          {data.lastVisitDate ? (
+          {data?.lastVisitDate ? (
             <Grid
               item
               xs={6}

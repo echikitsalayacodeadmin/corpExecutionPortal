@@ -31,7 +31,7 @@ const SalesVisitDashboard = () => {
   useEffect(() => {
     const _fromDate = _storedData?.fromDate
       ? dayjs(_storedData.fromDate).format("YYYY-MM-DD")
-      : dayjs().subtract(7, "day").format("YYYY-MM-DD");
+      : dayjs().subtract(2, "month").format("YYYY-MM-DD");
     const _toDate = _storedData?.toDate
       ? dayjs(_storedData?.toDate).format("YYYY-MM-DD")
       : dayjs().format("YYYY-MM-DD");

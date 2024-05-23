@@ -23,7 +23,6 @@ const VisitType = ({ formValues, setFormValues }) => {
       <CustomAutocomplete
         options={[
           { label: "Telephonic Visit", value: "TELEPHONIC" },
-          { label: "In Person Visit", value: "IN_PERSON" },
           {
             label: "In Person meeting with relevant stakeholder",
             value: "IN_PERSON_MEETING_WITH_RELEVANT_STAKEHOLDER",

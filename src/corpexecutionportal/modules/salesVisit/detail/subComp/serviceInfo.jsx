@@ -238,6 +238,7 @@ const ServiceInfo = ({ data }) => {
                     "NEGOTIATION",
                     "QUOTATION_APPROVED",
                     "QUOTATION_REJECTED",
+                    "CENTRAL_DECISION_MAKING",
                     "ORDER_LOST",
                     "DATA_AWAITED",
                   ]}

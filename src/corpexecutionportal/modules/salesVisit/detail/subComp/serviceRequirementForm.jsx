@@ -60,7 +60,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -149,7 +149,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -251,7 +251,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -353,7 +353,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -454,7 +454,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
   ],
@@ -504,7 +504,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -582,7 +582,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -666,7 +666,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -764,7 +764,7 @@ const servicesFields = {
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
-      type: "dropdown",
+      type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
@@ -777,6 +777,11 @@ const servicesFields = {
           fieldName: "serviceProvider",
           type: "textField",
           dataType: "string",
+        },
+        {
+          label: "Due Date",
+          fieldName: "dueDate",
+          type: "date",
         },
         {
           label: "Old Rate",
@@ -1143,6 +1148,40 @@ const ServiceRequirementForm = () => {
                             }}
                           />
                         )}
+                        {subVal.type === "dropdownEditable" && (
+                          <CustomAutocomplete
+                            freeSolo={true}
+                            label={subVal?.label}
+                            placeholder={subVal?.label}
+                            options={subVal?.options || []}
+                            getOptionLabel={(option) => option}
+                            value={formValues[subVal.fieldName] || ""}
+                            onChange={(event, newValue, reason) => {
+                              setFormValues({
+                                ...formValues,
+                                [subVal.fieldName]: newValue,
+                              });
+                              if (reason === "clear") {
+                                setFormValues({
+                                  ...formValues,
+                                  [subVal.fieldName]: "",
+                                });
+                              }
+                            }}
+                            onInputChange={(event, newInputValue, reason) => {
+                              setFormValues({
+                                ...formValues,
+                                [subVal.fieldName]: newInputValue,
+                              });
+                              if (reason === "clear") {
+                                setFormValues({
+                                  ...formValues,
+                                  [subVal.fieldName]: "",
+                                });
+                              }
+                            }}
+                          />
+                        )}
                         {subVal.type === "textField" &&
                           subVal.dataType === "string" && (
                             <TextField
@@ -1181,6 +1220,19 @@ const ServiceRequirementForm = () => {
                               }}
                             />
                           )}
+                        {subVal.type === "date" && (
+                          <GlobalDateLayout
+                            label={subVal?.label}
+                            placeholder={subVal?.label}
+                            property={subVal.fieldName}
+                            initialDate={
+                              formValues?.[subVal?.fieldName] || null
+                            }
+                            formValues={formValues}
+                            setFormValues={setFormValues}
+                            disablePast={true}
+                          />
+                        )}
                       </Grid>
                     </Grid>
                   ))}
