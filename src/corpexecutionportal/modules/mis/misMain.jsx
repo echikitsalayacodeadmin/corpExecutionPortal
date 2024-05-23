@@ -340,6 +340,21 @@ const MisMain = () => {
     filters.typeOfMisReport,
   ]);
 
+  const downloadCompanyLogHandler = async () => {
+    const url = BASE_URL + `corpSales/companyServiceLog`;
+    const response = await getData(url);
+
+    if (response.error) {
+      console.log({ error: response.err });
+      enqueueSnackbar("Failed to get data.", {
+        variant: "error",
+      });
+    } else {
+      console.log({ data: response.data });
+      downloadCsv(response.data, "company_log");
+    }
+  };
+
   if (isLoading) {
     return (
       <Box
@@ -366,6 +381,7 @@ const MisMain = () => {
                 "Reports for services",
                 "Reports for KAM Productivity",
                 "Report for Corp Current Sales Service Status",
+                "Company service log",
               ]}
               getOptionLabel={(option) => option || ""}
               value={filters.typeOfMisReport || ""}
@@ -431,7 +447,12 @@ const MisMain = () => {
         >
           <CustomButtonBlue
             title="Download Report"
-            disabled={misReport.length > 0 ? false : true}
+            disabled={
+              misReport.length > 0 ||
+              filters.typeOfMisReport === "Company service log"
+                ? false
+                : true
+            }
             onClick={() => {
               if (filters.typeOfMisReport === "Reports for services") {
                 downloadCsv(
@@ -447,6 +468,8 @@ const MisMain = () => {
                 "Report for Corp Current Sales Service Status"
               ) {
                 downloadCsv(misReport, `Report_for_Corp_Current_Sales_Service`);
+              } else if (filters.typeOfMisReport === "Company service log") {
+                downloadCompanyLogHandler();
               }
             }}
           />
