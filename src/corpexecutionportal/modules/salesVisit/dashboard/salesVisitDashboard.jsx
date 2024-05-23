@@ -1,36 +1,20 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Container,
-  Grid,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
+import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { getData } from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
 import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
-import SelectKam from "../../../global/selectKam/selectKam";
-import CustomSelect from "../../../../assets/customSelect";
 import SelectLocation from "../../../global/selectLocation/selectLocation";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
-import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import SearchBarCompany from "../../../global/searchBarCompany/searchBarCompany";
 import DashboardCard from "./subComp/dashboardCard";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "notistack";
 import { downloadCsv, getColorOfNextVisitDate } from "../../../../assets/utils";
-import SelectUser from "../../../global/selectUsers/selectUsers";
 import SelectkamInDashboard from "../../../global/selectKam/selectkamInDashboard";
 import dayjs from "dayjs";
-import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
 import MainPageLayoutWithBackSV from "../../../global/templates/mainPageLayoutWithBackSV";
 
 const SalesVisitDashboard = () => {
   const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar();
   const _storedData = useMemo(() => {
     try {
       return (
@@ -48,12 +32,9 @@ const SalesVisitDashboard = () => {
     const _fromDate = _storedData?.fromDate
       ? dayjs(_storedData.fromDate).format("YYYY-MM-DD")
       : dayjs().subtract(7, "day").format("YYYY-MM-DD");
-
     const _toDate = _storedData?.toDate
       ? dayjs(_storedData?.toDate).format("YYYY-MM-DD")
       : dayjs().format("YYYY-MM-DD");
-
-    // const _status = _storedData?.status || "";
     const _userId = _storedData?.userId || "";
     const _selectedUserName = _storedData?.selectedUserName || "";
     const _selectedLocation = _storedData?.selectedLocation || "";
@@ -61,15 +42,12 @@ const SalesVisitDashboard = () => {
     const _selectedColor = _storedData?.selectedColor || "";
     setFromDate(_fromDate);
     setToDate(_toDate);
-    // setStatus(_status);
     setUserId(_userId);
     setSelectedUserName(_selectedUserName);
     setselectedLocation(_selectedLocation);
     setSelectedPriority(_selectedPriority);
     setSelectedColor(_selectedColor);
-
     fetchData(
-      // _status,
       _userId,
       _selectedUserName,
       _fromDate,
@@ -81,7 +59,6 @@ const SalesVisitDashboard = () => {
   }, []);
 
   const fetchData = async (
-    // _status,
     _userId,
     _selectedUserName,
     _fromDate,
@@ -101,9 +78,6 @@ const SalesVisitDashboard = () => {
 
       const tempList = result?.data?.filter((item) => {
         return (
-          // (_status === "Interested" ? item?.interested === true : true) &&
-          // (_status === "NotInterested" ? item?.interested === false : true) &&
-          // (_userId ? item.userId === _userId : true) &&
           (_selectedPriority ? item.priority === _selectedPriority : true) &&
           (_selectedLocation ? item.location === _selectedLocation : true) &&
           (_selectedUserName
@@ -125,8 +99,8 @@ const SalesVisitDashboard = () => {
       setCompanyListStatic([]);
     }
   };
+
   const fetchMisData = async (
-    // _status,
     _userId,
     _fromDate,
     _toDate,
@@ -136,24 +110,12 @@ const SalesVisitDashboard = () => {
     let url =
       BASE_URL +
       `corpSales/mis/report?status=VISIT&userId=${userId}&startDate=${_fromDate}&endDate=${_toDate}`;
-
     if (_selectedPriority !== "") {
       url += _selectedPriority ? `&priority=${_selectedPriority}` : "";
     }
     if (_selectedLocation !== null || _selectedLocation !== "") {
       url += _selectedLocation ? `&location=${_selectedLocation}` : "";
     }
-    // if (_status !== "") {
-    //   _status
-    //     ? (url += `&interested=${
-    //         _status === "Interested"
-    //           ? true
-    //           : _status === "NotInterested"
-    //           ? false
-    //           : null
-    //       }`)
-    //     : null;
-    // }
     const result = await getData(url);
     if (result?.data) {
       const temp = result?.data?.map((item, index) => ({
@@ -167,41 +129,11 @@ const SalesVisitDashboard = () => {
     }
   };
 
-  const downloadCSV = (csvData) => {
-    if (csvData.length === 0) {
-      enqueueSnackbar("Response is empty", {
-        variant: "info",
-      });
-      return;
-    }
-    const csvContent =
-      "data:text/csv;charset=utf-8," +
-      Object?.keys(csvData[0])
-        .map((key) => key)
-        .join(",") +
-      "\n" +
-      csvData
-        .map((row) =>
-          Object.values(row)
-            .map((val) => `"${val}"`)
-            .join(",")
-        )
-        .join("\n");
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "data.csv");
-    document.body.appendChild(link);
-    link.click();
-  };
-
   const [fromDate, setFromDate] = useState(
     dayjs().subtract(7, "day").format("YYYY-MM-DD")
   );
   const [toDate, setToDate] = useState(dayjs().format("YYYY-MM-DD"));
 
-  // const [status, setStatus] = useState("");
   const [companyList, setCompanyList] = useState([]);
   const [companyListStatic, setCompanyListStatic] = useState([]);
   const [userId, setUserId] = useState("");
@@ -216,9 +148,6 @@ const SalesVisitDashboard = () => {
     setCompanyList(
       companyListStatic.filter((item) => {
         return (
-          // (status === "Interested" ? item?.interested === true : true) &&
-          // (status === "NotInterested" ? item?.interested === false : true) &&
-          // (userId ? item.userId === userId : true) &&
           (selectedPriority ? item.priority === selectedPriority : true) &&
           (selectedLocation ? item.location === selectedLocation : true) &&
           (selectedUserName
@@ -234,7 +163,6 @@ const SalesVisitDashboard = () => {
     );
   }, [
     companyListStatic,
-    // status,
     userId,
     selectedUserName,
     selectedPriority,
@@ -244,7 +172,6 @@ const SalesVisitDashboard = () => {
 
   useEffect(() => {
     fetchData(
-      // status,
       userId,
       selectedUserName,
       fromDate,
@@ -258,7 +185,6 @@ const SalesVisitDashboard = () => {
     const filtersData = {
       fromDate,
       toDate,
-
       userId,
       selectedUserName,
       selectedPriority,
@@ -272,7 +198,6 @@ const SalesVisitDashboard = () => {
   }, [
     fromDate,
     toDate,
-    // status,
     userId,
     selectedUserName,
     selectedLocation,
@@ -282,18 +207,20 @@ const SalesVisitDashboard = () => {
 
   const [rows, setRows] = useState([]);
 
-  // const fetchServices = async () => {
-  //   const url = BASE_URL + "corpSales/services";
-  //   const result = await getData(url);
-  //   if (result.data) {
-  //     setRows(result.data);
-  //   } else {
-  //     setRows([]);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchServices();
-  // }, []);
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Fragment>
@@ -301,7 +228,6 @@ const SalesVisitDashboard = () => {
         title="Dashboard"
         onDownloadClick={() =>
           fetchMisData(
-            // status,
             userId,
             fromDate,
             toDate,
@@ -369,19 +295,7 @@ const SalesVisitDashboard = () => {
               setSelectedValue={setselectedLocation}
             />
           </Grid>
-          {/* <Grid item xs={4} lg={2}>
-            <CustomSelect
-              label="Status"
-              placeholder={"Status"}
-              setvalue={setStatus}
-              value={status}
-              options={[
-                { label: "Status", value: "" },
-                { label: "Interested", value: "Interested" },
-                { label: "Not Interested", value: "NotInterested" },
-              ]}
-            />
-          </Grid> */}
+
           <Grid item xs={4} lg={2}>
             <CustomAutocomplete
               options={["green", "orange", "red"]}
@@ -417,9 +331,6 @@ const SalesVisitDashboard = () => {
               )}
             />
           </Grid>
-          {/* <Grid item xs={4} lg={1}>
-            <CustomButtonBlue title={"Next 7 Days"} />
-          </Grid> */}
         </Grid>
         <SearchBarCompany
           setTokenListStatic={setCompanyListStatic}

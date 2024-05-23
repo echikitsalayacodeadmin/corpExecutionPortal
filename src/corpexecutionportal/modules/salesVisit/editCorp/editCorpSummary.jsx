@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import Priority from "../registration/subComp/priority";
 import SubLocation from "../registration/subComp/subLocation";
 import UploadFilesEdit from "./subComp/uploadFilesEdit";
+import CustomAutocomplete from "../../../../assets/customAutocomplete";
 
 const EditCorpSummary = () => {
   const { itemId } = useParams();
@@ -181,7 +182,7 @@ const EditCorpSummary = () => {
           <Priority formValues={formValues} setFormValues={setFormValues} />
         </Grid>
         <Grid item xs={12} lg={12}>
-          <TextField
+          {/* <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             size="small"
@@ -190,6 +191,37 @@ const EditCorpSummary = () => {
             value={formValues.corpType || ""}
             onChange={(e) => {
               setFormValues({ ...formValues, corpType: e.target.value });
+            }}
+          /> */}
+          <CustomAutocomplete
+            fullWidth
+            size="small"
+            label={"Industry Type"}
+            placeholder={"Select/Enter Industry Type"}
+            options={[
+              "Chemical Companies",
+              "General Manufacturing",
+              "Personal",
+              "Food & Beverages",
+              "Auto OEMs and its Suppliers",
+              "IT/Financial",
+              "Pharma Company",
+              "Metal Fabrication/Metal Parts",
+              "Textiles",
+              "Warehouses",
+              "Manpower Contractors",
+              "Distillery",
+              "FMCG",
+              "Packaging",
+            ]}
+            freeSolo={true}
+            getOptionLabel={(option) => option || ""}
+            value={formValues.corpType || ""}
+            onChange={(event, newValue) => {
+              setFormValues({ ...formValues, corpType: newValue });
+            }}
+            onInputChange={(event, newInputValue) => {
+              setFormValues({ ...formValues, corpType: newInputValue });
             }}
           />
         </Grid>

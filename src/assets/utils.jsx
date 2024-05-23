@@ -298,9 +298,9 @@ export const getColorOfNextVisitDate = (nextVisitDate) => {
     return "#000000";
   }
   const currentDate = new Date();
-  currentDate.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+  currentDate.setUTCHours(0, 0, 0, 0);
   const nextVisit = new Date(nextVisitDate);
-  nextVisit.setUTCHours(0, 0, 0, 0); // Set UTC time components to zero
+  nextVisit.setUTCHours(0, 0, 0, 0);
   if (currentDate > nextVisit) {
     return "red";
   }
