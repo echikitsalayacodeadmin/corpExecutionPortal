@@ -236,6 +236,40 @@ const columns = {
     "remark",
     "confidenceLeveLStatus",
     "status",
+
+    // "user",
+    // "list",
+    // "decisionMakingCriteria",
+    // "closureProcedure",
+    // "dueDate",
+    // "date",
+    // "monthlyInflowNoOfEmp",
+    // "frequency",
+    // "location",
+    // "serviceProvider",
+    // "oldRate",
+    // "interestReason",
+    // "decisionOwner",
+    // "painPoint",
+    // "reasonForStarting",
+    // "tentativeBudget",
+    // "degree",
+    // "timings",
+    // "monthlyConsumption",
+    // "orderCycle",
+    // "reasonForShift",
+    // "remark",
+    // "csrExecutedBy",
+    // "typeOfTraining",
+    // "noOfPeople",
+    // "typeOfService",
+    // "typeOfPolicy",
+    // "numberOfLives",
+    // "insuranceRequestType",
+    // "status",
+    // "userId",
+    // "userName",
+    // "confidenceLeveLStatus",
   ],
 };
 
@@ -245,8 +279,8 @@ const MisMain = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     typeOfMisReport: "",
-    startDate: dayjs(new Date()).format("DD-MM-YYYY"),
-    endDate: dayjs(new Date()).format("DD-MM-YYYY"),
+    startDate: dayjs().format("YYYY-MM-DD"),
+    endDate: dayjs().format("YYYY-MM-DD"),
     serviceType: "",
   });
 
@@ -400,7 +434,10 @@ const MisMain = () => {
             disabled={misReport.length > 0 ? false : true}
             onClick={() => {
               if (filters.typeOfMisReport === "Reports for services") {
-                downloadCsv(misReport, `Reports_For_services`);
+                downloadCsv(
+                  misReport,
+                  `Reports_For_services_${filters?.serviceType?.serviceName}`
+                );
               } else if (
                 filters.typeOfMisReport === "Reports for KAM Productivity"
               ) {
@@ -409,10 +446,7 @@ const MisMain = () => {
                 filters.typeOfMisReport ===
                 "Report for Corp Current Sales Service Status"
               ) {
-                downloadCsv(
-                  misReport,
-                  `Report_for_Corp_Current_Sales_Service_${filters?.serviceType?.serviceName}`
-                );
+                downloadCsv(misReport, `Report_for_Corp_Current_Sales_Service`);
               }
             }}
           />
