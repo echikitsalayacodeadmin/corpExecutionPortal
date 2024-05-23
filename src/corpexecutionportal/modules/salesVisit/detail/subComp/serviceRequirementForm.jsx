@@ -124,6 +124,12 @@ const servicesFields = {
       dataType: "string",
     },
     {
+      label: "Monthly Influx Of Emp",
+      fieldName: "monthlyInflowNoOfEmp",
+      type: "textField",
+      dataType: "number",
+    },
+    {
       label: "Decision Making Criteria",
       fieldName: "decisionMakingCriteria",
       type: "textField",
@@ -779,7 +785,7 @@ const servicesFields = {
           dataType: "string",
         },
         {
-          label: "Due Date",
+          label: "Renewal Date",
           fieldName: "dueDate",
           type: "date",
         },
@@ -864,6 +870,7 @@ const ServiceRequirementForm = () => {
     user: "",
     list: "",
     decisionMakingCriteria: "",
+    monthlyInflowNoOfEmp: "",
     closureProcedure: "",
     dueDate: null,
     frequency: "",
@@ -901,6 +908,7 @@ const ServiceRequirementForm = () => {
       list: data.list || "",
       decisionMakingCriteria: data.decisionMakingCriteria || "",
       closureProcedure: data.closureProcedure || "",
+      monthlyInflowNoOfEmp: data.monthlyInflowNoOfEmp || "",
       dueDate: data.dueDate || "",
       frequency: data.frequency || "",
       location: data.location || "",
@@ -937,6 +945,7 @@ const ServiceRequirementForm = () => {
       list: formValues.list || null,
       decisionMakingCriteria: formValues.decisionMakingCriteria || null,
       closureProcedure: formValues.closureProcedure || null,
+      monthlyInflowNoOfEmp: formValues.monthlyInflowNoOfEmp || null,
       dueDate: formValues.dueDate || null,
       frequency: formValues.frequency || null,
       location: formValues.location || null,
@@ -1066,6 +1075,40 @@ const ServiceRequirementForm = () => {
                     style: {
                       minHeight: "130px",
                     },
+                  }}
+                />
+              )}
+              {val.type === "dropdownEditable" && (
+                <CustomAutocomplete
+                  freeSolo={true}
+                  label={val?.label}
+                  placeholder={val?.label}
+                  options={val?.options || []}
+                  getOptionLabel={(option) => option}
+                  value={formValues[val.fieldName] || ""}
+                  onChange={(event, newValue, reason) => {
+                    setFormValues({
+                      ...formValues,
+                      [val.fieldName]: newValue,
+                    });
+                    if (reason === "clear") {
+                      setFormValues({
+                        ...formValues,
+                        [val.fieldName]: "",
+                      });
+                    }
+                  }}
+                  onInputChange={(event, newInputValue, reason) => {
+                    setFormValues({
+                      ...formValues,
+                      [val.fieldName]: newInputValue,
+                    });
+                    if (reason === "clear") {
+                      setFormValues({
+                        ...formValues,
+                        [val.fieldName]: "",
+                      });
+                    }
                   }}
                 />
               )}
