@@ -35,7 +35,7 @@ const EditCorpSummary = () => {
   const [formValues, setFormValues] = useState({
     corpSalesId: "",
     corpName: "",
-    corpType: "",
+    industryType: "",
     address: "",
     noOfPlants: "",
     timeField: dayjs().format("YYYY-MM-DD"),
@@ -67,7 +67,7 @@ const EditCorpSummary = () => {
   const Obj2 = {
     corpSalesId: formValues?.corpSalesId,
     corpName: formValues.corpName,
-    corpType: formValues.corpType,
+    industryType: formValues.industryType,
     noOfPlants: formValues.noOfPlants,
     address: formValues.address,
     childUserId: formValues?.childUserId?.map((item) => item.id) || [],
@@ -182,17 +182,6 @@ const EditCorpSummary = () => {
           <Priority formValues={formValues} setFormValues={setFormValues} />
         </Grid>
         <Grid item xs={12} lg={12}>
-          {/* <TextField
-            fullWidth
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
-            size="small"
-            label={"Company Type"}
-            placeholder={"Enter Company Type"}
-            value={formValues.corpType || ""}
-            onChange={(e) => {
-              setFormValues({ ...formValues, corpType: e.target.value });
-            }}
-          /> */}
           <CustomAutocomplete
             fullWidth
             size="small"
@@ -216,12 +205,12 @@ const EditCorpSummary = () => {
             ]}
             freeSolo={true}
             getOptionLabel={(option) => option || ""}
-            value={formValues.corpType || ""}
+            value={formValues.industryType || ""}
             onChange={(event, newValue) => {
-              setFormValues({ ...formValues, corpType: newValue });
+              setFormValues({ ...formValues, industryType: newValue });
             }}
             onInputChange={(event, newInputValue) => {
-              setFormValues({ ...formValues, corpType: newInputValue });
+              setFormValues({ ...formValues, industryType: newInputValue });
             }}
           />
         </Grid>
