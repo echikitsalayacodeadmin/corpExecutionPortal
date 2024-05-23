@@ -21,6 +21,7 @@ import { saveData, uploadFile } from "../../../assets/corpServices";
 import Priority from "./subComp/priority";
 import SubLocation from "./subComp/subLocation";
 import AddSpocCompRegistration from "./subComp/addSpocCompRegistration";
+import CustomAutocomplete from "../../../../assets/customAutocomplete";
 
 const CorpSalesRegistration = () => {
   const navigate = useNavigate();
@@ -135,6 +136,8 @@ const CorpSalesRegistration = () => {
     }
   };
 
+  console.log({ formValues });
+
   return (
     <Fragment>
       <Grid container spacing={2}>
@@ -173,7 +176,7 @@ const CorpSalesRegistration = () => {
           <Priority formValues={formValues} setFormValues={setFormValues} />
         </Grid>
         <Grid item xs={12} lg={12}>
-          <TextField
+          {/* <TextField
             fullWidth
             sx={{ backgroundColor: "#FFFFFF", borderRadius: "15px" }}
             size="small"
@@ -182,6 +185,37 @@ const CorpSalesRegistration = () => {
             value={formValues.corpType || ""}
             onChange={(e) => {
               setFormValues({ ...formValues, corpType: e.target.value });
+            }}
+          /> */}
+          <CustomAutocomplete
+            fullWidth
+            size="small"
+            label={"Industry Type"}
+            placeholder={"Select/Enter Industry Type"}
+            options={[
+              "Chemical Companies",
+              "General Manufacturing",
+              "Personal",
+              "Food & Beverages",
+              "Auto OEMs and its Suppliers",
+              "IT/Financial",
+              "Pharma Company",
+              "Metal Fabrication/Metal Parts",
+              "Textiles",
+              "Warehouses",
+              "Manpower Contractors",
+              "Distillery",
+              "FMCG",
+              "Packaging",
+            ]}
+            freeSolo={true}
+            getOptionLabel={(option) => option || ""}
+            value={formValues.corpType || ""}
+            onChange={(event, newValue) => {
+              setFormValues({ ...formValues, corpType: newValue });
+            }}
+            onInputChange={(event, newInputValue) => {
+              setFormValues({ ...formValues, corpType: newInputValue });
             }}
           />
         </Grid>

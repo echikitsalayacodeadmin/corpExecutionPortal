@@ -175,6 +175,9 @@ const RowComp = ({ item, handleChange, corpId }) => {
           }}
         >
           <MarkStatusBtn
+            disabled={
+              item.itemId === "pasteLink" && item.url === null ? true : false
+            }
             selectedStatus={item.status} // Pass selectedStatus instead of status
             setSelectedStatus={(newValue) =>
               handleChange(item.itemId, newValue, "status")
@@ -434,6 +437,8 @@ const DataSheetMain = () => {
           ]
         : null,
   }));
+
+  console.log({ newDataSheet2 });
 
   if (isLoading) {
     return (

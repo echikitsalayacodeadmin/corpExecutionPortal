@@ -5,6 +5,7 @@ const MarkStatusBtn = ({
   selectedStatus,
   setSelectedStatus,
   notReq = false,
+  disabled,
 }) => {
   const handleChange = (event, newValue) => {
     setSelectedStatus(newValue);
@@ -12,6 +13,7 @@ const MarkStatusBtn = ({
 
   return (
     <ToggleButtonGroup
+      disabled={disabled}
       color="primary"
       value={selectedStatus}
       exclusive
