@@ -140,6 +140,24 @@ const ServiceInfo = ({ data }) => {
 
   // console.log({ rows, data, selectedRow, moreInfoObject });
 
+  const checkFields = (data) => {
+    const fieldsNotToCheck = [
+      "serviceName",
+      "id",
+      "testName",
+      "status",
+      "confidenceLeveLStatus",
+    ];
+
+    const fieldsToCheck = Object.keys(data).filter(
+      (field) => !fieldsNotToCheck.includes(field)
+    );
+    const allFieldsNull = fieldsToCheck.every(
+      (field) => data[field] === undefined
+    );
+    return allFieldsNull;
+  };
+
   return (
     <Fragment>
       <Box sx={{}}>
@@ -255,6 +273,7 @@ const ServiceInfo = ({ data }) => {
                   <Tooltip title="More Info">
                     <IconButton
                       onClick={() => {
+                        console.log({ obj });
                         const query = {
                           data: obj,
                           corpId: corpSalesId,
@@ -266,7 +285,9 @@ const ServiceInfo = ({ data }) => {
                         );
                       }}
                     >
-                      <InfoIcon style={{ color: "#127DDD" }} />
+                      <InfoIcon
+                        style={{ color: checkFields(obj) ? "red" : "#127DDD" }}
+                      />
                     </IconButton>
                   </Tooltip>
                   <CustomButtonBlue
@@ -355,6 +376,7 @@ const ServiceInfo = ({ data }) => {
                   <Tooltip title="More Info">
                     <IconButton
                       onClick={() => {
+                        console.log({ obj });
                         const query = {
                           data: obj,
                           corpId: corpSalesId,
@@ -366,7 +388,9 @@ const ServiceInfo = ({ data }) => {
                         );
                       }}
                     >
-                      <InfoIcon style={{ color: "#127DDD" }} />
+                      <InfoIcon
+                        style={{ color: checkFields(obj) ? "red" : "#127DDD" }}
+                      />
                     </IconButton>
                   </Tooltip>
 
