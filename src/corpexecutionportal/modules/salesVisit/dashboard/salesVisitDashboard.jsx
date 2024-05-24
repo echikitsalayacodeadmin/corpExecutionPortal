@@ -151,7 +151,7 @@ const SalesVisitDashboard = () => {
           (selectedPriority ? item.priority === selectedPriority : true) &&
           (selectedLocation ? item.location === selectedLocation : true) &&
           (selectedUserName
-            ? Object.keys(item?.mapOfUserAndVisitsCount)?.includes(
+            ? Object.keys(item?.mapOfUserAndVisitsCount || {})?.includes(
                 selectedUserName
               )
             : true) &&
