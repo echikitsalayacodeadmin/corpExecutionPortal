@@ -275,6 +275,29 @@ const columns = {
   ],
 };
 
+const getListFromMap = (data) => {
+  let list = Object.entries(data?.mapOfStatusLogsByKam);
+  let newObject = {};
+  list.map((value) => {
+    let tempObj = { ...newObject };
+    tempObj[`${value[0]}_Kam Name`] = value[1]?.kamName || null;
+    tempObj[`${value[0]}_Date`] = value[1]?.date || null;
+    newObject = { ...newObject, ...tempObj };
+  });
+  return newObject;
+};
+const getFormattedData = (data) => {
+  let updatedList = [];
+
+  updatedList = data?.map((val) => ({
+    companyName: val.companyName,
+    serviceName: val.serviceName,
+    ...getListFromMap(val),
+  }));
+
+  return updatedList;
+};
+
 const MisMain = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [servicesList, setServicesList] = useState([]);
@@ -353,7 +376,9 @@ const MisMain = () => {
       });
     } else {
       console.log({ data: response.data });
-      downloadCsv(response.data, "company_log");
+      const formattedData = getFormattedData(response.data);
+      console.log({ formattedData });
+      downloadCsv(formattedData, "company_log");
     }
   };
 
