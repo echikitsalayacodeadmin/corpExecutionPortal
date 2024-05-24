@@ -1,5 +1,11 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { getData } from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
 import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
@@ -12,8 +18,10 @@ import { downloadCsv, getColorOfNextVisitDate } from "../../../../assets/utils";
 import SelectkamInDashboard from "../../../global/selectKam/selectkamInDashboard";
 import dayjs from "dayjs";
 import MainPageLayoutWithBackSV from "../../../global/templates/mainPageLayoutWithBackSV";
+import { CorpNameContext } from "../../../global/context/usercontext";
 
 const SalesVisitDashboard = () => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const navigate = useNavigate();
   const _storedData = useMemo(() => {
     try {
@@ -206,6 +214,10 @@ const SalesVisitDashboard = () => {
   ]);
 
   const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    setCorpName("");
+  }, [corpName]);
 
   if (isLoading) {
     return (

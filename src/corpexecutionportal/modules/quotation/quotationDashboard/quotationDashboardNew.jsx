@@ -1,12 +1,20 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import WaitingCardQoutationDashboard from "./comps/waitingCardQoutationDashboard";
 import { sortArrayByLastModifiedDate } from "../../../../assets/utils";
 import { BASE_URL } from "../../../../assets/constants";
 import { getData } from "../../../assets/corpServices";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
+import { CorpNameContext } from "../../../global/context/usercontext";
 
 const QuotationDashboardNew = () => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const [corpList, setCorpList] = useState([]);
   const [selectedCorp, setSelectedCorp] = useState(null);
   const [qouatationList, setQouatationList] = useState([]);
@@ -50,6 +58,10 @@ const QuotationDashboardNew = () => {
           : true)
     );
   }, [qouatationList, selectedCorp, selectedStatus]);
+
+  useEffect(() => {
+    setCorpName("");
+  }, [corpName]);
 
   return (
     <Fragment>

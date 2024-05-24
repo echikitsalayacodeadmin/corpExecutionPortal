@@ -110,12 +110,14 @@
 // };
 
 import { Grid, IconButton, Typography } from "@mui/material";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { getColorOfNextVisitDate } from "../../../../assets/utils";
+import { CorpNameContext } from "../../../global/context/usercontext";
 
 const WaitingCardOrders = ({ data, serviceMapping }) => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const requiredServices = data?.mapOfServiceIdAndInfo || {};
   const userAndCount =
     Object?.entries(data?.mapOfUserAndVisitsCount || {}).map(
@@ -130,6 +132,7 @@ const WaitingCardOrders = ({ data, serviceMapping }) => {
     <Fragment>
       <NavLink
         onClick={() => {
+          setCorpName(data?.corpName);
           const query = data;
           navigate(
             `/corp/orderconfirmed/detailed/${encodeURIComponent(

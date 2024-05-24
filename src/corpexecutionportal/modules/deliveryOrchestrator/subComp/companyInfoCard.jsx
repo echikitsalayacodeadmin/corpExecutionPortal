@@ -1,12 +1,17 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { CustomTypographyBold } from "../../../../assets/customTypography";
 import { NavLink, useNavigate } from "react-router-dom";
+import { CorpNameContext } from "../../../global/context/usercontext";
 
 const CompanyInfoCard = ({ data }) => {
   let navigate = useNavigate();
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   return (
     <NavLink
+      onClick={() => {
+        setCorpName(data?.corpName);
+      }}
       to={`statussummary/${data?.corpId}`}
       style={({ isActive }) => ({
         color: isActive ? "#000" : "#000",

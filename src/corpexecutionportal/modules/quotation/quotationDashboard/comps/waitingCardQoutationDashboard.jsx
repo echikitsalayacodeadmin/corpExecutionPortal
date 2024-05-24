@@ -1,13 +1,14 @@
 import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { isBrowser, isMobile } from "react-device-detect";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { CorpNameContext } from "../../../../global/context/usercontext";
 
 const WaitingCardQoutationDashboard = ({ data }) => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const navigate = useNavigate();
-
   const formatDateTime = (dateString) => {
     const date = new Date(dateString);
     const hours = date.getHours() % 12 || 12;
@@ -98,6 +99,7 @@ const WaitingCardQoutationDashboard = ({ data }) => {
         <Grid item xs={1} lg={1}>
           <IconButton
             onClick={() => {
+              setCorpName(data?.corpName);
               const query = {
                 corpId: data.corpId,
                 quotationId: data?.id,

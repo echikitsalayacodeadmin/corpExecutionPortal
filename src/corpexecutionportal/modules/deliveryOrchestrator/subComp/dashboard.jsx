@@ -1,25 +1,36 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Grid,
+  Typography,
+} from "@mui/material";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { CustomTypographyBold } from "../../../../assets/customTypography";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
 import CompanyInfoCard from "./companyInfoCard";
 import { BASE_URL } from "../../../../assets/constants";
 import { getData } from "../../../assets/corpServices";
+import { CorpNameContext } from "../../../global/context/usercontext";
 
 const Dashboard = () => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-
+  const [isLoading, setIsLoading] = useState(false);
   const [corpList, setCorpList] = useState([]);
 
   const fetchCorps = async () => {
+    setIsLoading(true);
     const url = BASE_URL + "task/statusCount";
     const result = await getData(url);
     if (result.data) {
       setCorpList(result.data);
+      setIsLoading(false);
     } else {
       setCorpList([]);
+      setIsLoading(false);
     }
   };
 
@@ -41,6 +52,25 @@ const Dashboard = () => {
   // useEffect(() => {
   //   fetchCorps();
   // }, []);
+
+  useEffect(() => {
+    setCorpName("");
+  }, [corpName]);
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Fragment>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import WaitingCardOrders from "./subComps/WaitingCardOrders";
 import MainPageLayoutWithBack from "../../global/templates/mainPageLayoutWithBack";
@@ -7,8 +7,10 @@ import SearchBarCompany from "../../global/searchBarCompany/searchBarCompany";
 import { BASE_URL } from "../../../assets/constants";
 import { getData } from "../../assets/corpServices";
 import DashboardCard from "../salesVisit/dashboard/subComp/dashboardCard";
+import { CorpNameContext } from "../../global/context/usercontext";
 
 const OrderConfirmMain = () => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const _storedData =
     typeof localStorage !== "undefined"
       ? JSON.parse(localStorage.getItem("SAVE_FILTERS_ORDERS_DASHBOARD_CORP"))
@@ -73,7 +75,9 @@ const OrderConfirmMain = () => {
       JSON.stringify(filtersData)
     );
   }, [fromDate, toDate]);
-
+  useEffect(() => {
+    setCorpName("");
+  }, [corpName]);
   return (
     <Fragment>
       <MainPageLayoutWithBack title="Order Confirmed">

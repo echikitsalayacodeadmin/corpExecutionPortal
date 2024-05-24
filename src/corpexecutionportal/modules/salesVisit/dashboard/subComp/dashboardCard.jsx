@@ -1,5 +1,5 @@
 import { Grid, IconButton, Typography } from "@mui/material";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TourIcon from "@mui/icons-material/Tour";
@@ -9,6 +9,7 @@ import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { getColorOfNextVisitDate } from "../../../../../assets/utils";
 import dayjs from "dayjs";
+import { CorpNameContext } from "../../../../global/context/usercontext";
 
 const getServicesStatusSymbol = (status) => {
   return status === "INTERESTED"
@@ -37,6 +38,7 @@ const getServicesStatusSymbol = (status) => {
 };
 
 const DashboardCard = ({ data, serviceMapping }) => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const requiredServices = data?.mapOfServiceIdAndInfo || {};
   const userAndCount =
     Object?.entries(data?.mapOfUserAndVisitsCount || {}).map(
@@ -50,6 +52,9 @@ const DashboardCard = ({ data, serviceMapping }) => {
   return (
     <Fragment>
       <NavLink
+        onClick={() => {
+          setCorpName(data?.corpName);
+        }}
         to={`detail/${data?.corpSalesId}`}
         style={({ isActive }) => ({
           color: isActive ? "#000" : "#000",

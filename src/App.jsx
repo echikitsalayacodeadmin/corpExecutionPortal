@@ -5,7 +5,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import ErrorPage from "./error-page";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import Landing from "./landing/routes/landing";
 import CorpRootLayout from "./corpexecutionportal/global/templates/corpRootLayout";
 import CorpAuthLayout from "./corpexecutionportal/global/templates/corpAuthLayout";
@@ -38,8 +38,10 @@ import QRAnalysisIndex from "./corpexecutionportal/pages/qrAnalysisIndex";
 import EmployeeDetailIndex from "./corpexecutionportal/pages/employeeDetailIndex";
 import EditCorpDetail from "./corpexecutionportal/pages/editCorpDetail";
 import MisCorp from "./corpexecutionportal/pages/misCorp";
+import { CorpNameContext } from "./corpexecutionportal/global/context/usercontext";
 
 function App() {
+  const [corpName, setCorpName] = useState("");
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Fragment>
@@ -177,7 +179,11 @@ function App() {
     console.debug = () => {};
   }
 
-  return <RouterProvider router={router} />;
+  return (
+    <CorpNameContext.Provider value={{ corpName, setCorpName }}>
+      <RouterProvider router={router} />
+    </CorpNameContext.Provider>
+  );
 }
 
 export default App;

@@ -1,5 +1,5 @@
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { getData, saveData } from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
@@ -7,6 +7,7 @@ import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import { sortArrayByLastModifiedDate } from "../../../../assets/utils";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import { useNavigate, useParams } from "react-router-dom";
+import { CorpNameContext } from "../../../global/context/usercontext";
 
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
@@ -17,6 +18,7 @@ const formatDateTime = (dateString) => {
 };
 
 const QuotationSelect = () => {
+  const { corpName, setCorpName } = useContext(CorpNameContext);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +53,7 @@ const QuotationSelect = () => {
       if (response?.data) {
         setQouatationList(response?.data);
         if (response?.data.length === 0) {
+          setCorpName(selectedCorp?.corpName);
           const query = {
             corpId: selectedCorp?.corpSalesId,
             quotationId: null,
@@ -86,6 +89,7 @@ const QuotationSelect = () => {
     if (result && result.data) {
       console.log("SUCCESS POST", result.data);
       setNewCropName("");
+      setCorpName(result.data.corpName);
       const query = {
         corpSalesId: result.data.corpSalesId,
         companyName: result.data.corpName,
@@ -269,6 +273,7 @@ const QuotationSelect = () => {
             disabled={selectedQouation === null ? true : false}
             title={"Copy Selected Quotation"}
             onClick={() => {
+              setCorpName(selectedQouation?.corpName);
               const query = {
                 corpId: selectedQouation?.corpId,
                 quotationId: selectedQouation?.id,
@@ -300,6 +305,7 @@ const QuotationSelect = () => {
             disabled={selectedQouation === null ? true : false}
             title={"View Selected Quotation"}
             onClick={() => {
+              setCorpName(selectedQouation?.corpName);
               const query = {
                 corpId: selectedQouation?.corpId,
                 quotationId: selectedQouation?.id,
@@ -330,6 +336,7 @@ const QuotationSelect = () => {
             title={"Create New Quotation"}
             disabled={selectedCorp === null || !isExistingCorp ? true : false}
             onClick={() => {
+              setCorpName(selectedQouation?.corpName);
               const query = {
                 corpId: selectedCorp?.corpSalesId,
                 quotationId: null,
