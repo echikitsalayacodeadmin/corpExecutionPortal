@@ -4,6 +4,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { getData } from "../../../assets/corpServices";
@@ -23,6 +24,7 @@ import { CorpNameContext } from "../../../global/context/usercontext";
 const SalesVisitDashboard = () => {
   const { corpName, setCorpName } = useContext(CorpNameContext);
   const navigate = useNavigate();
+  const initialLoad = useRef(true);
   const _storedData = useMemo(() => {
     try {
       return (
@@ -55,15 +57,18 @@ const SalesVisitDashboard = () => {
     setselectedLocation(_selectedLocation);
     setSelectedPriority(_selectedPriority);
     setSelectedColor(_selectedColor);
-    fetchData(
-      _userId,
-      _selectedUserName,
-      _fromDate,
-      _toDate,
-      _selectedPriority,
-      _selectedLocation,
-      _selectedColor
-    );
+    if (initialLoad.current) {
+      fetchData(
+        _userId,
+        _selectedUserName,
+        _fromDate,
+        _toDate,
+        _selectedPriority,
+        _selectedLocation,
+        _selectedColor
+      );
+      initialLoad.current = false;
+    }
   }, []);
 
   const fetchData = async (
@@ -138,7 +143,7 @@ const SalesVisitDashboard = () => {
   };
 
   const [fromDate, setFromDate] = useState(
-    dayjs().subtract(7, "day").format("YYYY-MM-DD")
+    dayjs().subtract(2, "month").format("YYYY-MM-DD")
   );
   const [toDate, setToDate] = useState(dayjs().format("YYYY-MM-DD"));
 
@@ -179,14 +184,16 @@ const SalesVisitDashboard = () => {
   ]);
 
   useEffect(() => {
-    fetchData(
-      userId,
-      selectedUserName,
-      fromDate,
-      toDate,
-      selectedPriority,
-      selectedLocation
-    );
+    if (!initialLoad.current) {
+      fetchData(
+        userId,
+        selectedUserName,
+        fromDate,
+        toDate,
+        selectedPriority,
+        selectedLocation
+      );
+    }
   }, [fromDate, toDate]);
 
   useEffect(() => {
@@ -212,6 +219,8 @@ const SalesVisitDashboard = () => {
     selectedPriority,
     selectedColor,
   ]);
+
+  console.log({ _storedData });
 
   const [rows, setRows] = useState([]);
 
@@ -281,6 +290,7 @@ const SalesVisitDashboard = () => {
           <Grid item xs={4} lg={2}>
             <SelectkamInDashboard
               setSelectedUserName={setSelectedUserName}
+              selectedUserName={selectedUserName}
               setUserId={setUserId}
             />
           </Grid>

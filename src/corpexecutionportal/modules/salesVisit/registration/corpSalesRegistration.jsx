@@ -211,6 +211,8 @@ const CorpSalesRegistration = () => {
 
         <Grid item xs={12} lg={6}>
           <SelectLocation
+            required={true}
+            asterickColor={"red"}
             freeSolo={true}
             fontWeight={"600"}
             formValues={formValues}
@@ -222,6 +224,8 @@ const CorpSalesRegistration = () => {
         </Grid>
         <Grid item xs={12} lg={6}>
           <SubLocation
+            required={true}
+            asterickColor={"red"}
             property={"subLocation"}
             freeSolo={true}
             fontWeight={"600"}
@@ -333,7 +337,9 @@ const CorpSalesRegistration = () => {
             disabled={
               isDisabled === true ||
               formValues.corpName === "" ||
-              formValues.priority === ""
+              formValues.priority === "" ||
+              formValues.subLocation === "" ||
+              formValues.location === ""
                 ? true
                 : false
             }

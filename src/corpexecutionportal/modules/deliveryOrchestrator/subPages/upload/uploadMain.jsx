@@ -529,7 +529,7 @@ const FileTypeUpload = ({
                     )}
                     rowHeight={30}
                     columns={columns3}
-                    Gridheight={"24vh"}
+                    Gridheight={"34vh"}
                   />
                 </Box>
               )}

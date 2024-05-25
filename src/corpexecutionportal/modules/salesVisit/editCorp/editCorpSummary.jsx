@@ -216,6 +216,8 @@ const EditCorpSummary = () => {
         </Grid>
         <Grid item xs={12} lg={6}>
           <SelectLocation
+            required={true}
+            asterickColor={"red"}
             freeSolo={true}
             fontWeight={"600"}
             formValues={formValues}
@@ -227,6 +229,8 @@ const EditCorpSummary = () => {
         </Grid>
         <Grid item xs={12} lg={6}>
           <SubLocation
+            required={true}
+            asterickColor={"red"}
             property={"subLocation"}
             freeSolo={true}
             fontWeight={"600"}
@@ -333,7 +337,14 @@ const EditCorpSummary = () => {
           }}
         >
           <Button
-            disabled={formValues.corpName && formValues.priority ? false : true}
+            disabled={
+              formValues.corpName &&
+              formValues.priority &&
+              formValues.subLocation &&
+              formValues.location
+                ? false
+                : true
+            }
             variant="contained"
             sx={{ width: "150px", borderRadius: "15px" }}
             onClick={() => {

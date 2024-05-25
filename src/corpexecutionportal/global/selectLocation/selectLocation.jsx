@@ -13,6 +13,8 @@ const SelectLocation = ({
   setSelectedValue,
   property,
   freeSolo = false,
+  required,
+  asterickColor,
 }) => {
   const [value, setValue] = useState(null);
 
@@ -48,6 +50,8 @@ const SelectLocation = ({
   return (
     <Fragment>
       <CustomAutocomplete
+        required={required}
+        asterickColor={asterickColor}
         label={label}
         options={regionList}
         value={value}

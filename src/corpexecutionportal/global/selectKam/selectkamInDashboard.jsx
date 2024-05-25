@@ -27,6 +27,10 @@ const SelectkamInDashboard = ({
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setSelectedValue({ name: selectedUserName });
+  }, [selectedUserName]);
+
   return (
     <Fragment>
       <CustomAutocomplete

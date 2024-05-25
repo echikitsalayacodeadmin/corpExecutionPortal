@@ -48,6 +48,7 @@ const CorpSalesNewVisit = () => {
     userName: "",
     visitPhotoUrl: { source: "", file: "" },
     nextVisitDate: null,
+    visitDate: dayjs().format("YYYY-MM-DD"),
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
@@ -96,6 +97,9 @@ const CorpSalesNewVisit = () => {
       ? dayjs().add(3, "day").format("YYYY-MM-DD")
       : dayjs(formValues?.nextVisitDate).format("YYYY-MM-DD")
   );
+  formValues.visitDate
+    ? formData.append("visitDate", formValues.visitDate)
+    : null;
   formData.append(
     "childUserId",
     formValues?.childUserId?.map((item) => item.id).join(",")
@@ -140,11 +144,20 @@ const CorpSalesNewVisit = () => {
           />
         </Grid>
 
-        <Grid item xs={7} lg={6}>
+        <Grid item xs={12} lg={6}>
           <VisitType formValues={formValues} setFormValues={setFormValues} />
         </Grid>
 
-        <Grid item xs={5} lg={6}>
+        <Grid item xs={6} lg={6}>
+          <GlobalDateLayout
+            label={"Visit Date"}
+            initialDate={formValues.visitDate}
+            formValues={formValues}
+            setFormValues={setFormValues}
+            property={"visitDate"}
+          />
+        </Grid>
+        <Grid item xs={6} lg={6}>
           <GlobalDateLayout
             label={"Next Visit Date"}
             initialDate={formValues.nextVisitDate}
