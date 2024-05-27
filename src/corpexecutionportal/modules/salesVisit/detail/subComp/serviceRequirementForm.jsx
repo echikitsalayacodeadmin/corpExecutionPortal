@@ -64,6 +64,18 @@ const servicesFields = {
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
+    {
       label: "Type Of User",
       fieldName: "user",
       type: "radioButton",
@@ -157,6 +169,18 @@ const servicesFields = {
       fieldName: "decisionOwner",
       type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
+    },
+    {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
     },
     {
       label: "Type Of User",
@@ -261,6 +285,18 @@ const servicesFields = {
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
+    {
       label: "Type Of User",
       fieldName: "user",
       type: "radioButton",
@@ -312,7 +348,7 @@ const servicesFields = {
       label: "Degree",
       fieldName: "degree",
       type: "dropdown",
-      options: ["MBBS", "AFIH", "MBBS_AND_AFIH"],
+      options: ["GNM_NURSING", "BNM_NURSING", "WITHOUT_DEGREE"],
     },
     {
       label: "Procedure of closure",
@@ -361,6 +397,18 @@ const servicesFields = {
       fieldName: "decisionOwner",
       type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
+    },
+    {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
     },
     {
       label: "Type Of User",
@@ -463,6 +511,18 @@ const servicesFields = {
       type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
+    {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
   ],
   62510: [
     {
@@ -501,17 +561,30 @@ const servicesFields = {
       fieldName: "dueDate",
       type: "date",
     },
-    {
-      label: "Key Highlights",
-      fieldName: "remark",
-      type: "textFieldMultiline",
-      dataType: "string",
-    },
+
     {
       label: "Decision Owner",
       fieldName: "decisionOwner",
       type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
+    },
+    {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
+    {
+      label: "Key Highlights",
+      fieldName: "remark",
+      type: "textFieldMultiline",
+      dataType: "string",
     },
     {
       label: "Type Of User",
@@ -590,6 +663,18 @@ const servicesFields = {
       fieldName: "decisionOwner",
       type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
+    },
+    {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
     },
     {
       label: "Type Of User",
@@ -676,6 +761,18 @@ const servicesFields = {
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
     },
     {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
+    {
       label: "Type Of User",
       fieldName: "user",
       type: "radioButton",
@@ -730,6 +827,18 @@ const servicesFields = {
       options: ["NEW", "OLD"],
     },
     {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
+    {
       label: "Key Highlights",
       fieldName: "remark",
       type: "textFieldMultiline",
@@ -772,6 +881,18 @@ const servicesFields = {
       fieldName: "decisionOwner",
       type: "dropdownEditable",
       options: ["HR_HEAD", "ER_HEAD", "PLANT_HEAD", "PURCHASE_HEAD"],
+    },
+    {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
     },
     {
       label: "Type Of User",
@@ -844,6 +965,18 @@ const servicesFields = {
       type: "date",
     },
     {
+      label: "Revenue Type",
+      fieldName: "revenueType",
+      type: "dropdown",
+      options: ["ONE_TIME", "ANNUALY", "RECURRING"],
+    },
+    {
+      label: "Approximate Revenue Amount",
+      fieldName: "approxRevenueAmount",
+      type: "textField",
+      dataType: "number",
+    },
+    {
       label: "Key Highlights",
       fieldName: "remark",
       type: "textFieldMultiline",
@@ -866,6 +999,7 @@ const ServiceRequirementForm = () => {
   const userName = localStorage.getItem("USER_NAME_CORP_SALES");
   const { data, corpId } = JSON.parse(decodeURIComponent(itemId));
   console.log({ data, corpId });
+  const [isDisabled, setIsDisabled] = useState(false);
   const [formValues, setFormValues] = useState({
     user: "",
     list: "",
@@ -899,6 +1033,8 @@ const ServiceRequirementForm = () => {
     userId: "",
     userName: "",
     confidenceLeveLStatus: "",
+    revenueType: "",
+    approxRevenueAmount: "",
   });
 
   useEffect(() => {
@@ -936,10 +1072,13 @@ const ServiceRequirementForm = () => {
       userId: userId || "",
       userName: userName || "",
       confidenceLeveLStatus: data.confidenceLeveLStatus || "",
+      revenueType: data.revenueType || "",
+      approxRevenueAmount: data.approxRevenueAmount || "",
     });
   }, []);
 
   const handleSave = async () => {
+    setIsDisabled(true);
     const obj = {
       user: formValues.user || null,
       list: formValues.list || null,
@@ -973,6 +1112,8 @@ const ServiceRequirementForm = () => {
       userId: userId || null,
       userName: userName || null,
       confidenceLeveLStatus: formValues.confidenceLeveLStatus || null,
+      revenueType: formValues.revenueType || null,
+      approxRevenueAmount: formValues.approxRevenueAmount || null,
     };
 
     const url =
@@ -984,10 +1125,12 @@ const ServiceRequirementForm = () => {
         variant: "success",
       });
       navigate(-1);
+      setIsDisabled(false);
     } else {
       enqueueSnackbar("An Error Occured.", {
         variant: "error",
       });
+      setIsDisabled(false);
     }
   };
 
@@ -1295,6 +1438,7 @@ const ServiceRequirementForm = () => {
             }}
           >
             <CustomButtonBlue
+              disabled={isDisabled ? true : false}
               title="Save"
               onClick={() => {
                 handleSave();

@@ -79,6 +79,8 @@ const ServiceInfo = ({ data }) => {
         userId: data?.[item.id]?.userId,
         userName: data?.[item.id]?.userName,
         confidenceLeveLStatus: data?.[item.id]?.confidenceLeveLStatus,
+        revenueType: data?.[item.id]?.revenueType,
+        approxRevenueAmount: data?.[item.id]?.approxRevenueAmount,
       }));
       setRows(temp);
     } else {
@@ -123,6 +125,8 @@ const ServiceInfo = ({ data }) => {
       userId: userId || null,
       userName: userName || null,
       confidenceLeveLStatus: data.confidenceLeveLStatus || null,
+      revenueType: data.revenueType || null,
+      approxRevenueAmount: data.approxRevenueAmount || null,
     };
 
     const url =
@@ -149,14 +153,17 @@ const ServiceInfo = ({ data }) => {
       "testName",
       "status",
       "confidenceLeveLStatus",
+      "userId",
+      "userName",
     ];
-
+    console.log({ Hello: data });
     const fieldsToCheck = Object.keys(data).filter(
       (field) => !fieldsNotToCheck.includes(field)
     );
     const allFieldsNull = fieldsToCheck.every(
       (field) => data[field] === undefined
     );
+    console.log({ allFieldsNull });
     return allFieldsNull;
   };
 
@@ -243,6 +250,14 @@ const ServiceInfo = ({ data }) => {
                     "CENTRAL_DECISION_MAKING",
                     "ORDER_LOST",
                     "DATA_AWAITED",
+                    ...(obj.id === 145889
+                      ? [
+                          "AGREEMENT_SENT",
+                          "AGREEMENT_SIGNED",
+                          "DISCUSSED",
+                          "YET_TO_DISCUSSED",
+                        ]
+                      : []),
                   ]}
                   getOptionLabel={(option) => option}
                   value={obj?.status || ""}
