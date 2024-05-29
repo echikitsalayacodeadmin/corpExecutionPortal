@@ -1003,6 +1003,7 @@ const ServiceRequirementForm = () => {
   const [formValues, setFormValues] = useState({
     user: "",
     list: "",
+    userSelectedDate: null,
     decisionMakingCriteria: "",
     monthlyInflowNoOfEmp: "",
     closureProcedure: "",
@@ -1042,6 +1043,7 @@ const ServiceRequirementForm = () => {
       ...formValues,
       user: data.user || "",
       list: data.list || "",
+      userSelectedDate: data?.userSelectedDate ? data?.userSelectedDate : null, //
       decisionMakingCriteria: data.decisionMakingCriteria || "",
       closureProcedure: data.closureProcedure || "",
       monthlyInflowNoOfEmp: data.monthlyInflowNoOfEmp || "",
@@ -1082,6 +1084,9 @@ const ServiceRequirementForm = () => {
     const obj = {
       user: formValues.user || null,
       list: formValues.list || null,
+      userSelectedDate: formValues?.userSelectedDate
+        ? formValues?.userSelectedDate
+        : null, //
       decisionMakingCriteria: formValues.decisionMakingCriteria || null,
       closureProcedure: formValues.closureProcedure || null,
       monthlyInflowNoOfEmp: formValues.monthlyInflowNoOfEmp || null,

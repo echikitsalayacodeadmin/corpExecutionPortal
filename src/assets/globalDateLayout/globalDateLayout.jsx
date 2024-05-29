@@ -22,6 +22,7 @@ const GlobalDateLayout = ({
   setFormValues,
   property,
   maxNextDays,
+  onChange,
 }) => {
   const [dateValue, setDateValue] = useState(null);
 
@@ -113,7 +114,7 @@ const GlobalDateLayout = ({
           value={dateValue}
           label={label ? label : null}
           format="YYYY-MM-DD"
-          onChange={handleDateChange}
+          onChange={onChange ? onChange : handleDateChange}
           slotProps={{
             textField: { InputLabelProps: { shrink: true } },
             field: { clearable: true, onClear: () => handleClearDate() },

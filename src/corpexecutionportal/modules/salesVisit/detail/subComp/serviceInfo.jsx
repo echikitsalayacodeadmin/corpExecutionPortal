@@ -49,6 +49,9 @@ const ServiceInfo = ({ data }) => {
         testName: item.serviceName,
         user: data?.[item.id]?.user,
         list: data?.[item.id]?.list,
+        userSelectedDate: data?.[item.id]?.userSelectedDate
+          ? data?.[item.id]?.userSelectedDate
+          : null, //
         decisionMakingCriteria: data?.[item.id]?.decisionMakingCriteria,
         monthlyInflowNoOfEmp: data?.[item.id]?.monthlyInflowNoOfEmp,
         closureProcedure: data?.[item.id]?.closureProcedure,
@@ -95,6 +98,7 @@ const ServiceInfo = ({ data }) => {
     const obj = {
       user: data.user || null,
       list: data.list || null,
+      userSelectedDate: data?.userSelectedDate ? data?.userSelectedDate : null, //
       decisionMakingCriteria: data.decisionMakingCriteria || null,
       closureProcedure: data.closureProcedure || null,
       monthlyInflowNoOfEmp: data.monthlyInflowNoOfEmp || null,
@@ -144,7 +148,7 @@ const ServiceInfo = ({ data }) => {
     }
   };
 
-  // console.log({ rows, data, selectedRow, moreInfoObject });
+  console.log({ rows });
 
   const checkFields = (data) => {
     const fieldsNotToCheck = [
@@ -226,12 +230,32 @@ const ServiceInfo = ({ data }) => {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} lg={3}>
+              <Grid item xs={12} lg={2}>
                 <Typography
                   sx={{ fontWeight: "bold", textTransform: "capitalize" }}
                 >
                   {obj?.user?.replace(/_/g, " ")?.toLowerCase()}
                 </Typography>
+              </Grid>
+
+              <Grid item xs={8} lg={2}>
+                <GlobalDateLayout
+                  label={"Date"}
+                  property={"userSelectedDate"}
+                  initialDate={obj?.userSelectedDate}
+                  onChange={(newValue) => {
+                    console.log({ DATESERVICE: newValue.format("YYYY-MM-DD") });
+                    const updatedRows = rows.map((row) =>
+                      row.id === obj.id
+                        ? {
+                            ...obj,
+                            userSelectedDate: newValue.format("YYYY-MM-DD"),
+                          }
+                        : row
+                    );
+                    setRows(updatedRows);
+                  }}
+                />
               </Grid>
 
               <Grid item xs={8} lg={2}>
@@ -388,7 +412,7 @@ const ServiceInfo = ({ data }) => {
               {isDesktop && (
                 <Grid
                   item
-                  lg={3}
+                  lg={2}
                   sx={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <Tooltip title="More Info">
