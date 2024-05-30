@@ -26,7 +26,11 @@ const LoginIndex = () => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [isMobileLogin, setIsMobileLogin] = useState(true);
+  const [isMobileLogin, setIsMobileLogin] = useState(
+    localStorage.getItem("PRFEREDLOGINMETHOD_CEP")
+      ? JSON.parse(localStorage.getItem("PRFEREDLOGINMETHOD_CEP"))
+      : true
+  );
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,6 +38,7 @@ const LoginIndex = () => {
     setIsMobileLogin(!isMobileLogin);
     setUserName("");
     setPassword("");
+    localStorage.setItem("PRFEREDLOGINMETHOD_CEP", !isMobileLogin);
   };
 
   const handleFormSubmit = async (e) => {
