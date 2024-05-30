@@ -159,6 +159,7 @@ const ServiceInfo = ({ data }) => {
       "confidenceLeveLStatus",
       "userId",
       "userName",
+      "userSelectedDate",
     ];
     console.log({ Hello: data });
     const fieldsToCheck = Object.keys(data).filter(
