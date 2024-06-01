@@ -6,10 +6,14 @@ import {
   Container,
   Grid,
   IconButton,
+  InputAdornment,
   Stack,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import SaveIcon from "@mui/icons-material/Save";
 import { isMobile } from "react-device-detect";
 import { useSnackbar } from "notistack";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -77,6 +81,16 @@ const ReportingMain = () => {
     fetchAllTaskList(corpId, setIsLoading, setReportingTaskList, "REPORTING");
   }, []);
 
+  const [anchorReportName, setAnchorReportName] = useState("");
+  useEffect(() => {
+    if (reportingTaskList.length > 0) {
+      const anchorReportName =
+        reportingTaskList.find((item) => item?.itemId === "anchorReport")
+          ?.url || "";
+      setAnchorReportName(anchorReportName);
+    }
+  }, [reportingTaskList]);
+
   const [masterPdfList, setMasterPdfList] = useState([]);
 
   const fetchMasterPdfList = async () => {
@@ -85,7 +99,6 @@ const ReportingMain = () => {
       BASE_URL + `org/reporting/masterPdf?corpId=${corpId}&isCompleted=true`;
     const response = await getData(url);
     if (response.data) {
-      console.log(response.data);
       setIsLoading(false);
       let temp = response?.data?.map((item, index) => ({
         ...item,
@@ -116,6 +129,33 @@ const ReportingMain = () => {
     const updatedItem = {
       ...updateReportingTaskList[itemIndex],
       status: newValue,
+    };
+    const url = BASE_URL + `task/item`;
+    const response = await updateData(url, updatedItem);
+
+    if (response.error) {
+      enqueueSnackbar("An Error Occurred!", { variant: "error" });
+    } else {
+      enqueueSnackbar("Status Updated Successfully!", { variant: "success" });
+      fetchAllTaskList(corpId, setIsLoading, setReportingTaskList, "REPORTING");
+    }
+  };
+
+  const handleChangeAnchorReportName = async (itemId, clear) => {
+    const updateReportingTaskList = reportingTaskList.map((item, index) =>
+      item.itemId === itemId
+        ? { ...item, url: clear ? null : anchorReportName }
+        : item
+    );
+    setReportingTaskList(updateReportingTaskList);
+
+    const itemIndex = reportingTaskList.findIndex(
+      (item) => item.itemId === itemId
+    );
+
+    const updatedItem = {
+      ...updateReportingTaskList[itemIndex],
+      url: clear ? null : anchorReportName,
     };
     const url = BASE_URL + `task/item`;
     const response = await updateData(url, updatedItem);
@@ -178,10 +218,42 @@ const ReportingMain = () => {
                   <TextField
                     size="small"
                     fullWidth
-                    value={""}
-                    onChange={() => {}}
+                    value={anchorReportName}
+                    onChange={(e) => {
+                      setAnchorReportName(e.target.value);
+                    }}
                     label="Enter Anchor Report Name"
                     placeholder="Enter Anchor Report Name"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Tooltip title="Save Anchor Report Name">
+                            <IconButton
+                              sx={{ m: 0, p: 0 }}
+                              onClick={() =>
+                                handleChangeAnchorReportName("anchorReport")
+                              }
+                            >
+                              <SaveIcon sx={{ color: "#127DDD" }} />
+                            </IconButton>
+                          </Tooltip>
+                          <Tooltip title="Save Anchor Report Name">
+                            <IconButton
+                              sx={{ m: 0, p: 0 }}
+                              onClick={() => {
+                                handleChangeAnchorReportName(
+                                  "anchorReport",
+                                  true
+                                );
+                                setAnchorReportName("");
+                              }}
+                            >
+                              <ClearIcon sx={{ color: "#000000" }} />
+                            </IconButton>
+                          </Tooltip>
+                        </InputAdornment>
+                      ),
+                    }}
                   />
                 </Grid>
                 <Grid

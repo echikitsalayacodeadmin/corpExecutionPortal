@@ -6,13 +6,15 @@ import {
   Container,
   Grid,
   IconButton,
+  InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 import Papa from "papaparse";
 import { useSnackbar } from "notistack";
 import { isDesktop } from "react-device-detect";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DATASHEET_SEQ } from "../../../../assets/corpConstants";
 import {
   fetchAllTaskList,
@@ -23,6 +25,7 @@ import { BASE_URL } from "../../../../../assets/constants";
 import MainPageLayoutWithBack from "../../../../global/templates/mainPageLayoutWithBack";
 import MarkStatusBtn from "../../subComp/markStatusBtn";
 import { downloadCsv } from "../../../../../assets/utils";
+import { VisibilityOff } from "@mui/icons-material";
 
 const generateSummaryCSV = (data) => {
   let csvContent = `Test Name,Done,\n`;
@@ -36,35 +39,38 @@ const generateSummaryCSV = (data) => {
 const generateSummaryDetailCSV = (data) => {
   let csvContent = "";
   csvContent += Papa.unparse(data);
-
+  console.log({ csvContent });
   return csvContent;
 };
 
 const generateCombinedCSV = (data) => {
-  const summaryContent = generateSummaryCSV(data.summary);
-  const summaryDetailContent = generateSummaryDetailCSV(data.summaryDetail);
+  const summaryContent = generateSummaryCSV(data?.summary);
+  const summaryDetailContent = generateSummaryDetailCSV(data?.summaryDetail);
   let combinedContent = `${summaryContent}\n\n`; // Add two newlines for spacing
   combinedContent += summaryDetailContent;
   return combinedContent;
 };
 
 const generateCSVContent = (data) => {
-  const headers = Object.keys(data[0]);
-  const csvRows = data.map((row) => {
-    const escapedValues = headers.map((header) => {
-      if (typeof row[header] === "string") {
-        return `"${row[header].replace(/"/g, '""') || ""}"`;
-      } else {
-        return `"${row[header]?.toString() || ""}"`;
-      }
+  if (data?.length > 0) {
+    const headers = Object.keys(data?.[0] || {});
+    const csvRows = data?.map((row) => {
+      const escapedValues = headers?.map((header) => {
+        if (typeof row[header] === "string") {
+          return `"${row[header]?.replace(/"/g, '""') || ""}"`;
+        } else {
+          return `"${row[header]?.toString() || ""}"`;
+        }
+      });
+      return escapedValues.join(",");
     });
-    return escapedValues.join(",");
-  });
-  csvRows.unshift(headers.join(","));
-  return csvRows.join("\n");
+    csvRows?.unshift(headers.join(","));
+    return csvRows?.join("\n");
+  }
 };
 
 const RowComp = ({ item, handleChange, corpId }) => {
+  const navigate = useNavigate();
   return (
     <Fragment>
       <Grid container>
@@ -87,6 +93,22 @@ const RowComp = ({ item, handleChange, corpId }) => {
                 )
               }
               label="Paste Link"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      sx={{ m: 0, p: 0 }}
+                      onClick={() => {
+                        if (item.url) {
+                          handleChange(item.itemId, null, "url");
+                        }
+                      }}
+                    >
+                      <ClearIcon sx={{ color: "#000000" }} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           ) : (
             <Typography sx={{ fontWeight: "bold" }}>{item.itemName}</Typography>
@@ -152,11 +174,17 @@ const RowComp = ({ item, handleChange, corpId }) => {
                   hiddenElement.target = "_blank";
                   hiddenElement.download = `test_result.csv`;
                   hiddenElement.click();
+                } else if (item.itemId === "pasteLink" && item?.url) {
+                  window.open(item.url, "_blank");
+                  console.log({ ITEMURL: item.url });
                 }
               }}
               size="small"
               sx={{ width: "120px" }}
               variant="contained"
+              disabled={
+                item.itemId === "pasteLink" && item.url === null ? true : false
+              }
             >
               {item.itemId === "pasteLink" ? "Go to link" : "Download"}
             </Button>
@@ -264,129 +292,130 @@ const DataSheetMain = () => {
     overallStats: [
       {
         TestName: "PFT",
-        TotalRequiredtest: defects?.reportDefectsCountVM?.pftTestRequired,
+        TotalRequiredtest: defects?.reportDefectsCountVM?.pftTestRequired || 0,
         ...((item.itemId === "copyDefectExecution" ||
           item.itemId === "copyDefectFinal") && {
           TotalToggleNotOn:
             parseInt(defects?.reportDefectsCountVM?.pftTestRequired) -
-            parseInt(defects?.reportDefectsCountVM?.pftToggle),
+              parseInt(defects?.reportDefectsCountVM?.pftToggle) || 0,
         }),
         ...((item.itemId === "copyDefectUpload" ||
           item.itemId === "copyDefectFinal") && {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.pftToggle) -
-            parseInt(defects?.reportDefectsCountVM?.pftReportUploaded),
-          TotalReportUploaded: parseInt(
-            defects?.reportDefectsCountVM?.pftReportUploaded
-          ),
+              parseInt(defects?.reportDefectsCountVM?.pftReportUploaded) || 0,
+          TotalReportUploaded:
+            parseInt(defects?.reportDefectsCountVM?.pftReportUploaded) || 0,
         }),
       },
       {
         TestName: "AUDIOMETRY",
         TotalRequiredtest:
-          defects?.reportDefectsCountVM?.audiometryTestRequired,
+          defects?.reportDefectsCountVM?.audiometryTestRequired || 0,
         ...((item.itemId === "copyDefectExecution" ||
           item.itemId === "copyDefectFinal") && {
           TotalToggleNotOn:
             parseInt(defects?.reportDefectsCountVM?.audiometryTestRequired) -
-            parseInt(defects?.reportDefectsCountVM?.audiometryToggle),
+              parseInt(defects?.reportDefectsCountVM?.audiometryToggle) || 0,
         }),
         ...((item.itemId === "copyDefectUpload" ||
           item.itemId === "copyDefectFinal") && {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.audiometryToggle) -
-            parseInt(defects?.reportDefectsCountVM?.audiometryReportUploaded),
-          TotalReportUploaded: parseInt(
-            defects?.reportDefectsCountVM?.audiometryReportUploaded
-          ),
+              parseInt(
+                defects?.reportDefectsCountVM?.audiometryReportUploaded
+              ) || "",
+          TotalReportUploaded:
+            parseInt(defects?.reportDefectsCountVM?.audiometryReportUploaded) ||
+            "",
         }),
       },
       {
         TestName: "BLOODTEST",
-        TotalRequiredtest: defects?.reportDefectsCountVM?.bloodTestRequired,
+        TotalRequiredtest:
+          defects?.reportDefectsCountVM?.bloodTestRequired || 0,
         ...((item.itemId === "copyDefectExecution" ||
           item.itemId === "copyDefectFinal") && {
           TotalToggleNotOn:
             parseInt(defects?.reportDefectsCountVM?.bloodTestRequired) -
-            parseInt(defects?.reportDefectsCountVM?.bloodToggle),
+              parseInt(defects?.reportDefectsCountVM?.bloodToggle) || 0,
         }),
         ...((item.itemId === "copyDefectUpload" ||
           item.itemId === "copyDefectFinal") && {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.bloodToggle) -
-            parseInt(defects?.reportDefectsCountVM?.bloodReportUploaded),
-          TotalReportUploaded: parseInt(
-            defects?.reportDefectsCountVM?.bloodReportUploaded
-          ),
+              parseInt(defects?.reportDefectsCountVM?.bloodReportUploaded) ||
+            "",
+          TotalReportUploaded:
+            parseInt(defects?.reportDefectsCountVM?.bloodReportUploaded) || 0,
         }),
       },
       {
         TestName: "ECG",
-        TotalRequiredtest: defects?.reportDefectsCountVM?.ecgTestRequired,
+        TotalRequiredtest: defects?.reportDefectsCountVM?.ecgTestRequired || 0,
         ...((item.itemId === "copyDefectExecution" ||
           item.itemId === "copyDefectFinal") && {
           TotalToggleNotOn:
             parseInt(defects?.reportDefectsCountVM?.ecgTestRequired) -
-            parseInt(defects?.reportDefectsCountVM?.ecgToggle),
+              parseInt(defects?.reportDefectsCountVM?.ecgToggle) || 0,
         }),
         ...((item.itemId === "copyDefectUpload" ||
           item.itemId === "copyDefectFinal") && {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.ecgToggle) -
-            parseInt(defects?.reportDefectsCountVM?.ecgReportUploaded),
-          TotalReportUploaded: parseInt(
-            defects?.reportDefectsCountVM?.ecgReportUploaded
-          ),
+              parseInt(defects?.reportDefectsCountVM?.ecgReportUploaded) || 0,
+          TotalReportUploaded:
+            parseInt(defects?.reportDefectsCountVM?.ecgReportUploaded) || 0,
         }),
       },
       {
         TestName: "XRAY",
-        TotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired,
+        TotalRequiredtest: defects?.reportDefectsCountVM?.xrayTestRequired || 0,
         ...((item.itemId === "copyDefectExecution" ||
           item.itemId === "copyDefectFinal") && {
           TotalToggleNotOn:
             parseInt(defects?.reportDefectsCountVM?.xrayTestRequired) -
-            parseInt(defects?.reportDefectsCountVM?.xrayToggle),
+              parseInt(defects?.reportDefectsCountVM?.xrayToggle) || 0,
         }),
         ...((item.itemId === "copyDefectUpload" ||
           item.itemId === "copyDefectFinal") && {
           TotalReportNotUploaded:
             parseInt(defects?.reportDefectsCountVM?.xrayToggle) -
-            parseInt(defects?.reportDefectsCountVM?.xrayReportUploaded),
-          TotalReportUploaded: parseInt(
-            defects?.reportDefectsCountVM?.xrayReportUploaded
-          ),
+              parseInt(defects?.reportDefectsCountVM?.xrayReportUploaded) || 0,
+          TotalReportUploaded:
+            parseInt(defects?.reportDefectsCountVM?.xrayReportUploaded) || 0,
         }),
       },
     ],
 
-    sheetDefects: defects.empReportDefectsDetailVMS
-      ?.filter((obj, index) =>
-        item.itemId === "copyDefectExecution"
-          ? obj.exeDefect === true
-          : item.itemId === "copyDefectUpload"
-          ? obj.uploadDefect === true
-          : []
-      )
-      .map((val, index) =>
-        item.itemId === "copyDefectExecution"
-          ? {
-              empName: val.empName,
-              empId: val.empId,
-              testsRequired: val.testsRequired,
-              toggleOn: val.toggleOn,
-              missingTests: val.missingTests,
-            }
-          : item.itemId === "copyDefectUpload"
-          ? {
-              empName: val.empName,
-              empId: val.empId,
-              toggleOn: val.toggleOn,
-              missingReports: val.missingReports,
-            }
-          : val
-      ),
-    masterData: masterData,
+    sheetDefects:
+      defects.empReportDefectsDetailVMS
+        ?.filter((obj, index) =>
+          item.itemId === "copyDefectExecution"
+            ? obj.exeDefect === true
+            : item.itemId === "copyDefectUpload"
+            ? obj.uploadDefect === true
+            : []
+        )
+        .map((val, index) =>
+          item.itemId === "copyDefectExecution"
+            ? {
+                empName: val.empName,
+                empId: val.empId,
+                testsRequired: val.testsRequired,
+                toggleOn: val.toggleOn,
+                missingTests: val.missingTests,
+              }
+            : item.itemId === "copyDefectUpload"
+            ? {
+                empName: val.empName,
+                empId: val.empId,
+                toggleOn: val.toggleOn,
+                missingReports: val.missingReports,
+              }
+            : val
+        ) || [],
+    masterData: masterData || [],
     fields:
       item.itemId === "copySmdToggle"
         ? [

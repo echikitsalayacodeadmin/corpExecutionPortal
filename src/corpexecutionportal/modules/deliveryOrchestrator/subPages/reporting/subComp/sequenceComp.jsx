@@ -52,7 +52,7 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
     const response = await getData(url);
     if (response.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response?.data });
+
       setIsListExist(response?.data?.sequenceList?.length === 0 ? false : true);
       setMasterData(
         filterUniqueEmployeesByEmpId(response.data.sequenceList)?.map(
@@ -77,8 +77,6 @@ const SequenceComp = ({ reportingTaskList, handleStatusChange }) => {
       setIsListExist(false);
     }
   };
-
-  console.log({ isListExit, masterData });
 
   useEffect(() => {
     fetchCurrentSequenceList();

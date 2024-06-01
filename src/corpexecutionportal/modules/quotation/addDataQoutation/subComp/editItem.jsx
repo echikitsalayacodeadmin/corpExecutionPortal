@@ -24,7 +24,7 @@ const EditItem = () => {
     const response = await getData(url);
     if (response?.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response?.data });
+
       setItemList(sortArrayBySequence(response?.data));
     } else {
       setIsLoading(false);
