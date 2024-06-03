@@ -32,7 +32,7 @@ const AhcSection = ({ data }) => {
           : false
       }
     >
-      {/* <View style={{ marginVertical: "10px" }}>
+      <View style={{ marginVertical: "10px" }}>
         <Text style={{ fontSize: "10px" }}>
           {
             data?.quotationTableDataVMS?.filter(
@@ -40,7 +40,7 @@ const AhcSection = ({ data }) => {
             )[0]?.details
           }
         </Text>
-      </View> */}
+      </View>
       {data?.quotationTableDataVMS?.filter(
         (quote) => quote?.quotationDataType === "AHC"
       )[0]?.tableUrl === "" ||

@@ -26,9 +26,9 @@ const OhcSection = ({ data }) => {
       style={{ marginVertical: "10px" }}
       break={data?.ohcVM?.isOHCTableNextPage === true ? true : false}
     >
-      {/* <View style={{ marginVertical: "10px" }}>
+      <View style={{ marginVertical: "10px" }}>
         <Text style={{ fontSize: "10px" }}>{data?.ohcVM?.details}</Text>
-      </View> */}
+      </View>
       {data?.ohcVM?.ohcTableUrl === "" || data?.ohcVM?.ohcTableUrl === null ? (
         data?.ohcVM && (
           <View style={{ border: "1px solid #DDD" }}>

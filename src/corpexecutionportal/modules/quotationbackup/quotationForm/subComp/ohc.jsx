@@ -284,7 +284,7 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
           OHC SECTION
         </Typography>
         <Grid container spacing={2}>
-          {/* <Grid item xs={12} lg={12}>
+          <Grid item xs={12} lg={12}>
             <TextField
               multiline
               minRows={4}
@@ -304,7 +304,7 @@ const Ohc = ({ handleUpload, formValues, setFormValues }) => {
                 });
               }}
             />
-          </Grid> */}
+          </Grid>
           <Grid item lg={2}>
             <OhcSelectCategory setSelectedItem={setSelectedCategory} />
           </Grid>

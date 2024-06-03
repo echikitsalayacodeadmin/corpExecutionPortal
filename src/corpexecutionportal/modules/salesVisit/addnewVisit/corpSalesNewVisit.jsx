@@ -155,6 +155,7 @@ const CorpSalesNewVisit = () => {
             formValues={formValues}
             setFormValues={setFormValues}
             property={"visitDate"}
+            disableFuture={true}
           />
         </Grid>
         <Grid item xs={6} lg={6}>

@@ -1,5 +1,6 @@
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import Ahc from "./subComp/ahc";
+import React, { Fragment, useEffect, useState } from "react";
+
+import { useSnackbar } from "notistack";
 import {
   Box,
   CircularProgress,
@@ -8,28 +9,30 @@ import {
   Fab,
   Grid,
   IconButton,
+  Modal,
   Portal,
+  Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import BasicInfo from "./subComp/basicInfo";
-import Ohc from "./subComp/ohc";
-import PdfMain from "./pdfComp/pdfMain";
-import { useReactToPrint } from "react-to-print";
 import { pdf } from "@react-pdf/renderer";
+import BasicInfo from "./subComp/basicInfo";
+import CloseIcon from "@mui/icons-material/Close";
+import Ahc from "./subComp/ahc";
+import Ohc from "./subComp/ohc";
 import MyDocument from "./pdfComp/myDocument";
-import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
-import { useParams } from "react-router-dom";
-import CustomButtonBlue from "../../../../assets/customButtonBlue";
-import CustomButtonWhite from "../../../../assets/customButtonWhite";
-import { useSnackbar } from "notistack";
-import { BASE_URL } from "../../../../assets/constants";
+import PdfMain from "./pdfComp/pdfMain";
 import {
   getData,
-  saveData,
   updateData,
   updateDataFile,
 } from "../../../assets/corpServices";
+import { BASE_URL } from "../../../../assets/constants";
+import CustomButtonBlue from "../../../../assets/customButtonBlue";
+import CustomButtonWhite from "../../../../assets/customButtonWhite";
+
+import { useParams } from "react-router-dom";
+import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
+import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import { isMobile } from "react-device-detect";
 
 const calculateTestListRowFields = (dialogData) => {
@@ -51,11 +54,12 @@ const calculateTestListRowFields = (dialogData) => {
     const marginPercent =
       isNaN(quotePrice) || isNaN(bestPrice)
         ? 0
-        : Math.floor(((quotePrice - bestPrice) / quotePrice) * 100);
+        : Math.floor(((quotePrice - bestPrice) / quotePrice) * 100) || "";
     const marginPercentTAP =
       isNaN(quotePrice) || isNaN(bestPrice)
         ? 0
-        : Math.floor(((throwAwayPrice - bestPrice) / throwAwayPrice) * 100);
+        : Math.floor(((throwAwayPrice - bestPrice) / throwAwayPrice) * 100) ||
+          "";
 
     return {
       ...testItem,
@@ -89,17 +93,12 @@ const calculateTestListRowFields = (dialogData) => {
     ...dialogData,
     testList: updatedTestList,
     finalPrice: updatedTotalCost || "",
-    pricePerEmp,
-    totalMarginPercent,
+    pricePerEmp: totalMarginPercent || "",
+    totalMarginPercent: totalMarginPercent || "",
   };
 };
 
-const QuotationCreateForm = () => {
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
-  const [isLoading, setIsLoading] = useState(false);
+const QuotationUpdateForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { itemId } = useParams();
   const query = JSON.parse(decodeURIComponent(itemId));
@@ -107,9 +106,7 @@ const QuotationCreateForm = () => {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [routerDetail, setRouterDetail] = useState("");
-  const [responseId, setResponseId] = useState("");
-
-  console.log({ query });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const detail = query;
@@ -135,27 +132,12 @@ const QuotationCreateForm = () => {
         ? localStorage.getItem("USER_NAME_CORP_SALES")
         : null
     );
-    setResponseId(
-      typeof localStorage !== "undefined"
-        ? localStorage.getItem("QUOTATION_ID_RESPONSE_CORPSALES") || ""
-        : ""
-    );
   }, [itemId]);
 
   const [formValues, setFormValues] = useState({
     id: "",
     title: "",
-    details: `As per our discussion, we have prepared a detailed proposal cum quotation. The proposal consists of the below-mentioned services provided by Uno Care
-
-    1) Annual health check-ups for all employees & canteen staff
-    2) Health awareness program
-    3) OHC Furniture and Equipment
-    4) OHC staff - Doctor and nursing staff
-    5) Ambulance Services
-    6) First-Aid Kit (including Monthly Medicines)
-    7) First-Aid training
-    8) Emergency services
-    9) Care coordination`,
+    details: "",
     finalPrice: "",
     systemPrice: "",
     corpName: "",
@@ -172,13 +154,7 @@ const QuotationCreateForm = () => {
     quotationStatus: "",
     quotationTableDataVMS: [
       {
-        details: `1) Annual Health Checkup
-
-    (i) All the tests will be conducted via Authorized laboratory only.
-    (ii) All tests will be conducted at the company’s premises on the company's decided schedule.
-    (iii) All the test reports will be available DIGITALLY at Uno Care’s Health Dashboard.
-
-Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, which enables efficient medical health record keeping and provides visible insights regarding employees’ health status.`,
+        details: "",
         disclaimer: "",
         sequence: "",
         tableUrl: "",
@@ -204,15 +180,12 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
     isActive: true,
   });
 
-  console.log({ routerDetail, responseId });
-
   const [qoutationDetails, setQoutationDetails] = useState("");
   const fetchQouatationForm = async () => {
-    if (responseId || routerDetail?.quotationId) {
+    if (routerDetail?.quotationId) {
       setIsLoading(true);
       const url =
-        BASE_URL +
-        `quotation/id?quotationId=${responseId || routerDetail?.quotationId}`;
+        BASE_URL + "quotation/id?quotationId=" + routerDetail.quotationId;
       const response = await getData(url);
       if (response?.data) {
         setQoutationDetails(response?.data);
@@ -221,8 +194,8 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
           ...formValues,
           id: routerDetail.copyQuotation === "true" ? null : formData.id,
           title: formData.title,
-          details: formData.details,
           corpName: formData.corpName,
+          details: formData.details,
           corpAddress: formData.corpAddress,
           corpSpoc: formData.corpSpoc,
           noOfEmp: formData.noOfEmp,
@@ -233,40 +206,38 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
           createdByName: formData.createdByName,
           approvedBy: formData.approvedBy,
           approvedByName: formData.approvedByName,
-          quotationStatus:
-            routerDetail.copyQuotation === "true"
-              ? "PENDING"
-              : formData.quotationStatus || null,
+          quotationStatus: formData.quotationStatus,
           createdDate: formData.createdDate,
           lastModifiedDate: formData.lastModifiedDate,
-          quotationTableDataVMS: formData.quotationTableDataVMS,
+          quotationTableDataVMS: formData?.quotationTableDataVMS,
           ohcVM: formData?.ohcVM && {
             title: formData?.ohcVM?.title,
             details: formData?.ohcVM?.details,
             disclaimer: formData?.ohcVM?.disclaimer,
             ohcTableUrl: formData?.ohcVM?.ohcTableUrl,
-            ohcCategoryVMS: formData?.ohcVM?.ohcCategoryVMS.map(
+            ohcCategoryVMS: formData?.ohcVM?.ohcCategoryVMS?.map(
               (item, index) => ({
                 id: index,
-                categoryTitle: item?.categoryTitle,
-                sequence: item?.sequence,
+                categoryTitle: item.categoryTitle,
+                sequence: item.sequence,
                 ohcPackageVMS: item?.ohcPackageVMS?.map(
                   (subItem, subIndex) => ({
                     id: subIndex,
-                    packageTitle: subItem?.packageTitle,
-                    packageName: subItem?.packageName,
-                    packageDescription: subItem?.packageDescription,
-                    noOfStaff: subItem?.noOfStaff,
-                    perMonthCost: subItem?.perMonthCost,
-                    totalCostPerMonth: subItem?.totalCostPerMonth,
-                    sequence: subItem?.sequence,
+                    packageTitle: subItem.packageTitle,
+                    packageName: subItem.packageName,
+                    packageDescription: subItem.packageDescription,
+                    noOfStaff: subItem.noOfStaff,
+                    perMonthCost: subItem.perMonthCost,
+                    totalCostPerMonth: subItem.totalCostPerMonth,
+                    sequence: subItem.sequence,
                   })
                 ),
               })
             ),
           },
-          quotationUrl: formData?.quotationUrl || "",
+          quotationUrl: formData.quotationUrl || "",
         });
+
         setIsLoading(false);
         setFormValues((formValues) => ({
           ...formValues,
@@ -288,16 +259,13 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
   };
 
   useEffect(() => {
-    if (responseId || routerDetail?.quotationId) {
-      fetchQouatationForm();
-    }
-  }, [responseId, routerDetail]);
+    fetchQouatationForm();
+  }, [routerDetail?.quotationId]);
 
-  const handleSave = async () => {
-    setIsLoading(true);
-    const url = BASE_URL + "quotation/service/corp/addquotation";
+  const handleUpdateQouatation = async () => {
+    const url = BASE_URL + "quotation/service/corp/updatequotation";
     const Obj = {
-      id: formValues.id === "" ? null : formValues.id,
+      id: formValues.id,
       title: formValues.title,
       corpName: formValues.corpName,
       details: formValues.details,
@@ -309,7 +277,7 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
       createdByName: userName,
       quotationDate: formValues.quotationDate,
       quotationExpirationDate: formValues.quotationExpirationDate,
-      quotationStatus: "PENDING",
+      quotationStatus: formValues.quotationStatus,
       quotationTableDataVMS:
         formValues?.quotationTableDataVMS?.[0]?.quotationDataVMS?.length > 0
           ? formValues?.quotationTableDataVMS
@@ -322,31 +290,81 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
       quotationUrl: formValues.quotationUrl,
       isActive: true,
     };
-    const result = await saveData(url, Obj);
+    const result = await updateData(url, Obj);
     if (result && result.data) {
-      localStorage.setItem("QUOTATION_ID_RESPONSE_CORPSALES", result?.data?.id);
-      setResponseId(result.data.id || "");
-      fetchQouatationForm();
       enqueueSnackbar("Successfully Saved!", {
         variant: "success",
       });
-      setIsLoading(false);
+
+      fetchQouatationForm();
     } else if (result && result.error) {
       enqueueSnackbar("An Error Occured!", {
         variant: "error",
       });
-      setIsLoading(false);
     }
+  };
+
+  const [selectedStaus, setSelectedStatus] = useState(null);
+  const [openStatus, setOpenStatus] = useState(false);
+  const handleOpenStatus = () => {
+    setOpenStatus(true);
+  };
+
+  const handleCloseStatus = () => {
+    setOpenStatus(false);
   };
 
   const handleMarkApprovalStatus = async (status) => {
     const url =
       BASE_URL +
-      `quotation/update/status?quotationStatus=${status}&quotationId=${responseId}&authId=${userId}&name=${userName}`;
+      `quotation/update/status?quotationStatus=${
+        selectedStaus?.value || status
+      }&quotationId=${qoutationDetails?.id}&authId=${userId}&name=${userName}`;
 
     const result = await updateData(url, "");
     if (result && result?.data) {
       enqueueSnackbar("Approved Successfully!", {
+        variant: "success",
+      });
+      fetchQouatationForm();
+      setSelectedStatus(null);
+      handleCloseStatus();
+    } else {
+      enqueueSnackbar("An error Occured!", {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleConvertToBlob = async () => {
+    const blob = await pdf(<MyDocument data={formValues} />).toBlob();
+    const url =
+      BASE_URL +
+      `quotation/upload?quotationId=${routerDetail?.quotationId}&corpId=${routerDetail?.corpId}`;
+    const formData = new FormData();
+    formData.append("file", blob, "filename.pdf");
+
+    const result = await updateDataFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Uploaded Quotation PDF!", {
+        variant: "success",
+      });
+      fetchQouatationForm();
+    } else {
+      enqueueSnackbar("An error Occurred!", {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleMarkSendToApproval = async (status) => {
+    const url =
+      BASE_URL +
+      `quotation/update/status?quotationStatus=${status}&quotationId=${routerDetail?.quotationId}&authId=${userId}&name=${userName}`;
+
+    const result = await updateData(url, "");
+    if (result && result?.data) {
+      enqueueSnackbar("Sent For Approval!", {
         variant: "success",
       });
       fetchQouatationForm();
@@ -362,7 +380,7 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
     formData.append("files", file);
     const url =
       BASE_URL +
-      `quotation/upload/quotationimages?quotationId=${quotationId}&corpId=${corpId}&quotationDataTypes=${type}`;
+      `quotation/upload/quotationimages?quotationId=${qoutationDetails.id}&corpId=${qoutationDetails.corpId}&quotationDataTypes=${type}`;
     const result = await updateDataFile(url, formData);
     if (result && result?.data) {
       console.log("SUCCESS POST", result?.data);
@@ -384,31 +402,6 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
   };
   const handleClosePdf = () => {
     setOpenPdf(false);
-  };
-
-  console.log({ formValues });
-
-  const handleConvertToBlob = async () => {
-    const blob = await pdf(<MyDocument data={formValues} />).toBlob();
-    const url =
-      BASE_URL +
-      `quotation/upload?quotationId=${
-        routerDetail?.quotationId || responseId
-      }&corpId=${routerDetail?.corpId}`;
-    const formData = new FormData();
-    formData.append("file", blob, "filename.pdf");
-
-    const result = await updateDataFile(url, formData);
-    if (result && result.data) {
-      enqueueSnackbar("Successfully Uploaded Quotation PDF!", {
-        variant: "success",
-      });
-      fetchQouatationForm();
-    } else {
-      enqueueSnackbar("An error Occurred!", {
-        variant: "error",
-      });
-    }
   };
 
   const generatePdfUrlForMobile = async () => {
@@ -433,9 +426,10 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
       </Box>
     );
   }
+
   return (
     <Fragment>
-      <MainPageLayoutWithBack title="Quotation Create">
+      <MainPageLayoutWithBack title="Quotation Update">
         <Fab
           size="small"
           color="primary"
@@ -456,30 +450,14 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
         >
           <RemoveRedEyeIcon />
         </Fab>
-        {/* <Fab
-        size="small"
-        color="primary"
-        aria-label="add"
-        onClick={() => {
-          handlePrint();
-        }}
-        sx={{
-          position: "fixed",
-          top: 100,
-          right: 10,
-          zIndex: 1000,
-        }}
-      >
-        <RemoveRedEyeIcon />
-      </Fab> */}
         <Grid container spacing={2}>
           <Grid item xs={12} lg={12}>
-            {/* <BasicInfo
+            <BasicInfo
               data={qoutationDetails}
               corpSalesId={routerDetail?.corpId}
               formValues={formValues}
               setFormValues={setFormValues}
-            /> */}
+            />
           </Grid>
           <Grid item xs={12} lg={12}>
             <Ahc
@@ -495,7 +473,6 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
               setFormValues={setFormValues}
             />
           </Grid>
-
           <Grid
             item
             xs={12}
@@ -508,7 +485,7 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
           >
             <CustomButtonBlue
               title={"Save"}
-              onClick={handleSave}
+              onClick={handleUpdateQouatation}
               styles={{ width: "200px" }}
             />
           </Grid>
@@ -545,7 +522,6 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
             }}
           >
             <CustomButtonBlue
-              disabled={responseId ? false : true}
               title={"Upload Quotation PDF"}
               onClick={() => handleConvertToBlob()}
               styles={{ width: "200px" }}
@@ -561,32 +537,140 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
               alignItems: "center",
             }}
           >
-            {role === "CORPSALES_USER" && (
+            {role === "CORPSALES_ADMIN" && (
               <CustomButtonWhite
-                disabled={
-                  responseId === "" ||
-                  formValues.quotationStatus === null ||
-                  formValues.quotationStatus !== "PENDING"
-                    ? true
-                    : false
-                }
-                textColor={
-                  responseId === "" ||
-                  formValues.quotationStatus === null ||
-                  formValues.quotationStatus !== "PENDING"
-                    ? "lightgrey"
-                    : "#127DDD"
-                }
-                title={"Send To Approval"}
+                title={"Mark Quotation Status"}
                 onClick={() => {
-                  handleMarkApprovalStatus("PENDING_APPROVAL");
+                  handleOpenStatus();
                 }}
                 styles={{ width: "200px" }}
               />
             )}
           </Grid>
+          <Grid
+            item
+            xs={12}
+            lg={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {role === "CORPSALES_USER" &&
+              formValues.quotationStatus === "PENDING" && (
+                <CustomButtonWhite
+                  disabled={
+                    formValues.quotationStatus === null ||
+                    formValues.quotationStatus !== "PENDING"
+                      ? true
+                      : false
+                  }
+                  textColor={
+                    formValues.quotationStatus === null ||
+                    formValues.quotationStatus !== "PENDING"
+                      ? "lightgrey"
+                      : "#127DDD"
+                  }
+                  title={"Send To Approval"}
+                  onClick={() => {
+                    handleMarkSendToApproval("PENDING_APPROVAL");
+                  }}
+                  styles={{ width: "200px" }}
+                />
+              )}
+          </Grid>
         </Grid>
 
+        <Portal>
+          <Modal
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            open={openStatus}
+            onClose={handleCloseStatus}
+            sx={{
+              "& .MuiBackdrop-root": {
+                backgroundColor: "rgba(187, 187, 187, 0.1)",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: "#fff",
+                boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
+                borderRadius: "5px",
+                padding: "15px",
+                width: "365px",
+              }}
+            >
+              <Box display="flex" justifyContent="flex-end">
+                <IconButton onClick={handleCloseStatus}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+
+              <Typography
+                gutterBottom
+                sx={{
+                  textAlign: "center",
+                  fontWeight: "600",
+                  fontSize: "13px",
+                  lineHeight: "15px",
+                  color: "#000000",
+                  marginTop: "-25px",
+                  marginBottom: "10px",
+                }}
+              >
+                Mark Quotation Status
+              </Typography>
+              <Grid
+                container
+                sx={{ justifyContent: "space-between", marginTop: "20px" }}
+                spacing={2}
+              >
+                <Grid item xs={12} lg={12}>
+                  <CustomAutocomplete
+                    options={[
+                      { label: "Approved", value: "APPROVED" },
+                      { label: "Rejected", value: "REJECTED" },
+                      // { label: "Pending", value: "PENDING" },
+                    ]}
+                    placeholder={"Select Status"}
+                    label={"Select Status"}
+                    value={selectedStaus || null}
+                    onChange={(event, newValue, reason) => {
+                      setSelectedStatus(newValue);
+                      if (reason === "clear") {
+                        setSelectedStatus(null);
+                      }
+                    }}
+                  />
+                </Grid>
+
+                <Grid
+                  item
+                  xs={12}
+                  lg={12}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {role === "CORPSALES_ADMIN" && (
+                    <CustomButtonBlue
+                      title={"Save"}
+                      onClick={() => handleMarkApprovalStatus()}
+                    />
+                  )}
+                </Grid>
+              </Grid>
+            </Box>
+          </Modal>
+        </Portal>
         <Portal>
           <Dialog
             fullWidth={true}
@@ -610,17 +694,9 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
             </DialogContent>
           </Dialog>
         </Portal>
-        <Box component={"iframe"} sx={{ width: 0, height: 0, display: "none" }}>
-          <Box
-            ref={componentRef}
-            sx={{ fontFamily: '"Roboto","Helvetica","Arial",sans-serif' }}
-          >
-            {/* <MobileQuotationTemplate data={formValues} /> */}
-          </Box>
-        </Box>
       </MainPageLayoutWithBack>
     </Fragment>
   );
 };
 
-export default QuotationCreateForm;
+export default QuotationUpdateForm;

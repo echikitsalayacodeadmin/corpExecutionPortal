@@ -256,6 +256,7 @@ const ServiceInfo = ({ data }) => {
                     );
                     setRows(updatedRows);
                   }}
+                  disableFuture={true}
                 />
               </Grid>
 

@@ -474,12 +474,12 @@ Please call us at 1800-889-0189 to experience  Uno Care’s Digital Platform, wh
       </Fab> */}
         <Grid container spacing={2}>
           <Grid item xs={12} lg={12}>
-            {/* <BasicInfo
+            <BasicInfo
               data={qoutationDetails}
               corpSalesId={routerDetail?.corpId}
               formValues={formValues}
               setFormValues={setFormValues}
-            /> */}
+            />
           </Grid>
           <Grid item xs={12} lg={12}>
             <Ahc
