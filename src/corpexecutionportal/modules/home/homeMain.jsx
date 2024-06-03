@@ -105,6 +105,9 @@ const HomeMain = () => {
   useEffect(() => {
     fetchData();
     localStorage.removeItem("SAVE_FILTERS__SALES_VISIT_DASHBOARD");
+    localStorage.removeItem("SAVED_FILTER_SERVICE_INFO");
+    localStorage.removeItem("SAVED_FILTER_VISITS_INFO");
+    localStorage.removeItem("SAVED_FILTER_SPOCLIST_INFO");
   }, []);
   return (
     <Fragment>
