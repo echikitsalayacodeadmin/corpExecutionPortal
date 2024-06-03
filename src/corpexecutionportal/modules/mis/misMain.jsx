@@ -277,6 +277,7 @@ const columns = {
 
 const getListFromMap = (data) => {
   let list = Object.entries(data?.mapOfStatusLogsByKam);
+  console.log({ list });
   let newObject = {};
   list.map((value) => {
     let tempObj = { ...newObject };
@@ -315,7 +316,7 @@ const MisMain = () => {
 
   const [misReport, setMisReport] = useState([]);
   const fetchSalesServicesMISReport = async () => {
-    let url = BASE_URL;
+    let url = "https://apibackend.uno.care/api/";
     if (filters.typeOfMisReport === "Reports for KAM Productivity") {
       url += `corpSales/mis/kamProductivity?startDate=${filters?.startDate}&endDate=${filters?.endDate}`;
     } else if (
@@ -376,9 +377,9 @@ const MisMain = () => {
       });
     } else {
       console.log({ data: response.data });
-      const formattedData = getFormattedData(response.data);
-      console.log({ formattedData });
-      downloadCsv(formattedData, "company_log");
+      //const formattedData = getFormattedData(response.data);
+      //console.log({ formattedData });
+      downloadCsv(response.data, "company_log");
     }
   };
 
