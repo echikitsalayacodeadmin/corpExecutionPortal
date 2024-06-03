@@ -264,16 +264,16 @@ const CustomDataGridLayout = ({
           columnVisibilityModel={columnVisibilityModel}
           onColumnVisibilityModelChange={onColumnVisibilityModelChange}
           getRowClassName={(params) => {
-            const snoCount = rows.filter(
-              (row) => row.sno === params.row.sno
+            const snoCount = rows?.filter(
+              (row) => row?.sno === params?.row?.sno
             )?.length;
-            const employeeIdCount = rows.filter(
-              (row) => row.employeeid === params.row.employeeid
+            const employeeIdCount = rows?.filter(
+              (row) => row?.employeeid === params?.row?.employeeid
             )?.length;
 
-            return params.row.employeeid === "" ||
-              params.row.sno === "" ||
-              params.row.name === "" ||
+            return params?.row?.employeeid === "" ||
+              params?.row?.sno === "" ||
+              params?.row?.name === "" ||
               snoCount > 1 ||
               employeeIdCount > 1
               ? "error"

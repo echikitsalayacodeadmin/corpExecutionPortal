@@ -451,14 +451,14 @@ const QuotationUpdateForm = () => {
           <RemoveRedEyeIcon />
         </Fab>
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={12}>
+          {/* <Grid item xs={12} lg={12}>
             <BasicInfo
               data={qoutationDetails}
               corpSalesId={routerDetail?.corpId}
               formValues={formValues}
               setFormValues={setFormValues}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} lg={12}>
             <Ahc
               handleUpload={handleUpload}

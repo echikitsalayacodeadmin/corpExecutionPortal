@@ -94,6 +94,17 @@ const PackageModalAhc = ({
   setDialogData,
   packageIndex,
 }) => {
+  const [selectedRows, setSelectedRows] = React.useState([]);
+
+  const handleSelectionModelChange = (selectionModel) => {
+    console.log({ selectionModel });
+    const selectedRowsData = selectionModel?.map((id) => {
+      return dialogData?.testList?.find((row) => row.id === id);
+    });
+    console.log({ selectedRowsData });
+    setSelectedRows(selectedRowsData);
+  };
+
   const [openDelete, setOpenDelete] = useState(false);
   const handleOpenDelete = () => {
     setOpenDelete(true);
@@ -450,8 +461,11 @@ const PackageModalAhc = ({
               rowHeight={40}
               Gridheight={"100%"}
               getRowId={(row) => row?.id}
-              checkboxSelection={false}
+              checkboxSelection={true}
+              disableSelectionOnClick={true}
               disableRowSelectionOnClick={true}
+              selectionModel={selectedRows.map((row) => row.id)}
+              onRowSelectionModelChange={handleSelectionModelChange}
               slots={null}
             />
             <Box

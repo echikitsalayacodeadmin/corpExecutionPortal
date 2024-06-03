@@ -143,6 +143,19 @@ export const sortDataByName = (data) => {
 
   return sortedData;
 };
+export const sortDataByCorpName = (data) => {
+  const dataCopy = [...data];
+  const sortedData = dataCopy?.sort((a, b) => {
+    const nameA = a.corpName?.trim()?.toUpperCase();
+    const nameB = b.corpName?.trim()?.toUpperCase();
+
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  });
+
+  return sortedData;
+};
 
 export const sortArrayBySno = (dataArray) => {
   const dataCopy = [...dataArray];

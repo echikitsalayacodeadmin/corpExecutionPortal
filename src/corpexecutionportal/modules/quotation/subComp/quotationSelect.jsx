@@ -4,7 +4,10 @@ import { useSnackbar } from "notistack";
 import { getData, saveData } from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
-import { sortArrayByLastModifiedDate } from "../../../../assets/utils";
+import {
+  sortArrayByLastModifiedDate,
+  sortDataByCorpName,
+} from "../../../../assets/utils";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import { useNavigate, useParams } from "react-router-dom";
 import { CorpNameContext } from "../../../global/context/usercontext";
@@ -35,7 +38,7 @@ const QuotationSelect = () => {
     const response = await getData(url);
     if (response?.data) {
       setIsLoading(false);
-      setCorpList(response?.data);
+      setCorpList(sortDataByCorpName(response?.data));
     } else {
       setCorpList([]);
       setIsLoading(false);
@@ -143,7 +146,7 @@ const QuotationSelect = () => {
             required={true}
             asterickColor={"red"}
             freeSolo={true}
-            getOptionLabel={(corp) => corp?.corpName}
+            getOptionLabel={(corp) => corp?.corpName || corp}
             onChange={(event, newValue, reason) => {
               setSelectedCorp(newValue);
               console.log({ newValue });
@@ -216,13 +219,14 @@ const QuotationSelect = () => {
             onChange={(event, newValue, reason) => {
               setSelectedQouatation(newValue);
               console.log({ newValue });
-              enqueueSnackbar(
-                `Quotation ${newValue?.index}: ${newValue?.corpName} ${newValue?.quotationStatus} is Selected!`,
-                {
-                  variant: "success",
-                }
-              );
-
+              if (newValue !== undefined) {
+                enqueueSnackbar(
+                  `Quotation ${newValue?.index}: ${newValue?.corpName} ${newValue?.quotationStatus} is Selected!`,
+                  {
+                    variant: "success",
+                  }
+                );
+              }
               if (reason === "clear") {
                 setSelectedQouatation(null);
               }
