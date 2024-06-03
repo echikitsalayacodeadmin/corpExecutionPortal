@@ -9,7 +9,7 @@ import {
   Portal,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -30,83 +30,22 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
       window.open(url, "_blank");
     }
   };
-  const [visitDetail, setVisitDetail] = useState([
-    // {
-    //   nextVisitDate: "2024-05-10",
-    //   visitDate: "2024-05-02",
-    //   color: getColorOfNextVisitDate("2024-05-10"),
-    // },
-    // {
-    //   nextVisitDate: "2024-05-03",
-    //   visitDate: "2024-04-28",
-    //   color:
-    //     "2024-05-02" > "2024-05-03"
-    //       ? "red"
-    //       : "2024-05-02" === "2024-05-03"
-    //       ? "orange"
-    //       : "green",
-    // },
-    // {
-    //   nextVisitDate: "2024-04-28",
-    //   visitDate: "2024-04-23",
-    //   color:
-    //     "2024-04-28" > "2024-04-28"
-    //       ? "red"
-    //       : "2024-04-28" === "2024-04-28"
-    //       ? "orange"
-    //       : "green",
-    // },
-    // {
-    //   nextVisitDate: "2024-04-24",
-    //   visitDate: "2024-04-18",
-    //   color:
-    //     "2024-04-23" > "2024-05-24"
-    //       ? "red"
-    //       : "2024-04-23" === "2024-04-24"
-    //       ? "orange"
-    //       : "green",
-    // },
-    // {
-    //   nextVisitDate: "2024-04-17",
-    //   visitDate: "2024-04-14",
-    //   color:
-    //     "2024-04-18" > "2024-05-17"
-    //       ? "red"
-    //       : "2024-04-18" === "2024-04-17"
-    //       ? "orange"
-    //       : "green",
-    // },
-    // {
-    //   nextVisitDate: "2024-04-13",
-    //   visitDate: "2024-04-08",
-    //   color:
-    //     "2024-04-14" > "2024-04-13"
-    //       ? "red"
-    //       : "2024-04-14" === "2024-04-13"
-    //       ? "orange"
-    //       : "green",
-    // },
-    // {
-    //   nextVisitDate: "2024-04-08",
-    //   visitDate: "2024-04-04",
-    //   color:
-    //     "2024-04-08" > "2024-04-08"
-    //       ? "red"
-    //       : "2024-04-08" === "2024-04-08"
-    //       ? "orange"
-    //       : "green",
-    // },
-    // {
-    //   nextVisitDate: "2024-04-05",
-    //   visitDate: "2024-04-01",
-    //   color:
-    //     "2024-04-04" > "2024-04-05"
-    //       ? "red"
-    //       : "2024-04-04" === "2024-04-05"
-    //       ? "orange"
-    //       : "green",
-    // },
-  ]);
+
+  const _storedData = useMemo(() => {
+    try {
+      return JSON.parse(localStorage.getItem("SAVED_FILTER_VISITS_INFO")) || {};
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return {};
+    }
+  }, []);
+
+  useEffect(() => {
+    const _showSalesVisit = _storedData?.showSalesVisit || false;
+    setShowSalesVisit(_showSalesVisit);
+  }, []);
+
+  const [visitDetail, setVisitDetail] = useState([]);
 
   const fetchVisitDetail = async () => {
     if (data?.corpSalesId) {
@@ -133,6 +72,16 @@ const CompanyVisitDetails = ({ data, onlyView = false }) => {
 
   const [openPhoto, setOpenPhoto] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    const savedFilter = {
+      showSalesVisit,
+    };
+    localStorage.setItem(
+      "SAVED_FILTER_VISITS_INFO",
+      JSON.stringify(savedFilter)
+    );
+  }, [showSalesVisit]);
 
   return (
     <Fragment>

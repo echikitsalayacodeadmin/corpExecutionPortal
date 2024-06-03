@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -28,7 +28,7 @@ import CustomButtonBlue from "../../../../../assets/customButtonBlue";
 import dayjs from "dayjs";
 import { isBrowser, isDesktop, isMobile } from "react-device-detect";
 
-const ServiceInfo = ({ data }) => {
+const ServiceInfo = ({ data, setFetch }) => {
   const navigate = useNavigate();
   const { itemId } = useParams();
   const corpSalesId = itemId;
@@ -38,6 +38,22 @@ const ServiceInfo = ({ data }) => {
   // const [selectedRow, setSelectedRow] = useState("");
   const [showServices, setShowServices] = useState(false);
   const [rows, setRows] = useState([]);
+
+  const _storedData = useMemo(() => {
+    try {
+      return (
+        JSON.parse(localStorage.getItem("SAVED_FILTER_SERVICE_INFO")) || {}
+      );
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return {};
+    }
+  }, []);
+
+  useEffect(() => {
+    const _showServices = _storedData?.showServices || false;
+    setShowServices(_showServices);
+  }, []);
 
   const fetchServices = async () => {
     const url = BASE_URL + "corpSales/services";
@@ -49,9 +65,7 @@ const ServiceInfo = ({ data }) => {
         testName: item.serviceName,
         user: data?.[item.id]?.user,
         list: data?.[item.id]?.list,
-        userSelectedDate: data?.[item.id]?.userSelectedDate
-          ? data?.[item.id]?.userSelectedDate
-          : null, //
+        userSelectedDate: null,
         decisionMakingCriteria: data?.[item.id]?.decisionMakingCriteria,
         monthlyInflowNoOfEmp: data?.[item.id]?.monthlyInflowNoOfEmp,
         closureProcedure: data?.[item.id]?.closureProcedure,
@@ -141,6 +155,7 @@ const ServiceInfo = ({ data }) => {
       enqueueSnackbar("Successfully Saved", {
         variant: "success",
       });
+      window.location.reload();
     } else {
       enqueueSnackbar("An Error Occured.", {
         variant: "error",
@@ -171,6 +186,16 @@ const ServiceInfo = ({ data }) => {
     console.log({ allFieldsNull });
     return allFieldsNull;
   };
+
+  useEffect(() => {
+    const savedFilter = {
+      showServices,
+    };
+    localStorage.setItem(
+      "SAVED_FILTER_SERVICE_INFO",
+      JSON.stringify(savedFilter)
+    );
+  }, [showServices]);
 
   return (
     <Fragment>
@@ -243,19 +268,20 @@ const ServiceInfo = ({ data }) => {
                 <GlobalDateLayout
                   label={"Date"}
                   property={"userSelectedDate"}
-                  initialDate={obj?.userSelectedDate}
+                  initialDate={null}
                   onChange={(newValue) => {
-                    console.log({ DATESERVICE: newValue.format("YYYY-MM-DD") });
                     const updatedRows = rows.map((row) =>
                       row.id === obj.id
                         ? {
                             ...obj,
-                            userSelectedDate: newValue.format("YYYY-MM-DD"),
+                            userSelectedDate: newValue?.format("YYYY-MM-DD"),
                           }
                         : row
                     );
+
                     setRows(updatedRows);
                   }}
+                  disableFuture={true}
                 />
               </Grid>
 

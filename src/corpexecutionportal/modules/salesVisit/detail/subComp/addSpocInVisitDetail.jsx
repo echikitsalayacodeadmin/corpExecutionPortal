@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import {
   deleteDataWithObj,
   updateDatePut,
@@ -55,6 +55,23 @@ const AddSpocInVisitDetail = ({
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return regex.test(email);
   };
+
+  const _storedData = useMemo(() => {
+    try {
+      return (
+        JSON.parse(localStorage.getItem("SAVED_FILTER_SPOCLIST_INFO")) || {}
+      );
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return {};
+    }
+  }, []);
+
+  useEffect(() => {
+    const _showSpocList = _storedData?.showSpocList || false;
+    setShowSpocList(_showSpocList);
+  }, []);
+
   const [spocForm, setSpocForm] = useState({
     name: "",
     email: "",
@@ -168,6 +185,16 @@ const AddSpocInVisitDetail = ({
 
   const [openPhoto, setOpenPhoto] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    const savedFilter = {
+      showSpocList,
+    };
+    localStorage.setItem(
+      "SAVED_FILTER_SPOCLIST_INFO",
+      JSON.stringify(savedFilter)
+    );
+  }, [showSpocList]);
 
   return (
     <Fragment>

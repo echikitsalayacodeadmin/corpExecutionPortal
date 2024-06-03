@@ -1043,7 +1043,7 @@ const ServiceRequirementForm = () => {
       ...formValues,
       user: data.user || "",
       list: data.list || "",
-      userSelectedDate: data?.userSelectedDate ? data?.userSelectedDate : null, //
+      userSelectedDate: null,
       decisionMakingCriteria: data.decisionMakingCriteria || "",
       closureProcedure: data.closureProcedure || "",
       monthlyInflowNoOfEmp: data.monthlyInflowNoOfEmp || "",
