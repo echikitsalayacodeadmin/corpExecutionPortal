@@ -383,6 +383,23 @@ const MisMain = () => {
     }
   };
 
+  const downloadCompanyLogHandlerGroupedByStatus = async () => {
+    const url = BASE_URL + `corpSales/companyServiceLogGroupedByStatus`;
+    const response = await getData(url);
+
+    if (response.error) {
+      console.log({ error: response.err });
+      enqueueSnackbar("Failed to get data.", {
+        variant: "error",
+      });
+    } else {
+      console.log({ data: response.data });
+      const formattedData = getFormattedData(response.data);
+      //console.log({ formattedData });
+      downloadCsv(formattedData, "company_log_status");
+    }
+  };
+
   if (isLoading) {
     return (
       <Box
@@ -410,6 +427,7 @@ const MisMain = () => {
                 "Reports for KAM Productivity",
                 "Report for Corp Current Sales Service Status",
                 "Company service log",
+                "Company service log By Status",
               ]}
               getOptionLabel={(option) => option || ""}
               value={filters.typeOfMisReport || ""}
@@ -477,7 +495,8 @@ const MisMain = () => {
             title="Download Report"
             disabled={
               misReport.length > 0 ||
-              filters.typeOfMisReport === "Company service log"
+              filters.typeOfMisReport === "Company service log" ||
+              filters.typeOfMisReport === "Company service log By Status"
                 ? false
                 : true
             }
@@ -498,6 +517,10 @@ const MisMain = () => {
                 downloadCsv(misReport, `Report_for_Corp_Current_Sales_Service`);
               } else if (filters.typeOfMisReport === "Company service log") {
                 downloadCompanyLogHandler();
+              } else if (
+                filters.typeOfMisReport === "Company service log By Status"
+              ) {
+                downloadCompanyLogHandlerGroupedByStatus();
               }
             }}
           />
