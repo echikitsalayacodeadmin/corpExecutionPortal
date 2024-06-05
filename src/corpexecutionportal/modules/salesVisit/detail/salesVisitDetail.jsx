@@ -33,6 +33,7 @@ const SalesVisitDetail = () => {
 
   useEffect(() => {
     fetchCorpDetails(setCorpDetails, setIsLoading, corpSalesId);
+    setFetch(false);
   }, [corpSalesId, fetch]);
 
   const handleSubmit = async () => {
@@ -64,6 +65,7 @@ const SalesVisitDetail = () => {
       <AddSpocInVisitDetail
         formValues={corpDetails}
         setFormValues={setCorpDetails}
+        setFetch={setFetch}
       />
 
       <ServiceInfo

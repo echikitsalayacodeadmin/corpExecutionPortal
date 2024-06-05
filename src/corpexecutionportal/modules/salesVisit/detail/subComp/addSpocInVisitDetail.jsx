@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import {
   deleteDataWithObj,
+  updateData,
+  updateDataFile,
   updateDatePut,
   updateDatePutMultipart,
   uploadFile,
@@ -35,12 +37,12 @@ import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import UploadFile from "../../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
-import { RemoveRedEye } from "@mui/icons-material";
 
 const AddSpocInVisitDetail = ({
   formValues,
   setFormValues,
   onlyView = false,
+  setFetch,
 }) => {
   const { itemId } = useParams();
   const corpSalesId = itemId;
@@ -77,31 +79,44 @@ const AddSpocInVisitDetail = ({
     email: "",
     mobile: "",
     designation: "",
-    isDecisionMaker: "No",
-    spocPhotoUrl: "",
+    decisionMaker: "No",
+    spocPhotoUrl: { source: "" },
   });
   const [open, setOpen] = useState(false);
   const [editedIndex, setEditedIndex] = useState(null);
+  const [editedData, setEditedData] = useState(null);
 
-  const handleOpen = (index) => {
+  const handleOpen = (index, spoc) => {
     setOpen(true);
     if (index !== undefined) {
       setEditedIndex(index);
-      setSpocForm(formValues.spocList[index]);
+      setSpocForm({
+        name: formValues.spocList[index].name || "",
+        email: formValues.spocList[index].email || "",
+        mobile: formValues.spocList[index].mobile || "",
+        designation: formValues.spocList[index].designation || "",
+        decisionMaker: formValues.spocList[index].decisionMaker || "",
+        spocPhotoUrl: {
+          source: formValues.spocList[index].imageUrl || "",
+        },
+      });
+      setEditedData(spoc);
     } else {
       setSpocForm({
         name: "",
         email: "",
         mobile: "",
         designation: "",
-        isDecisionMaker: "No",
-        spocPhotoUrl: "",
+        decisionMaker: "No",
+        spocPhotoUrl: {
+          source: "",
+        },
       });
       setEditedIndex(null);
     }
   };
 
-  console.log({ spocForm });
+  console.log({ spocForm, editedData, editedIndex });
 
   const handleClose = () => {
     setOpen(false);
@@ -111,7 +126,10 @@ const AddSpocInVisitDetail = ({
       email: "",
       mobile: "",
       designation: "",
-      isDecisionMaker: "No",
+      decisionMaker: "No",
+      spocPhotoUrl: {
+        source: "",
+      },
     });
   };
 
@@ -119,11 +137,11 @@ const AddSpocInVisitDetail = ({
     handleSubmit();
   };
 
-  const deleteSpoc = (index, id) => {
+  const deleteSpoc = (index, id, obj) => {
     const updatedSpocList = [...formValues.spocList];
     updatedSpocList.splice(index, 1);
     setFormValues({ ...formValues, spocList: updatedSpocList });
-    handleDeleteSpoc(id);
+    handleDeleteSpoc(obj);
   };
 
   const handleSubmit = async () => {
@@ -135,10 +153,10 @@ const AddSpocInVisitDetail = ({
     spocForm?.designation
       ? formData.append("designation", spocForm?.designation)
       : null;
-    spocForm?.isDecisionMaker
-      ? formData.append("decisionMaker", spocForm?.isDecisionMaker)
+    spocForm?.decisionMaker
+      ? formData.append("decisionMaker", spocForm?.decisionMaker)
       : null;
-    spocForm?.spocPhotoUrl
+    spocForm?.spocPhotoUrl.file
       ? formData.append("file", spocForm?.spocPhotoUrl.file)
       : null;
 
@@ -161,6 +179,7 @@ const AddSpocInVisitDetail = ({
       }
       setShowSpocList(true);
       handleClose();
+      setFetch(true);
     } else if (result && result.error) {
       enqueueSnackbar(`${result.error.response.data.message}`, {
         variant: "error",
@@ -168,14 +187,43 @@ const AddSpocInVisitDetail = ({
     }
   };
 
-  const handleDeleteSpoc = async (id) => {
+  const handleDeleteSpoc = async (data) => {
+    const obj = {
+      corpSalesId: formValues.corpSalesId,
+      deleteList: [data.id],
+    };
     const url = BASE_URL + "corpSales/spoc";
-    const result = await deleteDataWithObj(url, formData);
+    const result = await deleteDataWithObj(url, obj);
     if (result && result.data) {
       enqueueSnackbar("Successfully Deleted", {
         variant: "success",
       });
       setFetch(true);
+      handleClose();
+    } else if (result && result.error) {
+      enqueueSnackbar("An Error Occured", {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleEditSpoc = async () => {
+    const formData = new FormData();
+    formData.append("corpSalesId", formValues?.corpSalesId);
+    formData.append("id", editedData?.id);
+    formData.append("name", spocForm.name);
+    formData.append("mobile", spocForm?.mobile);
+    formData.append("email", spocForm?.email);
+    formData.append("designation", spocForm?.designation);
+    formData.append("decisionMaker", spocForm?.decisionMaker);
+    const url = BASE_URL + "corpSales/spoc";
+    const result = await updateDataFile(url, formData);
+    if (result && result.data) {
+      enqueueSnackbar("Successfully Updated SPOC", {
+        variant: "success",
+      });
+      setFetch(true);
+      handleClose();
     } else if (result && result.error) {
       enqueueSnackbar("An Error Occured", {
         variant: "error",
@@ -271,7 +319,7 @@ const AddSpocInVisitDetail = ({
                       Decision Maker -
                     </Typography>
                     <Typography sx={styles.data}>
-                      {spoc.isDecisionMaker ? "Yes" : "No"}
+                      {spoc.decisionMaker ? "Yes" : "No"}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
@@ -301,8 +349,13 @@ const AddSpocInVisitDetail = ({
               </Grid>
               <Grid item xs={2} lg={2} sx={{ textAlign: "end" }}>
                 {onlyView === true ? null : (
-                  <IconButton onClick={() => deleteSpoc(index, spoc.id)}>
+                  <IconButton onClick={() => deleteSpoc(index, spoc.id, spoc)}>
                     <DeleteIcon />
+                  </IconButton>
+                )}
+                {onlyView === true ? null : (
+                  <IconButton onClick={() => handleOpen(index, spoc)}>
+                    <EditIcon />
                   </IconButton>
                 )}
               </Grid>
@@ -488,7 +541,7 @@ const AddSpocInVisitDetail = ({
                   size="small"
                   fullWidth
                   placeholder="Enter Designation"
-                  value={spocForm.designation}
+                  value={spocForm?.designation}
                   onChange={(e) =>
                     setSpocForm({ ...spocForm, designation: e.target.value })
                   }
@@ -498,16 +551,16 @@ const AddSpocInVisitDetail = ({
                 <Typography sx={{ mb: 1 }}>Descision Maker</Typography>
                 <RadioGroup
                   value={
-                    spocForm.isDecisionMaker === true
+                    spocForm.decisionMaker === true
                       ? "Yes"
-                      : spocForm.isDecisionMaker === false
+                      : spocForm.decisionMaker === false
                       ? "No"
                       : ""
                   }
                   onChange={(e) => {
                     setSpocForm({
                       ...spocForm,
-                      isDecisionMaker:
+                      decisionMaker:
                         e.target.value === "Yes"
                           ? true
                           : e.target.value === "No"
@@ -555,7 +608,11 @@ const AddSpocInVisitDetail = ({
                 <CustomButtonBlue
                   title={"Submit"}
                   onClick={() => {
-                    handleFormSubmit();
+                    if (editedData) {
+                      handleEditSpoc();
+                    } else {
+                      handleFormSubmit();
+                    }
                   }}
                 />
               </Grid>
