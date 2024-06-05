@@ -379,7 +379,16 @@ const MisMain = () => {
       console.log({ data: response.data });
       //const formattedData = getFormattedData(response.data);
       //console.log({ formattedData });
-      downloadCsv(response.data, "company_log");
+      const formattedData = response.data?.map((item) => ({
+        ...item,
+        dateOfChange: item.dateOfChange
+          ? dayjs(item.dateOfChange).format("LL")
+          : "",
+        dateOfLastVisit: item?.dateOfLastVisit
+          ? dayjs(item.dateOfLastVisit).format("LL")
+          : "",
+      }));
+      downloadCsv(formattedData, "company_log");
     }
   };
 
