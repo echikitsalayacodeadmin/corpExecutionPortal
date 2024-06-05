@@ -856,7 +856,7 @@ const servicesFields = {
       label: "Type Of Insurance",
       fieldName: "typeOfService",
       type: "dropdown",
-      options: ["GHI", "GPA", "WORKMEN", "GTI"],
+      options: ["GHI", "GPA", "WORKMEN", "GTI", "PERSONAL", "OTHER"],
     },
     {
       label: "Request Type",

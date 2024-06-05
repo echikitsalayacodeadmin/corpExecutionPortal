@@ -39,6 +39,7 @@ import EmployeeDetailIndex from "./corpexecutionportal/pages/employeeDetailIndex
 import EditCorpDetail from "./corpexecutionportal/pages/editCorpDetail";
 import MisCorp from "./corpexecutionportal/pages/misCorp";
 import { CorpNameContext } from "./corpexecutionportal/global/context/usercontext";
+import UpdateLocation from "./corpexecutionportal/pages/updateLocation";
 
 function App() {
   const [corpName, setCorpName] = useState("");
@@ -167,6 +168,9 @@ function App() {
               path="employeedetail/:empid"
               element={<EmployeeDetailIndex />}
             />
+
+            {/* Update location Corpsales */}
+            <Route path="updatelocation" element={<UpdateLocation />} />
           </Route>
         </Route>
       </Fragment>

@@ -40,6 +40,11 @@ const TopNavbar = () => {
       url: "/corp/analysis",
       visibility: true,
     },
+    {
+      name: "Update Location",
+      url: "/corp/updatelocation",
+      visibility: true,
+    },
   ]);
 
   return (

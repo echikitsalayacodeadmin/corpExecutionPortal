@@ -400,6 +400,25 @@ const MisMain = () => {
     }
   };
 
+  const downloadCorpSalesDump = async () => {
+    const url =
+      BASE_URL +
+      `corpSales/mis/corpsalesdump?startDate=${filters.startDate}&endDate=${filters.endDate}`;
+    const response = await getData(url);
+
+    if (response.error) {
+      console.log({ error: response.err });
+      enqueueSnackbar("Failed to get data.", {
+        variant: "error",
+      });
+    } else {
+      // console.log({ data: response.data });
+      // const formattedData = getFormattedData(response.data);
+      //console.log({ formattedData });
+      downloadCsv(response.data, "Corp_Sales_Dump");
+    }
+  };
+
   if (isLoading) {
     return (
       <Box
@@ -428,6 +447,7 @@ const MisMain = () => {
                 "Report for Corp Current Sales Service Status",
                 "Company service log",
                 "Company service log By Status",
+                "Corp Sales Dump",
               ]}
               getOptionLabel={(option) => option || ""}
               value={filters.typeOfMisReport || ""}
@@ -496,7 +516,8 @@ const MisMain = () => {
             disabled={
               misReport.length > 0 ||
               filters.typeOfMisReport === "Company service log" ||
-              filters.typeOfMisReport === "Company service log By Status"
+              filters.typeOfMisReport === "Company service log By Status" ||
+              filters.typeOfMisReport === "Corp Sales Dump"
                 ? false
                 : true
             }
@@ -521,6 +542,8 @@ const MisMain = () => {
                 filters.typeOfMisReport === "Company service log By Status"
               ) {
                 downloadCompanyLogHandlerGroupedByStatus();
+              } else if (filters.typeOfMisReport === "Corp Sales Dump") {
+                downloadCorpSalesDump();
               }
             }}
           />
