@@ -275,6 +275,33 @@ const columns = {
   ],
 };
 
+const transformCorpSalesDumpData = (data) => {
+  return data?.map((item) => ({
+    isActive: item.isActive,
+    id: item.id,
+    corpName: item.corpName,
+    corpId: item.corpId,
+    photoUrl: item.photoUrl,
+    onRollEmployees: item.onRollEmployees,
+    offRollEmployees: item.offRollEmployees,
+    noOfPlants: item.noOfPlants,
+    auditMonth: item.auditMonth,
+    address: item.address,
+    interested: item.interested,
+    interestedRemark: item.interestedRemark,
+    status: item.status,
+    userId: item.userId,
+    date: item.date,
+    lastVisitDate: item.lastVisitDate,
+    lastvisitDateTimeStamp: item.lastvisitDateTimeStamp,
+    totalVisits: item.totalVisits,
+    location: item.location,
+    subLocation: item.subLocation,
+    priority: item.priority,
+    industryType: item.industryType,
+  }));
+};
+
 const getListFromMap = (data) => {
   let list = Object.entries(data?.mapOfStatusLogsByKam);
   console.log({ list });
@@ -421,10 +448,8 @@ const MisMain = () => {
         variant: "error",
       });
     } else {
-      // console.log({ data: response.data });
-      // const formattedData = getFormattedData(response.data);
-      //console.log({ formattedData });
-      downloadCsv(response.data, "Corp_Sales_Dump");
+      const temp = transformCorpSalesDumpData(response.data);
+      downloadCsv(temp, "Corp_Sales_Dump");
     }
   };
 
