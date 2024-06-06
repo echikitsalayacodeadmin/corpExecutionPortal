@@ -20,7 +20,13 @@ const SelectCorpIndexOrgAnalysis = () => {
     if (response.data) {
       setIsLoading(false);
       console.log({ SUCCESS: response.data });
-      setCorpList(response.data);
+      const temp = response.data?.filter(
+        (item, index, self) =>
+          self.findIndex(
+            (t) => t.orgName === item.orgName || t.corpId === item.corpId
+          ) === index
+      );
+      setCorpList(temp);
     } else {
       setIsLoading(false);
       console.log({ ERROR: response.error });
