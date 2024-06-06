@@ -208,6 +208,7 @@ const AddSpocInVisitDetail = ({
   };
 
   const handleEditSpoc = async () => {
+    console.log({ file: spocForm?.spocPhotoUrl.file });
     const formData = new FormData();
     formData.append("corpSalesId", formValues?.corpSalesId);
     formData.append("id", editedData?.id);
@@ -216,6 +217,9 @@ const AddSpocInVisitDetail = ({
     formData.append("email", spocForm?.email);
     formData.append("designation", spocForm?.designation);
     formData.append("decisionMaker", spocForm?.decisionMaker);
+    spocForm?.spocPhotoUrl.file
+      ? formData.append("file", spocForm?.spocPhotoUrl.file)
+      : null;
     const url = BASE_URL + "corpSales/spoc";
     const result = await updateDataFile(url, formData);
     if (result && result.data) {
