@@ -29,20 +29,20 @@ const GlobalTopNavbars = () => {
   const portals = useMemo(
     () => [
       {
-        name: "Corp Execution Portal",
-        visible: activePortal !== "Corp Execution Portal",
+        name: "Sales & OPS",
+        visible: activePortal !== "Sales & OPS",
         url: "/corp/login",
       },
 
       {
-        name: "Reporting Portal",
-        visible: activePortal !== "Reporting Portal",
+        name: "Tech Reporting",
+        visible: activePortal !== "Tech Reporting",
         url: "/reporting/login",
       },
 
       {
-        name: "Organalysis Portal",
-        visible: activePortal !== "Organalysis Portal",
+        name: "Health Register",
+        visible: activePortal !== "Health Register",
         url: "/org-analysis/login",
       },
     ],
@@ -61,7 +61,7 @@ const GlobalTopNavbars = () => {
               Unocare |{" "}
               {portals.filter(
                 (value) => value.url === window.location.pathname
-              )[0]?.name || "Corp Execution Portal"}
+              )[0]?.name || "Sales & OPS"}
             </Typography>
             <Box
               sx={{

@@ -49,7 +49,7 @@ const LoginWithUserName = ({ setIsMobileLogin, isMobileLogin }) => {
         >
           <CardHeader
             // sx={{ mb: { lg: 20, xs: 1 } }}
-            title="Login to Corp Execution Portal"
+            title="Login to Sales & OPS"
             titleTypographyProps={{
               color: "rgb(0, 0, 255)",
               display: "flex",

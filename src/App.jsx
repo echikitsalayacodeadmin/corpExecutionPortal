@@ -66,6 +66,7 @@ import HomeIndexOrgAnalysis from "./organalysis/pages/homeIndexOrgAnalysis";
 import LoginReporting from "./reportingportal/pages/loginReporting";
 import LoginOrgAnalysis from "./organalysis/pages/loginOrgAnalysis";
 import ReportingRootLayout from "./reportingportal/global/templates/reportingRootLayout";
+import GenericTicketingSystemIndex from "./corpexecutionportal/pages/genericTicketingSystemIndex";
 
 function App() {
   const [corpName, setCorpName] = useState("");
@@ -187,6 +188,7 @@ function App() {
             {/* Mis */}
 
             <Route path="mis" element={<MisCorp />} />
+            <Route path="tickets" element={<GenericTicketingSystemIndex />} />
 
             <Route path="logout" element={<LogoutCorp />} />
 

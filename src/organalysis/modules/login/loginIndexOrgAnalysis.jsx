@@ -46,7 +46,7 @@ const LoginIndexOrgAnalysis = () => {
       >
         <CardHeader
           sx={{ mb: { lg: 5, xs: 1 } }}
-          title="Login to Org Analysis Portal"
+          title="Login to Health Register"
           titleTypographyProps={{
             color: "rgb(0, 0, 255)",
             display: "flex",

@@ -41,7 +41,7 @@ const LoginIndexReporting = () => {
       >
         <CardHeader
           sx={{ mb: { lg: 5, xs: 1 } }}
-          title="Login to Reporting Portal"
+          title="Login to Tech Reporting"
           titleTypographyProps={{
             color: "rgb(0, 0, 255)",
             display: "flex",
