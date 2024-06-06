@@ -44,6 +44,7 @@ import RenderExpandableCells from "../../../assets/globalDataGridLayout/renderEx
 
 const UploadReportMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
+  role = localStorage.getItem("REPORTING_ROLE"),
 }) => {
   const {
     selectedColumns,
@@ -938,73 +939,86 @@ const UploadReportMain = ({
   };
 
   const filteredData = useMemo(() => {
-    return sortDataByName(masterData)
-      .filter(
-        (employee, index, self) =>
-          employee.empId !== null &&
-          employee.empId !== "" &&
-          self.findIndex((e) => e?.empId === employee?.empId) === index
-      )
-      ?.filter((item) => {
-        const reportValueFilter =
-          selectedReportData?.title === "Master Data" ||
-          selectedReportValue?.value === "ALL" ||
-          item[selectedReportData?.filterValue] === selectedReportValue?.value;
-        const empType =
-          selectedEmpType?.value === "" ||
-          item.employmentType === selectedEmpType.value;
-        const uploadedStatusFilter =
-          selectedReportData?.title === "Master Data" ||
-          selectedUploadedStatus?.value === "ALL" ||
-          selectedReportData?.uploadStatusField === "xrayStatus" ||
-          selectedReportData?.uploadStatusField === "firstAidStatus" ||
-          item[selectedReportData?.uploadStatusField] ===
-            selectedUploadedStatus?.value;
-        const searchFilter =
-          searchedEmployee !== ""
-            ? item?.name === searchedEmployee?.name &&
-              item?.empId === searchedEmployee?.empId
-            : true;
-        const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
-        if (fromDate && toDate) {
-          const withinDateRange =
-            vitalsCreatedDate >= new Date(fromDate) &&
-            vitalsCreatedDate <= new Date(toDate);
+    if (role === "REPORTING_OPS") {
+      return sortDataByName(masterData)?.filter(
+        (item) =>
+          item?.name === searchedEmployee?.name &&
+          item?.empId === searchedEmployee?.empId
+      );
+    } else {
+      return sortDataByName(masterData)
+        .filter(
+          (employee, index, self) =>
+            employee.empId !== null &&
+            employee.empId !== "" &&
+            self.findIndex((e) => e?.empId === employee?.empId) === index
+        )
+        ?.filter((item) => {
+          const reportValueFilter =
+            selectedReportData?.title === "Master Data" ||
+            selectedReportValue?.value === "ALL" ||
+            item[selectedReportData?.filterValue] ===
+              selectedReportValue?.value;
+          const empType =
+            selectedEmpType?.value === "" ||
+            item.employmentType === selectedEmpType.value;
+          const uploadedStatusFilter =
+            selectedReportData?.title === "Master Data" ||
+            selectedUploadedStatus?.value === "ALL" ||
+            selectedReportData?.uploadStatusField === "xrayStatus" ||
+            selectedReportData?.uploadStatusField === "firstAidStatus" ||
+            item[selectedReportData?.uploadStatusField] ===
+              selectedUploadedStatus?.value;
+          const searchFilter =
+            searchedEmployee !== ""
+              ? item?.name === searchedEmployee?.name &&
+                item?.empId === searchedEmployee?.empId
+              : true;
+          const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
+          if (fromDate && toDate) {
+            const withinDateRange =
+              vitalsCreatedDate >= new Date(fromDate) &&
+              vitalsCreatedDate <= new Date(toDate);
 
-          return (
-            reportValueFilter &&
-            empType &&
-            uploadedStatusFilter &&
-            searchFilter &&
-            withinDateRange
-          );
-        } else if (fromDate) {
-          // If only fromDate is provided, filter for that specific date
-          const withinDateRange =
-            vitalsCreatedDate >= new Date(fromDate) &&
-            vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
+            return (
+              reportValueFilter &&
+              empType &&
+              uploadedStatusFilter &&
+              searchFilter &&
+              withinDateRange
+            );
+          } else if (fromDate) {
+            // If only fromDate is provided, filter for that specific date
+            const withinDateRange =
+              vitalsCreatedDate >= new Date(fromDate) &&
+              vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
 
-          return (
-            reportValueFilter &&
-            empType &&
-            uploadedStatusFilter &&
-            searchFilter &&
-            withinDateRange
-          );
-        } else {
-          return (
-            reportValueFilter && empType && uploadedStatusFilter && searchFilter
-          );
-        }
-      })
-      .sort((a, b) => {
-        if (selectedCreatedSort.value === "") return 0;
-        return selectedCreatedSort.value === "ASCENDING"
-          ? new Date(a.vitalsCreatedDate) - new Date(b.vitalsCreatedDate)
-          : new Date(b.vitalsCreatedDate) - new Date(a.vitalsCreatedDate);
-      });
+            return (
+              reportValueFilter &&
+              empType &&
+              uploadedStatusFilter &&
+              searchFilter &&
+              withinDateRange
+            );
+          } else {
+            return (
+              reportValueFilter &&
+              empType &&
+              uploadedStatusFilter &&
+              searchFilter
+            );
+          }
+        })
+        .sort((a, b) => {
+          if (selectedCreatedSort.value === "") return 0;
+          return selectedCreatedSort.value === "ASCENDING"
+            ? new Date(a.vitalsCreatedDate) - new Date(b.vitalsCreatedDate)
+            : new Date(b.vitalsCreatedDate) - new Date(a.vitalsCreatedDate);
+        });
+    }
   }, [
     masterData,
+    role,
     selectedReportValue,
     selectedEmpType,
     selectedUploadedStatus,
@@ -1015,9 +1029,9 @@ const UploadReportMain = ({
     toDate,
   ]);
 
-  useEffect(() => {
-    updateEmployeeList(filteredData);
-  }, [filteredData]);
+  // useEffect(() => {
+  //   updateEmployeeList(filteredData);
+  // }, [filteredData]);
 
   const columnVisibilityModel = useMemo(() => {
     const defaultVisibility = {};
@@ -1173,6 +1187,14 @@ const UploadReportMain = ({
       });
     }
   };
+
+  console.log({
+    dummy: sortDataByName(masterData)?.filter(
+      (item) =>
+        item?.name === searchedEmployee?.name &&
+        item?.empId === searchedEmployee?.empId
+    ),
+  });
 
   if (isLoading) {
     return (

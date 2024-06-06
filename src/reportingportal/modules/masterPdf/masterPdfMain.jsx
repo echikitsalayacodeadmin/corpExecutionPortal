@@ -28,6 +28,7 @@ import { sortArrayBySno } from "../../../assets/utils";
 
 const MasterPdfMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
+  role = localStorage.getItem("REPORTING_ROLE"),
 }) => {
   const { updateEmployeeList, empListHeader, searchedEmployee } =
     useContext(ReportingContext);
@@ -740,79 +741,87 @@ const MasterPdfMain = ({
   const [toDate, setToDate] = useState(null);
 
   const filteredData = useMemo(() => {
-    return masterData
-      .filter(
-        (employee, index, self) =>
-          employee.empId !== null &&
-          employee.empId !== "" &&
-          self.findIndex((e) => e?.empId === employee?.empId) === index
-      )
-      .filter((item) =>
-        searchedEmployee !== ""
-          ? item?.name === searchedEmployee?.name &&
-            item?.empId === searchedEmployee?.empId
-          : true
-      )
-      .filter((item) => {
-        return (
-          // selectFilterHWBS?.value === "hwbsAllAbsent"
-          //   ? item.hwbsAllAbsent === "Yes"
-          selectFilterHWBS?.value === "hwbsAllPresent"
-            ? item.hwbsAllPresent === "Yes"
-            : selectFilterHWBS?.value === "hwbsAnyPresent"
-            ? item.hwbsAnyPresent === "Yes"
-            : selectFilterHWBS?.value === "vitalsPresent"
-            ? item.vitalsPresent === "Yes"
-            : selectFilterHWBS?.value === "vitalsNotPresent"
-            ? item.vitalsPresent === "No"
+    if (role === "REPORTING_OPS") {
+      return masterData?.filter(
+        (item) =>
+          item?.name === searchedEmployee?.name &&
+          item?.empId === searchedEmployee?.empId
+      );
+    } else {
+      return masterData
+        .filter(
+          (employee, index, self) =>
+            employee.empId !== null &&
+            employee.empId !== "" &&
+            self.findIndex((e) => e?.empId === employee?.empId) === index
+        )
+        .filter((item) =>
+          searchedEmployee !== ""
+            ? item?.name === searchedEmployee?.name &&
+              item?.empId === searchedEmployee?.empId
             : true
-        );
-      })
-      .filter((item) => {
-        return selectedEmpType?.value === ""
-          ? true
-          : item.employmentType === selectedEmpType.value;
-      })
-      .filter((item) => {
-        return selectedEmpIdList === ""
-          ? true
-          : selectedEmpIdList.split(",").includes(item.empId);
-      })
-      .filter((item) => {
-        const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
-        // const withinDateRange =
-        //   !fromDate ||
-        //   !toDate ||
-        //   (vitalsCreatedDate >= new Date(fromDate) &&
-        //     vitalsCreatedDate <= new Date(toDate));
-        // return withinDateRange;
-        if (fromDate && toDate) {
-          const withinDateRange =
-            vitalsCreatedDate >= new Date(fromDate) &&
-            vitalsCreatedDate <= new Date(toDate);
+        )
+        .filter((item) => {
+          return (
+            // selectFilterHWBS?.value === "hwbsAllAbsent"
+            //   ? item.hwbsAllAbsent === "Yes"
+            selectFilterHWBS?.value === "hwbsAllPresent"
+              ? item.hwbsAllPresent === "Yes"
+              : selectFilterHWBS?.value === "hwbsAnyPresent"
+              ? item.hwbsAnyPresent === "Yes"
+              : selectFilterHWBS?.value === "vitalsPresent"
+              ? item.vitalsPresent === "Yes"
+              : selectFilterHWBS?.value === "vitalsNotPresent"
+              ? item.vitalsPresent === "No"
+              : true
+          );
+        })
+        .filter((item) => {
+          return selectedEmpType?.value === ""
+            ? true
+            : item.employmentType === selectedEmpType.value;
+        })
+        .filter((item) => {
+          return selectedEmpIdList === ""
+            ? true
+            : selectedEmpIdList.split(",").includes(item.empId);
+        })
+        .filter((item) => {
+          const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
+          // const withinDateRange =
+          //   !fromDate ||
+          //   !toDate ||
+          //   (vitalsCreatedDate >= new Date(fromDate) &&
+          //     vitalsCreatedDate <= new Date(toDate));
+          // return withinDateRange;
+          if (fromDate && toDate) {
+            const withinDateRange =
+              vitalsCreatedDate >= new Date(fromDate) &&
+              vitalsCreatedDate <= new Date(toDate);
 
-          return withinDateRange;
-        } else if (fromDate) {
-          // If only fromDate is provided, filter for that specific date
-          const withinDateRange =
-            vitalsCreatedDate >= new Date(fromDate) &&
-            vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
-          return withinDateRange;
-        } else {
-          const withinDateRange =
-            !fromDate ||
-            !toDate ||
-            (vitalsCreatedDate >= new Date(fromDate) &&
-              vitalsCreatedDate <= new Date(toDate));
-          return withinDateRange;
-        }
-      })
-      .sort((a, b) => {
-        if (selectedCreatedSort.value === "") return 0;
-        return selectedCreatedSort.value === "ASCENDING"
-          ? new Date(a.vitalsCreatedDate) - new Date(b.vitalsCreatedDate)
-          : new Date(b.vitalsCreatedDate) - new Date(a.vitalsCreatedDate);
-      });
+            return withinDateRange;
+          } else if (fromDate) {
+            // If only fromDate is provided, filter for that specific date
+            const withinDateRange =
+              vitalsCreatedDate >= new Date(fromDate) &&
+              vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
+            return withinDateRange;
+          } else {
+            const withinDateRange =
+              !fromDate ||
+              !toDate ||
+              (vitalsCreatedDate >= new Date(fromDate) &&
+                vitalsCreatedDate <= new Date(toDate));
+            return withinDateRange;
+          }
+        })
+        .sort((a, b) => {
+          if (selectedCreatedSort.value === "") return 0;
+          return selectedCreatedSort.value === "ASCENDING"
+            ? new Date(a.vitalsCreatedDate) - new Date(b.vitalsCreatedDate)
+            : new Date(b.vitalsCreatedDate) - new Date(a.vitalsCreatedDate);
+        });
+    }
   }, [
     masterData,
     selectFilterHWBS,

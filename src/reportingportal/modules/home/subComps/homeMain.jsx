@@ -46,7 +46,10 @@ import { BASE_URL } from "../../../../assets/constants";
 import { useSnackbar } from "notistack";
 import UpdateEmpDetail from "./updateEmpDetail";
 
-const HomeMain = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
+const HomeMain = ({
+  corpId = localStorage.getItem("CORP_ID_REPORTING"),
+  role = localStorage.getItem("REPORTING_ROLE"),
+}) => {
   const {
     selectedColumns,
     openDialog,
@@ -1034,88 +1037,98 @@ const HomeMain = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
 
   // Memoized filtered data state
   const filteredData = useMemo(() => {
-    return sortDataByName(masterData)
-      .filter(
-        (employee, index, self) =>
-          employee.empId !== null &&
-          employee.empId !== "" &&
-          self.findIndex((e) => e?.empId === employee?.empId) === index
-      )
-      ?.filter((item) => {
-        const reportFilter =
-          selectedReportData?.filterValue === "" ||
-          item[selectedReportData?.filterValue] !== undefined;
-        const reportValueFilter =
-          selectedReportData?.title === "Master Data" ||
-          selectedReportValue?.value === "ALL" ||
-          item[selectedReportData?.filterValue] === selectedReportValue?.value;
-        const empType =
-          selectedEmpType?.value === "" ||
-          item.employmentType === selectedEmpType.value;
-        const HWBSFilter =
-          selectFilterHWBS?.value === "hwbsAllPresent"
-            ? item.hwbsAllPresent === "Yes"
-            : selectFilterHWBS?.value === "hwbsAnyPresent"
-            ? item.hwbsAnyPresent === "Yes"
-            : selectFilterHWBS?.value === "vitalsPresent"
-            ? item.vitalsPresent === "Yes"
-            : selectFilterHWBS?.value === "vitalsNotPresent"
-            ? item.vitalsPresent === "No"
-            : true;
-        const searchFilter =
-          searchedEmployee !== ""
-            ? item?.name === searchedEmployee?.name &&
-              item?.empId === searchedEmployee?.empId
-            : true;
+    if (role === "REPORTING_OPS") {
+      return masterData?.filter(
+        (item) =>
+          item?.name === searchedEmployee?.name &&
+          item?.empId === searchedEmployee?.empId
+      );
+    } else {
+      return sortDataByName(masterData)
+        .filter(
+          (employee, index, self) =>
+            employee.empId !== null &&
+            employee.empId !== "" &&
+            self.findIndex((e) => e?.empId === employee?.empId) === index
+        )
+        ?.filter((item) => {
+          const reportFilter =
+            selectedReportData?.filterValue === "" ||
+            item[selectedReportData?.filterValue] !== undefined;
+          const reportValueFilter =
+            selectedReportData?.title === "Master Data" ||
+            selectedReportValue?.value === "ALL" ||
+            item[selectedReportData?.filterValue] ===
+              selectedReportValue?.value;
+          const empType =
+            selectedEmpType?.value === "" ||
+            item.employmentType === selectedEmpType.value;
+          const HWBSFilter =
+            selectFilterHWBS?.value === "hwbsAllPresent"
+              ? item.hwbsAllPresent === "Yes"
+              : selectFilterHWBS?.value === "hwbsAnyPresent"
+              ? item.hwbsAnyPresent === "Yes"
+              : selectFilterHWBS?.value === "vitalsPresent"
+              ? item.vitalsPresent === "Yes"
+              : selectFilterHWBS?.value === "vitalsNotPresent"
+              ? item.vitalsPresent === "No"
+              : true;
+          const searchFilter =
+            searchedEmployee !== ""
+              ? item?.name === searchedEmployee?.name &&
+                item?.empId === searchedEmployee?.empId
+              : true;
 
-        const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
+          const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
 
-        // Check if fromDate and toDate are provided
-        if (fromDate && toDate) {
-          const withinDateRange =
-            vitalsCreatedDate >= new Date(fromDate) &&
-            vitalsCreatedDate <= new Date(toDate);
+          // Check if fromDate and toDate are provided
+          if (fromDate && toDate) {
+            const withinDateRange =
+              vitalsCreatedDate >= new Date(fromDate) &&
+              vitalsCreatedDate <= new Date(toDate);
 
-          return (
-            reportFilter &&
-            empType &&
-            reportValueFilter &&
-            HWBSFilter &&
-            searchFilter &&
-            withinDateRange
-          );
-        } else if (fromDate) {
-          // If only fromDate is provided, filter for that specific date
-          const withinDateRange =
-            vitalsCreatedDate >= new Date(fromDate) &&
-            vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
+            return (
+              reportFilter &&
+              empType &&
+              reportValueFilter &&
+              HWBSFilter &&
+              searchFilter &&
+              withinDateRange
+            );
+          } else if (fromDate) {
+            // If only fromDate is provided, filter for that specific date
+            const withinDateRange =
+              vitalsCreatedDate >= new Date(fromDate) &&
+              vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
 
-          return (
-            reportFilter &&
-            empType &&
-            reportValueFilter &&
-            HWBSFilter &&
-            searchFilter &&
-            withinDateRange
-          );
-        } else {
-          return (
-            reportFilter &&
-            empType &&
-            reportValueFilter &&
-            HWBSFilter &&
-            searchFilter
-          );
-        }
-      })
-      .sort((a, b) => {
-        if (selectedCreatedSort.value === "") return 0;
-        return selectedCreatedSort.value === "ASCENDING"
-          ? new Date(a.vitalsCreatedDate) - new Date(b.vitalsCreatedDate)
-          : new Date(b.vitalsCreatedDate) - new Date(a.vitalsCreatedDate);
-      });
+            return (
+              reportFilter &&
+              empType &&
+              reportValueFilter &&
+              HWBSFilter &&
+              searchFilter &&
+              withinDateRange
+            );
+          } else {
+            return (
+              reportFilter &&
+              empType &&
+              reportValueFilter &&
+              HWBSFilter &&
+              searchFilter
+            );
+          }
+        })
+        .sort((a, b) => {
+          if (selectedCreatedSort.value === "") return 0;
+          return selectedCreatedSort.value === "ASCENDING"
+            ? new Date(a.vitalsCreatedDate) - new Date(b.vitalsCreatedDate)
+            : new Date(b.vitalsCreatedDate) - new Date(a.vitalsCreatedDate);
+        });
+    }
   }, [
     masterData,
+    role,
     selectedEmpType,
     selectedReportData,
     selectedReportValue,
@@ -1178,6 +1191,20 @@ const HomeMain = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
       }
     }
   };
+
+  const reportingOpsData = useMemo(() => {
+    if (role === "REPORTING_OPS") {
+      masterData.filter((item) => {
+        const searchFilter =
+          searchedEmployee !== ""
+            ? item?.name === searchedEmployee?.name &&
+              item?.empId === searchedEmployee?.empId
+            : true;
+
+        return searchFilter;
+      });
+    }
+  }, [searchedEmployee]);
 
   if (isLoading) {
     return (

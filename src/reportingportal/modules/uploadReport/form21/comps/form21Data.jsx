@@ -8,6 +8,7 @@ import {
   Grid,
 } from "@mui/material";
 import CustomDataGridLayout from "../../../../../assets/globalDataGridLayout/customDataGridLayout";
+import RenderExpandableCells from "../../../../../assets/globalDataGridLayout/renderExpandableCells";
 
 const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
   const [form21Data, setForm21Data] = useState([]);
@@ -53,6 +54,14 @@ const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
       width: 80,
       align: "left",
       headerAlign: "left",
+    },
+    {
+      field: "occupation",
+      headerName: "Occupation",
+      width: 250,
+      align: "left",
+      headerAlign: "left",
+      renderCell: (params) => <RenderExpandableCells {...params} />,
     },
     {
       field: "dateOfJoining",

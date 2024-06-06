@@ -66,6 +66,70 @@ export const getReportingPermissions = () => {
       };
 
       break;
+    case "REPORTING_OPS":
+      permissions = {
+        assignKamTab: { visibilty: true },
+        corpAdminTab: { visibilty: true },
+        bulkUploadTab: { visibilty: true },
+        managePermissionsTab: { visibilty: true },
+        masterDataTab: { visibilty: true },
+        createReportTab: {
+          visibilty: true,
+          createReportBtn: { visibilty: true },
+          childTab: {
+            form32Tab: { visibilty: true },
+            form35Tab: { visibilty: true },
+            fitnessCertificateTab: { visibilty: true },
+            xrayTab: { visibilty: true },
+            foodCertificateTab: { visibilty: true },
+            physicalFitnessFormTab: { visibilty: true },
+            vaccinationCertificateTab: { visibilty: true },
+          },
+        },
+        uploadReportTab: {
+          visibilty: true,
+          columnVisibility: { uploadReportCol: true, reportActions: true },
+          childTab: {
+            bloodTab: { visibilty: true },
+            pftTab: { visibilty: true },
+            audiometryTab: { visibilty: true },
+            ecgTab: { visibilty: true },
+            xrayFilmTab: { visibilty: true },
+            firstAidTab: { visibilty: true },
+            form21Tab: {
+              getForm21Data: { visibilty: true },
+              uploadForm21Data: { visibilty: true },
+            },
+          },
+        },
+        masterPdfTab: {
+          visibilty: true,
+          createMasterPdfBtn: { visibilty: true },
+          childTab: {
+            masterPdfRequestTab: { visibilty: true },
+            masterPdfDownloadTab: { visibilty: true },
+          },
+        },
+        uploadSequenceTab: { visibilty: false },
+        uploadReportCloudTab: {
+          visibilty: false,
+          childTab: {
+            uploadTab: { visibilty: false },
+            // getCountTab: { visibilty: true },
+            // moveFilesTab: { visibilty: true },
+            // deleteFilesTab: { visibilty: true },
+            // viewFilesTab: { visibilty: true },
+            allFilesTab: { visibilty: false, processReportBtn: true },
+            allFilesTaskExecutor: { visibilty: false, processReportBtn: true },
+            // processedReportTab: { visibilty: true },
+          },
+        },
+        refreshHeadersTab: { visibilty: false },
+        healthRegisterTab: { visibilty: true },
+        reportAnalysis: { visibilty: true },
+      };
+
+      break;
     case "REPORTING":
       permissions = {
         assignKamTab: { visibilty: true },
