@@ -40,6 +40,32 @@ import EditCorpDetail from "./corpexecutionportal/pages/editCorpDetail";
 import MisCorp from "./corpexecutionportal/pages/misCorp";
 import { CorpNameContext } from "./corpexecutionportal/global/context/usercontext";
 import UpdateLocation from "./corpexecutionportal/pages/updateLocation";
+import ReportingAuthLayout from "./reportingportal/global/templates/reportingAuthLayout";
+import SelectCorp from "./reportingportal/pages/selectCorp";
+import CreateCorpCredentials from "./reportingportal/pages/createCorpCredentials";
+import Assignkam from "./reportingportal/pages/assignkam";
+import BulkUploadReporting from "./reportingportal/pages/bulkUploadReporting";
+import ManagePermissionsReporting from "./reportingportal/pages/managePermissionsReporting";
+import MainReporting from "./reportingportal/pages/mainReporting";
+import MasterDataReporting from "./reportingportal/pages/masterDataReporting";
+import SequenceReporting from "./reportingportal/pages/sequenceReporting";
+import PdfMasterDownload from "./reportingportal/pages/pdfMasterDownload";
+import PdfMasterRequest from "./reportingportal/pages/pdfMasterRequest";
+import UploadReportCloud from "./reportingportal/pages/uploadReportCloud";
+import RefreshDataIndex from "./reportingportal/pages/refreshDataIndex";
+import HealthRegisterIndex from "./reportingportal/pages/healthRegisterIndex";
+import ReportAnalysis from "./reportingportal/pages/reportAnalysis";
+import UploadReport from "./reportingportal/pages/uploadReport";
+import UploadReportMain from "./reportingportal/modules/uploadReport/uploadReportMain";
+import Form21Reporting from "./reportingportal/pages/form21Reporting";
+import LogoutReporting from "./reportingportal/pages/logoutReporting";
+import OrgAnalysisRootLayout from "./organalysis/global/templates/orgAnalysisRootLayout";
+import OrgAnalysisAuthLayout from "./organalysis/global/templates/orgAnalysisAuthLayout";
+import SelectCorpOrgAnalysis from "./organalysis/pages/selectCorpOrgAnalysis";
+import HomeIndexOrgAnalysis from "./organalysis/pages/homeIndexOrgAnalysis";
+import LoginReporting from "./reportingportal/pages/loginReporting";
+import LoginOrgAnalysis from "./organalysis/pages/loginOrgAnalysis";
+import ReportingRootLayout from "./reportingportal/global/templates/reportingRootLayout";
 
 function App() {
   const [corpName, setCorpName] = useState("");
@@ -52,6 +78,9 @@ function App() {
           element={<GlobalRootLayout />}
         >
           <Route index element={<Landing />} />
+          <Route path="corp/login" element={<LoginCorp />} />
+          <Route path="reporting/login" element={<LoginReporting />} />
+          <Route path="org-analysis/login" element={<LoginOrgAnalysis />} />
         </Route>
 
         <Route
@@ -61,7 +90,6 @@ function App() {
         >
           <Route index element={<HomeCorp />} />
           <Route element={<CorpAuthLayout />}>
-            <Route path="login" element={<LoginCorp />} />
             <Route path="home" element={<HomeCorp />} />
 
             {/* Delivery Orchestrator */}
@@ -171,6 +199,60 @@ function App() {
 
             {/* Update location Corpsales */}
             <Route path="updatelocation" element={<UpdateLocation />} />
+          </Route>
+        </Route>
+
+        <Route
+          path="/reporting"
+          errorElement={<ErrorPage />}
+          element={<ReportingRootLayout />}
+        >
+          <Route element={<ReportingAuthLayout />}>
+            <Route path="select-corp" element={<SelectCorp />} />
+            <Route
+              path="create-corp-credentials"
+              element={<CreateCorpCredentials />}
+            />
+            <Route path="assign-kam" element={<Assignkam />} />
+            <Route path="bulkupload" element={<BulkUploadReporting />} />
+            <Route
+              path="managepermissions"
+              element={<ManagePermissionsReporting />}
+            />
+            <Route path="reporting-main" element={<MainReporting />}>
+              <Route path="" element={<MasterDataReporting />} />
+              <Route path="master-data" element={<MasterDataReporting />} />
+              <Route path="upload-sequence" element={<SequenceReporting />} />
+              <Route
+                path="master-pdf-download"
+                element={<PdfMasterDownload />}
+              />
+              <Route path="master-pdf-request" element={<PdfMasterRequest />} />
+              <Route
+                path="upload-reports-cloud"
+                element={<UploadReportCloud />}
+              />
+              <Route path="refresh-data" element={<RefreshDataIndex />} />
+              <Route path="health-register" element={<HealthRegisterIndex />} />
+              <Route path="report-analysis" element={<ReportAnalysis />} />
+
+              <Route path="upload-reports" element={<UploadReport />}>
+                <Route path="" element={<UploadReportMain />} />
+                <Route path="form21" element={<Form21Reporting />} />
+              </Route>
+            </Route>
+            <Route path="logout" element={<LogoutReporting />} />
+          </Route>
+        </Route>
+
+        <Route
+          path="/org-analysis"
+          errorElement={<ErrorPage />}
+          element={<OrgAnalysisRootLayout />}
+        >
+          <Route element={<OrgAnalysisAuthLayout />}>
+            <Route path="select-corp" element={<SelectCorpOrgAnalysis />} />
+            <Route path="home" element={<HomeIndexOrgAnalysis />} />
           </Route>
         </Route>
       </Fragment>

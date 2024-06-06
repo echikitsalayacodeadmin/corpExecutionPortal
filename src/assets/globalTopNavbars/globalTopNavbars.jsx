@@ -6,14 +6,16 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
 import { Fragment, useContext, useMemo, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { PortalContext } from "../globalContext/globalContext";
+import { useNavigate } from "react-router-dom";
 
 const GlobalTopNavbars = () => {
+  const { activePortal, changeActivePortal } = useContext(PortalContext);
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -24,13 +26,44 @@ const GlobalTopNavbars = () => {
     setAnchorElNav(null);
   };
 
+  const portals = useMemo(
+    () => [
+      {
+        name: "Corp Execution Portal",
+        visible: activePortal !== "Corp Execution Portal",
+        url: "/corp/login",
+      },
+
+      {
+        name: "Reporting Portal",
+        visible: activePortal !== "Reporting Portal",
+        url: "/reporting/login",
+      },
+
+      {
+        name: "Organalysis Portal",
+        visible: activePortal !== "Organalysis Portal",
+        url: "/org-analysis/login",
+      },
+    ],
+    [activePortal]
+  );
+
+  const [selectedPortal, setselectedPortal] = useState(portals[0]);
+  console.log(window.location.pathname);
+  const navigate = useNavigate();
   return (
     <Fragment>
       <AppBar position="fixed" color="default">
         <Container maxWidth={false}>
           <Toolbar sx={{ justifyContent: "space-between" }}>
-            <Typography variant="h6">Unocare | Sales Portal</Typography>
-            {/* <Box
+            <Typography variant="h6">
+              Unocare |{" "}
+              {portals.filter(
+                (value) => value.url === window.location.pathname
+              )[0]?.name || "Corp Execution Portal"}
+            </Typography>
+            <Box
               sx={{
                 flexGrow: 1,
                 display: { xs: "none", lg: "flex" },
@@ -39,22 +72,22 @@ const GlobalTopNavbars = () => {
                 mr: 1,
               }}
             >
-              {portals.map(
-                (portal, index) =>
-                  portal.visible && (
-                    <Button
-                      key={index}
-                      sx={{
-                        my: 1,
-                        color: "black",
-                        display: "block",
-                      }}
-                      onClick={() => changeActivePortal(portal.name)}
-                    >
-                      {portal?.name}
-                    </Button>
-                  )
-              )}
+              {portals.map((portal, index) => (
+                <Button
+                  key={index}
+                  sx={{
+                    my: 1,
+                    color: "black",
+                    display: "block",
+                  }}
+                  onClick={() => {
+                    navigate(portal.url);
+                    setselectedPortal(portal);
+                  }}
+                >
+                  {portal?.name}
+                </Button>
+              ))}
             </Box>
             <Box sx={{ display: { xs: "block", lg: "none" } }}>
               <IconButton
@@ -85,27 +118,25 @@ const GlobalTopNavbars = () => {
                   display: { xs: "block", lg: "none" },
                 }}
               >
-                {portals.map(
-                  (portal) =>
-                    portal.visible && (
-                      <MenuItem
-                        key={portal.name}
-                        sx={{
-                          "&:hover": {
-                            backgroundColor: "lightgray !important",
-                          },
-                        }}
-                        onClick={() => {
-                          changeActivePortal(portal.name);
-                          handleCloseNavMenu();
-                        }}
-                      >
-                        {portal.name}
-                      </MenuItem>
-                    )
-                )}
+                {portals.map((portal) => (
+                  <MenuItem
+                    key={portal.name}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "lightgray !important",
+                      },
+                    }}
+                    onClick={() => {
+                      navigate(portal.url);
+                      handleCloseNavMenu();
+                      setselectedPortal(portal);
+                    }}
+                  >
+                    {portal.name}
+                  </MenuItem>
+                ))}
               </Menu>
-            </Box> */}
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>

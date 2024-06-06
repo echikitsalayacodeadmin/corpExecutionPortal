@@ -433,3 +433,72 @@ export const assignColors = (visits) => {
 
   return visits;
 };
+
+export const stringToObject = (str) => {
+  return str?.split(", ")?.reduce((acc, pair) => {
+    const [key, value] = pair.split(": ");
+    acc[key] = value === "True";
+    return acc;
+  }, {});
+};
+
+export const setAttendancePortalMetaData = (data, token) => {
+  console.log({ data, token });
+  localStorage.setItem("AUTHHEADER_ATTENDANCE", token);
+  localStorage.setItem("ROLE_ATTENDANCE", data?.role);
+  localStorage.setItem("BRANCH_ID_ATTENDANCE", data?.userID);
+  localStorage.setItem("USER_NAME_ATTENDANCE", data?.name);
+  localStorage.setItem("USER_MOBILE_ATTENDANCE", data?.mobile);
+  localStorage.setItem("AUTH_ID_ATTENDANCE", data?.id);
+  localStorage.setItem("PORTAL_ATTENDANCE", data?.portal);
+  localStorage.setItem("ROLES_ATTENDANCE", data?.roles);
+};
+
+export const processStringForAudiometry = (str) => {
+  if (str) {
+    const words = str.trim().split(/\s+/);
+
+    if (words.length === 2) {
+      if (str.length > 20) {
+        words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+        words[1] = words[1].charAt(0).toUpperCase();
+        return words.join(" ");
+      }
+    } else if (words.length === 3) {
+      if (str.length > 20) {
+        words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+        words[1] = words[1].charAt(0).toUpperCase();
+        words[2] = words[2].charAt(0).toUpperCase() + words[2].slice(1);
+        return words.join(" ");
+      }
+    } else if (words.length > 3) {
+      if (str.length > 20) {
+        const middleIndex = Math.floor(words.length / 2);
+        const middleWord = words[middleIndex].charAt(0).toUpperCase();
+
+        words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+        words[words.length - 1] =
+          words[words.length - 1].charAt(0).toUpperCase() +
+          words[words.length - 1].slice(1);
+
+        return words[0] + " " + middleWord + " " + words[words.length - 1];
+      }
+    }
+    return str;
+  }
+};
+
+export const shortenName = (employeeName, employeeId, testName) => {
+  if (employeeName && employeeId && testName) {
+    if (testName === "pft") {
+      const words = employeeName?.trim().split(/\s+/);
+      return words[0] + " " + employeeId;
+    } else if (testName === "audiometry") {
+      return processStringForAudiometry(employeeName);
+    } else if (testName === "pathology") {
+      return employeeName + " " + employeeId;
+    } else if (testName === "xray") {
+      return employeeName + " " + employeeId;
+    }
+  }
+};

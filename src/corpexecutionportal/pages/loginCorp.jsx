@@ -1,11 +1,14 @@
 import { Fragment } from "react";
 import CorpRootLayout from "../global/templates/corpRootLayout";
 import LoginIndex from "../modules/login/loginIndex";
+import LandingIndexDynamic from "../../landing/landingIndexDynamic";
 
 const LoginCorp = () => {
   return (
     <Fragment>
-      <LoginIndex />
+      <LandingIndexDynamic>
+        <LoginIndex />
+      </LandingIndexDynamic>
     </Fragment>
   );
 };

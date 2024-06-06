@@ -1,0 +1,19 @@
+export const logoutUser = (navigate) => {
+  localStorage.removeItem("AUTHHEADER_REPORTING");
+  localStorage.removeItem("CORP_NAME_REPORTING");
+  localStorage.removeItem("CORP_ID_REPORTING");
+  localStorage.removeItem("CORP_LOGO_REPORTING");
+  localStorage.removeItem("CORP_ADDRESS_REPORTING");
+  localStorage.removeItem("SAVED_CREATE_CREDENT");
+  localStorage.removeItem("SAVED_FILTER_HOME");
+  localStorage.removeItem("SAVED_FILTER_GENERATE_REPORT");
+  localStorage.removeItem("SAVED_FILTER_HEADER");
+  localStorage.removeItem("SAVED_FILTER_HOME_MAIN");
+  localStorage.removeItem("SAVED_FILTER_HEALTH_REGISTER");
+  localStorage.removeItem("SAVED_FILTER_SIDE_BAR");
+  localStorage.removeItem("SAVED_FILTER_MASTER_PDF");
+  localStorage.removeItem("SAVED_FILTER_UPLOAD_REPORT");
+  localStorage.removeItem("SAVED_S3_FILTERS");
+  localStorage.removeItem("SAVED_FORM_21_TAB");
+  navigate("/reporting/login");
+};

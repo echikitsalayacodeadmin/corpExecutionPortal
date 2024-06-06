@@ -73,7 +73,7 @@ const LoginWithMobile = ({ setIsMobileLogin, isMobileLogin }) => {
           />
           <CardContent>
             <form onSubmit={handleLogin}>
-              <Stack spacing={2}>
+              <Stack spacing={1}>
                 <TextField
                   placeholder={"Mobile Number"}
                   required

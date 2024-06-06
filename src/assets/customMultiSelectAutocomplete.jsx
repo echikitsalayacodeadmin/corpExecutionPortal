@@ -46,6 +46,19 @@ const CustomMultiSelectAutocomplete = ({
       renderInput={(params) => (
         <TextField
           {...params}
+          sx={{
+            background: "#fff",
+            color: "#127DDD",
+            fontWeight: "500",
+            fontSize: "13px",
+            lineHeight: " 15px",
+            "& input::placeholder": {
+              color: "#000000",
+              fontWeight: "500",
+              fontSize: "13px",
+              lineHeight: " 15px",
+            },
+          }}
           label={label}
           variant="outlined"
           placeholder={placeholder}
