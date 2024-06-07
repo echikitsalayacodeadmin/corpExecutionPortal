@@ -452,6 +452,21 @@ const MisMain = () => {
       downloadCsv(temp, "Corp_Sales_Dump");
     }
   };
+  const downloadAttendanceMisReport = async () => {
+    const url =
+      BASE_URL +
+      `staff/mis/reports?fromDate=${filters.startDate}&toDate=${filters.endDate}`;
+    const response = await getData(url);
+
+    if (response.error) {
+      console.log({ error: response.err });
+      enqueueSnackbar("Failed to get data.", {
+        variant: "error",
+      });
+    } else {
+      downloadCsv(response.data, "Attendance_Mis_Report");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -482,6 +497,7 @@ const MisMain = () => {
                 "Company service log",
                 "Company service log By Status",
                 "Corp Sales Dump",
+                "Attendance Mis Report",
               ]}
               getOptionLabel={(option) => option || ""}
               value={filters.typeOfMisReport || ""}
@@ -551,7 +567,8 @@ const MisMain = () => {
               misReport.length > 0 ||
               filters.typeOfMisReport === "Company service log" ||
               filters.typeOfMisReport === "Company service log By Status" ||
-              filters.typeOfMisReport === "Corp Sales Dump"
+              filters.typeOfMisReport === "Corp Sales Dump" ||
+              filters.typeOfMisReport === "Attendance Mis Report"
                 ? false
                 : true
             }
@@ -578,6 +595,8 @@ const MisMain = () => {
                 downloadCompanyLogHandlerGroupedByStatus();
               } else if (filters.typeOfMisReport === "Corp Sales Dump") {
                 downloadCorpSalesDump();
+              } else if (filters.typeOfMisReport === "Attendance Mis Report") {
+                downloadAttendanceMisReport();
               }
             }}
           />
