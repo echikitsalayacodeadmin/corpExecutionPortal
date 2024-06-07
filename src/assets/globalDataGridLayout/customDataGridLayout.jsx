@@ -267,16 +267,18 @@ const CustomDataGridLayout = ({
             const snoCount = rows.filter(
               (row) => row.sno === params.row.sno
             )?.length;
-            const employeeIdCount = rows.filter(
-              (row) => row.employeeid === params.row.employeeid
-            )?.length;
+            // const employeeIdCount = rows.filter(
+            //   (row) => row.employeeid === params.row.employeeid
+            // )?.length;
 
             return params.row.employeeid === "" ||
               params.row.sno === "" ||
               params.row.name === "" ||
-              snoCount > 1 ||
-              employeeIdCount > 1
-              ? "error"
+              params.row.foundInDb === false ||
+              snoCount > 1
+              ? //  ||
+                // employeeIdCount > 1
+                "error"
               : "";
           }}
           editMode={editMode}
