@@ -67,6 +67,9 @@ import LoginReporting from "./reportingportal/pages/loginReporting";
 import LoginOrgAnalysis from "./organalysis/pages/loginOrgAnalysis";
 import ReportingRootLayout from "./reportingportal/global/templates/reportingRootLayout";
 import GenericTicketingSystemIndex from "./corpexecutionportal/pages/genericTicketingSystemIndex";
+import EngagementCorp from "./corpexecutionportal/pages/engagementCorp";
+import SessionInfoCorp from "./corpexecutionportal/pages/sessionInfoCorp";
+import CalenderInfoCorp from "./corpexecutionportal/pages/calenderInfoCorp";
 
 function App() {
   const [corpName, setCorpName] = useState("");
@@ -201,6 +204,17 @@ function App() {
 
             {/* Update location Corpsales */}
             <Route path="updatelocation" element={<UpdateLocation />} />
+            {/* Engagement */}
+            <Route path="engagement" element={<EngagementCorp />} />
+
+            <Route
+              path="engagement/sessioninfo"
+              element={<SessionInfoCorp />}
+            />
+            <Route
+              path="engagement/calendarinfo"
+              element={<CalenderInfoCorp />}
+            />
           </Route>
         </Route>
 
