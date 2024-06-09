@@ -5,7 +5,13 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { CustomTypographyBold } from "../../../../assets/customTypography";
 import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import GlobalDateLayout from "../../../../assets/globalDateLayout/globalDateLayout";
@@ -20,6 +26,7 @@ const Dashboard = () => {
   const [toDate, setToDate] = useState(new Date());
   const [isLoading, setIsLoading] = useState(false);
   const [corpList, setCorpList] = useState([]);
+  const [searchedCompany, setSearchedCompany] = useState("");
 
   const fetchCorps = async () => {
     setIsLoading(true);
@@ -37,25 +44,19 @@ const Dashboard = () => {
   useEffect(() => {
     fetchCorps();
   }, []);
-  // const [corpList, setCorpList] = useState([]);
-
-  // const fetchCorps = async () => {
-  //   const url = BASE_URL + "task/corp/all";
-  //   const result = await getData(url);
-  //   if (result.data) {
-  //     setCorpList(result.data);
-  //   } else {
-  //     setCorpList([]);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchCorps();
-  // }, []);
 
   useEffect(() => {
     setCorpName("");
   }, [corpName]);
+
+  const filteredCorps = useMemo(() => {
+    console.log({ searchedCompany });
+    return corpList.filter((item) =>
+      searchedCompany ? item.corpName === searchedCompany.corpName : true
+    );
+  }, [searchedCompany, corpList]);
+
+  console.log({ corpList, filteredCorps });
 
   if (isLoading) {
     return (
@@ -195,15 +196,21 @@ const Dashboard = () => {
           </Box>
           <CustomAutocomplete
             styles={{ borderRadius: "15px", mb: 4 }}
-            options={[]}
-            value={null}
-            onChange={() => {}}
+            options={corpList.filter((item) => item.corpName)}
+            value={searchedCompany}
+            getOptionLabel={(option) => option.corpName || ""}
+            onChange={(event, newValue, reason) => {
+              setSearchedCompany(newValue);
+              if (reason === "clear") {
+                setSearchedCompany("");
+              }
+            }}
             placeholder="Search Company..."
           />
 
           <Box sx={{}}></Box>
 
-          {corpList.map((item, index) => (
+          {filteredCorps.map((item, index) => (
             <CompanyInfoCard key={index} data={item} />
           ))}
         </Box>

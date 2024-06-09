@@ -56,6 +56,15 @@ const UpdateSessionInfo = () => {
         variant: "success",
       });
       setIsLoading(false);
+      setSessionDetail({
+        id: "",
+        sessionName: "",
+        description: "",
+        duration: "",
+        impact: "",
+        isActive: "",
+      });
+      setSelectedSession("");
     }
   };
 
@@ -107,7 +116,7 @@ const UpdateSessionInfo = () => {
             placeholder="Session Name"
             size="small"
             fullWidth
-            value={sessionDetail.sessionName}
+            value={sessionDetail.sessionName || ""}
             onChange={(e) => {
               setSessionDetail({
                 ...sessionDetail,
@@ -122,7 +131,7 @@ const UpdateSessionInfo = () => {
             placeholder="Session Duration"
             size="small"
             fullWidth
-            value={sessionDetail.duration}
+            value={sessionDetail.duration || ""}
             onChange={(e) => {
               setSessionDetail({
                 ...sessionDetail,
@@ -137,7 +146,7 @@ const UpdateSessionInfo = () => {
             placeholder="Session Impact"
             size="small"
             fullWidth
-            value={sessionDetail.impact}
+            value={sessionDetail.impact || ""}
             onChange={(e) => {
               setSessionDetail({
                 ...sessionDetail,
@@ -189,7 +198,7 @@ const UpdateSessionInfo = () => {
             placeholder="Session Description"
             size="small"
             fullWidth
-            value={sessionDetail.description}
+            value={sessionDetail.description || ""}
             onChange={(e) => {
               setSessionDetail({
                 ...sessionDetail,

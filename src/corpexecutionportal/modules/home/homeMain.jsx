@@ -52,7 +52,7 @@ const data = (val) => {
     },
     {
       id: 5,
-      title: "DELIVERY ORCHESTRATOR",
+      title: "REPORTING & DELIVERY",
       count: val?.totalEmployees || "",
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
       path: "/corp/deliveryorchestrator",
