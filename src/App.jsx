@@ -5,7 +5,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import ErrorPage from "./error-page";
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import Landing from "./landing/routes/landing";
 import CorpRootLayout from "./corpexecutionportal/global/templates/corpRootLayout";
 import CorpAuthLayout from "./corpexecutionportal/global/templates/corpAuthLayout";
@@ -72,7 +72,9 @@ import SessionInfoCorp from "./corpexecutionportal/pages/sessionInfoCorp";
 import CalenderInfoCorp from "./corpexecutionportal/pages/calenderInfoCorp";
 
 function App() {
-  const [corpName, setCorpName] = useState("");
+  const [corpName, setCorpName] = useState(
+    localStorage.getItem("CORP_NAME_SALES_OPS") || ""
+  );
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Fragment>
@@ -274,6 +276,10 @@ function App() {
       </Fragment>
     )
   );
+
+  useEffect(() => {
+    localStorage.setItem("CORP_NAME_SALES_OPS", corpName);
+  }, [corpName]);
 
   if (process.env.NODE_ENV === "production") {
     console.log = () => {};

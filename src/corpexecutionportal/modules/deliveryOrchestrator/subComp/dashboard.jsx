@@ -33,7 +33,7 @@ const Dashboard = () => {
     const url = BASE_URL + "task/statusCount";
     const result = await getData(url);
     if (result.data) {
-      setCorpList(result.data);
+      setCorpList(result.data.filter((item) => item.corpName));
       setIsLoading(false);
     } else {
       setCorpList([]);

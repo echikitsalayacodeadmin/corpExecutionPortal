@@ -16,6 +16,7 @@ import RenderExpandableCells from "../../../../../../assets/globalDataGridLayout
 import {
   formatColumnName,
   getColumnWidth,
+  getFileType,
 } from "../../../../../../assets/utils";
 
 const DetailedUploadedFileViewModal = ({
@@ -28,10 +29,8 @@ const DetailedUploadedFileViewModal = ({
   const [fileUrl, setFileUrl] = useState("");
   const [fileType, setFileType] = useState("");
 
-  const handleViewFile = (url) => {
+  const handleViewFile = () => {
     setOpenModal(true);
-    setFileUrl(url);
-    setFileType(getFileType(url));
   };
 
   const columns =
@@ -53,7 +52,13 @@ const DetailedUploadedFileViewModal = ({
                 typeof params.value === "string" &&
                 params.value.match(/^https?:\/\/\S+/);
               return isUrl ? (
-                <Button onClick={() => handleViewFile(params.value)}>
+                <Button
+                  onClick={() => {
+                    handleViewFile();
+                    setFileUrl(params.value);
+                    setFileType(getFileType(params.value));
+                  }}
+                >
                   View
                 </Button>
               ) : typeof params.value === "boolean" && params.value !== null ? (

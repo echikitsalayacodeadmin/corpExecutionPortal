@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,10 +7,13 @@ import {
   Grid,
   IconButton,
   InputAdornment,
+  Modal,
+  Portal,
   TextField,
   Typography,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
+import CloseIcon from "@mui/icons-material/Close";
 import Papa from "papaparse";
 import { useSnackbar } from "notistack";
 import { isDesktop } from "react-device-detect";
@@ -26,6 +29,9 @@ import MainPageLayoutWithBack from "../../../../global/templates/mainPageLayoutW
 import MarkStatusBtn from "../../subComp/markStatusBtn";
 import { downloadCsv } from "../../../../../assets/utils";
 import { VisibilityOff } from "@mui/icons-material";
+import CustomButtonBlue from "../../../../../assets/customButtonBlue";
+import CustomButtonWhite from "../../../../../assets/customButtonWhite";
+import { CorpNameContext } from "../../../../global/context/usercontext";
 
 const generateSummaryCSV = (data) => {
   let csvContent = `Test Name,Done,\n`;
@@ -70,7 +76,9 @@ const generateCSVContent = (data) => {
 };
 
 const RowComp = ({ item, handleChange, corpId }) => {
+  const { corpName } = useContext(CorpNameContext);
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   return (
     <Fragment>
       <Grid container>
@@ -100,7 +108,7 @@ const RowComp = ({ item, handleChange, corpId }) => {
                       sx={{ m: 0, p: 0 }}
                       onClick={() => {
                         if (item.url) {
-                          handleChange(item.itemId, null, "url");
+                          setOpen(true);
                         }
                       }}
                     >
@@ -143,7 +151,16 @@ const RowComp = ({ item, handleChange, corpId }) => {
                     });
                     return filteredItem;
                   });
-                  downloadCsv(filteredData, `${item.itemId}.csv`);
+                  downloadCsv(
+                    filteredData,
+                    `${
+                      item.itemId === "copySmdToggle"
+                        ? `${corpName}_Super_Master_Data_Toggle`
+                        : item.itemId === "copySmdUpload"
+                        ? `${corpName}_Super_MAster_Data_Upload`
+                        : `${corpName}_Super_Master_Data_Final`
+                    }.csv`
+                  );
                 } else if (
                   item.itemId === "copyDefectExecution" ||
                   item.itemId === "copyDefectUpload" ||
@@ -161,7 +178,12 @@ const RowComp = ({ item, handleChange, corpId }) => {
                   const hiddenElement = document.createElement("a");
                   hiddenElement.href = csvUrl;
                   hiddenElement.target = "_blank";
-                  hiddenElement.download = item.itemId;
+                  hiddenElement.download =
+                    item.itemId === "copyDefectExecution"
+                      ? `${corpName}_Defect_Exection`
+                      : item.itemId === "copyDefectUpload"
+                      ? `${corpName}_Defect_Upload`
+                      : `${corpName}_Defect_Final`;
                   hiddenElement.click();
                 } else if (item.itemId === "tabSnop") {
                   const combinedCsv = generateCombinedCSV(item.snopMailReport);
@@ -172,7 +194,7 @@ const RowComp = ({ item, handleChange, corpId }) => {
                   const hiddenElement = document.createElement("a");
                   hiddenElement.href = csvUrl;
                   hiddenElement.target = "_blank";
-                  hiddenElement.download = `test_result.csv`;
+                  hiddenElement.download = `Snop.csv`;
                   hiddenElement.click();
                 } else if (item.itemId === "pasteLink" && item?.url) {
                   window.open(item.url, "_blank");
@@ -213,6 +235,103 @@ const RowComp = ({ item, handleChange, corpId }) => {
           />
         </Grid>
       </Grid>
+      <Portal>
+        <Modal
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          open={open}
+          onClose={() => setOpen(false)}
+          sx={{
+            "& .MuiBackdrop-root": {
+              backgroundColor: "rgba(187, 187, 187, 0.1)",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "#fff",
+              boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+              padding: "15px",
+              width: "265px",
+            }}
+          >
+            <Box display="flex" justifyContent="flex-end">
+              <IconButton onClick={() => setOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+
+            <Typography
+              gutterBottom
+              sx={{
+                textAlign: "center",
+                fontWeight: "600",
+                fontSize: "13px",
+                lineHeight: "15px",
+                color: "#000000",
+                marginTop: "-25px",
+                marginBottom: "10px",
+              }}
+            >
+              Confirm!
+            </Typography>
+
+            <Grid
+              container
+              sx={{ justifyContent: "space-between" }}
+              spacing={2}
+            >
+              <Grid item xs={12} lg={12}>
+                <Typography
+                  sx={{
+                    textAlign: "center",
+                    fontWeight: "400",
+                    fontSize: "13px",
+                    lineHeight: "15px",
+                    color: "#000000",
+                  }}
+                >
+                  Do you want to Remove the link ?
+                </Typography>
+              </Grid>
+              <Grid item xs={6} lg={6}>
+                <CustomButtonBlue
+                  onClick={() => {
+                    if (item.url) {
+                      handleChange("pasteLink", null, "url");
+                      setOpen(false);
+                    }
+                  }}
+                  title="Yes"
+                />
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                lg={6}
+                sx={{ display: "flex", justifyContent: "flex-end" }}
+              >
+                <CustomButtonWhite
+                  onClick={() => setOpen(false)}
+                  title="No"
+                  styles={{
+                    borderWidth: "1px solid",
+                    borderColor: "red",
+                    "&:hover": {
+                      borderColor: "red",
+                    },
+                  }}
+                  textColor={"red"}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Modal>
+      </Portal>
     </Fragment>
   );
 };
@@ -466,8 +585,6 @@ const DataSheetMain = () => {
           ]
         : null,
   }));
-
-  console.log({ newDataSheet2 });
 
   if (isLoading) {
     return (

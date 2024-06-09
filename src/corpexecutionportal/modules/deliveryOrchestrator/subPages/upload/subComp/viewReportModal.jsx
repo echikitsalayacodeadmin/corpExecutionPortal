@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Portal,
 } from "@mui/material";
+import CustomPDFViewer from "../../../../../../assets/customPDFViewer";
 
 const ViewReportModal = ({ open, handleCloseModal, fileUrl, fileType }) => {
   return (
