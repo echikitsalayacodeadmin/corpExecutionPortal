@@ -37,6 +37,7 @@ import { useParams } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import UploadFile from "../../../../global/uploadFile";
 import { useFileUpload } from "use-file-upload";
+import { CallOutlined } from "@mui/icons-material";
 
 const AddSpocInVisitDetail = ({
   formValues,
@@ -306,9 +307,28 @@ const AddSpocInVisitDetail = ({
                     <Typography sx={styles.heading}>Name -</Typography>
                     <Typography sx={styles.data}>{spoc.name}</Typography>
                   </Grid>
-                  <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
+                  <Grid
+                    item
+                    xs={12}
+                    lg={4}
+                    sx={{ display: "flex", alignItems: "center" }}
+                  >
                     <Typography sx={styles.heading}>Mobile -</Typography>
                     <Typography sx={styles.data}>{spoc.mobile}</Typography>
+                    {spoc.mobile && (
+                      <IconButton
+                        sx={{ marginLeft: 1 }}
+                        href={`tel:${spoc.mobile}`}
+                      >
+                        <CallOutlined
+                          sx={{
+                            color: "#127DDD",
+                            height: "20px",
+                            width: "20px",
+                          }}
+                        />
+                      </IconButton>
+                    )}
                   </Grid>
                   <Grid item xs={12} lg={4} sx={{ display: "flex" }}>
                     <Typography sx={styles.heading}>Email Id -</Typography>
