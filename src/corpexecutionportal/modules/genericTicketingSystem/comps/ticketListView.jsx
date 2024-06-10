@@ -51,7 +51,7 @@ const TicketListView = ({
             : value.status === status.value) &&
           (!ticketType?.ticketType
             ? true
-            : ticketType?.value === ticketType?.ticketType)
+            : value?.ticketType === ticketType?.ticketType)
       )
     );
   }, [
