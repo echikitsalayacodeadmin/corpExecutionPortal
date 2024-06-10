@@ -27,36 +27,43 @@ const TicketCategoryList = [
     id: 1,
     title: "Awareness Session",
     imageUrl: HWI,
+    ticketType: "HEALTH_AWARENESS",
   },
   {
     id: 2,
     title: "Pre Employment",
     imageUrl: PEI,
+    ticketType: "HEALTH_AWARENESS",
   },
   {
     id: 3,
     title: "Corp Admin",
     imageUrl: CAI,
+    ticketType: "HEALTH_AWARENESS",
   },
   {
     id: 4,
     title: "Corp Employee",
     imageUrl: CEI,
+    ticketType: "HEALTH_AWARENESS",
   },
   {
     id: 5,
     title: "Internal",
     imageUrl: INTI,
+    ticketType: "HEALTH_AWARENESS",
   },
   {
     id: 6,
     title: "Service Request",
     imageUrl: SRI,
+    ticketType: "HEALTH_AWARENESS",
   },
   {
     id: 7,
     title: "Pharmacy",
     imageUrl: PHAI,
+    ticketType: "HEALTH_AWARENESS",
   },
 ];
 const RaiseNewTicketMain = ({
@@ -92,10 +99,11 @@ const RaiseNewTicketMain = ({
 
                       <Box
                         sx={{
-                          position: "relative",
-                          top: 60,
-                          height: 200,
-                          width: 200,
+                          position: "absolute ",
+                          top: 20,
+                          right: -20,
+                          height: 180,
+                          width: 180,
                           borderRadius: 100,
                           mt: 100,
                           background: "#fff",
@@ -104,13 +112,34 @@ const RaiseNewTicketMain = ({
                           justifyContent: "center",
                         }}
                       >
-                        <Typography
-                          sx={{ fontSize: 14 }}
-                          color="text.secondary"
-                          gutterBottom
+                        <Stack
+                          direction="row"
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          spacing={1}
                         >
-                          {value.title}
-                        </Typography>
+                          <Typography
+                            sx={{ fontSize: 14 }}
+                            color="text.secondary"
+                            gutterBottom
+                          >
+                            {value.title}
+                          </Typography>
+                          <Box
+                            sx={{
+                              height: 30,
+                              width: 30,
+                              borderRadius: 15,
+                              background: "#efefff",
+                            }}
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <ArrowRightAltIcon fontSize="10" />
+                          </Box>
+                        </Stack>
                       </Box>
                     </Stack>
                   </CardContent>

@@ -1,15 +1,10 @@
 import {
   Box,
-  Button,
-  Card,
-  CardContent,
   FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   Select,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
@@ -18,6 +13,8 @@ import {
   getCompanyList,
   getSessionTypeList,
 } from "../../../services/genericTicketingSystem";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const TicketForm = ({ formValues, setFormValues }) => {
   const [sessionTypeList, setSessionTypeList] = useState([]);
@@ -31,107 +28,104 @@ const TicketForm = ({ formValues, setFormValues }) => {
   console.log({ companyList, sessionTypeList });
   return (
     <Fragment>
-      <Box>
+      <Box sx={{ py: 5 }}>
         <Grid container spacing={2}>
-          <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    lg={12}
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
+          <Grid
+            item
+            lg={4}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Stack spacing={2}>
+              <Stack direction="row" spacing={1}>
+                <BookIcon fontSize="10" />
+                <Typography sx={{ fontSize: 10 }}>Company Name</Typography>
+              </Stack>
+              <Box sx={{ minWidth: 400 }}>
+                <FormControl fullWidth>
+                  <Select
+                    size="small"
+                    fullWidth
+                    value={formValues.company}
+                    label=""
+                    onChange={(e) =>
+                      setFormValues({
+                        ...formValues,
+                        company: e.target.value,
+                      })
+                    }
                   >
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Company name
-                        </Typography>
-                      </Stack>
-                      <TextField size="small" />
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
+                    {companyList.map((value, index) => (
+                      <MenuItem value={value} key={index}>
+                        {value.orgName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Stack>
           </Grid>
-          <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    lg={12}
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
+          <Grid
+            item
+            lg={3}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Stack spacing={2}>
+              <Stack direction="row" spacing={1}>
+                <BookIcon fontSize="10" />
+                <Typography sx={{ fontSize: 10 }}>Seesion Date</Typography>
+              </Stack>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label=""
+                  value={formValues.date}
+                  onChange={(newValue) =>
+                    setFormValues({ ...formValues, date: newValue })
+                  }
+                  slotProps={{ textField: { size: "small" } }}
+                  format="LL"
+                />
+              </LocalizationProvider>
+            </Stack>
+          </Grid>
+          <Grid
+            item
+            lg={5}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Stack spacing={2}>
+              <Stack direction="row" spacing={1}>
+                <BookIcon fontSize="10" />
+                <Typography sx={{ fontSize: 10 }}>Session Type</Typography>
+              </Stack>
+              <Box sx={{ minWidth: 500 }}>
+                <FormControl fullWidth>
+                  <Select
+                    size="small"
+                    fullWidth
+                    value={formValues.sessionType}
+                    label=""
+                    onChange={(e) =>
+                      setFormValues({
+                        ...formValues,
+                        sessionType: e.target.value,
+                      })
+                    }
                   >
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Seesion Date
-                        </Typography>
-                      </Stack>
-                      <TextField type="date" size="small" />
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    lg={12}
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                  >
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Session Type
-                        </Typography>
-                      </Stack>
-                      <Box sx={{ minWidth: 120 }}>
-                        <FormControl fullWidth>
-                          <Select
-                            value={formValues.sessionType}
-                            label=""
-                            onChange={(e) =>
-                              setFormValues({
-                                ...formValues,
-                                sessionType: e.target.value,
-                              })
-                            }
-                          >
-                            {sessionTypeList.map((value, index) => (
-                              <MenuItem value={value} key={index}>
-                                {value.sessionName}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Box>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item lg={12} display="flex" justifyContent="center">
-            <Button variant="outlined" onClick={() => console.log("hi")}>
-              Save
-            </Button>
+                    {sessionTypeList.map((value, index) => (
+                      <MenuItem value={value} key={index}>
+                        {value.sessionName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Stack>
           </Grid>
         </Grid>
       </Box>

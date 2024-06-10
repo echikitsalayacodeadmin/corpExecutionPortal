@@ -2,8 +2,9 @@ import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../assets/constants";
 import { getData, saveData } from "../assets/corpServices";
 
-export const getAllTickets = async (date, setTicketList) => {
-  const url = BASE_URL + `org/getTickets/${date}`;
+export const getAllTickets = async (date, userId, setTicketList) => {
+  const url =
+    BASE_URL + `org/getTickets/${date}?userId=${userId}&endDate=${date}`;
 
   const response = await getData(url);
 
@@ -16,11 +17,23 @@ export const getAllTickets = async (date, setTicketList) => {
   }
 };
 
-export const raiseTicket = async (data) => {
+export const raiseTicket = async (data, handleClose) => {
   const url = BASE_URL + `org/v2/raiseTicket`;
 
-  const res = await saveData(url, data);
+  const payload = {
+    raisedBy: data.name,
+    raisedById: data.userId,
+    raisedByMobileNo: data.mobile,
 
+    ticketType: data.selectedTicketType?.ticketType,
+    date: new Date(data.date).toISOString().split("T")[0],
+
+    corpId: data.company?.corpId,
+    corpName: data.company?.orgName,
+
+    ticketStatusStage: data.sessionType?.sessionName,
+  };
+  const res = await saveData(url, payload);
   if (res.error) {
     console.warn({ error: res.error });
     enqueueSnackbar("Failed to raise ticket!", {
@@ -31,6 +44,7 @@ export const raiseTicket = async (data) => {
     enqueueSnackbar("Successfully raised ticket.", {
       variant: "success",
     });
+    handleClose();
   }
 };
 
