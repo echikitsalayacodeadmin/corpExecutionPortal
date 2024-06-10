@@ -17,13 +17,11 @@ const TicketListView = ({
     <Fragment>
       <Box sx={{ maxHeight: 350, overflow: "auto" }}>
         <Grid container spacing={2}>
-          {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map(
-            (value, index) => (
-              <Grid item lg={12} key={index}>
-                <TicketCardView />
-              </Grid>
-            )
-          )}
+          {ticketList.map((value, index) => (
+            <Grid item lg={12} key={index}>
+              <TicketCardView ticket={value} />
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </Fragment>

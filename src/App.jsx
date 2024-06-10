@@ -195,7 +195,7 @@ function App() {
 
             <Route path="mis" element={<MisCorp />} />
             <Route path="tickets" element={<GenericTicketingSystemIndex />} />
-            <Route path="ticketview" element={<TicketViewIndex />} />
+            <Route path="ticketview/:ticketId" element={<TicketViewIndex />} />
 
             <Route path="logout" element={<LogoutCorp />} />
 

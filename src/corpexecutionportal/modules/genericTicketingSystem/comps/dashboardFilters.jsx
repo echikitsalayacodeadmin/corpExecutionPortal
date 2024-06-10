@@ -15,7 +15,7 @@ import {
 } from "../../../services/genericTicketingSystem";
 import { TicketCategoryList } from "../raiseNewTicketMain";
 
-const StatusList = [
+export const StatusList = [
   {
     id: 1,
     label: "All",

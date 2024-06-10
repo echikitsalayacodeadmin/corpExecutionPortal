@@ -3,16 +3,26 @@ import {
   Button,
   Card,
   CardContent,
+  FormControl,
   Grid,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import BookIcon from "@mui/icons-material/Book";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import dayjs from "dayjs";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { StatusList } from "./dashboardFilters";
+import { updateTicket } from "../../../services/genericTicketingSystem";
 
-const TicketView = () => {
+const TicketView = ({ data }) => {
+  const [date, setDate] = useState(dayjs);
+  const [status, setStatus] = useState("");
+
   return (
     <Fragment>
       <Box>
@@ -138,7 +148,17 @@ const TicketView = () => {
                           Seesion Date
                         </Typography>
                       </Stack>
-                      <TextField type="date" size="small" />
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label="From Date"
+                          value={date}
+                          onChange={(newValue) => setDate(newValue)}
+                          slotProps={{
+                            textField: { size: "small", fullWidth: true },
+                          }}
+                          format="LL"
+                        />
+                      </LocalizationProvider>
                     </Stack>
                   </Grid>
                 </Grid>
@@ -163,7 +183,23 @@ const TicketView = () => {
                           Ticket Status
                         </Typography>
                       </Stack>
-                      <TextField size="small" placeholder="Pending" />
+                      <Box sx={{ minWidth: 400 }}>
+                        <FormControl fullWidth>
+                          <Select
+                            size="small"
+                            fullWidth
+                            value={status}
+                            label=""
+                            onChange={(e) => setStatus(e.target.value)}
+                          >
+                            {StatusList.map((value, index) => (
+                              <MenuItem value={value} key={index}>
+                                {value.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Box>
                     </Stack>
                   </Grid>
                 </Grid>
@@ -172,7 +208,10 @@ const TicketView = () => {
           </Grid>
 
           <Grid item lg={12} display="flex" justifyContent="center">
-            <Button variant="outlined" onClick={() => console.log("hi")}>
+            <Button
+              variant="outlined"
+              onClick={() => updateTicket(data, date, status)}
+            >
               Save
             </Button>
           </Grid>

@@ -12,12 +12,16 @@ import { Fragment } from "react";
 import BookIcon from "@mui/icons-material/Book";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
-const TicketCardView = () => {
+const TicketCardView = ({ ticket }) => {
   const navigate = useNavigate();
 
   return (
     <Fragment>
-      <Box onClick={() => navigate("/corp/ticketview")}>
+      <Box
+        onClick={() =>
+          navigate(`/corp/ticketview/${ticket}`, { state: ticket })
+        }
+      >
         <Grid container spacing={1}>
           <Grid item lg={12}>
             <Box
@@ -31,15 +35,6 @@ const TicketCardView = () => {
               <Card variant="outlined">
                 <CardContent>
                   <Stack direction={"row"}>
-                    {/* <Box
-                      sx={{
-                        width: 20,
-                        height: 100,
-                        position: "relative",
-                        background: "lightgreen",
-                        left: -20,
-                      }}
-                    /> */}
                     <Grid container spacing={1}>
                       <Grid
                         item
@@ -56,7 +51,7 @@ const TicketCardView = () => {
                             </Typography>
                           </Stack>
                           <Typography sx={{ fontSize: 14 }}>
-                            ASI02324
+                            {ticket?.ticketId}
                           </Typography>
                         </Stack>
                       </Grid>
@@ -73,7 +68,7 @@ const TicketCardView = () => {
                             <Typography sx={{ fontSize: 10 }}>Date</Typography>
                           </Stack>
                           <Typography sx={{ fontSize: 14 }}>
-                            05.06.2024
+                            {ticket?.date}
                           </Typography>
                         </Stack>
                       </Grid>
@@ -90,7 +85,7 @@ const TicketCardView = () => {
                             <Typography sx={{ fontSize: 10 }}>Type</Typography>
                           </Stack>
                           <Typography sx={{ fontSize: 14 }}>
-                            Awareness Session
+                            {ticket?.ticketType}
                           </Typography>
                         </Stack>
                       </Grid>
@@ -109,7 +104,7 @@ const TicketCardView = () => {
                             </Typography>
                           </Stack>
                           <Typography sx={{ fontSize: 14 }}>
-                            Optisol business solution
+                            {ticket?.corpName}
                           </Typography>
                         </Stack>
                       </Grid>
@@ -128,7 +123,7 @@ const TicketCardView = () => {
                             </Typography>
                           </Stack>
                           <Typography sx={{ fontSize: 14 }}>
-                            Hemanth Chawla
+                            {ticket?.raisedBy}
                           </Typography>
                         </Stack>
                       </Grid>
@@ -146,6 +141,8 @@ const TicketCardView = () => {
                             px: 3,
                             py: 1,
                             borderRadius: 3,
+                            minWidth: 210,
+                            minHeight: 40,
                           }}
                           direction="row"
                           spacing={1}
@@ -155,7 +152,7 @@ const TicketCardView = () => {
                         >
                           <NotificationsIcon fontSize="10" />
                           <Typography sx={{ fontSize: 14 }}>
-                            ASI02324
+                            {ticket?.status}
                           </Typography>
                         </Box>
                       </Grid>
