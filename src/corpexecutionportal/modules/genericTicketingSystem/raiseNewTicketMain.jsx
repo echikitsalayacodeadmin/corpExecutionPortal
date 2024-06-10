@@ -22,7 +22,7 @@ import SRI from "../../../assets/images/ticketingSystem/service req 1.png";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import RaiseTicketDialog from "./comps/raiseTicketDialog";
 
-const TicketCategoryList = [
+export const TicketCategoryList = [
   {
     id: 1,
     title: "Awareness Session",

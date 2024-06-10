@@ -1,10 +1,9 @@
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../assets/constants";
 import { getData, saveData } from "../assets/corpServices";
-
+//////userId=${userId}
 export const getAllTickets = async (date, userId, setTicketList) => {
-  const url =
-    BASE_URL + `org/getTickets/${date}?userId=${userId}&endDate=${date}`;
+  const url = BASE_URL + `org/getTickets/${date}?endDate=${date}&`;
 
   const response = await getData(url);
 
@@ -30,6 +29,7 @@ export const raiseTicket = async (data, handleClose) => {
 
     corpId: data.company?.corpId,
     corpName: data.company?.orgName,
+    ticketCategory: "CORP",
 
     ticketStatusStage: data.sessionType?.sessionName,
   };
