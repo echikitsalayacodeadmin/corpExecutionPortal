@@ -46,28 +46,23 @@ const TicketListView = ({
     setFfilteredTicketList(
       ticketList.filter(
         (value) =>
-          (!status.value || status.value === "ALL"
-            ? true
-            : value.status === status.value) &&
           (!ticketType?.ticketType
             ? true
-            : value?.ticketType === ticketType?.ticketType)
+            : value?.ticketType === ticketType?.ticketType) &&
+          (!status?.value || status?.value === "ALL"
+            ? true
+            : value.status === status?.value) &&
+          (!selectedCompany
+            ? true
+            : value.corpId === selectedCompany?.corpId) &&
+          (!searchText
+            ? true
+            : value?.raisedBy
+                ?.toUpperCase()
+                ?.includes(searchText?.trim()?.toUpperCase()))
       )
     );
-  }, [
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    status,
-    setStatus,
-    selectedCompany,
-    setSelectedCompany,
-    ticketType,
-    setTicketType,
-    searchText,
-    setSearchText,
-  ]);
+  }, [ticketList, status, selectedCompany, ticketType, searchText]);
   return (
     <Fragment>
       <Box sx={{ maxHeight: 350, overflow: "auto" }}>

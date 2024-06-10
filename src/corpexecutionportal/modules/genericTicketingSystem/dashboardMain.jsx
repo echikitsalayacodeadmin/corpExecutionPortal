@@ -9,9 +9,9 @@ import dayjs from "dayjs";
 const DashboardMain = () => {
   const [startDate, setStartDate] = useState(dayjs().subtract(7, "day"));
   const [endDate, setEndDate] = useState(dayjs());
-  const [status, setStatus] = useState("");
-  const [selectedCompany, setSelectedCompany] = useState("");
-  const [ticketType, setTicketType] = useState("");
+  const [status, setStatus] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [ticketType, setTicketType] = useState(null);
   const [searchText, setSearchText] = useState("");
 
   return (

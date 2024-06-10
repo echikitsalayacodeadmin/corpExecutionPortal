@@ -1,6 +1,8 @@
 import {
+  Autocomplete,
   Box,
   FormControl,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -37,31 +39,26 @@ const DashboardFilters = ({
     getSessionTypeList(setSessionTypeList);
     getCompanyList(setCompanyList);
   }, []);
+
   return (
     <Fragment>
       <Box sx={{ py: 0 }}>
         <Grid container spacing={2}>
           <Grid item lg={6}>
-            <Box sx={{ minWidth: 400 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" sx={{ fontSize: 14 }}>
-                  Ticket type
-                </InputLabel>
-                <Select
-                  size="small"
-                  fullWidth
-                  value={ticketType}
-                  label="Ticket type"
-                  onChange={(e) => setTicketType(e.target.value)}
-                >
-                  {TicketCategoryList.map((value, index) => (
-                    <MenuItem value={value} key={index}>
-                      {value.title}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+            <Autocomplete
+              fullWidth
+              value={ticketType}
+              onChange={(event, newValue) => {
+                setTicketType(newValue);
+              }}
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={TicketCategoryList}
+              renderInput={(params) => (
+                <TextField {...params} label="Ticket type" />
+              )}
+            />
           </Grid>
           <Grid item lg={6}>
             <TextField
@@ -96,53 +93,34 @@ const DashboardFilters = ({
             </LocalizationProvider>
           </Grid>
           <Grid item lg={3}>
-            <Box sx={{ minWidth: 100 }}>
-              <FormControl fullWidth>
-                <InputLabel
-                  id="demo-simple-select-label"
-                  sx={{
-                    fontSize: 14,
-                  }}
-                >
-                  Status
-                </InputLabel>
-                <Select
-                  size="small"
-                  fullWidth
-                  value={status}
-                  label="Status"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  {StatusList.map((value, index) => (
-                    <MenuItem value={value} key={index}>
-                      {value.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+            <Autocomplete
+              fullWidth
+              value={status}
+              onChange={(event, newValue) => {
+                setStatus(newValue);
+              }}
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={StatusList}
+              renderInput={(params) => <TextField {...params} label="Status" />}
+            />
           </Grid>
           <Grid item lg={3}>
-            <Box sx={{ minWidth: 100 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label" sx={{ fontSize: 14 }}>
-                  Raised by
-                </InputLabel>
-                <Select
-                  size="small"
-                  fullWidth
-                  value={selectedCompany}
-                  label="Raised by"
-                  onChange={(e) => setSelectedCompany(e.target.value)}
-                >
-                  {companyList.map((value, index) => (
-                    <MenuItem value={value} key={index}>
-                      {value.orgName}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+            <Autocomplete
+              fullWidth
+              value={selectedCompany}
+              onChange={(event, newValue) => {
+                setSelectedCompany(newValue);
+              }}
+              size="small"
+              disablePortal
+              id="combo-box-demo"
+              options={companyList}
+              renderInput={(params) => (
+                <TextField {...params} label="Raised by" />
+              )}
+            />
           </Grid>
         </Grid>
       </Box>

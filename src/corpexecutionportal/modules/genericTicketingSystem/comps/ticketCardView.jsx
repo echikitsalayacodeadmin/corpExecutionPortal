@@ -12,6 +12,7 @@ import { Fragment } from "react";
 import BookIcon from "@mui/icons-material/Book";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 const TicketCardView = ({ ticket }) => {
   const navigate = useNavigate();
 
@@ -68,7 +69,9 @@ const TicketCardView = ({ ticket }) => {
                             <Typography sx={{ fontSize: 10 }}>Date</Typography>
                           </Stack>
                           <Typography sx={{ fontSize: 14 }}>
-                            {ticket?.date}
+                            {ticket?.date
+                              ? dayjs(ticket?.date).format("LL")
+                              : ""}
                           </Typography>
                         </Stack>
                       </Grid>

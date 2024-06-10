@@ -16,11 +16,11 @@ export const getAllTickets = async (
   if (response.error) {
     console.warn({ error: response.error });
     setTicketList([]);
-    setFfilteredTicketList([]);
+    //setFfilteredTicketList([]);
   } else {
     console.log({ success: response.data });
     setTicketList(response.data);
-    setFfilteredTicketList(response.data);
+    //setFfilteredTicketList(response.data);
   }
 };
 
@@ -81,7 +81,17 @@ export const getCompanyList = async (setCompanyList) => {
     setCompanyList([]);
   } else {
     console.log({ success: res.data });
-    setCompanyList(res.data);
+    setCompanyList(
+      res.data
+        .filter(
+          (value, index, self) =>
+            index === self.findIndex((t) => t.orgName === value.orgName)
+        )
+        .map((value) => ({
+          ...value,
+          label: value.orgName,
+        }))
+    );
   }
 };
 
