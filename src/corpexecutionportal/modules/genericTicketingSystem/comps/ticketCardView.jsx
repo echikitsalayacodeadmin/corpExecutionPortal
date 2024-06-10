@@ -19,7 +19,7 @@ const TicketCardView = ({ ticket }) => {
     <Fragment>
       <Box
         onClick={() =>
-          navigate(`/corp/ticketview/${ticket}`, { state: ticket })
+          navigate(`/corp/ticketview/${ticket.ticketId}`, { state: ticket })
         }
       >
         <Grid container spacing={1}>

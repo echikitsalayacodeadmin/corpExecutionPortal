@@ -1,3 +1,11 @@
+import HWI from "../../assets/images/ticketingSystem/aware seesion 1.png";
+import CAI from "../../assets/images/ticketingSystem/Corp admin 1.png";
+import CEI from "../../assets/images/ticketingSystem/corp employee 1.png";
+import INTI from "../../assets/images/ticketingSystem/Internal 1.png";
+import PHAI from "../../assets/images/ticketingSystem/pharmacy 1.png";
+import PEI from "../../assets/images/ticketingSystem/pre employment 1.png";
+import SRI from "../../assets/images/ticketingSystem/service req 1.png";
+
 export const CorpName = "TEST";
 
 export const FILE_TYPE = [
@@ -78,4 +86,90 @@ export const CORPORATE_SERVICES = [
   "CSR",
   "Health awareness sessions",
   "Ambulance services",
+];
+
+export const StatusList = [
+  {
+    id: 1,
+    label: "All",
+    value: "ALL",
+  },
+  {
+    id: 2,
+    label: "Pending",
+    value: "PENDING",
+  },
+  {
+    id: 3,
+    label: "Completed",
+    value: "COMPLETED",
+  },
+  {
+    id: 4,
+    label: "Ticket raised",
+    value: "TICKET_RAISED",
+  },
+];
+
+export const StatusListForNonFilter = [
+  {
+    id: 2,
+    label: "Pending",
+    value: "PENDING",
+  },
+  {
+    id: 3,
+    label: "Completed",
+    value: "COMPLETED",
+  },
+  {
+    id: 4,
+    label: "Ticket raised",
+    value: "TICKET_RAISED",
+  },
+];
+
+export const TicketCategoryList = [
+  {
+    id: 1,
+    title: "Awareness Session",
+    imageUrl: HWI,
+    ticketType: "HEALTH_AWARENESS",
+  },
+  {
+    id: 2,
+    title: "Pre Employment",
+    imageUrl: PEI,
+    ticketType: "PEI",
+  },
+  {
+    id: 3,
+    title: "Corp Admin",
+    imageUrl: CAI,
+    ticketType: "CAI",
+  },
+  {
+    id: 4,
+    title: "Corp Employee",
+    imageUrl: CEI,
+    ticketType: "CEI",
+  },
+  {
+    id: 5,
+    title: "Internal",
+    imageUrl: INTI,
+    ticketType: "INTI",
+  },
+  {
+    id: 6,
+    title: "Service Request",
+    imageUrl: SRI,
+    ticketType: "SRI",
+  },
+  {
+    id: 7,
+    title: "Pharmacy",
+    imageUrl: PHAI,
+    ticketType: "PHAI",
+  },
 ];

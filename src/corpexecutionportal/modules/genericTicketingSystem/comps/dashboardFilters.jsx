@@ -2,6 +2,7 @@ import {
   Box,
   FormControl,
   Grid,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -13,25 +14,7 @@ import {
   getCompanyList,
   getSessionTypeList,
 } from "../../../services/genericTicketingSystem";
-import { TicketCategoryList } from "../raiseNewTicketMain";
-
-export const StatusList = [
-  {
-    id: 1,
-    label: "All",
-    value: "ALL",
-  },
-  {
-    id: 1,
-    label: "Pending",
-    value: "Pending",
-  },
-  {
-    id: 1,
-    label: "Completed",
-    value: "Completed",
-  },
-];
+import { StatusList, TicketCategoryList } from "../../../assets/corpConstants";
 
 const DashboardFilters = ({
   startDate,
@@ -61,11 +44,14 @@ const DashboardFilters = ({
           <Grid item lg={6}>
             <Box sx={{ minWidth: 400 }}>
               <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label" sx={{ fontSize: 14 }}>
+                  Ticket type
+                </InputLabel>
                 <Select
                   size="small"
                   fullWidth
                   value={ticketType}
-                  label=""
+                  label="Ticket type"
                   onChange={(e) => setTicketType(e.target.value)}
                 >
                   {TicketCategoryList.map((value, index) => (
@@ -110,13 +96,21 @@ const DashboardFilters = ({
             </LocalizationProvider>
           </Grid>
           <Grid item lg={3}>
-            <Box sx={{ minWidth: 400 }}>
+            <Box sx={{ minWidth: 100 }}>
               <FormControl fullWidth>
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{
+                    fontSize: 14,
+                  }}
+                >
+                  Status
+                </InputLabel>
                 <Select
                   size="small"
                   fullWidth
                   value={status}
-                  label=""
+                  label="Status"
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   {StatusList.map((value, index) => (
@@ -129,13 +123,16 @@ const DashboardFilters = ({
             </Box>
           </Grid>
           <Grid item lg={3}>
-            <Box sx={{ minWidth: 400 }}>
+            <Box sx={{ minWidth: 100 }}>
               <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label" sx={{ fontSize: 14 }}>
+                  Raised by
+                </InputLabel>
                 <Select
                   size="small"
                   fullWidth
                   value={selectedCompany}
-                  label=""
+                  label="Raised by"
                   onChange={(e) => setSelectedCompany(e.target.value)}
                 >
                   {companyList.map((value, index) => (

@@ -2,17 +2,25 @@ import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../assets/constants";
 import { getData, saveData, updateData } from "../assets/corpServices";
 //////userId=${userId}
-export const getAllTickets = async (date, userId, setTicketList) => {
-  const url = BASE_URL + `org/getTickets/${date}?endDate=${date}&`;
+export const getAllTickets = async (
+  startDate,
+  endDate,
+  userId,
+  setTicketList,
+  setFfilteredTicketList
+) => {
+  const url = BASE_URL + `org/getTickets/${startDate}?endDate=${endDate}&`;
 
   const response = await getData(url);
 
   if (response.error) {
     console.warn({ error: response.error });
     setTicketList([]);
+    setFfilteredTicketList([]);
   } else {
     console.log({ success: response.data });
     setTicketList(response.data);
+    setFfilteredTicketList(response.data);
   }
 };
 
@@ -30,6 +38,7 @@ export const raiseTicket = async (data, handleClose) => {
     corpId: data.company?.corpId,
     corpName: data.company?.orgName,
     ticketCategory: "CORP",
+    status: "TICKET_RAISED",
 
     ticketStatusStage: data.sessionType?.sessionName,
   };
@@ -79,9 +88,12 @@ export const getCompanyList = async (setCompanyList) => {
 export const updateTicket = async (data, date, status) => {
   const url = BASE_URL + `org/updateTicketStatus`;
 
+  let ticketInfo = data?.ticketInfo;
+  ticketInfo["sessionDate"] = new Date(date).toISOString().split("T")[0];
+
   const payload = {
     ticketId: data?.ticketId,
-    date: new Date(date).toISOString().split("T")[0],
+    ticketInfo: ticketInfo,
     status: status?.value,
   };
   const res = await updateData(url, payload);

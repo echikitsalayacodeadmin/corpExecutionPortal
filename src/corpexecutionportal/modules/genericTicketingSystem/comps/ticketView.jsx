@@ -16,12 +16,21 @@ import BookIcon from "@mui/icons-material/Book";
 import dayjs from "dayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { StatusList } from "./dashboardFilters";
 import { updateTicket } from "../../../services/genericTicketingSystem";
+import { StatusListForNonFilter } from "../../../assets/corpConstants";
 
 const TicketView = ({ data }) => {
-  const [date, setDate] = useState(dayjs);
-  const [status, setStatus] = useState("");
+  const [date, setDate] = useState(
+    data?.ticketInfo?.sessionDate
+      ? dayjs(data?.ticketInfo?.sessionDate)
+      : dayjs()
+  );
+  const [status, setStatus] = useState(
+    StatusListForNonFilter.filter((value) => value.value === data.status)[0] ||
+      ""
+  );
+
+  console.log({ data123: data });
 
   return (
     <Fragment>
@@ -43,7 +52,9 @@ const TicketView = ({ data }) => {
                         <BookIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>Number</Typography>
                       </Stack>
-                      <Typography sx={{ fontSize: 14 }}>ASI02324</Typography>
+                      <Typography sx={{ fontSize: 14 }}>
+                        {data.ticketId}
+                      </Typography>
                     </Stack>
                   </Grid>
                   <Grid
@@ -56,16 +67,35 @@ const TicketView = ({ data }) => {
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
                         <BookIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Ticket Date
-                        </Typography>
+                        <Typography sx={{ fontSize: 10 }}>Company</Typography>
                       </Stack>
-                      <Typography sx={{ fontSize: 14 }}>05.06.2024</Typography>
+                      <Typography sx={{ fontSize: 14 }}>
+                        {data.corpName}
+                      </Typography>
                     </Stack>
                   </Grid>
                   <Grid
                     item
-                    lg={3}
+                    lg={1}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Stack spacing={2}>
+                      <Stack direction="row" spacing={1}>
+                        <BookIcon fontSize="10" />
+                        <Typography sx={{ fontSize: 10 }}>
+                          Ticket Date
+                        </Typography>
+                      </Stack>
+                      <Typography sx={{ fontSize: 14 }}>
+                        {data.date ? dayjs(data.date).format("LL") : ""}
+                      </Typography>
+                    </Stack>
+                  </Grid>
+                  <Grid
+                    item
+                    lg={2}
                     display="flex"
                     justifyContent="center"
                     alignItems="center"
@@ -78,7 +108,7 @@ const TicketView = ({ data }) => {
                         </Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 14 }}>
-                        Awareness Session
+                        {data.ticketType}
                       </Typography>
                     </Stack>
                   </Grid>
@@ -95,7 +125,7 @@ const TicketView = ({ data }) => {
                         <Typography sx={{ fontSize: 10 }}>Raised By</Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 14 }}>
-                        Optosol business solution
+                        {data.raisedBy || "n/a"}
                       </Typography>
                     </Stack>
                   </Grid>
@@ -114,7 +144,7 @@ const TicketView = ({ data }) => {
                     justifyContent="flex-start"
                     alignItems="center"
                   >
-                    <Stack spacing={2}>
+                    <Stack spacing={2} sx={{ height: 73 }}>
                       <Stack direction="row" spacing={1}>
                         <BookIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>
@@ -122,7 +152,7 @@ const TicketView = ({ data }) => {
                         </Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 18 }}>
-                        Awareness Session
+                        {data.ticketInfo?.sessionName || "n/a"}
                       </Typography>
                     </Stack>
                   </Grid>
@@ -150,7 +180,7 @@ const TicketView = ({ data }) => {
                       </Stack>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                          label="From Date"
+                          label=""
                           value={date}
                           onChange={(newValue) => setDate(newValue)}
                           slotProps={{
@@ -183,7 +213,7 @@ const TicketView = ({ data }) => {
                           Ticket Status
                         </Typography>
                       </Stack>
-                      <Box sx={{ minWidth: 400 }}>
+                      <Box sx={{ minWidth: 300 }}>
                         <FormControl fullWidth>
                           <Select
                             size="small"
@@ -192,7 +222,7 @@ const TicketView = ({ data }) => {
                             label=""
                             onChange={(e) => setStatus(e.target.value)}
                           >
-                            {StatusList.map((value, index) => (
+                            {StatusListForNonFilter.map((value, index) => (
                               <MenuItem value={value} key={index}>
                                 {value.label}
                               </MenuItem>
@@ -209,7 +239,8 @@ const TicketView = ({ data }) => {
 
           <Grid item lg={12} display="flex" justifyContent="center">
             <Button
-              variant="outlined"
+              sx={{ width: 200 }}
+              variant="contained"
               onClick={() => updateTicket(data, date, status)}
             >
               Save

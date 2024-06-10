@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const DashboardMain = () => {
-  const [startDate, setStartDate] = useState(dayjs());
+  const [startDate, setStartDate] = useState(dayjs().subtract(7, "day"));
   const [endDate, setEndDate] = useState(dayjs());
   const [status, setStatus] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
@@ -35,7 +35,20 @@ const DashboardMain = () => {
             />
           </Grid>
           <Grid item lg={12}>
-            <TicketListView />
+            <TicketListView
+              startDate={startDate}
+              setStartDate={setStartDate}
+              endDate={endDate}
+              setEndDate={setEndDate}
+              selectedCompany={selectedCompany}
+              setSelectedCompany={setSelectedCompany}
+              status={status}
+              setStatus={setStatus}
+              ticketType={ticketType}
+              setTicketType={setTicketType}
+              searchText={searchText}
+              setSearchText={setSearchText}
+            />
           </Grid>
         </Grid>
       </Box>

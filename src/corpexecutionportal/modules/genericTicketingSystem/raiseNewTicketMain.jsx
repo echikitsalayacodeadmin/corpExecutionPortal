@@ -11,61 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment, useState } from "react";
-import HWI from "../../../assets/images/ticketingSystem/aware seesion 1.png";
-import CAI from "../../../assets/images/ticketingSystem/Corp admin 1.png";
-import CEI from "../../../assets/images/ticketingSystem/corp employee 1.png";
-import INTI from "../../../assets/images/ticketingSystem/Internal 1.png";
-import PHAI from "../../../assets/images/ticketingSystem/pharmacy 1.png";
-import PEI from "../../../assets/images/ticketingSystem/pre employment 1.png";
-import SRI from "../../../assets/images/ticketingSystem/service req 1.png";
 
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import RaiseTicketDialog from "./comps/raiseTicketDialog";
+import { TicketCategoryList } from "../../assets/corpConstants";
 
-export const TicketCategoryList = [
-  {
-    id: 1,
-    title: "Awareness Session",
-    imageUrl: HWI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-  {
-    id: 2,
-    title: "Pre Employment",
-    imageUrl: PEI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-  {
-    id: 3,
-    title: "Corp Admin",
-    imageUrl: CAI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-  {
-    id: 4,
-    title: "Corp Employee",
-    imageUrl: CEI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-  {
-    id: 5,
-    title: "Internal",
-    imageUrl: INTI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-  {
-    id: 6,
-    title: "Service Request",
-    imageUrl: SRI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-  {
-    id: 7,
-    title: "Pharmacy",
-    imageUrl: PHAI,
-    ticketType: "HEALTH_AWARENESS",
-  },
-];
 const RaiseNewTicketMain = ({
   authId = localStorage.getItem("USER_ID_CORP_SALES"),
 }) => {
