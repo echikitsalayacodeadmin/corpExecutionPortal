@@ -70,6 +70,7 @@ import GenericTicketingSystemIndex from "./corpexecutionportal/pages/genericTick
 import EngagementCorp from "./corpexecutionportal/pages/engagementCorp";
 import SessionInfoCorp from "./corpexecutionportal/pages/sessionInfoCorp";
 import CalenderInfoCorp from "./corpexecutionportal/pages/calenderInfoCorp";
+import TicketViewIndex from "./corpexecutionportal/pages/ticketViewIndex";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -194,6 +195,7 @@ function App() {
 
             <Route path="mis" element={<MisCorp />} />
             <Route path="tickets" element={<GenericTicketingSystemIndex />} />
+            <Route path="ticketview" element={<TicketViewIndex />} />
 
             <Route path="logout" element={<LogoutCorp />} />
 

@@ -86,7 +86,14 @@ const data = (val) => {
       disabled: false,
     },
     {
-      id: 8,
+      id: 9,
+      title: "TICKETS",
+      count: 0,
+      countComp: <ShowCount></ShowCount>,
+      path: "/corp/tickets",
+    },
+    {
+      id: 10,
       title: "Engagement",
       count: val?.totalEmployees,
       countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,

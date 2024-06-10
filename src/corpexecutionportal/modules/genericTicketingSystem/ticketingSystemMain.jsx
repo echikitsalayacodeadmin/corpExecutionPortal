@@ -7,9 +7,7 @@ const TicketingSystemMain = () => {
   return (
     <Fragment>
       <MainPageLayoutWithBack title="Tickets">
-        <Box>
-          <TicketingTabs />
-        </Box>
+        <TicketingTabs />
       </MainPageLayoutWithBack>
     </Fragment>
   );
