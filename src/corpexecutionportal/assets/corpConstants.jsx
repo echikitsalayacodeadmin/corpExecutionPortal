@@ -6,6 +6,9 @@ import PHAI from "../../assets/images/ticketingSystem/pharmacy 1.png";
 import PEI from "../../assets/images/ticketingSystem/pre employment 1.png";
 import SRI from "../../assets/images/ticketingSystem/service req 1.png";
 
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+
 export const CorpName = "TEST";
 
 export const FILE_TYPE = [
@@ -180,3 +183,17 @@ export const TicketCategoryList = [
     ticketType: "PHAI",
   },
 ];
+
+export const StatusColorCode = {
+  PENDING: "#e2435c",
+  TICKET_RAISED: "#61696d",
+  COMPLETED: "#3caf4a",
+  BOOKING_CONFIRMED: "#eab676",
+};
+
+export const StatusIcons = {
+  PENDING: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  TICKET_RAISED: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  COMPLETED: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  BOOKING_CONFIRMED: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+};
