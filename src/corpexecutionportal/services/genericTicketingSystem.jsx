@@ -31,16 +31,18 @@ export const raiseTicket = async (data, handleClose) => {
     raisedBy: data.name,
     raisedById: data.userId,
     raisedByMobileNo: data.mobile,
-
     ticketType: data.selectedTicketType?.ticketType,
-    date: new Date(data.date).toISOString().split("T")[0],
 
     corpId: data.company?.corpId,
     corpName: data.company?.orgName,
     ticketCategory: "CORP",
     status: "TICKET_RAISED",
 
-    ticketStatusStage: data.sessionType?.sessionName,
+    ticketInfo: {
+      sessionId: data.sessionType?.id,
+      sessionDate: new Date(data.date).toISOString().split("T")[0],
+      sessionName: data.sessionType?.sessionName,
+    },
   };
   const res = await saveData(url, payload);
   if (res.error) {
