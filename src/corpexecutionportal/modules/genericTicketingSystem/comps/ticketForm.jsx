@@ -45,6 +45,7 @@ const TicketForm = ({ formValues, setFormValues }) => {
               <Box sx={{ minWidth: 400 }}>
                 <FormControl fullWidth>
                   <Select
+                    displayEmpty
                     size="small"
                     fullWidth
                     value={formValues.company}
@@ -56,6 +57,9 @@ const TicketForm = ({ formValues, setFormValues }) => {
                       })
                     }
                   >
+                    <MenuItem disabled value="">
+                      <em>Select Company...</em>
+                    </MenuItem>
                     {companyList.map((value, index) => (
                       <MenuItem value={value} key={index}>
                         {value.orgName}
@@ -106,6 +110,7 @@ const TicketForm = ({ formValues, setFormValues }) => {
               <Box sx={{ minWidth: 500 }}>
                 <FormControl fullWidth>
                   <Select
+                    displayEmpty
                     size="small"
                     fullWidth
                     value={formValues.sessionType}
@@ -117,6 +122,9 @@ const TicketForm = ({ formValues, setFormValues }) => {
                       })
                     }
                   >
+                    <MenuItem disabled value="">
+                      <em>Select Session Type...</em>
+                    </MenuItem>
                     {sessionTypeList.map((value, index) => (
                       <MenuItem value={value} key={index}>
                         {value.sessionName}
