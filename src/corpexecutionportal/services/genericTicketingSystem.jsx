@@ -1,6 +1,11 @@
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../assets/constants";
-import { getData, saveData, updateData } from "../assets/corpServices";
+import {
+  getData,
+  saveData,
+  updateData,
+  uploadFile,
+} from "../assets/corpServices";
 import dayjs from "dayjs";
 //////userId=${userId}
 export const getAllTickets = async (
@@ -28,24 +33,48 @@ export const getAllTickets = async (
 export const raiseTicket = async (data, handleClose) => {
   const url = BASE_URL + `org/v2/raiseTicket`;
 
-  const payload = {
-    raisedBy: data.name,
-    raisedById: data.userId,
-    raisedByMobileNo: data.mobile,
-    ticketType: data.selectedTicketType?.ticketType,
+  // const payload = {
+  //   raisedBy: data.name,
+  //   raisedById: data.userId,
+  //   raisedByMobileNo: data.mobile,
+  //   ticketType: data.selectedTicketType?.ticketType,
 
-    corpId: data.company?.corpId,
-    corpName: data.company?.orgName,
-    ticketCategory: "CORP",
-    status: "TICKET_RAISED",
+  //   corpId: data.company?.corpId,
+  //   corpName: data.company?.orgName,
+  //   ticketCategory: "CORP",
+  //   status: "TICKET_RAISED",
 
-    ticketInfo: {
+  //   ticketInfo: {
+  //     sessionId: data.sessionType?.id,
+  //     sessionDate: dayjs(data.date).format("YYYY-MM-DD"),
+  //     sessionName: data.sessionType?.sessionName,
+  //   },
+  // };
+
+  let formData = new FormData();
+
+  console.log({ data });
+
+  formData.append("raisedBy", data.name);
+  formData.append("raisedById", data.userId);
+  formData.append("raisedByMobileNo", data.mobile);
+  formData.append("ticketType", data.selectedTicketType?.ticketType || "");
+
+  formData.append("corpId", data.company?.corpId || "");
+  formData.append("corpName", data.company?.orgName || "");
+  formData.append("ticketCategory", "CORP");
+  formData.append("status", "TICKET_RAISED");
+
+  formData.append(
+    "ticketInfo",
+    JSON.stringify({
       sessionId: data.sessionType?.id,
       sessionDate: dayjs(data.date).format("YYYY-MM-DD"),
       sessionName: data.sessionType?.sessionName,
-    },
-  };
-  const res = await saveData(url, payload);
+    })
+  );
+
+  const res = await uploadFile(url, formData);
   if (res.error) {
     console.warn({ error: res.error });
     enqueueSnackbar("Failed to raise ticket!", {
