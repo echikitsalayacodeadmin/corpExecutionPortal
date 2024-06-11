@@ -8,6 +8,15 @@ import {
   StatusListForNonFilter,
   TicketCategoryList,
 } from "../../../assets/corpConstants";
+import {
+  CompanyNameIcon,
+  DateIcon,
+  DateIcon1,
+  ECGIcon,
+  EmployeeIcon,
+  NumberIcon,
+  TypeIcon,
+} from "../../../../assets/customIcons";
 const TicketCardView = ({ ticket }) => {
   const navigate = useNavigate();
 
@@ -46,7 +55,7 @@ const TicketCardView = ({ ticket }) => {
                         <Grid item lg={2} display="flex" alignItems="center">
                           <Stack spacing={2}>
                             <Stack direction="row" spacing={1}>
-                              <BookIcon fontSize="10" />
+                              <NumberIcon fontSize="10" />
                               <Typography sx={{ fontSize: 10 }}>
                                 Number
                               </Typography>
@@ -65,7 +74,7 @@ const TicketCardView = ({ ticket }) => {
                         >
                           <Stack spacing={2}>
                             <Stack direction="row" spacing={1}>
-                              <BookIcon fontSize="10" />
+                              <DateIcon1 fontSize="10" />
                               <Typography sx={{ fontSize: 10 }}>
                                 Date
                               </Typography>
@@ -80,7 +89,7 @@ const TicketCardView = ({ ticket }) => {
                         <Grid item lg={2} display="flex" alignItems="center">
                           <Stack spacing={2}>
                             <Stack direction="row" spacing={1}>
-                              <BookIcon fontSize="10" />
+                              <TypeIcon fontSize="10" />
                               <Typography sx={{ fontSize: 10 }}>
                                 Type
                               </Typography>
@@ -96,7 +105,7 @@ const TicketCardView = ({ ticket }) => {
                         <Grid item lg={2} display="flex" alignItems="center">
                           <Stack spacing={2}>
                             <Stack direction="row" spacing={1}>
-                              <BookIcon fontSize="10" />
+                              <CompanyNameIcon fontSize="10" />
                               <Typography sx={{ fontSize: 10 }}>
                                 Company Name
                               </Typography>
@@ -109,7 +118,7 @@ const TicketCardView = ({ ticket }) => {
                         <Grid item lg={2} display="flex" alignItems="center">
                           <Stack spacing={2}>
                             <Stack direction="row" spacing={1}>
-                              <BookIcon fontSize="10" />
+                              <EmployeeIcon fontSize="10" />
                               <Typography sx={{ fontSize: 10 }}>
                                 Employee Name
                               </Typography>
