@@ -1,6 +1,7 @@
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../assets/constants";
 import { getData, saveData, updateData } from "../assets/corpServices";
+import dayjs from "dayjs";
 //////userId=${userId}
 export const getAllTickets = async (
   startDate,
@@ -40,7 +41,7 @@ export const raiseTicket = async (data, handleClose) => {
 
     ticketInfo: {
       sessionId: data.sessionType?.id,
-      sessionDate: new Date(data.date).toISOString().split("T")[0],
+      sessionDate: dayjs(data.date).format("YYYY-MM-DD"),
       sessionName: data.sessionType?.sessionName,
     },
   };
@@ -101,7 +102,7 @@ export const updateTicket = async (data, date, status) => {
   const url = BASE_URL + `org/updateTicketStatus`;
 
   let ticketInfo = data?.ticketInfo;
-  ticketInfo["sessionDate"] = new Date(date).toISOString().split("T")[0];
+  ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD");
 
   const payload = {
     ticketId: data?.ticketId,
