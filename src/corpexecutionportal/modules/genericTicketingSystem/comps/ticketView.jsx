@@ -17,7 +17,10 @@ import dayjs from "dayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { updateTicket } from "../../../services/genericTicketingSystem";
-import { StatusListForNonFilter } from "../../../assets/corpConstants";
+import {
+  StatusListForNonFilter,
+  TicketCategoryList,
+} from "../../../assets/corpConstants";
 
 const TicketView = ({ data }) => {
   const [date, setDate] = useState(
@@ -108,7 +111,9 @@ const TicketView = ({ data }) => {
                         </Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 14 }}>
-                        {data.ticketType}
+                        {TicketCategoryList.find(
+                          (element) => element.ticketType === data.ticketType
+                        )?.label || "n/a"}
                       </Typography>
                     </Stack>
                   </Grid>

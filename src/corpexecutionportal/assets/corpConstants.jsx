@@ -8,6 +8,7 @@ import SRI from "../../assets/images/ticketingSystem/service req 1.png";
 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import RecommendIcon from "@mui/icons-material/Recommend";
 
 export const CorpName = "TEST";
 
@@ -109,7 +110,7 @@ export const StatusList = [
     label: "Booking Confirmed",
     value: "BOOKING_CONFIRMED",
     color: "#eab676",
-    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
   {
     id: 3,
@@ -133,7 +134,7 @@ export const StatusListForNonFilter = [
     label: "Booking Confirmed",
     value: "BOOKING_CONFIRMED",
     color: "#eab676",
-    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
   {
     id: 3,

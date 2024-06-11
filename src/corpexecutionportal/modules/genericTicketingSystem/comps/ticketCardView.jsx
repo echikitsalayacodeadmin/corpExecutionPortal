@@ -1,21 +1,13 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { Fragment } from "react";
 import BookIcon from "@mui/icons-material/Book";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { StatusListForNonFilter } from "../../../assets/corpConstants";
-import { checkValue } from "../../../../assets/utils";
+import {
+  StatusListForNonFilter,
+  TicketCategoryList,
+} from "../../../assets/corpConstants";
 const TicketCardView = ({ ticket }) => {
   const navigate = useNavigate();
 
@@ -94,7 +86,10 @@ const TicketCardView = ({ ticket }) => {
                               </Typography>
                             </Stack>
                             <Typography sx={{ fontSize: 14 }}>
-                              {ticket?.ticketType || "n/a"}
+                              {TicketCategoryList.find(
+                                (element) =>
+                                  element.ticketType === ticket?.ticketType
+                              )?.label || "n/a"}
                             </Typography>
                           </Stack>
                         </Grid>
@@ -159,7 +154,11 @@ const TicketCardView = ({ ticket }) => {
                               />
                             )}
                             <Typography sx={{ fontSize: 14, color: "#fff" }}>
-                              {ticket?.status}
+                              {
+                                StatusListForNonFilter.find(
+                                  (element) => element.value === ticket?.status
+                                )?.label
+                              }
                             </Typography>
                           </Box>
                         </Grid>
