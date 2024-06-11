@@ -54,7 +54,7 @@ export const raiseTicket = async (data, handleClose) => {
   let formData = new FormData();
 
   console.log({ data });
-
+  formData.append("userAuthId", data.userId);
   formData.append("raisedBy", data.name);
   formData.append("raisedById", data.userId);
   formData.append("raisedByMobileNo", data.mobile);
