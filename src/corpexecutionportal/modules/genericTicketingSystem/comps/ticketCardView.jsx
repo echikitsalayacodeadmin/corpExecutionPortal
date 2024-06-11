@@ -14,7 +14,8 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
-import { StatusColorCode, StatusIcons } from "../../../assets/corpConstants";
+import { StatusListForNonFilter } from "../../../assets/corpConstants";
+import { checkValue } from "../../../../assets/utils";
 const TicketCardView = ({ ticket }) => {
   const navigate = useNavigate();
 
@@ -38,7 +39,10 @@ const TicketCardView = ({ ticket }) => {
                   sx={{
                     width: 15,
                     height: 80,
-                    background: StatusColorCode[ticket?.status] || "lightgray",
+                    background:
+                      StatusListForNonFilter.find(
+                        (element) => element.value === ticket?.status
+                      )?.color || "lightgray",
                     borderTopLeftRadius: 10,
                     borderBottomLeftRadius: 10,
                   }}
@@ -131,7 +135,9 @@ const TicketCardView = ({ ticket }) => {
                             component={Stack}
                             sx={{
                               background:
-                                StatusColorCode[ticket?.status] || "lightgray",
+                                StatusListForNonFilter.find(
+                                  (element) => element.value === ticket?.status
+                                )?.color || "lightgray",
                               px: 3,
                               py: 1,
                               borderRadius: 3,
@@ -144,7 +150,9 @@ const TicketCardView = ({ ticket }) => {
                             justifyContent="center"
                             alignItems="center"
                           >
-                            {StatusIcons[ticket?.status] || (
+                            {StatusListForNonFilter.find(
+                              (element) => element.value === ticket?.status
+                            )?.icon || (
                               <NotificationsIcon
                                 fontSize="10"
                                 sx={{ color: "#fff" }}

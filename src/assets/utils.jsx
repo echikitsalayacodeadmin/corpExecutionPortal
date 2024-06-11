@@ -502,3 +502,7 @@ export const shortenName = (employeeName, employeeId, testName) => {
     }
   }
 };
+
+export const checkValue = (a, b) => {
+  return a === b;
+};

@@ -102,7 +102,13 @@ export const updateTicket = async (data, date, status) => {
   const url = BASE_URL + `org/updateTicketStatus`;
 
   let ticketInfo = data?.ticketInfo;
-  ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD");
+  ticketInfo
+    ? (ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD"))
+    : (ticketInfo = {
+        sessionId: "",
+        sessionDate: dayjs(date).format("YYYY-MM-DD"),
+        sessionName: "",
+      });
 
   const payload = {
     ticketId: data?.ticketId,

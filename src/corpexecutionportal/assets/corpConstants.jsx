@@ -93,42 +93,54 @@ export const CORPORATE_SERVICES = [
 
 export const StatusList = [
   {
-    id: 1,
+    id: 0,
     label: "All",
     value: "ALL",
   },
   {
+    id: 1,
+    label: "Pending for confirmation",
+    value: "TICKET_RAISED",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
     id: 2,
-    label: "Pending",
-    value: "PENDING",
+    label: "Booking Confirmed",
+    value: "BOOKING_CONFIRMED",
+    color: "#eab676",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
   {
     id: 3,
     label: "Completed",
     value: "COMPLETED",
-  },
-  {
-    id: 4,
-    label: "Ticket raised",
-    value: "TICKET_RAISED",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
 ];
 
 export const StatusListForNonFilter = [
   {
+    id: 1,
+    label: "Pending for confirmation",
+    value: "TICKET_RAISED",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
     id: 2,
-    label: "Pending",
-    value: "PENDING",
+    label: "Booking Confirmed",
+    value: "BOOKING_CONFIRMED",
+    color: "#eab676",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
   {
     id: 3,
     label: "Completed",
     value: "COMPLETED",
-  },
-  {
-    id: 4,
-    label: "Ticket raised",
-    value: "TICKET_RAISED",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
 ];
 
@@ -145,55 +157,41 @@ export const TicketCategoryList = [
     title: "Pre Employment",
     label: "Pre Employment",
     imageUrl: PEI,
-    ticketType: "PEI",
+    ticketType: "PRE_EMPLOYMENT",
   },
   {
     id: 3,
     title: "Corp Admin",
     label: "Corp Admin",
     imageUrl: CAI,
-    ticketType: "CAI",
+    ticketType: "CORP",
   },
   {
     id: 4,
     title: "Corp Employee",
     label: "Corp Employee",
     imageUrl: CEI,
-    ticketType: "CEI",
+    ticketType: "CORP_CONSUMABLES",
   },
   {
     id: 5,
     title: "Internal",
     label: "Internal",
     imageUrl: INTI,
-    ticketType: "INTI",
+    ticketType: "COUNSELLING_CAMP",
   },
   {
     id: 6,
     title: "Service Request",
     label: "Service Request",
     imageUrl: SRI,
-    ticketType: "SRI",
+    ticketType: "OUTSTATION_SERVICE",
   },
   {
     id: 7,
     title: "Pharmacy",
     label: "Pharmacy",
     imageUrl: PHAI,
-    ticketType: "PHAI",
+    ticketType: "PHARMACY",
   },
 ];
-
-export const StatusColorCode = {
-  PENDING: "#e2435c",
-  TICKET_RAISED: "#61696d",
-  COMPLETED: "#3caf4a",
-  BOOKING_CONFIRMED: "#eab676",
-};
-
-export const StatusIcons = {
-  PENDING: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
-  TICKET_RAISED: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
-  COMPLETED: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
-  BOOKING_CONFIRMED: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
-};
