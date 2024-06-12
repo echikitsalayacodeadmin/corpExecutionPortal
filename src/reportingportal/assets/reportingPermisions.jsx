@@ -133,7 +133,7 @@ export const getReportingPermissions = () => {
     case "REPORTING":
       permissions = {
         assignKamTab: { visibilty: true },
-        corpAdminTab: { visibilty: true },
+        corpAdminTab: { visibilty: false },
         bulkUploadTab: { visibilty: false },
         managePermissionsTab: { visibilty: true },
         masterDataTab: { visibilty: true },
