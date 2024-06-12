@@ -7,11 +7,21 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
+  Modal,
   Portal,
   TextField,
   Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import React, {
   Fragment,
   useContext,
@@ -68,6 +78,23 @@ const filterReport = [
   { value: "CONSOLIDATED_REPORT", label: "Consolidated Report" },
   { value: "ANNEXURE", label: "Annexure Report" },
 ];
+
+const reportFieldsMap = {
+  FITNESS_CERTIFICATE: ["fitnessCertificateUrl"],
+  PHYSICAL_FITNESS_CERTIFICATE: ["form32Url"],
+  PHYSICAL_FITNESS_FORM: ["physicalFitnessFormUrl"],
+  FORM_35: ["form35Url"],
+  PFT: ["pftUrl"],
+  AUDIOMETRY: ["audiometryUrl"],
+  BLOODTEST: ["bloodTestUrl"],
+  ECG: ["ecgUrl"],
+  XRAY: ["xrayUrl"],
+  VACCINATION_CERTIFICATE: ["vaccinationCertificateUrl"],
+  FITNESS_CERTIFICATE_FOOD: ["medicalFitnessFoodUrl"],
+  EYE_TEST: [], // Add corresponding fields for "EYE_TEST" if any
+  CONSOLIDATED_REPORT: ["consolidatedRUrl"],
+  ANNEXURE: ["annexureUrl"],
+};
 
 const CreatePdfModal = ({
   employeeList,
@@ -321,19 +348,156 @@ const CreatePdfModal = ({
     removeSequnceEmployees,
   ]);
 
-  console.log({
+  // console.log({
+  //   selectedRows,
+  //   dbSequence,
+  //   filteredEmployeeList,
+  //   employeesIdList,
+  //   selectedReport,
+  // });
+
+  // console.log({
+  //   employeeList,
+  //   employeesId,
+  //   selectedRows,
+  //   filteredEmployeeList,
+  //   originalEmployeeList,
+  // });
+
+  const [allSelectedEmployees, setAllSelectedEmployees] = useState([]);
+
+  useEffect(() => {
+    if (
+      isPickEmployeeFromSequence === false &&
+      removeSequnceEmployees === false &&
+      (employeeList.length > 0 || employeesId !== "") &&
+      selectedReport.length > 0
+    ) {
+      const temp =
+        employeeList?.length > 0
+          ? employeeList?.map((employee) => employee?.empId)?.join(",")
+          : employeesId !== ""
+          ? employeesId
+          : null;
+
+      if (typeof temp === "string") {
+        const dummpTemp = temp.split(",").map((id) => id.trim());
+        const filteredEmployeesIdList = originalEmployeeList.filter((emp) =>
+          dummpTemp.includes(emp.empId)
+        );
+        setAllSelectedEmployees(filteredEmployeesIdList);
+      } else if (Array.isArray(temp)) {
+        const filteredEmployeesIdList = originalEmployeeList.filter((emp) =>
+          temp.includes(emp.empId)
+        );
+        setAllSelectedEmployees(filteredEmployeesIdList);
+      }
+    } else if (
+      isPickEmployeeFromSequence === true &&
+      selectedReport.length > 0 &&
+      selectedRows.length > 0
+    ) {
+      const temp = selectedRows.map((row) => row.empId);
+      const filteredEmployeesIdList = originalEmployeeList.filter((emp) =>
+        temp.includes(emp.empId)
+      );
+      setAllSelectedEmployees(filteredEmployeesIdList);
+    } else if (
+      isPickEmployeeFromSequence === true &&
+      selectedRows.length === 0 &&
+      selectedReport.length > 0
+    ) {
+      const temp = dbSequence.map((row) => row.empId);
+      console.log({ temp });
+      const filteredEmployeesIdList = originalEmployeeList.filter((emp) =>
+        temp.includes(emp.empId)
+      );
+      console.log({ filteredEmployeesIdList });
+      setAllSelectedEmployees(filteredEmployeesIdList);
+    } else if (
+      removeSequnceEmployees === true &&
+      selectedReport.length > 0 &&
+      dbSequence.length > 0 &&
+      filteredEmployeeList.length > 0
+    ) {
+      const temp = filteredEmployeeList.map((employee) => employee.empId);
+      const filteredEmployeesIdList = originalEmployeeList.filter((emp) =>
+        temp.includes(emp.empId)
+      );
+      setAllSelectedEmployees(filteredEmployeesIdList);
+    }
+  }, [
+    isPickEmployeeFromSequence,
+    removeSequnceEmployees,
+    selectedReport,
+    employeeList,
+    employeesId,
     selectedRows,
-    dbSequence,
     filteredEmployeeList,
-    employeesIdList,
+    originalEmployeeList,
+    dbSequence,
+  ]);
+
+  console.log({
+    allSelectedEmployees,
+    dbSequence,
+    jjj:
+      isPickEmployeeFromSequence === true &&
+      selectedRows.length === 0 &&
+      selectedReport.length > 0,
+    isPickEmployeeFromSequence,
+    selectedRows,
+    selectedReport,
   });
+
+  const [presummaryReport, setPresummaryReport] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const checkEmployeeFields = useMemo(() => {
+    return () => {
+      const newPresummaryReport = [];
+      allSelectedEmployees.forEach((employee) => {
+        const emptyReport = {};
+        const notEmptyReport = {};
+        selectedReport.forEach((report) => {
+          const fields = reportFieldsMap[report];
+          if (fields && fields.length > 0) {
+            const emptyFields = fields.filter(
+              (field) =>
+                employee[field] === undefined || employee[field] === null
+            );
+            const notEmptyFields = fields.filter((field) => employee[field]);
+            if (emptyFields.length > 0) {
+              emptyReport[report] = emptyFields.join(", ");
+            }
+            if (notEmptyFields.length > 0) {
+              notEmptyReport[report] = notEmptyFields.length;
+            }
+          }
+        });
+        newPresummaryReport.push({
+          name: employee.name,
+          empId: employee.empId,
+          emptyReport,
+          notEmptyReport,
+        });
+      });
+      setPresummaryReport(newPresummaryReport);
+      setOpen(true);
+    };
+  }, [selectedReport, allSelectedEmployees, reportFieldsMap]);
+
+  console.log({ presummaryReport });
 
   return (
     <Fragment>
       <Portal>
         <Dialog
           open={openDialog}
-          onClose={handleCloseDialog}
+          onClose={() => {
+            handleCloseDialog();
+            setEmployeesId("");
+          }}
           maxWidth={"xl"}
           fullWidth={true}
         >
@@ -351,7 +515,10 @@ const CreatePdfModal = ({
               <IconButton
                 edge="end"
                 color="inherit"
-                onClick={handleCloseDialog}
+                onClick={() => {
+                  handleCloseDialog();
+                  setEmployeesId("");
+                }}
                 aria-label="close"
               >
                 <CloseIcon />
@@ -447,6 +614,13 @@ const CreatePdfModal = ({
                 </Grid>
                 <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
                   <CustomButtonBlue
+                    disabled={selectedReport.length > 0 ? false : true}
+                    onClick={() => checkEmployeeFields()}
+                    title="Check Report"
+                  />
+                </Grid>
+                <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
+                  <CustomButtonBlue
                     onClick={() => handleGeneratePDFRequest()}
                     title="Generate Report"
                   />
@@ -527,6 +701,69 @@ const CreatePdfModal = ({
         setOpen={setOpenEditModal}
         open={openEditModal}
       />
+      <Portal>
+        <Modal
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          open={open}
+          onClose={() => setOpen(false)}
+          sx={{
+            "& .MuiBackdrop-root": {
+              backgroundColor: "rgba(187, 187, 187, 0.1)",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              backgroundColor: "#fff",
+              boxShadow: "0px 1px 4px 1px rgba(0, 0, 0, 0.1)",
+              borderRadius: "5px",
+              padding: "15px",
+              width: "500px",
+              minHeight: "120px",
+            }}
+          >
+            <Typography variant="h6">Master PDF Summary</Typography>
+            <Typography variant="h6">
+              Total Emp : {presummaryReport.length}
+            </Typography>
+            <Box>
+              <TableContainer sx={{ height: "60vh" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Emp ID</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Empty Reports</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {presummaryReport.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell>{item.empId}</TableCell>
+                        <TableCell>{item.name}</TableCell>
+                        <TableCell>
+                          {Object.entries(item.emptyReport).map(
+                            ([key, value], index) => (
+                              <Typography key={index} sx={{ fontSize: "15px" }}>
+                                {index + 1 + ") "}
+                                {value}
+                              </Typography>
+                            )
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          </Box>
+        </Modal>
+      </Portal>
     </Fragment>
   );
 };

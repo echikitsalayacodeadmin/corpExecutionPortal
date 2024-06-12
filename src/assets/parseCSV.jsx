@@ -8,7 +8,7 @@ const strToBool = (str) => {
   return str === "YES" ? true : str === "NO" ? false : null;
 };
 
-const ParseCSV = ({ setList, corpId, setSavedFile }) => {
+const ParseCSV = ({ setList, corpId, setSavedFile, testPackage = false }) => {
   const isValidUUID = (id) => {
     const uuidRegex =
       /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -78,11 +78,14 @@ const ParseCSV = ({ setList, corpId, setSavedFile }) => {
         return [...acc, e];
       }, []);
       console.log({ columns, res, parsedData });
-      if (!res.includes("employeeid"))
-        return alert("Employee header is missing.");
+      if (testPackage === false) {
+        if (!res.includes("employeeid"))
+          return alert("Employee header is missing.");
+      }
 
       setData(parsedData);
       setList(parsedData);
+
       //_uploadData(parsedData);
     };
     reader.readAsText(file);

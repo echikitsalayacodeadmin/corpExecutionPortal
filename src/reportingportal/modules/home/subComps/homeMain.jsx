@@ -3,7 +3,9 @@ import {
   Badge,
   Box,
   Button,
+  Checkbox,
   CircularProgress,
+  FormControlLabel,
   Grid,
   IconButton,
   Modal,
@@ -62,6 +64,8 @@ const HomeMain = ({
     searchedEmployee,
     updateSearchedEmployee,
     selectedReportData,
+    selectedEmployeeCommaSepIds,
+    handleChangeEmployeeCommaSepIds,
   } = useContext(ReportingContext);
   const { enqueueSnackbar } = useSnackbar();
   const _storedData = useMemo(() => {
@@ -120,6 +124,12 @@ const HomeMain = ({
     setFromDate(_storedData.fromDate || null);
     setToDate(_storedData.toDate || null);
   }, []);
+
+  useEffect(() => {
+    setSelectedEmpIdCommaSep(selectedEmployeeCommaSepIds || "");
+  }, [selectedEmployeeCommaSepIds]);
+
+  console.log({ selectedEmployeeCommaSepIds });
 
   const [openEmpForm, setOpenEmpForm] = useState(false);
   const [empFormData, setEmpFormData] = useState("");
@@ -975,6 +985,12 @@ const HomeMain = ({
     setOpenSelectedEmp(false);
   };
 
+  const [showReportingSeq, setShowReportingSeq] = useState(false);
+
+  const handleShowReportingSeq = (event) => {
+    setShowReportingSeq(event.target.checked);
+  };
+
   const [selectedEmp, setSelectedEmp] = useState([]);
 
   const [selectedRows, setSelectedRows] = React.useState([]);
@@ -991,17 +1007,6 @@ const HomeMain = ({
     setSelectedEmp((prevState) => [...prevState, ...selectedRows]);
   }, [selectedRows]);
 
-  console.log({ selectedRows, selectedEmp });
-  // const [columnVisibilityModel, setColumnVisibilityModel] = React.useState({});
-  // useEffect(() => {
-  //   const defaultVisibility = {};
-  //   columns?.forEach((column) => {
-  //     defaultVisibility[column.field] =
-  //       selectedColumns?.length === 0 ||
-  //       selectedColumns?.includes(column.field);
-  //   });
-  //   setColumnVisibilityModel(defaultVisibility);
-  // }, [selectedColumns]);
   const columnVisibilityModel = useMemo(() => {
     const defaultVisibility = {};
     columns?.forEach((column) => {
@@ -1012,9 +1017,7 @@ const HomeMain = ({
     return defaultVisibility;
   }, [columns, selectedColumns]);
 
-  // useEffect(() => {
-  //   setMasterData(empListHeader);
-  // }, [searchedEmployee]);
+  const [selectedEmpIdCommaSep, setSelectedEmpIdCommaSep] = useState("");
 
   useEffect(() => {
     const saveFilter = {
@@ -1051,6 +1054,14 @@ const HomeMain = ({
             employee.empId !== "" &&
             self.findIndex((e) => e?.empId === employee?.empId) === index
         )
+        .filter((item) => {
+          return selectedEmpIdCommaSep === ""
+            ? true
+            : selectedEmpIdCommaSep.split(",").includes(item.empId);
+        })
+        .filter((item) => {
+          return showReportingSeq === false ? true : item.reportingSno;
+        })
         ?.filter((item) => {
           const reportFilter =
             selectedReportData?.filterValue === "" ||
@@ -1137,6 +1148,8 @@ const HomeMain = ({
     selectedCreatedSort,
     fromDate,
     toDate,
+    selectedEmpIdCommaSep,
+    showReportingSeq,
   ]);
 
   const deleteReport = async () => {
@@ -1191,20 +1204,6 @@ const HomeMain = ({
       }
     }
   };
-
-  const reportingOpsData = useMemo(() => {
-    if (role === "REPORTING_OPS") {
-      masterData.filter((item) => {
-        const searchFilter =
-          searchedEmployee !== ""
-            ? item?.name === searchedEmployee?.name &&
-              item?.empId === searchedEmployee?.empId
-            : true;
-
-        return searchFilter;
-      });
-    }
-  }, [searchedEmployee]);
 
   if (isLoading) {
     return (
@@ -1283,6 +1282,7 @@ const HomeMain = ({
                 disableFuture={true}
               />
             </Grid>
+
             <Grid item xs={12} lg={2.5}>
               <CustomAutocomplete
                 options={filterEmpType}
@@ -1290,6 +1290,30 @@ const HomeMain = ({
                 placeholder="Search Value"
                 value={selectedEmpType}
                 onChange={handleEmpType}
+              />
+            </Grid>
+            <Grid item lg={2.5} xs={6} sx={{ display: "flex" }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={showReportingSeq}
+                    onChange={handleShowReportingSeq}
+                  />
+                }
+                label="FIlter Reporting Sequence"
+              />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <TextField
+                size="small"
+                fullWidth
+                label={`Filter Employee ID Comma Seperated`}
+                placeholder={`Enter Employee ID Comma Seperated`}
+                value={selectedEmpIdCommaSep || ""}
+                onChange={(e) => {
+                  setSelectedEmpIdCommaSep(e.target.value);
+                  handleChangeEmployeeCommaSepIds(e.target.value);
+                }}
               />
             </Grid>
           </Grid>

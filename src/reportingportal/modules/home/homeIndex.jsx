@@ -31,6 +31,7 @@ const HomeIndex = () => {
         filterValue: "",
       }
     );
+    setSelectedEmployeeCommaSepIds(_storedData.selectedEmployeeCommaSepIds);
     setSelectedColumns(_storedData.selectedColumns || []);
   }, []);
 
@@ -68,18 +69,31 @@ const HomeIndex = () => {
     setSelectedColumns(selectedColumns);
   };
 
+  const [selectedEmployeeCommaSepIds, setSelectedEmployeeCommaSepIds] =
+    useState("");
+  const handleChangeEmployeeCommaSepIds = (selectedEmployeeCommaSepIds) => {
+    setSelectedEmployeeCommaSepIds(selectedEmployeeCommaSepIds);
+  };
+
   useEffect(() => {
     const savedFilter = {
       openDrawer,
       showSequenceComponent,
-
       searchedEmployee,
       selectedReportData,
       selectedColumns,
+      selectedEmployeeCommaSepIds,
     };
 
     localStorage.setItem("SAVED_FILTER_HOME", JSON.stringify(savedFilter));
-  }, [openDrawer, showSequenceComponent, searchedEmployee, selectedReportData]);
+  }, [
+    openDrawer,
+    showSequenceComponent,
+    searchedEmployee,
+    selectedReportData,
+    selectedColumns,
+    selectedEmployeeCommaSepIds,
+  ]);
 
   return (
     <Fragment>
@@ -101,6 +115,8 @@ const HomeIndex = () => {
           setSelectedColumns,
           handleButtonClick,
           handleCloseDialog,
+          selectedEmployeeCommaSepIds,
+          handleChangeEmployeeCommaSepIds,
         }}
       >
         <Header />

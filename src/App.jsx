@@ -71,6 +71,7 @@ import EngagementCorp from "./corpexecutionportal/pages/engagementCorp";
 import SessionInfoCorp from "./corpexecutionportal/pages/sessionInfoCorp";
 import CalenderInfoCorp from "./corpexecutionportal/pages/calenderInfoCorp";
 import TicketViewIndex from "./corpexecutionportal/pages/ticketViewIndex";
+import AddPackages from "./reportingportal/pages/addPackages";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -235,6 +236,7 @@ function App() {
             />
             <Route path="assign-kam" element={<Assignkam />} />
             <Route path="bulkupload" element={<BulkUploadReporting />} />
+            <Route path="addpackage" element={<AddPackages />} />
             <Route
               path="managepermissions"
               element={<ManagePermissionsReporting />}

@@ -7,6 +7,7 @@ export const getReportingPermissions = () => {
         assignKamTab: { visibilty: true },
         corpAdminTab: { visibilty: true },
         bulkUploadTab: { visibilty: true },
+        addPackage: { visibilty: true },
         managePermissionsTab: { visibilty: true },
         masterDataTab: { visibilty: true },
         createReportTab: {
@@ -71,6 +72,7 @@ export const getReportingPermissions = () => {
         assignKamTab: { visibilty: true },
         corpAdminTab: { visibilty: true },
         bulkUploadTab: { visibilty: true },
+        addPackage: { visibilty: true },
         managePermissionsTab: { visibilty: true },
         masterDataTab: { visibilty: true },
         createReportTab: {
@@ -135,6 +137,7 @@ export const getReportingPermissions = () => {
         assignKamTab: { visibilty: true },
         corpAdminTab: { visibilty: false },
         bulkUploadTab: { visibilty: false },
+        addPackage: { visibilty: false },
         managePermissionsTab: { visibilty: true },
         masterDataTab: { visibilty: true },
         createReportTab: {

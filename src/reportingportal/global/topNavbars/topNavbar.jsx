@@ -58,6 +58,11 @@ const TopNavbar = () => {
       visibility: permissions.bulkUploadTab.visibilty,
     },
     {
+      name: "Add Bulk Package",
+      url: "/reporting/addpackage",
+      visibility: permissions.addPackage.visibilty,
+    },
+    {
       name: "Manage Permissions",
       url: "/reporting/managepermissions",
       visibility: permissions.managePermissionsTab.visibilty,

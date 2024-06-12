@@ -18,6 +18,7 @@ import {
   Modal,
   Paper,
   Portal,
+  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -56,6 +57,8 @@ const UploadReportMain = ({
     empListHeader,
     searchedEmployee,
     selectedReportData,
+    selectedEmployeeCommaSepIds,
+    handleChangeEmployeeCommaSepIds,
   } = useContext(ReportingContext);
   const permissions = getReportingPermissions();
   console.log({ selectedReportData });
@@ -96,6 +99,10 @@ const UploadReportMain = ({
     setFromDate(_storedData.fromDate || null);
     setToDate(_storedData.toDate || null);
   }, []);
+
+  useEffect(() => {
+    setSelectedEmpIdCommaSep(selectedEmployeeCommaSepIds || "");
+  }, [selectedEmployeeCommaSepIds]);
 
   const [masterData, setMasterData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -938,6 +945,8 @@ const UploadReportMain = ({
     }
   };
 
+  const [selectedEmpIdCommaSep, setSelectedEmpIdCommaSep] = useState("");
+
   const filteredData = useMemo(() => {
     if (role === "REPORTING_OPS") {
       return sortDataByName(masterData)?.filter(
@@ -953,6 +962,11 @@ const UploadReportMain = ({
             employee.empId !== "" &&
             self.findIndex((e) => e?.empId === employee?.empId) === index
         )
+        .filter((item) => {
+          return selectedEmpIdCommaSep === ""
+            ? true
+            : selectedEmpIdCommaSep.split(",").includes(item.empId);
+        })
         ?.filter((item) => {
           const reportValueFilter =
             selectedReportData?.title === "Master Data" ||
@@ -1027,6 +1041,7 @@ const UploadReportMain = ({
     selectedReportData,
     fromDate,
     toDate,
+    selectedEmpIdCommaSep,
   ]);
 
   // useEffect(() => {
@@ -1300,17 +1315,30 @@ const UploadReportMain = ({
                 }}
                 title="Parse Trigger"
               />
+              <Typography
+                sx={{
+                  fontSize: "10px",
+                  p: 0,
+                  m: 0,
+                }}
+              >
+                Please Select Employees
+              </Typography>
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <TextField
+                size="small"
+                fullWidth
+                label={`Filter Employee ID Comma Seperated`}
+                placeholder={`Enter Employee ID Comma Seperated`}
+                value={selectedEmpIdCommaSep || ""}
+                onChange={(e) => {
+                  setSelectedEmpIdCommaSep(e.target.value);
+                  handleChangeEmployeeCommaSepIds(e.target.value);
+                }}
+              />
             </Grid>
           </Grid>
-          <Typography
-            sx={{
-              fontSize: "10px",
-              textAlign: isDesktop && "right",
-              marginRight: isDesktop && "50px",
-            }}
-          >
-            Please Select Employees
-          </Typography>
 
           <CustomDataGridLayout
             hideFooterPagination={false}

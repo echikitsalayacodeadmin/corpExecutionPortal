@@ -30,8 +30,13 @@ const MasterPdfMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
   role = localStorage.getItem("REPORTING_ROLE"),
 }) => {
-  const { updateEmployeeList, empListHeader, searchedEmployee } =
-    useContext(ReportingContext);
+  const {
+    updateEmployeeList,
+    empListHeader,
+    searchedEmployee,
+    selectedEmployeeCommaSepIds,
+    handleChangeEmployeeCommaSepIds,
+  } = useContext(ReportingContext);
   const { enqueueSnackbar } = useSnackbar();
 
   const _storedData = useMemo(() => {
@@ -68,6 +73,10 @@ const MasterPdfMain = ({
     setFromDate(_storedData.fromDate || null);
     setToDate(_storedData.toDate || null);
   }, []);
+
+  useEffect(() => {
+    setSelectedEmpIdCommaSep(selectedEmployeeCommaSepIds || "");
+  }, [selectedEmployeeCommaSepIds]);
 
   const columns = [
     { field: "reportingSno", headerName: "Reporting Sno", width: 120 },
@@ -735,8 +744,9 @@ const MasterPdfMain = ({
     }
   };
 
-  const [selectedEmpIdList, setSelectedEmpIdList] = React.useState("");
-  console.log({ list: selectedEmpIdList?.split(",") });
+  const [selectedEmpIdCommaSep, setSelectedEmpIdCommaSep] = useState("");
+  const [selectedTokenList, setSelectedTokenList] = React.useState("");
+
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
 
@@ -782,9 +792,16 @@ const MasterPdfMain = ({
             : item.employmentType === selectedEmpType.value;
         })
         .filter((item) => {
-          return selectedEmpIdList === ""
+          return selectedEmpIdCommaSep === ""
             ? true
-            : selectedEmpIdList.split(",").includes(item.empId);
+            : selectedEmpIdCommaSep.split(",").includes(item.empId);
+        })
+        .filter((item) => {
+          return selectedTokenList === ""
+            ? true
+            : selectedTokenList
+                .split(",")
+                .includes(item?.tokenNumber?.toString());
         })
         .filter((item) => {
           const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
@@ -825,12 +842,13 @@ const MasterPdfMain = ({
   }, [
     masterData,
     selectFilterHWBS,
-    selectedEmpIdList,
+    selectedTokenList,
     selectedEmpType,
     searchedEmployee,
     selectedCreatedSort,
     fromDate,
     toDate,
+    selectedEmpIdCommaSep,
   ]);
 
   useEffect(() => {
@@ -925,15 +943,28 @@ const MasterPdfMain = ({
                 onChange={handleEmpType}
               />
             </Grid>
-            <Grid item xs={12} lg={2.5}>
+            <Grid item xs={12} lg={4}>
               <TextField
                 size="small"
                 fullWidth
-                label={`Search Emp Id`}
-                placeholder={`Enter list of empIds`}
-                value={selectedEmpIdList}
+                label={`Filter Employee ID Comma Seperated`}
+                placeholder={`Enter Employee ID Comma Seperated`}
+                value={selectedEmpIdCommaSep || ""}
                 onChange={(e) => {
-                  setSelectedEmpIdList(e.target.value);
+                  setSelectedEmpIdCommaSep(e.target.value);
+                  handleChangeEmployeeCommaSepIds(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} lg={3}>
+              <TextField
+                size="small"
+                fullWidth
+                label={`Filter Search Token no Comma Seperated`}
+                placeholder={`Enter list of token no Comma Seperated`}
+                value={selectedTokenList}
+                onChange={(e) => {
+                  setSelectedTokenList(e.target.value);
                 }}
               />
             </Grid>
