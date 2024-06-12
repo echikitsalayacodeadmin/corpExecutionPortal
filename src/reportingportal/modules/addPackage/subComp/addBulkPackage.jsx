@@ -15,6 +15,7 @@ import { saveData } from "../../../assets/reportingServices";
 import { useSnackbar } from "notistack";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import dayjs from "dayjs";
+import CustomAutocomplete from "../../../../assets/customAutocomplete";
 
 const AddBulkPackage = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -24,7 +25,7 @@ const AddBulkPackage = ({
   const [packageDetailUpdated, setPackageDetailUpdated] = useState([]);
   const [savedFile, setSavedFile] = useState("");
 
-  const [selectedEmpType, setSelectedEmpType] = useState("");
+  const [selectedEmpType, setSelectedEmpType] = useState(null);
 
   const columns = [
     {
@@ -171,6 +172,29 @@ const AddBulkPackage = ({
   return (
     <Fragment>
       <Box sx={{ mt: 2 }}>
+        <CustomAutocomplete
+          options={[
+            "AHC",
+            "ONROLL",
+            "CONTRACTOR",
+            "PRE_EMPLOYMENT",
+            "NOT_PROVIDED",
+            "NOT_MAPPED",
+            "CSR",
+          ]}
+          value={selectedEmpType || null}
+          onChange={(event, newValue, reason) => {
+            setSelectedEmpType(newValue);
+            if (reason === "clear") {
+              setSelectedEmpType(null);
+            }
+          }}
+          label="Select Employment Type"
+          placeholder="Select Employment Type"
+          required={true}
+          asterickColor={"red"}
+          getOptionLabel={(option) => option || null}
+        />
         <CustomDataGridLayout
           disableRowSelectionOnClick={true}
           disableSelectionOnClick={true}
@@ -217,7 +241,13 @@ const AddBulkPackage = ({
                       setSavedFile={setSavedFile}
                       testPackage={true}
                     />
-                    <Button onClick={handleUploadBulkPackages}>Submit</Button>
+                    <Button
+                      variant="contained"
+                      disabled={selectedEmpType === "" ? true : false}
+                      onClick={handleUploadBulkPackages}
+                    >
+                      Submit
+                    </Button>
                   </Stack>
                 </Grid>
               </Grid>
