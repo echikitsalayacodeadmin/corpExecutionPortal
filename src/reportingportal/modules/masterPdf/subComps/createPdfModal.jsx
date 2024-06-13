@@ -96,6 +96,22 @@ const reportFieldsMap = {
   ANNEXURE: ["annexureUrl"],
 };
 
+const countTotalReports = (data) => {
+  let totalReports = 0;
+
+  data.forEach((item) => {
+    for (const reportType in reportFieldsMap) {
+      reportFieldsMap[reportType].forEach((field) => {
+        if (item[field]) {
+          totalReports++;
+        }
+      });
+    }
+  });
+
+  return totalReports;
+};
+
 const CreatePdfModal = ({
   employeeList,
   setEmployeeList,
@@ -624,6 +640,12 @@ const CreatePdfModal = ({
                     onClick={() => handleGeneratePDFRequest()}
                     title="Generate Report"
                   />
+                </Grid>
+                <Grid item lg={12} xs={6} sx={{ display: "flex" }}>
+                  <Typography>
+                    No of Reports Found :{" "}
+                    {countTotalReports(allSelectedEmployees)}
+                  </Typography>
                 </Grid>
               </Grid>
 
