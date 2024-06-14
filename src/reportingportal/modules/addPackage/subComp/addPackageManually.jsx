@@ -27,8 +27,8 @@ const initialData = [
   {
     id: 1,
     packageName: "Pack-A",
-    bloodPackageName: "Pkg - 1",
-    xray: true,
+    bloodPackageName: "Blood",
+    xray: false,
     cbc: false,
     urine: false,
     fitness: false,
@@ -39,7 +39,7 @@ const initialData = [
     sugar: false,
     sbilirubin: false,
     stoolSample: false,
-    employmentType: "NOT_PROVIDED",
+    employmentType: "",
     date: dayjs().format("YYYY-MM-DD"),
   },
 ];

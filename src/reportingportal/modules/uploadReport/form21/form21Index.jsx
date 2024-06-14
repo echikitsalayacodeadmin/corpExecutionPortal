@@ -1,9 +1,9 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Grid, Paper, Tab } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
+import { getReportingPermissions } from "../../../assets/reportingPermisions";
 import Form21Upload from "./comps/form21Upload";
 import Form21Data from "./comps/form21Data";
-import { getReportingPermissions } from "../../../assets/reportingPermisions";
 
 const Form21Index = () => {
   const permissions = getReportingPermissions();

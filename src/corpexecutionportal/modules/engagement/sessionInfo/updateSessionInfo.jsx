@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import {
+  deleteData,
   getData,
   updateData,
   updateDataFile,
@@ -29,7 +30,8 @@ const UpdateSessionInfo = () => {
   const [selectedSession, setSelectedSession] = useState("");
   const [sessionList, setSessionList] = useState([]);
   const getSessionList = async () => {
-    const url = BASE_URL + `org/awarenessSessions/list`;
+    const url =
+      BASE_URL + `org/orgconfig/list?orgConfigType=AWARENESS_SESSIONS`;
     const result = await getData(url);
     if (result.error) {
       setSessionList([]);
@@ -48,7 +50,6 @@ const UpdateSessionInfo = () => {
     description: "",
     duration: "",
     impact: "",
-    isActive: true,
     imageUrl: "",
   });
 
@@ -73,14 +74,10 @@ const UpdateSessionInfo = () => {
         ? formData.append("duration", sessionDetail?.duration)
         : null;
     }
+    formData.append("orgConfigType", "AWARENESS_SESSIONS");
     {
       sessionDetail?.impact
         ? formData.append("impact", sessionDetail?.impact)
-        : null;
-    }
-    {
-      sessionDetail?.isActive
-        ? formData.append("isActive", sessionDetail?.isActive)
         : null;
     }
 
@@ -90,7 +87,7 @@ const UpdateSessionInfo = () => {
         : null;
     }
 
-    const url = BASE_URL + `org/awarenessSessions/update`;
+    const url = BASE_URL + `org/orgrconfig/update`;
     const result = await updateDataFile(url, formData);
     if (result.error) {
       console.log(result.error);
@@ -106,7 +103,7 @@ const UpdateSessionInfo = () => {
         description: "",
         duration: "",
         impact: "",
-        isActive: true,
+
         imageUrl: "",
       });
       setSelectedSession("");
@@ -114,6 +111,29 @@ const UpdateSessionInfo = () => {
     }
   };
 
+  const handleDeleteSession = async () => {
+    const url = BASE_URL + `org/orgconfig/delete?id=${selectedSession.id}`;
+    const result = await deleteData(url);
+    if (result.error) {
+      enqueueSnackbar("An error occured.", {
+        variant: "error",
+      });
+    } else {
+      enqueueSnackbar("Deleted successfully.", {
+        variant: "success",
+      });
+      setSelectedSession("");
+      setSessionDetail({
+        id: "",
+        sessionName: "",
+        description: "",
+        duration: "",
+        impact: "",
+        imageUrl: "",
+      });
+      getSessionList();
+    }
+  };
   if (isLoading) {
     return (
       <Box
@@ -207,41 +227,7 @@ const UpdateSessionInfo = () => {
             }}
           />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={6}
-          lg={6}
-          sx={{ display: "flex", alignItems: "center" }}
-        >
-          <Typography sx={{ marginRight: 3 }}>Is Active</Typography>
-          <RadioGroup
-            value={
-              sessionDetail.isActive === true
-                ? "Yes"
-                : sessionDetail.isActive === false
-                ? "No"
-                : ""
-            }
-            onChange={(e) => {
-              setSessionDetail({
-                ...sessionDetail,
-                isActive:
-                  e.target.value === "Yes"
-                    ? true
-                    : e.target.value === "No"
-                    ? false
-                    : "",
-              });
-            }}
-          >
-            <Box sx={{ display: "flex" }}>
-              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
-              <FormControlLabel value="No" control={<Radio />} label="No" />
-            </Box>
-          </RadioGroup>
-        </Grid>
+
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <UploadFile
             title="Upload Icon"
@@ -287,6 +273,7 @@ const UpdateSessionInfo = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            gap: 3,
           }}
         >
           <CustomButtonBlue
@@ -294,6 +281,19 @@ const UpdateSessionInfo = () => {
             title="Save"
             onClick={() => {
               handleUpdated();
+            }}
+          />
+          <CustomButtonBlue
+            disabled={selectedSession ? false : true}
+            styles={{
+              backgroundColor: "red",
+              ":hover": {
+                backgroundColor: "red",
+              },
+            }}
+            title="Delete"
+            onClick={() => {
+              handleDeleteSession();
             }}
           />
         </Grid>

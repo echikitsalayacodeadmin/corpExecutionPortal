@@ -1,7 +1,11 @@
 import React, { Fragment, useState } from "react";
 import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import { Box, CircularProgress, Grid, TextField } from "@mui/material";
-import { saveData, uploadFile } from "../../../assets/corpServices";
+import {
+  saveData,
+  updateDataFile,
+  uploadFile,
+} from "../../../assets/corpServices";
 import { BASE_URL } from "../../../../assets/constants";
 import { useSnackbar } from "notistack";
 import UploadFile from "../../../global/uploadFile";
@@ -16,7 +20,6 @@ const SessionInfoAdd = () => {
     description: "",
     duration: "",
     impact: "",
-    isActive: true,
     imageUrl: "",
   });
 
@@ -41,15 +44,13 @@ const SessionInfoAdd = () => {
       ? formData.append("impact", sessionDetail?.impact)
       : null;
 
-    sessionDetail?.isActive
-      ? formData.append("isActive", sessionDetail?.isActive)
-      : null;
+    formData.append("orgConfigType", "AWARENESS_SESSIONS");
 
     sessionDetail.imageUrl.file
       ? formData.append("file", sessionDetail.imageUrl.file)
       : null;
 
-    const url = BASE_URL + `org/awarenessSessions/add`;
+    const url = BASE_URL + `org/orgconfig/add`;
     const result = await uploadFile(url, formData);
     if (result.error) {
       setIsLoading(false);
@@ -64,7 +65,6 @@ const SessionInfoAdd = () => {
         description: "",
         duration: "",
         impact: "",
-        isActive: true,
         imageUrl: "",
       });
     }

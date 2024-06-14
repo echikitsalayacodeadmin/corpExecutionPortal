@@ -379,6 +379,13 @@ const HomeMain = ({
       },
     },
     {
+      field: "eyeTestToggle",
+      headerName: "Eye Test Toggle",
+      width: 120,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
       field: "visionRemark",
       headerName: "Vision Remark",
       width: 300,
@@ -1018,6 +1025,7 @@ const HomeMain = ({
   }, [columns, selectedColumns]);
 
   const [selectedEmpIdCommaSep, setSelectedEmpIdCommaSep] = useState("");
+  const [selectedTokenList, setSelectedTokenList] = React.useState("");
 
   useEffect(() => {
     const saveFilter = {
@@ -1061,6 +1069,13 @@ const HomeMain = ({
         })
         .filter((item) => {
           return showReportingSeq === false ? true : item.reportingSno;
+        })
+        .filter((item) => {
+          return selectedTokenList === ""
+            ? true
+            : selectedTokenList
+                .split(",")
+                .includes(item?.tokenNumber?.toString());
         })
         ?.filter((item) => {
           const reportFilter =
@@ -1313,6 +1328,18 @@ const HomeMain = ({
                 onChange={(e) => {
                   setSelectedEmpIdCommaSep(e.target.value);
                   handleChangeEmployeeCommaSepIds(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} lg={3}>
+              <TextField
+                size="small"
+                fullWidth
+                label={`Filter Search Token no Comma Seperated`}
+                placeholder={`Enter list of token no Comma Seperated`}
+                value={selectedTokenList}
+                onChange={(e) => {
+                  setSelectedTokenList(e.target.value);
                 }}
               />
             </Grid>
