@@ -4,23 +4,46 @@ import {
   Card,
   CardContent,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   Grid,
   MenuItem,
   Select,
   Stack,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import BookIcon from "@mui/icons-material/Book";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PersonIcon from "@mui/icons-material/Person";
+import BackHandIcon from "@mui/icons-material/BackHand";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import HorizontalSplitIcon from "@mui/icons-material/HorizontalSplit";
+import SplitscreenIcon from "@mui/icons-material/Splitscreen";
 import dayjs from "dayjs";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  LocalizationProvider,
+  TimePicker,
+} from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { updateTicket } from "../../../services/genericTicketingSystem";
+import {
+  getSessionTypeList,
+  updateTicket,
+} from "../../../services/genericTicketingSystem";
 import {
   StatusListForNonFilter,
   TicketCategoryList,
 } from "../../../assets/corpConstants";
+import {
+  CompanyNameIcon,
+  DateIcon,
+  DateIcon1,
+  NumberIcon,
+  TypeIcon,
+} from "../../../../assets/customIcons";
 
 const TicketView = ({ data }) => {
   const [date, setDate] = useState(
@@ -33,7 +56,36 @@ const TicketView = ({ data }) => {
       ""
   );
 
-  console.log({ data123: data });
+  const [doctorName, setDoctorName] = useState("");
+  const [sessionStartDate, setSessionStartDate] = useState(null);
+  const [sessionEndDate, setSessionEndDate] = useState(null);
+
+  const [checked, setChecked] = useState(true);
+  const [breakTime, setBreakTime] = useState(15);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    setBreakTime(event.target.checked ? 15 : 0);
+    setSessionEndDate(
+      sessionStartDate.add(120 + (event.target.checked ? 15 : 0), "Minute")
+    );
+  };
+
+  const [sessionTypeList, setSessionTypeList] = useState([]);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    getSessionTypeList(setSessionTypeList);
+  }, []);
+
+  useEffect(() => {
+    setDuration(
+      sessionTypeList.find(
+        (a) => a.sessionName === data.ticketInfo?.sessionName
+      )?.duration || 0
+    );
+  }, [sessionTypeList]);
+  console.log({ data123: data, sessionStartDate, sessionTypeList, duration });
 
   return (
     <Fragment>
@@ -52,7 +104,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <NumberIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>Number</Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 14 }}>
@@ -69,7 +121,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <CompanyNameIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>Company</Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 14 }}>
@@ -86,7 +138,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <DateIcon1 fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>
                           Ticket Date
                         </Typography>
@@ -105,7 +157,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <TypeIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>
                           Ticket Type
                         </Typography>
@@ -126,7 +178,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <BackHandIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>Raised By</Typography>
                       </Stack>
                       <Typography sx={{ fontSize: 14 }}>
@@ -151,7 +203,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2} sx={{ height: 73 }}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <HorizontalSplitIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>
                           Seesion Type
                         </Typography>
@@ -178,7 +230,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <DateRangeIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>
                           Seesion Date
                         </Typography>
@@ -213,7 +265,7 @@ const TicketView = ({ data }) => {
                   >
                     <Stack spacing={2}>
                       <Stack direction="row" spacing={1}>
-                        <BookIcon fontSize="10" />
+                        <SplitscreenIcon fontSize="10" />
                         <Typography sx={{ fontSize: 10 }}>
                           Ticket Status
                         </Typography>
@@ -238,6 +290,106 @@ const TicketView = ({ data }) => {
                     </Stack>
                   </Grid>
                 </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item lg={4}>
+            <Card variant="outlined">
+              <CardContent>
+                <Stack spacing={2}>
+                  <Stack direction="row" spacing={1}>
+                    <PersonIcon fontSize="10" />
+                    <Typography sx={{ fontSize: 10 }}>
+                      Doctor/Instructor name
+                    </Typography>
+                  </Stack>
+
+                  <TextField
+                    size="small"
+                    fullWidth
+                    value={doctorName}
+                    onChange={(e) => setDoctorName(e.target.value)}
+                    placeholder="Enter doctor name"
+                  />
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item lg={4}>
+            <Card variant="outlined">
+              <CardContent>
+                <Stack spacing={2}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Stack direction="row" spacing={1}>
+                      <AccessTimeIcon fontSize="10" />
+                      <Typography sx={{ fontSize: 10 }}>
+                        Session Start Time
+                      </Typography>
+                    </Stack>
+                    <FormGroup>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            size="small"
+                            checked={checked}
+                            onChange={handleChange}
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        }
+                        label="15 mins break"
+                        labelPlacement="start"
+                      />
+                    </FormGroup>
+                  </Stack>
+
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                      label=""
+                      value={sessionStartDate}
+                      onChange={(newValue) => {
+                        setSessionStartDate(newValue);
+                        setSessionEndDate(
+                          newValue.add(duration + breakTime, "Minute")
+                        );
+                      }}
+                      slotProps={{
+                        textField: { size: "small", fullWidth: true },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item lg={4}>
+            <Card variant="outlined">
+              <CardContent>
+                <Stack spacing={2}>
+                  <Stack direction="row" spacing={1}>
+                    <AccessTimeIcon fontSize="10" />
+                    <Typography sx={{ fontSize: 10 }}>
+                      Session End Time
+                    </Typography>
+                  </Stack>
+
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                      readOnly
+                      label=""
+                      value={sessionEndDate}
+                      onChange={(newValue) => setSessionEndDate(newValue)}
+                      slotProps={{
+                        textField: { size: "small", fullWidth: true },
+                      }}
+                    />
+                  </LocalizationProvider>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>
