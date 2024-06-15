@@ -217,6 +217,7 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
               "gender",
               "form35",
               "eyeTest",
+              "eyeTestToggle",
               "visionRemark",
               "vitalsCreatedDate",
               "reportAction",

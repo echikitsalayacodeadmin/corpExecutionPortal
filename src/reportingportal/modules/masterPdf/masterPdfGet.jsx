@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { getData, saveData } from "../../assets/reportingServices";
 import CustomDataGridLayout from "../../../assets/globalDataGridLayout/customDataGridLayout";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   Box,
   Button,
@@ -51,39 +52,39 @@ const MasterPdfGet = ({
   };
 
   const columns = [
-    // {
-    //   field: "markCompleted",
-    //   headerName: "Mark Completed",
-    //   width: 150,
-    //   align: "center",
-    //   headerAlign: "center",
-    //   renderCell: (params) => {
-    //     console.log({ id: params?.row?.id });
-    //     return (
-    //       <Button
-    //         variant="contained"
-    //         sx={{
-    //           textTransform: "capitalize",
-    //           p: "3px",
-    //           borderRadius: "3px",
-    //           m: 0,
-    //         }}
-    //         onClick={() => {
-    //           setOpenMarkStatus(true);
-    //           setSelectedPdfId(params?.row?.id);
-    //         }}
-    //       >
-    //         <Typography
-    //           sx={{ fontSize: "12px", color: "#FFF", fontWeight: "400" }}
-    //         >
-    //           Mark Complete
-    //         </Typography>
-    //       </Button>
-    //     );
-    //   },
-    // },
-    // { field: "isCompleted", headerName: "Is Completed", width: 140 },
-    // { field: "isAnchorSequence", headerName: "Is Anchor Sequence", width: 140 },
+    {
+      field: "markCompleted",
+      headerName: "Mark Completed",
+      width: 150,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        console.log({ id: params });
+        return (
+          <Button
+            variant="contained"
+            sx={{
+              textTransform: "capitalize",
+              p: "3px",
+              borderRadius: "3px",
+              m: 0,
+            }}
+            onClick={() => {
+              setOpenMarkStatus(true);
+              setSelectedPdfId(params?.row?.id);
+            }}
+          >
+            <Typography
+              sx={{ fontSize: "12px", color: "#FFF", fontWeight: "400" }}
+            >
+              Mark Complete
+            </Typography>
+          </Button>
+        );
+      },
+    },
+    { field: "isCompleted", headerName: "Is Completed", width: 140 },
+    { field: "isAnchorSequence", headerName: "Is Anchor Sequence", width: 140 },
     { field: "date", headerName: "Date", width: 140 },
     { field: "time", headerName: "Time", width: 140 },
     {
@@ -180,8 +181,8 @@ const MasterPdfGet = ({
       console.log({ SUCCESS: response.data });
       let temp = response?.data?.map((item, index) => ({
         ...item,
-        id: index + 1,
-        // index: index + 1,
+        // id: index + 1,
+        index: index + 1,
       }));
       setMasterPdfList(sortDataByDateTime(temp));
     } else {
@@ -236,6 +237,9 @@ const MasterPdfGet = ({
             paddingBlock: "10px",
           }}
         >
+          <IconButton onClick={fetchMasterPdfList}>
+            <RefreshIcon />
+          </IconButton>
           <CustomDataGridLayout
             columns={columns}
             rows={masterPdfList}

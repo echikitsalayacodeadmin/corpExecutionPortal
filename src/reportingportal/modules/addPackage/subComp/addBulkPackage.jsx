@@ -127,7 +127,7 @@ const AddBulkPackage = ({
         packageDetail.map((item, index) => ({
           id: index,
           packageName: item.packagename,
-          bloodPackageName: item.bloodpackagename,
+          bloodPackageName: item.bloodpackagename === "TRUE" ? "Blood" : "",
           xray: item.xray === "TRUE" ? true : false,
           cbc: item.cbc === "TRUE" ? true : false,
           urine: item.urine === "TRUE" ? true : false,
