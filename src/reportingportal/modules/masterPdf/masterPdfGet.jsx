@@ -5,6 +5,10 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
   Grid,
   IconButton,
@@ -13,6 +17,11 @@ import {
   Portal,
   Radio,
   RadioGroup,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
 import { BASE_URL } from "../../../assets/constants";
@@ -22,6 +31,7 @@ import { useSnackbar } from "notistack";
 import CustomButtonWhite from "../../../assets/customButtonWhite";
 import CloseIcon from "@mui/icons-material/Close";
 import CustomButtonBlue from "../../../assets/customButtonBlue";
+import MasterPdfIndexModal from "./subComps/masterPdfIndexModal";
 
 const MasterPdfGet = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -51,6 +61,13 @@ const MasterPdfGet = ({
     setOpenMarkStatus(false);
   };
 
+  const [masterPdfIndexData, setMasterPdfIndexData] = useState([]);
+  const [open3, setOpen3] = useState(false);
+
+  const handleClose3 = () => {
+    setOpen3(false);
+  };
+
   const columns = [
     {
       field: "markCompleted",
@@ -59,7 +76,6 @@ const MasterPdfGet = ({
       align: "center",
       headerAlign: "center",
       renderCell: (params) => {
-        console.log({ id: params });
         return (
           <Button
             variant="contained"
@@ -147,11 +163,38 @@ const MasterPdfGet = ({
       ),
     },
     {
+      field: "masterPdfIndex",
+      headerName: "Master Pdf Index",
+      width: 170,
+      renderCell: (params) => {
+        const flattenArray = Object.keys(params.row.masterPdfIndex || {}).map(
+          (key) => {
+            const { empId, sno, pageNo, name, fileAndUrlsMap } =
+              params.row.masterPdfIndex[key];
+            return { empId, sno, pageNo, name, ...fileAndUrlsMap };
+          }
+        );
+
+        return (
+          <Fragment>
+            <Button
+              size="small"
+              onClick={() => {
+                setOpen3(true);
+                setMasterPdfIndexData(flattenArray);
+              }}
+            >
+              View
+            </Button>
+          </Fragment>
+        );
+      },
+    },
+    {
       field: "fileTypeList",
       headerName: "File Type List",
       width: 1300,
       renderCell: (params) => {
-        console.log({ LISTOFREPORTS: params.value, row: params.row });
         return (
           <div>
             {params?.value && params?.value?.length > 0 && (
@@ -224,6 +267,8 @@ const MasterPdfGet = ({
       });
     }
   };
+
+  console.log({ open3, masterPdfIndexData });
 
   return (
     <Fragment>
@@ -419,6 +464,11 @@ const MasterPdfGet = ({
           </Box>
         </Modal>
       </Portal>
+      <MasterPdfIndexModal
+        open={open3}
+        handleClose={handleClose3}
+        data={masterPdfIndexData}
+      />
     </Fragment>
   );
 };

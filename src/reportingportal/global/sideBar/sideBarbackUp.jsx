@@ -41,8 +41,6 @@ const SideBarbackUp = ({
     "/reporting/reporting-main/master-pdf-download"
   );
 
-  console.log({ masterDataLocation });
-
   const _storedData = (() => {
     try {
       return JSON.parse(localStorage.getItem("SAVED_FILTER_SIDE_BAR")) || {};

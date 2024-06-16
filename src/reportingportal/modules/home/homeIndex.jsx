@@ -17,8 +17,6 @@ const HomeIndex = () => {
     }
   })();
 
-  console.log({ DATA: localStorage.getItem("SAVED_FILTER_HOME") });
-
   useEffect(() => {
     setOpenDrawer(_storedData.openDrawer || isMobile ? false : true);
     setShowSequenceComponent(_storedData.showSequenceComponent || false);
