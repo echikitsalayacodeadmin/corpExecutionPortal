@@ -49,6 +49,15 @@ const MainPageLayoutWithBackSV = ({
             alignItems={"flex-end"}
             sx={{ gap: "10px" }}
           >
+            <CustomButtonBlue
+              title="OHC staff audit"
+              onClick={() => {
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeGUVLCAuSBxG8VbVhGoHm2gG3Cxz8vUkZsJ8GuZzdrP8fAQA/viewform",
+                  "_blank"
+                );
+              }}
+            />
             <IconButton
               onClick={onDownloadClick}
               sx={{
