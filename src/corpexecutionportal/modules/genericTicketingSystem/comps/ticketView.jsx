@@ -67,7 +67,7 @@ const TicketView = ({ data }) => {
     setChecked(event.target.checked);
     setBreakTime(event.target.checked ? 15 : 0);
     setSessionEndDate(
-      sessionStartDate.add(120 + (event.target.checked ? 15 : 0), "Minute")
+      sessionStartDate.add(duration + (event.target.checked ? 15 : 0), "Minute")
     );
   };
 
@@ -80,9 +80,11 @@ const TicketView = ({ data }) => {
 
   useEffect(() => {
     setDuration(
-      sessionTypeList.find(
-        (a) => a.sessionName === data.ticketInfo?.sessionName
-      )?.duration || 0
+      parseInt(
+        sessionTypeList.find(
+          (a) => a.sessionName === data.ticketInfo?.sessionName
+        )?.duration
+      ) || 0
     );
   }, [sessionTypeList]);
   console.log({ data123: data, sessionStartDate, sessionTypeList, duration });
