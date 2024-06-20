@@ -255,68 +255,10 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
         },
         {
           to: "/reporting/reporting-main/master-data",
-          subTabTitle: "Xray",
-          onClick: () => {
-            setSelectedPButton(1);
-            updateSelectedReport({
-              value: "XRAY",
-              title: "Create Report - Xray",
-              label: "Xray",
-              filterValue: "xray",
-            });
-            handleButtonClick([
-              "empId",
-              "tokenNumber",
-              "name",
-              "age",
-              "gender",
-              "xray",
-              "xrayFilm",
-              "xrayToggle",
-              "vitalsCreatedDate",
-              "reportAction",
-            ]);
-            setSelectedCButton(14);
-          },
-
-          selectedCButtonSubMenu: 14,
-        },
-        {
-          to: "/reporting/reporting-main/master-data",
-          subTabTitle: "Food Certificate",
-          onClick: () => {
-            setSelectedPButton(1);
-            setSelectedCButton(15);
-            updateSelectedReport({
-              value: "FITNESS_CERTIFICATE_FOOD",
-              title: "Create Report - Food Certificate",
-              label: "Food Certificate",
-              filterValue: "medicalFitnessFood",
-            });
-            handleButtonClick([
-              "empId",
-              "tokenNumber",
-              "name",
-              "age",
-              "gender",
-              "height",
-              "weight",
-              "bp",
-              "sugar",
-              "medicalFitnessFood",
-              "vitalsCreatedDate",
-              "reportAction",
-            ]);
-          },
-
-          selectedCButtonSubMenu: 15,
-        },
-        {
-          to: "/reporting/reporting-main/master-data",
           subTabTitle: "Physical Fitness Form",
           onClick: () => {
             setSelectedPButton(1);
-            setSelectedCButton(16);
+            setSelectedCButton(14);
             updateSelectedReport({
               value: "PHYSICAL_FITNESS_FORM",
               title: "Create Report - Physical Fitness Form",
@@ -339,14 +281,42 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
             ]);
           },
 
-          selectedCButtonSubMenu: 16,
+          selectedCButtonSubMenu: 14,
+        },
+        {
+          to: "/reporting/reporting-main/master-data",
+          subTabTitle: "Xray",
+          onClick: () => {
+            setSelectedPButton(1);
+            updateSelectedReport({
+              value: "XRAY",
+              title: "Create Report - Xray",
+              label: "Xray",
+              filterValue: "xray",
+            });
+            handleButtonClick([
+              "empId",
+              "tokenNumber",
+              "name",
+              "age",
+              "gender",
+              "xray",
+              "xrayFilm",
+              "xrayToggle",
+              "vitalsCreatedDate",
+              "reportAction",
+            ]);
+            setSelectedCButton(15);
+          },
+
+          selectedCButtonSubMenu: 15,
         },
         {
           to: "/reporting/reporting-main/master-data",
           subTabTitle: "Vaccination Certificate",
           onClick: () => {
             setSelectedPButton(1);
-            setSelectedCButton(17);
+            setSelectedCButton(16);
             updateSelectedReport({
               value: "VACCINATION_CERTIFICATE",
               title: "Create Report - Vaccination Certificate",
@@ -364,6 +334,36 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
               "bp",
               "sugar",
               "vaccinationCertificate",
+              "vitalsCreatedDate",
+              "reportAction",
+            ]);
+          },
+
+          selectedCButtonSubMenu: 16,
+        },
+        {
+          to: "/reporting/reporting-main/master-data",
+          subTabTitle: "Food Certificate",
+          onClick: () => {
+            setSelectedPButton(1);
+            setSelectedCButton(17);
+            updateSelectedReport({
+              value: "FITNESS_CERTIFICATE_FOOD",
+              title: "Create Report - Food Certificate",
+              label: "Food Certificate",
+              filterValue: "medicalFitnessFood",
+            });
+            handleButtonClick([
+              "empId",
+              "tokenNumber",
+              "name",
+              "age",
+              "gender",
+              "height",
+              "weight",
+              "bp",
+              "sugar",
+              "medicalFitnessFood",
               "vitalsCreatedDate",
               "reportAction",
             ]);
