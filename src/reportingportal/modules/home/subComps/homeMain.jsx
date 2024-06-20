@@ -1220,6 +1220,8 @@ const HomeMain = ({
     }
   };
 
+  console.log({ selectedRows });
+
   if (isLoading) {
     return (
       <Box

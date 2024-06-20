@@ -69,11 +69,11 @@ export const getReportingPermissions = () => {
       break;
     case "REPORTING_OPS":
       permissions = {
-        assignKamTab: { visibilty: true },
-        corpAdminTab: { visibilty: true },
-        bulkUploadTab: { visibilty: true },
-        addPackage: { visibilty: true },
-        managePermissionsTab: { visibilty: true },
+        assignKamTab: { visibilty: false },
+        corpAdminTab: { visibilty: false },
+        bulkUploadTab: { visibilty: false },
+        addPackage: { visibilty: false },
+        managePermissionsTab: { visibilty: false },
         masterDataTab: { visibilty: true },
         createReportTab: {
           visibilty: true,
@@ -134,11 +134,11 @@ export const getReportingPermissions = () => {
       break;
     case "REPORTING":
       permissions = {
-        assignKamTab: { visibilty: true },
+        assignKamTab: { visibilty: false },
         corpAdminTab: { visibilty: false },
         bulkUploadTab: { visibilty: false },
         addPackage: { visibilty: false },
-        managePermissionsTab: { visibilty: true },
+        managePermissionsTab: { visibilty: false },
         masterDataTab: { visibilty: true },
         createReportTab: {
           visibilty: false,

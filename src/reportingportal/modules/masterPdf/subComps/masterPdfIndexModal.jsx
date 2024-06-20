@@ -11,11 +11,17 @@ import CustomDataGridLayout from "../../../../assets/globalDataGridLayout/custom
 const MasterPdfIndexModal = ({ open, handleClose, data }) => {
   if (data.length === 0) return null;
 
-  const columns = Object.keys(data[0]).map((key) => ({
-    field: key,
-    headerName: key.replace(/_/g, " ").toUpperCase(),
-    width: 150,
-  }));
+  // const columns = Object.keys(data[0]).map((key) => ({
+  //   field: key,
+  //   headerName: key.replace(/_/g, " ").toUpperCase(),
+  //   width: 150,
+  // }));
+
+  const columns = [
+    { field: "sno", headerName: "Sno", width: 150 },
+    { field: "empId", headerName: "Employee Id", width: 150 },
+    { field: "name", headerName: "Name", width: 150 },
+  ];
 
   const rows = data.map((row, index) => ({ id: index, ...row }));
 

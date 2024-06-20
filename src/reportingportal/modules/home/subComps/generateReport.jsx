@@ -161,7 +161,13 @@ const GenerateReport = ({
     return filtered.length > 0 ? filtered : [];
   }, [employeesIdList, originalEmployeeList]);
 
-  console.log({ employeesIdList, employeesId, filteredEmployee });
+  console.log({
+    employeesIdList,
+    employeesId,
+    filteredEmployee,
+    totalEmployees,
+    employeeList,
+  });
 
   if (isLoading) {
     return (
