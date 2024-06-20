@@ -142,8 +142,8 @@ export const updateTicket = async (
   if (ticketInfo) {
     ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD");
     ticketInfo["doctorName"] = doctorName;
-    ticketInfo["sessionStartDate"] = dayjs(sessionStartDate).format("LT");
-    ticketInfo["sessionEndDate"] = dayjs(sessionEndDate).format("LT");
+    ticketInfo["sessionStartDate"] = dayjs(sessionStartDate); //.format("LT");
+    ticketInfo["sessionEndDate"] = dayjs(sessionEndDate); //.format("LT");
   } else {
     ticketInfo = {
       sessionId: "",
