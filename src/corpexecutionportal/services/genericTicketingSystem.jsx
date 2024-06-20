@@ -127,17 +127,33 @@ export const getCompanyList = async (setCompanyList) => {
   }
 };
 
-export const updateTicket = async (data, date, status) => {
+export const updateTicket = async (
+  data,
+  date,
+  status,
+  doctorName,
+  sessionStartDate,
+  sessionEndDate
+) => {
   const url = BASE_URL + `org/updateTicketStatus`;
 
   let ticketInfo = data?.ticketInfo;
-  ticketInfo
-    ? (ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD"))
-    : (ticketInfo = {
-        sessionId: "",
-        sessionDate: dayjs(date).format("YYYY-MM-DD"),
-        sessionName: "",
-      });
+
+  if (ticketInfo) {
+    ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD");
+    ticketInfo["doctorName"] = doctorName;
+    ticketInfo["sessionStartDate"] = dayjs(sessionStartDate).format("LT");
+    ticketInfo["sessionEndDate"] = dayjs(sessionEndDate).format("LT");
+  } else {
+    ticketInfo = {
+      sessionId: "",
+      sessionDate: dayjs(date).format("YYYY-MM-DD"),
+      sessionName: "",
+      doctorName: doctorName,
+      sessionStartDate: sessionStartDate,
+      sessionEndDate: sessionEndDate,
+    };
+  }
 
   const payload = {
     ticketId: data?.ticketId,

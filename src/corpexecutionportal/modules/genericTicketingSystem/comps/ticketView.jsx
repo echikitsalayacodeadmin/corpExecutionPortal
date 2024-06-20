@@ -400,7 +400,16 @@ const TicketView = ({ data }) => {
             <Button
               sx={{ width: 200 }}
               variant="contained"
-              onClick={() => updateTicket(data, date, status)}
+              onClick={() =>
+                updateTicket(
+                  data,
+                  date,
+                  status,
+                  doctorName,
+                  sessionStartDate,
+                  sessionEndDate
+                )
+              }
             >
               Save
             </Button>
