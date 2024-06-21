@@ -134,6 +134,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { isObject } from "@mui/x-data-grid/internals";
 import ViewReportModal from "../uploadReportsS3/subComp/viewReportModal";
 import CustomAutocomplete from "../../../assets/customAutocomplete";
+import { getData } from "../../assets/reportingServices";
+import { BASE_URL } from "../../../assets/constants";
+import RangeTooltip from "./rangeToolTip";
 
 const VitalsDataErrorMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -146,7 +149,7 @@ const VitalsDataErrorMain = ({
   const [flattenedColumns, setFlattenedColumns] = useState([]);
   const [fieldType, setFieldType] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
-
+  const [selectedRowData, setSelectedRowData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [fileUrl, setFileUrl] = useState("");
   const [fileType, setFileType] = useState("");
@@ -179,15 +182,11 @@ const VitalsDataErrorMain = ({
   };
 
   const handleViewClick = (data) => {
-    const flattened = flattenObject(data);
-    setFlattenedData([flattened]);
-    setFlattenedColumns(
-      Object.keys(flattened).map((key) => ({
-        field: key,
-        headerName: formatColumnName(key),
-        width: 200,
-      }))
-    );
+    const transformedData = Object.keys(data).map((key) => ({
+      column: formatColumnName(key),
+      value: data[key],
+    }));
+    setSelectedRowData(transformedData);
     setOpen(true);
   };
 
@@ -280,6 +279,25 @@ const VitalsDataErrorMain = ({
       );
   }, [masterData, searchedEmployee, selectedGender]);
 
+  const [bloodData, setBloodData] = useState([]);
+  const getTestDetails = async () => {
+    const url = BASE_URL + `org/testsconfig`;
+    const result = await getData(url);
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      const temp = result.data.map((item, index) => ({
+        id: index,
+        ...item,
+        editRow: "editRow",
+      }));
+      setBloodData(temp);
+    }
+  };
+  useEffect(() => {
+    getTestDetails();
+  }, []);
+
   if (isLoading) {
     return (
       <Box
@@ -340,13 +358,45 @@ const VitalsDataErrorMain = ({
         <DialogContent>
           <Box style={{ height: 400, width: "100%" }}>
             <CustomDataGridLayout
-              columns={flattenedColumns}
-              rows={flattenedData.map((item, index) => ({
+              rowHeight={30}
+              columns={[
+                { field: "column", headerName: "Column", width: 400 },
+                {
+                  field: "value",
+                  headerName: "Value",
+                  width: 400,
+                  renderCell: (params) => {
+                    const test = bloodData.find(
+                      (item) =>
+                        formatColumnName(item.testKey)
+                          ?.replace(/\s+/g, "")
+                          ?.toLowerCase() ===
+                        params.row.column?.replace(/\s+/g, "")?.toLowerCase()
+                    );
+                    console.log({
+                      testKey: test?.testKey
+                        ?.replace(/\s+/g, "")
+                        ?.toLowerCase(),
+                      columnName: params.row.column
+                        .replace(/\s+/g, "")
+                        ?.toLowerCase(),
+                    });
+                    return (
+                      <RangeTooltip
+                        value={params?.value}
+                        acceptableRangeMin={test?.acceptableRangeMin}
+                        acceptableRangeMax={test?.acceptableRangeMax}
+                        biorefRangeMax={test?.biorefRangeMax}
+                        biorefRangeMin={test?.biorefRangeMin}
+                      />
+                    );
+                  },
+                },
+              ]}
+              rows={selectedRowData.map((item, index) => ({
                 id: index,
                 ...item,
               }))}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
             />
           </Box>
         </DialogContent>

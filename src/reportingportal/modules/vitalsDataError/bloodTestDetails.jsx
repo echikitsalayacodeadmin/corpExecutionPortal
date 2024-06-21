@@ -63,13 +63,7 @@ const BloodTestDetails = () => {
     getTestDetails();
   }, []);
 
-  const options = bloodData
-    .filter(
-      (test, index, self) =>
-        test.test_name !== null &&
-        self.findIndex((e) => e?.test_name === test?.test_name) === index
-    )
-    .map((item) => item.test_name);
+  const options = bloodData.map((item) => item.testKey);
 
   const columns =
     bloodData.length > 0
@@ -118,7 +112,7 @@ const BloodTestDetails = () => {
 
   const filterData = useMemo(() => {
     return bloodData.filter((item) =>
-      selectedTestName !== "" ? item.test_name === selectedTestName : true
+      selectedTestName !== "" ? item.testKey === selectedTestName : true
     );
   }, [selectedTestName, bloodData]);
 
@@ -152,6 +146,7 @@ const BloodTestDetails = () => {
     }
   };
 
+  console.log({ options });
   return (
     <Fragment>
       <Box sx={{ marginBlock: 1 }}>
