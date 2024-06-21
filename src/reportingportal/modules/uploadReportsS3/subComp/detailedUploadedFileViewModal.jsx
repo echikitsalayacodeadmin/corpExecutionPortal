@@ -10,7 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { formatColumnName, getColumnWidth } from "../../../../assets/utils";
+import {
+  formatColumnName,
+  getColumnWidth,
+  getFileType,
+} from "../../../../assets/utils";
 import RenderExpandableCells from "../../../../assets/globalDataGridLayout/renderExpandableCells";
 import CustomDataGridLayout from "../../../../assets/globalDataGridLayout/customDataGridLayout";
 import ViewReportModal from "./viewReportModal";

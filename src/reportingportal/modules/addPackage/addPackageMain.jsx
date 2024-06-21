@@ -21,6 +21,7 @@ import PackageNameNotFoundListInFile from "./subComp/packageNameNotFoundListInFi
 import DuplicatePackageNameListInFile from "./subComp/duplicatePackageNameListInFile";
 import DuplicatePackageNameListInDB from "./subComp/duplicatePackageNameListInDB";
 import dayjs from "dayjs";
+import GetPackages from "./subComp/getPackages";
 
 const AddPackageMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -66,7 +67,9 @@ const AddPackageMain = ({
         : localStorage.getItem("CAMP_ID_REPORTING");
     const url =
       BASE_URL +
-      `org/addBulkPackageDetails/${corpId}?campCycleId=${campCycleId}&employmentType=${selectedEmpType}`;
+      `org/addBulkPackageDetails/${corpId}?campCycleId=${
+        campCycleId || ""
+      }&employmentType=${selectedEmpType}`;
     const payload = packageDetailUpdated.map(({ id, ...rest }) => rest);
     const result = await saveData(url, payload);
     if (result.error) {
@@ -100,90 +103,100 @@ const AddPackageMain = ({
                 onChange={handleChange}
                 aria-label="lab API tabs example"
               >
-                <Tab label="Add Bulk Package" value="1" />
-                <Tab label="Package Name Not Found List In File" value="2" />
-                <Tab label="Duplicate Package Name List In File" value="3" />
-                <Tab label="Duplicate Package Name List In DB" value="4" />
-                <Tab label="Add Package Manually" value="5" />
+                <Tab label="Get Packages" value="1" />
+                <Tab label="Add Package Manually" value="2" />
+                <Tab label="Add Bulk Package" value="3" />
+                <Tab label="Package Name Not Found List In File" value="4" />
+                <Tab label="Duplicate Package Name List In File" value="5" />
+                <Tab label="Duplicate Package Name List In DB" value="6" />
               </TabList>
             </Box>
             <TabPanel value="1" sx={{ p: 0 }}>
-              <AddBulkPackage
+              <GetPackages
                 selectedEmpType={selectedEmpType}
                 setSelectedEmpType={setSelectedEmpType}
                 rows={packageDetailUpdated}
               />
             </TabPanel>
             <TabPanel value="2" sx={{ p: 0 }}>
+              <AddPackageManually setResponse={setResponse} />
+            </TabPanel>
+            <TabPanel value="3" sx={{ p: 0 }}>
+              <AddBulkPackage
+                selectedEmpType={selectedEmpType}
+                setSelectedEmpType={setSelectedEmpType}
+                rows={packageDetailUpdated}
+              />
+            </TabPanel>
+            <TabPanel value="4" sx={{ p: 0 }}>
               <PackageNameNotFoundListInFile
                 rows={response.packageNameNotFoundListInFile}
               />
             </TabPanel>
-            <TabPanel value="3" sx={{ p: 0 }}>
+            <TabPanel value="5" sx={{ p: 0 }}>
               <DuplicatePackageNameListInFile
                 rows={response.duplicatePackageNameListInFile}
               />
             </TabPanel>
-            <TabPanel value="4" sx={{ p: 0 }}>
+            <TabPanel value="6" sx={{ p: 0 }}>
               <DuplicatePackageNameListInDB
                 rows={response.duplicatePackageNameListInDB}
               />
             </TabPanel>
-            <TabPanel value="5" sx={{ p: 0 }}>
-              <AddPackageManually />
-            </TabPanel>
           </TabContext>
         </Box>
       </MainPageLayoutWithBack>
-      <AppBar
-        position="fixed"
-        color="inherit"
-        sx={{
-          top: "auto",
-          bottom: 0,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Container maxWidth={false}>
-          <Toolbar>
-            <Grid
-              container
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
+      {value === "3" && (
+        <AppBar
+          position="fixed"
+          color="inherit"
+          sx={{
+            top: "auto",
+            bottom: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Container maxWidth={false}>
+            <Toolbar>
               <Grid
-                item
-                lg={7}
-                md={7}
-                sm={12}
-                xs={12}
+                container
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
               >
-                <Stack direction={{ lg: "row", xs: "column" }}>
-                  <ParseCSV
-                    setList={setPackageDetail}
-                    corpId={corpId}
-                    setSavedFile={setSavedFile}
-                    testPackage={true}
-                  />
-                  <Button
-                    variant="contained"
-                    disabled={selectedEmpType === null ? true : false}
-                    onClick={handleUploadBulkPackages}
-                  >
-                    Submit
-                  </Button>
-                </Stack>
+                <Grid
+                  item
+                  lg={7}
+                  md={7}
+                  sm={12}
+                  xs={12}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Stack direction={{ lg: "row", xs: "column" }}>
+                    <ParseCSV
+                      setList={setPackageDetail}
+                      corpId={corpId}
+                      setSavedFile={setSavedFile}
+                      testPackage={true}
+                    />
+                    <Button
+                      variant="contained"
+                      disabled={selectedEmpType === null ? true : false}
+                      onClick={handleUploadBulkPackages}
+                    >
+                      Submit
+                    </Button>
+                  </Stack>
+                </Grid>
               </Grid>
-            </Grid>
-          </Toolbar>
-        </Container>
-      </AppBar>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      )}
     </Fragment>
   );
 };

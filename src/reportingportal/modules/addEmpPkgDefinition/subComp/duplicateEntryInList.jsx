@@ -1,21 +1,20 @@
 import React, { Fragment } from "react";
 import CustomDataGridLayout from "../../../../assets/globalDataGridLayout/customDataGridLayout";
+import { formatColumnName } from "../../../../assets/utils";
 
 const DuplicateEntryInList = ({ rows = [] }) => {
-  const columns = [
-    {
-      field: "empId",
-      headerName: "Employee ID",
-      width: 200,
-      editable: false,
-    },
-    {
-      field: "packageName",
-      headerName: "Package Name",
-      width: 200,
-      editable: false,
-    },
-  ];
+  const columns =
+    rows.length > 0
+      ? Object.keys(rows[0]).map((key) => {
+          return {
+            field: key,
+            headerName: formatColumnName(key),
+            width: 170,
+            align: "left",
+            headerAlign: "left",
+          };
+        })
+      : [];
 
   return (
     <Fragment>

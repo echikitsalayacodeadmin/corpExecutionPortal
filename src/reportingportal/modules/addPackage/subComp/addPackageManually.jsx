@@ -46,6 +46,7 @@ const initialData = [
 
 const AddPackageManually = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
+  setResponse,
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [rows, setRows] = useState(initialData);
@@ -272,14 +273,14 @@ const AddPackageManually = ({
     },
   ];
 
-  const handleAddPackages = async () => {
+  const handleAddPackagesMannualy = async () => {
     const campCycleId =
       localStorage.getItem("CAMP_ID_REPORTING") === "null"
         ? null
         : localStorage.getItem("CAMP_ID_REPORTING");
     const url =
       BASE_URL +
-      `org/addBulkPackageDetails/${corpId}?campCycleId=${campCycleId}`;
+      `org/addBulkPackageDetails/${corpId}?campCycleId=${campCycleId || ""}`;
     const payload = rows.map(({ id, ...rest }) => rest);
     const result = await saveData(url, payload);
     if (result.error) {
@@ -290,6 +291,7 @@ const AddPackageManually = ({
       enqueueSnackbar(`Successfully Saved`, {
         variant: "success",
       });
+      setResponse(result.data);
     }
   };
 
@@ -342,7 +344,10 @@ const AddPackageManually = ({
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Button variant="contained" onClick={handleAddPackages}>
+                  <Button
+                    variant="contained"
+                    onClick={handleAddPackagesMannualy}
+                  >
                     Submit
                   </Button>
                 </Grid>

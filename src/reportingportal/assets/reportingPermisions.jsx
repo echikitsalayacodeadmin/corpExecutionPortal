@@ -61,6 +61,7 @@ export const getReportingPermissions = () => {
         reportAnalysis: { visibilty: true },
         packageMismatch: { visibilty: true },
         addEmpPackageDefinition: { visibilty: true },
+        vitalsDataError: { visibilty: true },
       };
 
       break;
@@ -123,6 +124,7 @@ export const getReportingPermissions = () => {
         reportAnalysis: { visibilty: true },
         packageMismatch: { visibilty: false },
         addEmpPackageDefinition: { visibilty: false },
+        vitalsDataError: { visibilty: false },
       };
 
       break;
@@ -185,6 +187,7 @@ export const getReportingPermissions = () => {
         reportAnalysis: { visibilty: true },
         packageMismatch: { visibilty: false },
         addEmpPackageDefinition: { visibilty: false },
+        vitalsDataError: { visibilty: false },
       };
 
       break;
@@ -246,6 +249,7 @@ export const getReportingPermissions = () => {
         reportAnalysis: { visibilty: true },
         packageMismatch: { visibilty: true },
         addEmpPackageDefinition: { visibilty: true },
+        vitalsDataError: { visibilty: true },
       };
   }
 

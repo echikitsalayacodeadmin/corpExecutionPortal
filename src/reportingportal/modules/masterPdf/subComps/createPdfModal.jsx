@@ -637,6 +637,13 @@ const CreatePdfModal = ({
                 </Grid>
                 <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
                   <CustomButtonBlue
+                    disabled={
+                      allSelectedEmployees.filter(
+                        (item) => item.isVitalsErrorData === true
+                      ).length > 0
+                        ? true
+                        : false
+                    }
                     onClick={() => handleGeneratePDFRequest()}
                     title="Generate Report"
                   />

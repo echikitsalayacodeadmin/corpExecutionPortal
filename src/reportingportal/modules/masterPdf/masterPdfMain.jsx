@@ -615,6 +615,21 @@ const MasterPdfMain = ({
       headerAlign: "center",
       width: 800,
     },
+    {
+      field: "vitalsErrorData",
+      headerName: "Vitals Error Data",
+      align: "center",
+      headerAlign: "center",
+      width: 800,
+      valueGetter: (params) => {
+        const details = params.value;
+        if (details && typeof details === "object") {
+          return JSON.stringify(params.value);
+        }
+        return params.value;
+      },
+      renderCell: (params) => <RenderExpandableCells {...params} />,
+    },
   ];
 
   const [masterData, setMasterData] = useState([]);
@@ -672,10 +687,6 @@ const MasterPdfMain = ({
 
     setSelectedRows(sortArrayBySno(selectedRowsData));
   };
-
-  // useEffect(() => {
-  //   setMasterData(empListHeader);
-  // }, [searchedEmployee]);
 
   console.log({ selectedRows });
 
@@ -982,6 +993,17 @@ const MasterPdfMain = ({
             disableRowSelectionOnClick={true}
             selectionModel={selectedRows.map((row) => row.empId)}
             onRowSelectionModelChange={handleSelectionModelChange}
+            getRowClassName={(params) => {
+              return params.row.isVitalsErrorData === true ? "error" : "";
+            }}
+            styles={{
+              ".error": {
+                backgroundColor: "#FF0000",
+                "&:hover": {
+                  backgroundColor: "#FF4D4D",
+                },
+              },
+            }}
           />
         </Paper>
       </Box>

@@ -915,7 +915,7 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
     {
       to: "/reporting/reporting-main/mismatchpackage",
       tabTitle: "Package Mismatch",
-      tabIcon: <AnalyticsIcon />,
+      tabIcon: <AssignmentIcon />,
       onClick: () => {
         setShowSequenceComponent(true);
         updateEmployeeList([]);
@@ -934,7 +934,7 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
     {
       to: "/reporting/reporting-main/addemppackgedefinition",
       tabTitle: "Add Emp Package Definition",
-      tabIcon: <AnalyticsIcon />,
+      tabIcon: <AssignmentIcon />,
       onClick: () => {
         setShowSequenceComponent(true);
         updateEmployeeList([]);
@@ -949,6 +949,25 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
       selectedPButton: 10,
       isSubMenuExist: false,
       visibility: permissions.addEmpPackageDefinition.visibilty,
+    },
+    {
+      to: "/reporting/reporting-main/vitalsdataerror",
+      tabTitle: "Vitals Error Data",
+      tabIcon: <StorageIcon />,
+      onClick: () => {
+        setShowSequenceComponent(true);
+        updateEmployeeList([]);
+        handleSubItemClick(null);
+        handleItemClick(11);
+        updateSelectedReport({
+          value: "",
+          label: "Vitals Error Data",
+          title: "Vitals Error Data",
+        });
+      },
+      selectedPButton: 11,
+      isSubMenuExist: false,
+      visibility: permissions.vitalsDataError.visibilty,
     },
   ];
 

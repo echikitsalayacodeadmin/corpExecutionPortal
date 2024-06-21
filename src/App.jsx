@@ -74,6 +74,7 @@ import TicketViewIndex from "./corpexecutionportal/pages/ticketViewIndex";
 import AddPackages from "./reportingportal/pages/addPackages";
 import MismatchPackageIndex from "./reportingportal/pages/mismatchPackageIndex";
 import AddEmpPkgDefinitionReporting from "./reportingportal/pages/addEmpPkgDefinitionReporting";
+import VitalsErrorDataReporting from "./reportingportal/pages/vitalsErrorDataReporting";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -266,6 +267,10 @@ function App() {
               <Route
                 path="addemppackgedefinition"
                 element={<AddEmpPkgDefinitionReporting />}
+              />
+              <Route
+                path="vitalsdataerror"
+                element={<VitalsErrorDataReporting />}
               />
 
               <Route path="upload-reports" element={<UploadReport />}>

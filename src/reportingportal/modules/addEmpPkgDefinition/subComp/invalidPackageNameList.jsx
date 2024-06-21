@@ -2,13 +2,9 @@ import React, { Fragment } from "react";
 import CustomDataGridLayout from "../../../../assets/globalDataGridLayout/customDataGridLayout";
 import { formatColumnName } from "../../../../assets/utils";
 
-const InvalidPackageNameList = ({
-  selectedEmpType,
-  setSelectedEmpType,
-  rows = [],
-}) => {
+const InvalidPackageNameList = ({ rows = [] }) => {
   const columns =
-    masterData.length > 0
+    rows.length > 0
       ? Object.keys(rows[0]).map((key) => {
           return {
             field: key,

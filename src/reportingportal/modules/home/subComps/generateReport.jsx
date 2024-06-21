@@ -76,6 +76,11 @@ const GenerateReport = ({
   const handleForceCreate = (event) => {
     setisForceCreate(event.target.checked);
   };
+  const [useContractorName, setUseContractorName] = useState(false);
+
+  const handleUseContractorName = (event) => {
+    setUseContractorName(event.target.checked);
+  };
 
   console.log({ isCheckedSigned });
 
@@ -119,6 +124,7 @@ const GenerateReport = ({
         forceCreate: isForceCreate,
         removeDate: isRemoveDate,
         campCycleId: campCycleId,
+        useContractorName: useContractorName,
       };
       const url = BASE_URL + "org/reporting/uploadSystemGeneratedReports";
       const result = await saveData(url, Obj);
@@ -303,6 +309,18 @@ const GenerateReport = ({
                 setEmployeesId(uniqueValuesString);
                 setEmployeesIdList(uniqueValues);
               }}
+            />
+          </Grid>
+
+          <Grid item lg={4} xs={6} sx={{ display: "flex" }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={useContractorName}
+                  onChange={handleUseContractorName}
+                />
+              }
+              label="Use Contractor Name"
             />
           </Grid>
 

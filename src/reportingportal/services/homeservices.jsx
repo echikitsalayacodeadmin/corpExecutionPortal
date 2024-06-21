@@ -212,6 +212,11 @@ const modifyArray = (arr) => {
     missingTests: item.missingTests || null,
     pathPackageDetails: item.pathPackageDetails || null,
     testPresentDetails: item.testPresentDetails?.["PATH"] || {},
+    vitalsErrorData: JSON.stringify(item?.vitalsErrorData) || {},
+    isVitalsErrorData:
+      item?.vitalsErrorData && Object.keys(item.vitalsErrorData).length > 0
+        ? true
+        : false,
   }));
 };
 
