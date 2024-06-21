@@ -60,10 +60,14 @@ const TicketView = ({ data }) => {
     data?.ticketInfo?.doctorName || ""
   );
   const [sessionStartDate, setSessionStartDate] = useState(
-    dayjs(data?.ticketInfo?.sessionStartDate) || null
+    data?.ticketInfo?.sessionStartDate
+      ? dayjs(data?.ticketInfo?.sessionStartDate)
+      : null
   );
   const [sessionEndDate, setSessionEndDate] = useState(
-    dayjs(data?.ticketInfo?.sessionEndDate) || null
+    data?.ticketInfo?.sessionEndDate
+      ? dayjs(data?.ticketInfo?.sessionEndDate)
+      : null
   );
 
   const [checked, setChecked] = useState(true);
