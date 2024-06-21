@@ -432,6 +432,8 @@ const BasicMenu = () => {
         });
         handleButtonClick([
           "tokenNumber",
+          "patientNameinReport",
+          "isBloodParsed",
           "empId",
           "name",
           "age",

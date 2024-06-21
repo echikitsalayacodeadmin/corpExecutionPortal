@@ -30,7 +30,7 @@ const RangeTooltip = ({
       }
       arrow
     >
-      <span>{value}</span>
+      <span>{value === true ? "true" : value === false ? "false" : value}</span>
     </Tooltip>
   );
 };

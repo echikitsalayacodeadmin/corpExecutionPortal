@@ -160,6 +160,8 @@ const VitalsDataErrorMain = ({
     setFileType(getFileType(url));
   };
 
+  console.log({ selectedRowData });
+
   useEffect(() => {
     fetchVitalsDataError(
       corpId,

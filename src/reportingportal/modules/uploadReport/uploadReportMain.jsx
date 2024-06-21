@@ -161,6 +161,13 @@ const UploadReportMain = ({
       },
     },
     {
+      field: "isBloodParsed",
+      headerName: "Is Blood Parsed",
+      width: 150,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
       field: "bloodTest",
       headerName: "Blood Test",
       width: 100,
@@ -732,6 +739,13 @@ const UploadReportMain = ({
           </Typography>
         );
       },
+    },
+    {
+      field: "patientNameinReport",
+      headerName: "Patient Name in Report",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
     },
     {
       field: "packageName",
