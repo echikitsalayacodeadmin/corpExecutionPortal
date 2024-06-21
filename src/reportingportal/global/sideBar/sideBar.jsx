@@ -912,6 +912,44 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
       isSubMenuExist: false,
       visibility: permissions.reportAnalysis.visibilty,
     },
+    {
+      to: "/reporting/reporting-main/mismatchpackage",
+      tabTitle: "Package Mismatch",
+      tabIcon: <AnalyticsIcon />,
+      onClick: () => {
+        setShowSequenceComponent(true);
+        updateEmployeeList([]);
+        handleSubItemClick(null);
+        handleItemClick(9);
+        updateSelectedReport({
+          value: "",
+          label: "Package Mismatch",
+          title: "Package Mismatch",
+        });
+      },
+      selectedPButton: 9,
+      isSubMenuExist: false,
+      visibility: permissions.packageMismatch.visibilty,
+    },
+    {
+      to: "/reporting/reporting-main/addemppackgedefinition",
+      tabTitle: "Add Emp Package Definition",
+      tabIcon: <AnalyticsIcon />,
+      onClick: () => {
+        setShowSequenceComponent(true);
+        updateEmployeeList([]);
+        handleSubItemClick(null);
+        handleItemClick(10);
+        updateSelectedReport({
+          value: "",
+          label: "Add Emp Package Definition",
+          title: "Add Emp Package Definition",
+        });
+      },
+      selectedPButton: 10,
+      isSubMenuExist: false,
+      visibility: permissions.addEmpPackageDefinition.visibilty,
+    },
   ];
 
   return (

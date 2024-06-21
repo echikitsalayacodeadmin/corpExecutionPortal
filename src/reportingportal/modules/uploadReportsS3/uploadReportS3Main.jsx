@@ -76,7 +76,7 @@ const UploadReportS3Main = () => {
             borderRadius: 5,
             paddingInline: 3,
             boxShadow: 3,
-            height: isMobile ? "100%" : "78vh",
+            height: isMobile ? "100%" : "84vh",
             minHeight: "84vh",
             paddingBlock: 1,
           }}

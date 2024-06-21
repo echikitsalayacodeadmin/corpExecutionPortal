@@ -72,6 +72,8 @@ import SessionInfoCorp from "./corpexecutionportal/pages/sessionInfoCorp";
 import CalenderInfoCorp from "./corpexecutionportal/pages/calenderInfoCorp";
 import TicketViewIndex from "./corpexecutionportal/pages/ticketViewIndex";
 import AddPackages from "./reportingportal/pages/addPackages";
+import MismatchPackageIndex from "./reportingportal/pages/mismatchPackageIndex";
+import AddEmpPkgDefinitionReporting from "./reportingportal/pages/addEmpPkgDefinitionReporting";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -257,6 +259,14 @@ function App() {
               <Route path="refresh-data" element={<RefreshDataIndex />} />
               <Route path="health-register" element={<HealthRegisterIndex />} />
               <Route path="report-analysis" element={<ReportAnalysis />} />
+              <Route
+                path="mismatchpackage"
+                element={<MismatchPackageIndex />}
+              />
+              <Route
+                path="addemppackgedefinition"
+                element={<AddEmpPkgDefinitionReporting />}
+              />
 
               <Route path="upload-reports" element={<UploadReport />}>
                 <Route path="" element={<UploadReportMain />} />

@@ -1046,6 +1046,7 @@ const UploadReportMain = ({
     selectedUploadedStatus,
     searchedEmployee,
     selectedCreatedSort,
+    selectedTokenList,
     selectedReportData,
     fromDate,
     toDate,
@@ -1243,7 +1244,7 @@ const UploadReportMain = ({
             borderRadius: 5,
             paddingInline: 3,
             boxShadow: 3,
-            height: isMobile ? "100%" : "78vh",
+            height: isMobile ? "100%" : "84vh",
             paddingBlock: "10px",
           }}
         >

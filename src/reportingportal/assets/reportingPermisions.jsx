@@ -52,18 +52,15 @@ export const getReportingPermissions = () => {
           visibilty: true,
           childTab: {
             uploadTab: { visibilty: true },
-            // getCountTab: { visibilty: true },
-            // moveFilesTab: { visibilty: true },
-            // deleteFilesTab: { visibilty: true },
-            // viewFilesTab: { visibilty: true },
             allFilesTab: { visibilty: true, processReportBtn: true },
             allFilesTaskExecutor: { visibilty: true, processReportBtn: true },
-            // processedReportTab: { visibilty: true },
           },
         },
         refreshHeadersTab: { visibilty: true },
         healthRegisterTab: { visibilty: true },
         reportAnalysis: { visibilty: true },
+        packageMismatch: { visibilty: true },
+        addEmpPackageDefinition: { visibilty: true },
       };
 
       break;
@@ -117,18 +114,15 @@ export const getReportingPermissions = () => {
           visibilty: false,
           childTab: {
             uploadTab: { visibilty: false },
-            // getCountTab: { visibilty: true },
-            // moveFilesTab: { visibilty: true },
-            // deleteFilesTab: { visibilty: true },
-            // viewFilesTab: { visibilty: true },
             allFilesTab: { visibilty: false, processReportBtn: true },
             allFilesTaskExecutor: { visibilty: false, processReportBtn: true },
-            // processedReportTab: { visibilty: true },
           },
         },
         refreshHeadersTab: { visibilty: false },
         healthRegisterTab: { visibilty: true },
         reportAnalysis: { visibilty: true },
+        packageMismatch: { visibilty: false },
+        addEmpPackageDefinition: { visibilty: false },
       };
 
       break;
@@ -182,18 +176,15 @@ export const getReportingPermissions = () => {
           visibilty: true,
           childTab: {
             uploadTab: { visibilty: true },
-            // getCountTab: { visibilty: false },
-            // moveFilesTab: { visibilty: false },
-            // deleteFilesTab: { visibilty: false },
-            // viewFilesTab: { visibilty: false },
             allFilesTab: { visibilty: true, processReportBtn: false },
             allFilesTaskExecutor: { visibilty: true, processReportBtn: false },
-            // processedReportTab: { visibilty: true },
           },
         },
         refreshHeadersTab: { visibilty: false },
         healthRegisterTab: { visibilty: true },
         reportAnalysis: { visibilty: true },
+        packageMismatch: { visibilty: false },
+        addEmpPackageDefinition: { visibilty: false },
       };
 
       break;
@@ -246,17 +237,15 @@ export const getReportingPermissions = () => {
           visibilty: true,
           childTab: {
             uploadTab: { visibilty: true },
-            // getCountTab: { visibilty: true },
-            // moveFilesTab: { visibilty: true },
-            // deleteFilesTab: { visibilty: true },
-            // viewFilesTab: { visibilty: true },
             allFilesTab: { visibilty: true, processReportBtn: true },
-            // processedReportTab: { visibilty: true },
+            allFilesTaskExecutor: { visibilty: true, processReportBtn: false },
           },
         },
         refreshHeadersTab: { visibilty: true },
         healthRegisterTab: { visibilty: true },
         reportAnalysis: { visibilty: true },
+        packageMismatch: { visibilty: true },
+        addEmpPackageDefinition: { visibilty: true },
       };
   }
 
