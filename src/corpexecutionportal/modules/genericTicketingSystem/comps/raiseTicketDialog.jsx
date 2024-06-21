@@ -49,7 +49,7 @@ const RaiseTicketDialog = ({
     date: dayjs(),
   });
 
-  console.log({ formValues });
+  console.log({ formValues, selectedTicketType });
   return (
     <Fragment>
       <Portal>
@@ -86,7 +86,7 @@ const RaiseTicketDialog = ({
               }
               onClick={() => {
                 setIsLoading(true);
-                raiseTicket(formValues, handleClose);
+                raiseTicket(formValues, selectedTicketType, handleClose);
               }}
               variant="contained"
               sx={{ width: 200 }}

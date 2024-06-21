@@ -30,9 +30,8 @@ export const getAllTickets = async (
   }
 };
 
-export const raiseTicket = async (data, handleClose) => {
+export const raiseTicket = async (data, selectedTicketType, handleClose) => {
   const url = BASE_URL + `org/v2/raiseTicket`;
-
   // const payload = {
   //   raisedBy: data.name,
   //   raisedById: data.userId,
@@ -58,7 +57,7 @@ export const raiseTicket = async (data, handleClose) => {
   formData.append("raisedBy", data.name);
   formData.append("raisedById", data.userId);
   formData.append("raisedByMobileNo", data.mobile);
-  formData.append("ticketType", data.selectedTicketType?.ticketType || "");
+  formData.append("ticketType", selectedTicketType?.ticketType || "");
 
   formData.append("corpId", data.company?.corpId || "");
   formData.append("corpName", data.company?.orgName || "");
