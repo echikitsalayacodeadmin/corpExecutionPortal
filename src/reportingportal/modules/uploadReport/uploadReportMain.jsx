@@ -1046,6 +1046,7 @@ const UploadReportMain = ({
     selectedUploadedStatus,
     searchedEmployee,
     selectedCreatedSort,
+    selectedTokenList,
     selectedReportData,
     fromDate,
     toDate,

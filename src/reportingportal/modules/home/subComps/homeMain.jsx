@@ -1159,6 +1159,7 @@ const HomeMain = ({
     selectedReportData,
     selectedReportValue,
     selectFilterHWBS,
+    selectedTokenList,
     searchedEmployee,
     selectedCreatedSort,
     fromDate,
