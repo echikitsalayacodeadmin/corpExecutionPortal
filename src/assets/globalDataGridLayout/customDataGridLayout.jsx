@@ -225,14 +225,6 @@ const CustomDataGridLayout = ({
   onRowEditStop,
   styles,
 }) => {
-  // const [paginationModel, setPaginationModel] = React.useState({
-  //   pageSize: PAGE_SIZE,
-  //   page: 0,
-  // });
-  const customRowStyles = ({ highlighted }) => ({
-    backgroundColor: highlighted ? "red" : "green", // Change this to your desired color
-  });
-
   return (
     <React.Fragment>
       <Box
@@ -263,24 +255,21 @@ const CustomDataGridLayout = ({
           onRowSelectionModelChange={onRowSelectionModelChange}
           columnVisibilityModel={columnVisibilityModel}
           onColumnVisibilityModelChange={onColumnVisibilityModelChange}
-          getRowClassName={(params) => {
-            const snoCount = rows.filter(
-              (row) => row.sno === params.row.sno
-            )?.length;
-            // const employeeIdCount = rows.filter(
-            //   (row) => row.employeeid === params.row.employeeid
-            // )?.length;
-
-            return params.row.employeeid === "" ||
-              params.row.sno === "" ||
-              params.row.name === "" ||
-              params.row.foundInDb === false ||
-              snoCount > 1
-              ? //  ||
-                // employeeIdCount > 1
-                "error"
-              : "";
-          }}
+          // getRowClassName={(params) => {
+          //   const snoCount = rows.filter(
+          //     (row) => row.sno === params.row.sno
+          //   )?.length;
+          //   console.log({ kkk: params.row.packageName });
+          //   return params.row.packageName === "" ||
+          //     params.row.employeeid === "" ||
+          //     params.row.sno === "" ||
+          //     params.row.name === "" ||
+          //     params.row.foundInDb === false ||
+          //     snoCount > 1
+          //     ? "error"
+          //     : "";
+          // }}
+          getRowClassName={getRowClassName}
           editMode={editMode}
           processRowUpdate={processRowUpdate}
           rowModesModel={rowModesModel}

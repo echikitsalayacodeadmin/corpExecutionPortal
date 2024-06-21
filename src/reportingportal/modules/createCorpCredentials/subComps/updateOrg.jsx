@@ -20,6 +20,7 @@ const UpdateOrg = () => {
     orgAddress: "",
     city: "",
     pincode: "",
+    plantName: "",
     orgLogoUrl: { source: "" },
     orgLogoUrlMobile: { source: "" },
   });
@@ -38,6 +39,7 @@ const UpdateOrg = () => {
       city: newValue?.city || "",
       pincode: newValue?.pincode || "",
       orgLogoUrl: { source: newValue?.logo || "" },
+      plantName: newValue.plantName || "",
       orgLogoUrlMobile: { source: newValue?.mobileLogo || "" },
     });
 
@@ -47,6 +49,7 @@ const UpdateOrg = () => {
         orgAddress: "",
         city: "",
         pincode: "",
+        plantName: "",
         orgLogoUrl: { source: "" },
         orgLogoUrlMobile: { source: "" },
       });
@@ -66,6 +69,7 @@ const UpdateOrg = () => {
     formData.append("orgAddress", formValues?.orgAddress);
     formData.append("city", formValues?.city);
     formData.append("pincode", formValues?.pincode);
+    formData.append("plantName", formValues?.plantName);
     {
       formValues.orgLogoUrl.file
         ? formData.append("orgLogoFile", formValues.orgLogoUrl.file)
@@ -131,7 +135,9 @@ const UpdateOrg = () => {
                       color: option.isDetailsCompleted ? "#000" : "red",
                     }}
                   >
-                    {option?.orgName}
+                    {`${option.orgName} ${
+                      option?.plantName ? `${option?.plantName}` : ""
+                    }`}
                   </Typography>
                 </Box>
               )}
@@ -255,6 +261,36 @@ const UpdateOrg = () => {
                 setFormValues({
                   ...formValues,
                   pincode: e.target.value,
+                });
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <TextField
+              sx={{
+                height: "50px",
+                background: "#fff",
+                color: "#127DDD",
+                fontWeight: "500",
+                fontSize: "13px",
+                lineHeight: " 15px",
+                "& input::placeholder": {
+                  color: "#000000",
+                  fontWeight: "500",
+                  fontSize: "13px",
+                  lineHeight: " 15px",
+                },
+              }}
+              label="Enter Plant Name"
+              variant="outlined"
+              placeholder="Enter Plant Name"
+              size="small"
+              fullWidth
+              value={formValues.plantName}
+              onChange={(e) => {
+                setFormValues({
+                  ...formValues,
+                  plantName: e.target.value,
                 });
               }}
             />

@@ -702,6 +702,22 @@ const CreatePdfModal = ({
                       disableRowSelectionOnClick={true}
                       selectionModel={selectedRows.map((row) => row?.sno)}
                       onRowSelectionModelChange={handleSelectionModelChange}
+                      getRowClassName={(params) => {
+                        const snoCount = dbSequence
+                          .map((item, index) => ({
+                            id: index,
+                            ...item,
+                          }))
+                          .filter((row) => row.sno === params.row.sno).length;
+
+                        return params.row.employeeid === "" ||
+                          params.row.sno === "" ||
+                          params.row.name === "" ||
+                          params.row.foundInDb === false ||
+                          snoCount > 1
+                          ? "error"
+                          : "";
+                      }}
                       styles={{
                         ".error": {
                           backgroundColor: "#FF0000",
