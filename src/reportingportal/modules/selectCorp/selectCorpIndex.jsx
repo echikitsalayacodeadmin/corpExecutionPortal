@@ -67,15 +67,18 @@ const SelectCorpIndex = ({ role = localStorage.getItem("REPORTING_ROLE") }) => {
     localStorage.setItem("CORP_ID_REPORTING", newValue?.corpId);
     localStorage.setItem(
       "CORP_NAME_REPORTING",
-      `${newValue?.orgName} ${newValue?.plantName}`
+      `${newValue?.orgName} ${newValue?.plantName || ""}`
     );
     localStorage.setItem("CORP_LOGO_REPORTING", newValue?.logo);
     localStorage.setItem("CORP_ADDRESS_REPORTING", newValue?.orgAddress);
-    updateCorpName(`${newValue?.orgName} ${newValue?.plantName}`);
+    updateCorpName(`${newValue?.orgName} ${newValue?.plantName || ""}`);
     updateCorpId(newValue?.corpId);
-    enqueueSnackbar(`${newValue?.orgName} ${newValue?.plantName} Selected`, {
-      variant: "success",
-    });
+    enqueueSnackbar(
+      `${newValue?.orgName} ${newValue?.plantName || ""} Selected`,
+      {
+        variant: "success",
+      }
+    );
     let corpId = localStorage.getItem("CORP_ID_REPORTING");
     console.log({ corpId });
     localStorage.removeItem("CAMP_ID_REPORTING");
