@@ -79,6 +79,8 @@ const Header = () => {
     openDrawer,
     openDialog,
     setOpenDialog,
+    openDialogEcg,
+    setOpenDialogEcg,
     openDialogVC,
     setOpenDialogVC,
     empListHeader,
@@ -297,6 +299,12 @@ const Header = () => {
               <CustomButtonBlue
                 title="Create Vacination Certificate"
                 onClick={() => setOpenDialogVC(!openDialogVC)}
+              />
+            )}
+            {selectedReportData.title === "Upload Report - ECG" && (
+              <CustomButtonBlue
+                title="Create Normal Ecg"
+                onClick={() => setOpenDialogEcg(!openDialogEcg)}
               />
             )}
 

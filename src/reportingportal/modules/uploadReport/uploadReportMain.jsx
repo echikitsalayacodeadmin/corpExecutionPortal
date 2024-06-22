@@ -42,6 +42,7 @@ import CustomButtonWhite from "../../../assets/customButtonWhite";
 import { sortDataByName } from "../../../assets/utils";
 import { getReportingPermissions } from "../../assets/reportingPermisions";
 import RenderExpandableCells from "../../../assets/globalDataGridLayout/renderExpandableCells";
+import CreateNormalEcg from "./subComp/createNormalEcg";
 
 const UploadReportMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -50,6 +51,8 @@ const UploadReportMain = ({
   const {
     selectedColumns,
     openDialog,
+    openDialogEcg,
+    setOpenDialogEcg,
     handleCloseDialog,
     setSelectedColumns,
     handleButtonClick,
@@ -113,7 +116,7 @@ const UploadReportMain = ({
       setMasterData,
       updateEmployeeList
     );
-  }, [openDialog]);
+  }, [openDialog, openDialogEcg]);
 
   const [pdfUrl, setPdfUrl] = useState("");
   const [deleteData, setDeleteData] = useState("");
@@ -1523,6 +1526,8 @@ const UploadReportMain = ({
           </Box>
         </Modal>
       </Portal>
+
+      <CreateNormalEcg open={openDialogEcg} setOpen={setOpenDialogEcg} />
     </Fragment>
   );
 };

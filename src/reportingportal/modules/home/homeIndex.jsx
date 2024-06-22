@@ -36,6 +36,7 @@ const HomeIndex = () => {
   const [openDrawer, setOpenDrawer] = useState(isMobile ? false : true);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDialogVC, setOpenDialogVC] = useState(false);
+  const [openDialogEcg, setOpenDialogEcg] = useState(false);
   const [showSequenceComponent, setShowSequenceComponent] = useState(false);
   const [empListHeader, setEmpListHeader] = useState([]);
   const [searchedEmployee, setSearchedEmployee] = useState("");
@@ -107,6 +108,8 @@ const HomeIndex = () => {
           setOpenDialog,
           openDialogVC,
           setOpenDialogVC,
+          openDialogEcg,
+          setOpenDialogEcg,
           showSequenceComponent,
           setShowSequenceComponent,
           empListHeader,
