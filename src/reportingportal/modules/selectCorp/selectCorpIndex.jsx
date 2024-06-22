@@ -65,12 +65,15 @@ const SelectCorpIndex = ({ role = localStorage.getItem("REPORTING_ROLE") }) => {
     localStorage.removeItem("SAVED_S3_ALL_FILES_FILTERS");
     setSelectedCorp(newValue);
     localStorage.setItem("CORP_ID_REPORTING", newValue?.corpId);
-    localStorage.setItem("CORP_NAME_REPORTING", newValue?.orgName);
+    localStorage.setItem(
+      "CORP_NAME_REPORTING",
+      `${newValue?.orgName} ${newValue?.plantName}`
+    );
     localStorage.setItem("CORP_LOGO_REPORTING", newValue?.logo);
     localStorage.setItem("CORP_ADDRESS_REPORTING", newValue?.orgAddress);
-    updateCorpName(newValue?.orgName);
+    updateCorpName(`${newValue?.orgName} ${newValue?.plantName}`);
     updateCorpId(newValue?.corpId);
-    enqueueSnackbar(`${newValue?.orgName} Selected`, {
+    enqueueSnackbar(`${newValue?.orgName} ${newValue?.plantName} Selected`, {
       variant: "success",
     });
     let corpId = localStorage.getItem("CORP_ID_REPORTING");
@@ -142,6 +145,21 @@ const SelectCorpIndex = ({ role = localStorage.getItem("REPORTING_ROLE") }) => {
               type: "Search Corp",
             }}
           />
+        )}
+        renderOption={(props, option) => (
+          <Box
+            {...props}
+            style={{
+              padding: "8px 16px",
+              cursor: "pointer",
+            }}
+          >
+            <Typography>
+              {`${option.orgName} ${
+                option?.plantName ? `${option?.plantName}` : ""
+              }`}
+            </Typography>
+          </Box>
         )}
       />
     </Box>

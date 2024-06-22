@@ -128,7 +128,7 @@ const CalendarInfoAdd = () => {
           }}
         >
           <CustomButtonBlue
-            disabled={calendarDetail.sessionName ? false : true}
+            disabled={calendarDetail.name ? false : true}
             title="Save"
             onClick={() => {
               handleAdd();
