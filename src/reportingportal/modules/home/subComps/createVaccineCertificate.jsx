@@ -166,7 +166,10 @@ const CreateVaccineCertificate = ({
 
     <div style="margin-left:30px;display:flex" >
 
-    <div style="width:200px"> <pre>${vaccineDetailsCol1}</pre></div>
+    <div style="width:200px"> <h2 style="  padding-left: 17pt;
+        text-indent: 0pt;
+        line-height: 152%;
+        text-align: justify;"> <pre>${vaccineDetailsCol1}</pre> </h2> </div>
     <div> <pre>${vaccineDetailsCol2}</pre></div>
 
     </div>
