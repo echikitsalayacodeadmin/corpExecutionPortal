@@ -6,10 +6,13 @@ import { BASE_URL } from "../../../assets/constants";
 const PackageAutocomplete = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
   setSelectedPackage,
+  employmentType,
 }) => {
   const [listOfPackage, setListOfPackage] = useState([]);
   const fetchPackages = async () => {
-    const url = BASE_URL + `org/package/${corpId}`;
+    const url =
+      BASE_URL +
+      `org/getPackageDetails/${corpId}?employmentType=${employmentType}`;
     const packages = await getData(url);
     if (packages.error) {
       console.log("error");

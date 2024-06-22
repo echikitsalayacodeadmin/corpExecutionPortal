@@ -2,15 +2,25 @@ import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { fetchMismatchPackages } from "../../services/mismatchPackageServices";
 import {
   Box,
+  Button,
   Checkbox,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
   Grid,
+  IconButton,
   Paper,
   TextField,
 } from "@mui/material";
 import CustomDataGridLayout from "../../../assets/globalDataGridLayout/customDataGridLayout";
 import { isMobile } from "react-device-detect";
+import CustomAutocomplete from "../../../assets/customAutocomplete";
+import { Edit } from "@mui/icons-material";
+import PackageAutocomplete from "../../global/packageAutocomplete/packageAutocomplete";
+import { BASE_URL } from "../../../assets/constants";
 
 const MismatchPackage = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -28,6 +38,9 @@ const MismatchPackage = ({
     fetchMismatchPackages(corpId, setMistmatchPackageList, setIsLoading);
   }, []);
 
+  const [open, setOpen] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState("");
+
   const columns = [
     {
       field: "empId",
@@ -43,6 +56,32 @@ const MismatchPackage = ({
       align: "center",
       headerAlign: "center",
     },
+    {
+      field: "employmentType",
+      headerName: "Employment Type",
+      width: 200,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "updatePackage",
+      headerName: "Upadate Package",
+      width: 200,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        return (
+          <IconButton
+            onClick={() => {
+              setSelectedRowData(params.row);
+              setOpen(true);
+            }}
+          >
+            <Edit />
+          </IconButton>
+        );
+      },
+    },
   ];
 
   const [selectedRows, setSelectedRows] = React.useState([]);
@@ -56,6 +95,8 @@ const MismatchPackage = ({
   };
 
   const [selectedEmpIdCommaSep, setSelectedEmpIdCommaSep] = useState("");
+  const [employmentType, setEmploymentType] = useState("");
+  const [selectedPackage, setSelectedpackage] = useState("");
   const filterData = useMemo(() => {
     return mistmatchPackageList
       .filter((item) => (filterNullPackages ? item.packageName === "" : true))
@@ -63,8 +104,20 @@ const MismatchPackage = ({
         return selectedEmpIdCommaSep === ""
           ? true
           : selectedEmpIdCommaSep.split(",").includes(item.empId);
-      });
-  }, [filterNullPackages, mistmatchPackageList, selectedEmpIdCommaSep]);
+      })
+      .filter((item) =>
+        employmentType ? item.employmentType === employmentType : true
+      );
+  }, [
+    filterNullPackages,
+    mistmatchPackageList,
+    selectedEmpIdCommaSep,
+    employmentType,
+  ]);
+
+  const handleUpdateEmpPackage = async () => {
+    const url = BASE_URL;
+  };
 
   if (isLoading) {
     return (
@@ -93,8 +146,8 @@ const MismatchPackage = ({
             paddingBlock: "10px",
           }}
         >
-          <Grid container>
-            <Grid item lg={2.5} xs={6} sx={{ display: "flex" }}>
+          <Grid container spacing={2}>
+            <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -105,7 +158,7 @@ const MismatchPackage = ({
                 label="Filter Null Packages"
               />
             </Grid>
-            <Grid item xs={12} lg={4}>
+            <Grid item xs={12} lg={3}>
               <TextField
                 size="small"
                 fullWidth
@@ -115,6 +168,18 @@ const MismatchPackage = ({
                 onChange={(e) => {
                   setSelectedEmpIdCommaSep(e.target.value);
                   handleChangeEmployeeCommaSepIds(e.target.value);
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} lg={3}>
+              <CustomAutocomplete
+                options={["ONROLL", "CONTRACTOR", "PRE_EMPLOYMENT", "CSR"]}
+                label={`Employment Type`}
+                placeholder={`Employment Type`}
+                getOptionLabel={(option) => option}
+                value={employmentType || ""}
+                onChange={(e) => {
+                  setEmploymentType(e.target.value);
                 }}
               />
             </Grid>
@@ -144,6 +209,24 @@ const MismatchPackage = ({
           />
         </Paper>
       </Box>
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogContent>
+          <PackageAutocomplete
+            setSelectedPackage={setSelectedpackage}
+            employmentType={selectedRowData.employmentType}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Fragment>
   );
 };

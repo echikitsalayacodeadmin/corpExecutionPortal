@@ -281,10 +281,20 @@ const Header = () => {
             selectedReportData.title === "Refresh Headers" ||
             selectedReportData.title === "Health Register" ||
             selectedReportData.title === "Report Analysis" ||
+            selectedReportData.title ===
+              "Create Report - Vaccination Certificate" ||
             hasUploadReports === true ? null : (
               <CustomButtonBlue
                 onClick={() => setOpenDialog(!openDialog)}
                 title={isMobile ? "Create" : "Create Report"}
+              />
+            )}
+
+            {selectedReportData.title ===
+              "Create Report - Vaccination Certificate" && (
+              <CustomButtonBlue
+                title="Create Vacination Certificate"
+                onClick={() => setOpenDialog(!openDialog)}
               />
             )}
 
