@@ -21,6 +21,8 @@ import CustomAutocomplete from "../../../assets/customAutocomplete";
 import { Edit } from "@mui/icons-material";
 import PackageAutocomplete from "../../global/packageAutocomplete/packageAutocomplete";
 import { BASE_URL } from "../../../assets/constants";
+import { getData, saveData } from "../../assets/reportingServices";
+import CustomButtonBlue from "../../../assets/customButtonBlue";
 
 const MismatchPackage = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -116,7 +118,22 @@ const MismatchPackage = ({
   ]);
 
   const handleUpdateEmpPackage = async () => {
-    const url = BASE_URL;
+    const obj = [
+      {
+        empId: selectedRowData.empId,
+        packageName: selectedPackage,
+      },
+    ];
+
+    const url =
+      BASE_URL +
+      `http://apibackend.uno.care/api/org/empIdAndPackageDefinition/${corpId}`;
+    const response = await saveData(url, obj);
+    if (response.error) {
+      console.log(response.error);
+    } else {
+      console.log(response.data);
+    }
   };
 
   if (isLoading) {
@@ -212,7 +229,7 @@ const MismatchPackage = ({
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
-        maxWidth="lg"
+        maxWidth="xs"
         fullWidth
       >
         <DialogContent>
@@ -220,12 +237,21 @@ const MismatchPackage = ({
             setSelectedPackage={setSelectedpackage}
             employmentType={selectedRowData.employmentType}
           />
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mt: 5,
+            }}
+          >
+            <CustomButtonBlue
+              onClick={handleUpdateEmpPackage}
+              title={"Submit"}
+            />
+          </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)} color="primary">
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </Fragment>
   );
