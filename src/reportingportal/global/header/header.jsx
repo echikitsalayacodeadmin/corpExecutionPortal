@@ -79,6 +79,8 @@ const Header = () => {
     openDrawer,
     openDialog,
     setOpenDialog,
+    openDialogVC,
+    setOpenDialogVC,
     empListHeader,
     updateSearchedEmployee,
     selectedReportData,
@@ -294,7 +296,7 @@ const Header = () => {
               "Create Report - Vaccination Certificate" && (
               <CustomButtonBlue
                 title="Create Vacination Certificate"
-                onClick={() => setOpenDialog(!openDialog)}
+                onClick={() => setOpenDialogVC(!openDialogVC)}
               />
             )}
 

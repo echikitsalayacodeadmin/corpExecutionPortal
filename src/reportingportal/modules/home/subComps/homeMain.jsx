@@ -47,6 +47,7 @@ import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import { BASE_URL } from "../../../../assets/constants";
 import { useSnackbar } from "notistack";
 import UpdateEmpDetail from "./updateEmpDetail";
+import CreateVaccineCertificate from "./createVaccineCertificate";
 
 const HomeMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
@@ -56,6 +57,8 @@ const HomeMain = ({
     selectedColumns,
     openDialog,
     handleCloseDialog,
+    openDialogVC,
+    setOpenDialogVC,
     setSelectedColumns,
     handleButtonClick,
     updateEmployeeList,
@@ -864,7 +867,7 @@ const HomeMain = ({
         updateEmployeeList
       );
     }, 50);
-  }, [openDialog, openEmpForm]);
+  }, [openDialog, openEmpForm, openDialogVC]);
 
   const handleCellClick = (params) => {
     const field = params.field;
@@ -1542,6 +1545,12 @@ const HomeMain = ({
           </Box>
         </Modal>
       </Portal>
+
+      <CreateVaccineCertificate
+        open={openDialogVC}
+        setOpen={setOpenDialogVC}
+        selectedEmployees={selectedRows}
+      />
     </Fragment>
   );
 };

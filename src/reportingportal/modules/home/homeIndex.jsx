@@ -35,6 +35,7 @@ const HomeIndex = () => {
 
   const [openDrawer, setOpenDrawer] = useState(isMobile ? false : true);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDialogVC, setOpenDialogVC] = useState(false);
   const [showSequenceComponent, setShowSequenceComponent] = useState(false);
   const [empListHeader, setEmpListHeader] = useState([]);
   const [searchedEmployee, setSearchedEmployee] = useState("");
@@ -60,6 +61,9 @@ const HomeIndex = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(!openDialog);
+  };
+  const handleCloseDialogVC = () => {
+    setOpenDialogVC(!openDialog);
   };
 
   const [selectedColumns, setSelectedColumns] = useState([]);
@@ -101,6 +105,8 @@ const HomeIndex = () => {
           setOpenDrawer,
           openDialog,
           setOpenDialog,
+          openDialogVC,
+          setOpenDialogVC,
           showSequenceComponent,
           setShowSequenceComponent,
           empListHeader,
