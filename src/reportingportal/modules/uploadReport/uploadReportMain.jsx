@@ -168,6 +168,20 @@ const UploadReportMain = ({
       headerAlign: "left",
     },
     {
+      field: "isPftParsed",
+      headerName: "Is PFT Parsed",
+      width: 150,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "isAudiometryParsed",
+      headerName: "Is Audiometry Parsed",
+      width: 150,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
       field: "bloodTest",
       headerName: "Blood Test",
       width: 100,
@@ -472,6 +486,27 @@ const UploadReportMain = ({
     },
 
     { field: "name", headerName: "Name", width: 200 },
+    {
+      field: "patientNameinBloodReport",
+      headerName: "Patient Name in Report",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
+    },
+    {
+      field: "patientNameinPftReport",
+      headerName: "Patient Name in Report",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
+    },
+    {
+      field: "patientNameinAudiometryReport",
+      headerName: "Patient Name in Report",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
+    },
 
     { field: "empId", headerName: "Emp ID", width: 100 },
     {
@@ -740,13 +775,7 @@ const UploadReportMain = ({
         );
       },
     },
-    {
-      field: "patientNameinReport",
-      headerName: "Patient Name in Report",
-      align: "left",
-      headerAlign: "left",
-      width: 300,
-    },
+
     {
       field: "packageName",
       headerName: "Package Name",

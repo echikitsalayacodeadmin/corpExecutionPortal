@@ -432,7 +432,7 @@ const BasicMenu = () => {
         });
         handleButtonClick([
           "tokenNumber",
-          "patientNameinReport",
+          "patientNameinBloodReport",
           "isBloodParsed",
           "empId",
           "name",
@@ -477,6 +477,8 @@ const BasicMenu = () => {
             handleButtonClick([
               "tokenNumber",
               "empId",
+              "patientNameinBloodReport",
+              "isBloodParsed",
               "name",
               "age",
               "gender",
@@ -515,6 +517,8 @@ const BasicMenu = () => {
             handleButtonClick([
               "tokenNumber",
               "empId",
+              "isPftParsed",
+              "patientNameinPftReport",
               "name",
               "age",
               "gender",
@@ -553,6 +557,8 @@ const BasicMenu = () => {
             handleButtonClick([
               "tokenNumber",
               "empId",
+              "isAudiometryParsed",
+              "patientNameinAudiometryReport",
               "name",
               "age",
               "gender",

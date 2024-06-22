@@ -394,7 +394,7 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
         });
         handleButtonClick([
           "tokenNumber",
-          "patientNameinReport",
+          "patientNameinBloodReport",
           "isBloodParsed",
           "empId",
           "name",
@@ -439,6 +439,8 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
             handleButtonClick([
               "tokenNumber",
               "empId",
+              "patientNameinBloodReport",
+              "isBloodParsed",
               "name",
               "age",
               "gender",
@@ -477,6 +479,8 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
             handleButtonClick([
               "tokenNumber",
               "empId",
+              "isPftParsed",
+              "patientNameinPftReport",
               "name",
               "age",
               "gender",
@@ -515,6 +519,8 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
             handleButtonClick([
               "tokenNumber",
               "empId",
+              "isAudiometryParsed",
+              "patientNameinAudiometryReport",
               "name",
               "age",
               "gender",

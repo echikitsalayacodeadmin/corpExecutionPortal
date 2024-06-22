@@ -218,8 +218,14 @@ const modifyArray = (arr) => {
         ? true
         : false,
     isBloodParsed: item?.cholestrolData?.["BLOODTEST_parsed"] || null,
-    patientNameinReport:
+    patientNameinBloodReport:
       item?.cholestrolData?.["BLOOD_PATIENT_NAME_REPORT"] || null,
+    isPftParsed: item?.cholestrolData?.PFT_parsed || null,
+    patientNameinPftReport:
+      item?.cholestrolData?.["PFT_PATIENT_NAME_REPORT"] || null,
+    isAudiometryParsed: item?.cholestrolData?.AUDIOMETRY_parsed || null,
+    patientNameinAudiometryReport:
+      item?.cholestrolData?.["AUDIOMETRY_PATIENT_NAME_REPORT"] || null,
   }));
 };
 
