@@ -476,7 +476,7 @@ const MisMain = () => {
   const downloadCCFeedbackMisReport = async () => {
     const url =
       BASE_URL +
-      `feedback/getAllFeedback/${selectedCorpId}?serviceTypes=${"CARE_COORDINATION"}&startDate=${
+      `feedback/mis/getAllFeedback/?corpId=${selectedCorpId}&serviceTypes=${"CARE_COORDINATION"}&startDate=${
         filters.startDate
       }&endDate=${filters.endDate}`;
     const response = await getData(url);
@@ -487,10 +487,8 @@ const MisMain = () => {
       });
     } else {
       const temp = response.data.map((item, index) => ({
-        isActive: item.isActive,
-        id: item.id,
         name: item.name,
-        corpName: selectedCorpName,
+        corpName: selectedCorpName || item.corpName,
         [item.questionsWithRatingsList[0].question]:
           item.questionsWithRatingsList[0].rating ||
           item.questionsWithRatingsList[0].textRating,
@@ -519,7 +517,7 @@ const MisMain = () => {
   const downloadASFeedbackMisReport = async () => {
     const url =
       BASE_URL +
-      `feedback/getAllFeedback/${selectedCorpId}?serviceTypes=${"AWARENESS_SESSION"}&startDate=${
+      `feedback/mis/getAllFeedback/?corpId=${selectedCorpId}&serviceTypes=${"AWARENESS_SESSION"}&startDate=${
         filters.startDate
       }&endDate=${filters.endDate}`;
     const response = await getData(url);
@@ -530,10 +528,8 @@ const MisMain = () => {
       });
     } else {
       const temp = response.data.map((item, index) => ({
-        isActive: item.isActive,
-        id: item.id,
         name: item.name,
-        corpName: selectedCorpName,
+        corpName: selectedCorpName || item.corpName,
         [item.questionsWithRatingsList[0].question]:
           item.questionsWithRatingsList[0].rating ||
           item.questionsWithRatingsList[0].textRating,
@@ -565,7 +561,7 @@ const MisMain = () => {
   const downloadCampFeedbackMisReport = async () => {
     const url =
       BASE_URL +
-      `feedback/getAllFeedback/${selectedCorpId}?serviceTypes=${"CAMP"}&startDate=${
+      `feedback/mis/getAllFeedback/?corpId=${selectedCorpId}&serviceTypes=${"CAMP"}&startDate=${
         filters.startDate
       }&endDate=${filters.endDate}`;
     const response = await getData(url);
@@ -576,10 +572,8 @@ const MisMain = () => {
       });
     } else {
       const temp = response.data.map((item, index) => ({
-        isActive: item.isActive,
-        id: item.id,
         name: item.name,
-        corpName: selectedCorpName,
+        corpName: selectedCorpName || item.corpName,
         [item.questionsWithRatingsList[0].question]:
           item.questionsWithRatingsList[0].rating ||
           item.questionsWithRatingsList[0].textRating,
@@ -608,7 +602,7 @@ const MisMain = () => {
   const downloadFFSFeedbackMisReport = async () => {
     const url =
       BASE_URL +
-      `feedback/getAllFeedback/${selectedCorpId}?serviceTypes=${"FIRSTAID_OR_FIRESAFETYTRAINING"}&startDate=${
+      `feedback/mis/getAllFeedback/?corpId=${selectedCorpId}&serviceTypes=${"FIRSTAID_OR_FIRESAFETYTRAINING"}&startDate=${
         filters.startDate
       }&endDate=${filters.endDate}`;
     const response = await getData(url);
@@ -619,10 +613,8 @@ const MisMain = () => {
       });
     } else {
       const temp = response.data.map((item, index) => ({
-        isActive: item.isActive,
-        id: item.id,
         name: item.name,
-        corpName: selectedCorpName,
+        corpName: selectedCorpName || item.corpName,
         [item.questionsWithRatingsList[0].question]:
           item.questionsWithRatingsList[0].rating ||
           item.questionsWithRatingsList[0].textRating,
@@ -656,7 +648,7 @@ const MisMain = () => {
   const downloadPAHCDocFeedbackMisReport = async () => {
     const url =
       BASE_URL +
-      `feedback/getAllFeedback/${selectedCorpId}?serviceTypes=${"POST_AHC_DOCTOR_CONSULTATION"}&startDate=${
+      `feedback/mis/getAllFeedback/?corpId=${selectedCorpId}&serviceTypes=${"POST_AHC_DOCTOR_CONSULTATION"}&startDate=${
         filters.startDate
       }&endDate=${filters.endDate}`;
     const response = await getData(url);
@@ -667,10 +659,8 @@ const MisMain = () => {
       });
     } else {
       const temp = response.data.map((item, index) => ({
-        isActive: item.isActive,
-        id: item.id,
         name: item.name,
-        corpName: selectedCorpName,
+        corpName: selectedCorpName || item.corpName,
         [item.questionsWithRatingsList[0].question]:
           item.questionsWithRatingsList[0].rating ||
           item.questionsWithRatingsList[0].textRating,
