@@ -221,7 +221,7 @@ const MasterPdfGet = ({
     const response = await getData(url);
     if (response.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response.data });
+
       let temp = response?.data?.map((item, index) => ({
         ...item,
         // id: index + 1,
@@ -253,7 +253,7 @@ const MasterPdfGet = ({
     const response = await saveData(url);
     if (response.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response.data });
+
       enqueueSnackbar("Successfully Marked", {
         variant: "success",
       });

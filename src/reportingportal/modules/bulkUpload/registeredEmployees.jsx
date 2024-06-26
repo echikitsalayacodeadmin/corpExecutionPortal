@@ -17,7 +17,6 @@ const RegisteredEmployees = ({
       console.log({ error: response.error });
       setEmployeeList([]);
     } else {
-      console.log({ success: response.data });
       setEmployeeList(response.data);
     }
   };

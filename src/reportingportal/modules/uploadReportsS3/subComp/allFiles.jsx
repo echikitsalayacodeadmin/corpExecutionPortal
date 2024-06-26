@@ -45,8 +45,6 @@ const AllFiles = ({
     }
   })();
 
-  console.log({ _storedData });
-
   useEffect(() => {
     setMatchingStatus(_storedData.matchingStatus || { value: "", label: "" });
     setUploadedStatus(_storedData.uploadedStatus || { value: "", label: "" });
@@ -73,7 +71,7 @@ const AllFiles = ({
     const response = await getData(url);
     if (response.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response.data });
+
       setMasterData(response?.data);
     } else {
       setIsLoading(false);
@@ -115,7 +113,7 @@ const AllFiles = ({
     const response = await saveData(url);
     if (response.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response.data });
+
       enqueueSnackbar("Processed successfully.", {
         variant: "success",
       });

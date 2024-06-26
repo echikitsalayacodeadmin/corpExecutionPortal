@@ -245,7 +245,7 @@ export const fetchSuperMasterData = async (
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setMasterData(modifyArray(response.data));
     updateEmployeeList(
       modifyArray(

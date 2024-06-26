@@ -36,7 +36,6 @@ const ManagePermissionsIndex = ({
       console.log({ error: response.error });
       setPermissionList([]);
     } else {
-      console.log({ success: response.data });
       setIsLoading(false);
       const permissions = response.data?.permissions;
       setPermissionList(permissions?.parentRoles);

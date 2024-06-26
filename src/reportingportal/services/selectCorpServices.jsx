@@ -7,7 +7,7 @@ export const fetchCorps = async (setIsLoading, setCorpList) => {
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setCorpList(response.data);
   } else {
     setIsLoading(false);

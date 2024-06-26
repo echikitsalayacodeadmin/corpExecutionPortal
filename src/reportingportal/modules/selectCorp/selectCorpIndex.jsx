@@ -33,7 +33,7 @@ const SelectCorpIndex = ({ role = localStorage.getItem("REPORTING_ROLE") }) => {
       setCorpList([]);
     } else {
       setIsLoading(false);
-      console.log({ SUCCESS: response.data });
+
       setCorpList(
         response.data?.filter(
           (item, index, self) =>

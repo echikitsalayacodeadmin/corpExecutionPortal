@@ -19,8 +19,6 @@ const UploadReportS3Main = () => {
     }
   })();
 
-  console.log({ _storedData });
-
   useEffect(() => {
     setSelectedFileType(
       _storedData.selectedFileType || { value: "", label: "" }

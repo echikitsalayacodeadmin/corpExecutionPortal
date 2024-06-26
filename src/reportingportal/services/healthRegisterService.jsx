@@ -115,7 +115,7 @@ export const fetchHealthRegisterData = async (
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     const temp = response?.data?.map((item, index) => ({
       id: index + 1,
       ...item,

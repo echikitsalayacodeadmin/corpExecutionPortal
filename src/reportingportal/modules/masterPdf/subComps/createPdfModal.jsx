@@ -41,6 +41,7 @@ import CustomDataGridLayout from "../../../../assets/globalDataGridLayout/custom
 import { isMobile } from "react-device-detect";
 import { sortArrayBySno } from "../../../../assets/utils";
 import EditModal from "../../sequence/subComp/editModal";
+import { useDisableMasterPdfCreation } from "../../../services/disablingMasterPdfCreation";
 
 const filterReport = [
   {
@@ -364,22 +365,6 @@ const CreatePdfModal = ({
     removeSequnceEmployees,
   ]);
 
-  // console.log({
-  //   selectedRows,
-  //   dbSequence,
-  //   filteredEmployeeList,
-  //   employeesIdList,
-  //   selectedReport,
-  // });
-
-  // console.log({
-  //   employeeList,
-  //   employeesId,
-  //   selectedRows,
-  //   filteredEmployeeList,
-  //   originalEmployeeList,
-  // });
-
   const [allSelectedEmployees, setAllSelectedEmployees] = useState([]);
 
   useEffect(() => {
@@ -503,7 +488,14 @@ const CreatePdfModal = ({
     };
   }, [selectedReport, allSelectedEmployees, reportFieldsMap]);
 
-  console.log({ presummaryReport });
+  const { isDisabled, reasons, disabledEmployees } =
+    useDisableMasterPdfCreation(
+      allSelectedEmployees,
+      selectedReport,
+      openDialog
+    );
+
+  console.log({ isDisabled });
 
   return (
     <Fragment>
@@ -513,6 +505,8 @@ const CreatePdfModal = ({
           onClose={() => {
             handleCloseDialog();
             setEmployeesId("");
+            setSelectedReport([]);
+            setAllSelectedEmployees([]);
           }}
           maxWidth={"xl"}
           fullWidth={true}
@@ -534,6 +528,7 @@ const CreatePdfModal = ({
                 onClick={() => {
                   handleCloseDialog();
                   setEmployeesId("");
+                  setSelectedReport([]);
                 }}
                 aria-label="close"
               >
@@ -637,13 +632,7 @@ const CreatePdfModal = ({
                 </Grid>
                 <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
                   <CustomButtonBlue
-                    // disabled={
-                    //   // allSelectedEmployees.filter(
-                    //   //   (item) => item.isVitalsErrorData === true
-                    //   // ).length > 0
-                    //   //   ? true
-                    //   //   : false
-                    // }
+                    disabled={isDisabled}
                     onClick={() => handleGeneratePDFRequest()}
                     title="Generate Report"
                   />
@@ -655,6 +644,12 @@ const CreatePdfModal = ({
                   </Typography>
                 </Grid>
               </Grid>
+
+              <Box sx={{ gap: 3 }}>
+                {reasons?.map((item, index) => (
+                  <Typography key={index}>{item}</Typography>
+                ))}
+              </Box>
 
               {isPickEmployeeFromSequence ? null : (
                 <>

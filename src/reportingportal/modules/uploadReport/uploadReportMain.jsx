@@ -77,8 +77,6 @@ const UploadReportMain = ({
     }
   }, []);
 
-  console.log({ _storedData });
-
   useEffect(() => {
     setSelectedCreatedSort(
       _storedData.selectedCreatedSort || {
@@ -1213,7 +1211,6 @@ const UploadReportMain = ({
       });
       setIsLoading(false);
     } else {
-      console.log({ success: response.data });
       if (response.data === true) {
         handleCloseDelete();
         setDeleteData("");

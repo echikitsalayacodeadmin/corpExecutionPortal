@@ -48,8 +48,6 @@ const MasterPdfMain = ({
     }
   }, []);
 
-  console.log({ _storedData });
-
   useEffect(() => {
     setSelectedFilterHWBS(
       _storedData.selectFilterHWBS || {
@@ -182,6 +180,27 @@ const MasterPdfMain = ({
       width: 150,
       align: "center",
       headerAlign: "center",
+    },
+    {
+      field: "isBloodParsed",
+      headerName: "Is Blood Parsed",
+      width: 150,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "isPftParsed",
+      headerName: "Is PFT Parsed",
+      width: 150,
+      align: "left",
+      headerAlign: "left",
+    },
+    {
+      field: "isAudiometryParsed",
+      headerName: "Is Audiometry Parsed",
+      width: 150,
+      align: "left",
+      headerAlign: "left",
     },
     {
       field: "pft",
@@ -643,8 +662,6 @@ const MasterPdfMain = ({
     );
   }, []);
 
-  console.log({ empListHeader });
-
   const [selectedRows, setSelectedRows] = React.useState([]);
 
   const handleCellClick = (params) => {
@@ -687,8 +704,6 @@ const MasterPdfMain = ({
 
     setSelectedRows(sortArrayBySno(selectedRowsData));
   };
-
-  console.log({ selectedRows });
 
   const filterHWBS = [
     // { value: "hwbsAllAbsent", label: "HWBS All Absent" },
@@ -881,8 +896,6 @@ const MasterPdfMain = ({
     toDate,
   ]);
 
-  console.log({ masterData });
-
   if (isLoading) {
     return (
       <Box
@@ -994,7 +1007,13 @@ const MasterPdfMain = ({
             selectionModel={selectedRows.map((row) => row.empId)}
             onRowSelectionModelChange={handleSelectionModelChange}
             getRowClassName={(params) => {
-              return params.row.isVitalsErrorData === true ? "error" : "";
+              return params.row.isVitalsErrorData === true ||
+                params.row.isBloodParsed !== true
+                ? //  ||
+                  // params.row.isPftParsed !== true ||
+                  // params.row.isAudiometryParsed !== true
+                  "error"
+                : "";
             }}
             styles={{
               ".error": {

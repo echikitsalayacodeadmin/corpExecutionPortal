@@ -24,7 +24,6 @@ export const getAllTickets = async (
     setTicketList([]);
     //setFfilteredTicketList([]);
   } else {
-    console.log({ success: response.data });
     setTicketList(response.data);
     //setFfilteredTicketList(response.data);
   }

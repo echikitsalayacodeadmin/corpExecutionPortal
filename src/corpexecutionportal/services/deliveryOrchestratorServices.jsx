@@ -206,7 +206,7 @@ export const fetchSuperMasterData = async (
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setMasterData(response.data);
   } else {
     console.log({ ERROR: response.error });
@@ -226,7 +226,6 @@ export const getDataSheetReports = async (corpId, fields) => {
     `org/superMasterData?corpId=${corpId}&campCycleId=${campCycleId || ""}`;
   const response = await getData(url);
   if (response.data) {
-    console.log({ SUCCESS: response.data });
     const filteredData = response.data.map((item) => {
       const filteredItem = {};
       fields.forEach((field) => {

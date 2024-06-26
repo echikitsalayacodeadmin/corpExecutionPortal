@@ -6,7 +6,7 @@ export const fetchKamList = async (setIsLoading, setKAMList) => {
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setKAMList(response.data);
   } else {
     setIsLoading(false);
@@ -19,7 +19,7 @@ export const fetchCorpKamList = async (setIsLoading, setCorpKamList) => {
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setCorpKamList(response.data);
   } else {
     setIsLoading(false);

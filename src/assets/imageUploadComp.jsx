@@ -50,7 +50,6 @@ const ImageUploadComp = ({
     if (response.error) {
       console.log({ error: response.error });
     } else {
-      console.log({ success: response.data });
       handleCloseDelete();
       setImageURL(null);
     }

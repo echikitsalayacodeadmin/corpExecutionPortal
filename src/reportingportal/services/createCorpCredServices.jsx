@@ -7,7 +7,7 @@ export const fetchSnopCorps = async (setIsLoading, setSnopCorpList) => {
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setSnopCorpList(response.data);
   } else {
     setIsLoading(false);
@@ -22,7 +22,7 @@ export const fetchRegisteredCorps = async (setIsLoading, setCorpList) => {
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setCorpList(response.data);
   } else {
     setIsLoading(false);

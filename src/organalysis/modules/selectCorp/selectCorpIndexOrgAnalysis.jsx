@@ -19,7 +19,7 @@ const SelectCorpIndexOrgAnalysis = () => {
     const response = await getData(url);
     if (response.data) {
       setIsLoading(false);
-      console.log({ SUCCESS: response.data });
+
       const temp = response.data?.filter(
         (item, index, self) =>
           self.findIndex(

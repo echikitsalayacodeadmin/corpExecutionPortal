@@ -80,8 +80,6 @@ const HomeMain = ({
     }
   }, []);
 
-  console.log({ _storedData });
-
   const [pdfUrl, setPdfUrl] = useState("");
   const [deleteData, setDeleteData] = useState("");
   const [open, setOpen] = useState(false);
@@ -1200,7 +1198,6 @@ const HomeMain = ({
       });
       setIsLoading(false);
     } else {
-      console.log({ success: response.data });
       if (response.data === true) {
         handleCloseDelete();
         setDeleteData("");
@@ -1223,8 +1220,6 @@ const HomeMain = ({
       }
     }
   };
-
-  console.log({ selectedRows });
 
   if (isLoading) {
     return (

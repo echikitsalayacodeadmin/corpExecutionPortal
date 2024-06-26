@@ -16,8 +16,6 @@ const Form21Index = () => {
     }
   })();
 
-  console.log({ _storedData });
-
   useEffect(() => {
     setValue(_storedData.value || "1");
   }, []);

@@ -16,7 +16,7 @@ export const fetchReportAnalysisData = async (
   const response = await getData(url);
   if (response.data) {
     setIsLoading(false);
-    console.log({ SUCCESS: response.data });
+
     setMasterData(response.data);
   } else {
     console.log({ ERROR: response.error });

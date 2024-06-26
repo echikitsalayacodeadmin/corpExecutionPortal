@@ -220,8 +220,6 @@ const SalesVisitDashboard = () => {
     selectedColor,
   ]);
 
-  console.log({ _storedData });
-
   const [rows, setRows] = useState([]);
 
   useEffect(() => {

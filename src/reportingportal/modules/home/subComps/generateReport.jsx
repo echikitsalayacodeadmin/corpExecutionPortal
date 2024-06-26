@@ -42,8 +42,6 @@ const GenerateReport = ({
     }
   }, []);
 
-  console.log({ _storedData });
-
   useEffect(() => {
     setDate(
       _storedData.date
