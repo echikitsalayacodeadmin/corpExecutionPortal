@@ -632,7 +632,7 @@ const CreatePdfModal = ({
                 </Grid>
                 <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
                   <CustomButtonBlue
-                    disabled={isDisabled}
+                    // disabled={isDisabled}
                     onClick={() => handleGeneratePDFRequest()}
                     title="Generate Report"
                   />
