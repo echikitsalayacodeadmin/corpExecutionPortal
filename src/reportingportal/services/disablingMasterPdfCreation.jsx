@@ -23,21 +23,36 @@ export const useDisableMasterPdfCreation = (
     if (item.isVitalsErrorData === true) {
       vitalsErrorEmployees.push(item);
     }
-    if (selectedReport.includes("BLOODTEST") && item.isBloodParsed !== true) {
+    // if (
+    //   selectedReport.includes("BLOODTEST") &&
+    //   item.bloodToggle === true
+    // ||
+    // (selectedReport.includes("AUDIOMETRY") &&
+    //   item.audometryToggle === true) ||
+    // (selectedReport.includes("PFT") && item.pftToggle === true)
+    // ) {
+    if (
+      selectedReport.includes("BLOODTEST") &&
+      item.isBloodParsed !== true &&
+      item.bloodToggle === "Yes"
+    ) {
       bloodErrorEmployees.push(item);
     }
     if (
       selectedReport.includes("AUDIOMETRY") &&
-      item.isAudiometryParsed !== true
+      item.isAudiometryParsed !== true &&
+      item.audometryToggle === "Yes"
     ) {
       audiometryErrorEmployees.push(item);
     }
     if (
       selectedReport.includes("PFT") &&
-      (item.isPftParsed !== true || item.isPftParsed === null)
+      item.isPftParsed !== true &&
+      item.pftToggle === "Yes"
     ) {
       pftErrorEmployees.push(item);
     }
+    // }
   });
 
   const reasons = [];
@@ -75,6 +90,12 @@ export const useDisableMasterPdfCreation = (
     allSelectedEmployees.length === 0 ||
     selectedReport.length === 0 ||
     disabledEmployees.length > 0;
+
+  console.log({
+    isDisabled,
+    reasons,
+    disabledEmployees,
+  });
 
   return {
     isDisabled,

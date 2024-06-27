@@ -235,6 +235,14 @@ const MasterPdfMain = ({
     },
 
     {
+      field: "pftToggle",
+      headerName: "PFT Toggle",
+      width: 120,
+      align: "center",
+      headerAlign: "center",
+    },
+
+    {
       field: "audiometry",
       headerName: "Audiometry",
       width: 80,
@@ -266,6 +274,13 @@ const MasterPdfMain = ({
       headerAlign: "center",
     },
     {
+      field: "audiometryToggle",
+      headerName: "Audiometry Toggle",
+      width: 140,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
       field: "bloodTest",
       headerName: "Blood Test",
       width: 100,
@@ -292,6 +307,13 @@ const MasterPdfMain = ({
     {
       field: "bloodStatus",
       headerName: "Blood Status",
+      width: 120,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "bloodToggle",
+      headerName: "Blood Toggle",
       width: 120,
       align: "center",
       headerAlign: "center",
@@ -1008,6 +1030,7 @@ const MasterPdfMain = ({
             onRowSelectionModelChange={handleSelectionModelChange}
             getRowClassName={(params) => {
               return params.row.isVitalsErrorData === true ||
+                params.row.bloodToggle === true ||
                 params.row.isBloodParsed !== true
                 ? //  ||
                   // params.row.isPftParsed !== true ||
