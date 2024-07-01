@@ -29,27 +29,13 @@ export const getAllTickets = async (
   }
 };
 
-export const raiseTicket = async (data, selectedTicketType, handleClose) => {
+export const raiseTicket = async (
+  data,
+  selectedTicketType,
+  handleClose,
+  formData
+) => {
   const url = BASE_URL + `org/v2/raiseTicket`;
-  // const payload = {
-  //   raisedBy: data.name,
-  //   raisedById: data.userId,
-  //   raisedByMobileNo: data.mobile,
-  //   ticketType: data.selectedTicketType?.ticketType,
-
-  //   corpId: data.company?.corpId,
-  //   corpName: data.company?.orgName,
-  //   ticketCategory: "CORP",
-  //   status: "TICKET_RAISED",
-
-  //   ticketInfo: {
-  //     sessionId: data.sessionType?.id,
-  //     sessionDate: dayjs(data.date).format("YYYY-MM-DD"),
-  //     sessionName: data.sessionType?.sessionName,
-  //   },
-  // };
-
-  let formData = new FormData();
 
   console.log({ data });
   formData.append("userAuthId", data.userId);
@@ -170,4 +156,17 @@ export const updateTicket = async (
       variant: "success",
     });
   }
+};
+
+export const getDepartments = async (corpId, setDepartmentList) => {
+  const url = BASE_URL + `org/departments?corpId=${corpId}`;
+  let data = [];
+  const departments = await getData(url, "");
+  if (departments.error) {
+    data = [];
+  } else {
+    data = departments.data;
+  }
+  setDepartmentList(data);
+  return data;
 };

@@ -23,6 +23,7 @@ const RaiseTicketDialog = ({
   userId = localStorage.getItem("USER_ID_CORP_SALES"),
   name = localStorage.getItem("USER_NAME_CORP_SALES"),
   mobile = localStorage.getItem("USER_MOBILE_CORP_SALES"),
+  formData = new FormData(),
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleClose = () => {
@@ -50,6 +51,7 @@ const RaiseTicketDialog = ({
   });
 
   console.log({ formValues, selectedTicketType });
+
   return (
     <Fragment>
       <Portal>
@@ -76,17 +78,21 @@ const RaiseTicketDialog = ({
               <TicketForm
                 formValues={formValues}
                 setFormValues={setFormValues}
+                selectedTicketType={selectedTicketType}
+                formData={formData}
               />
             </Box>
           </DialogContent>
           <DialogActions>
             <Button
-              disabled={
-                isLoading || !(formValues.company && formValues.sessionType)
-              }
               onClick={() => {
                 setIsLoading(true);
-                raiseTicket(formValues, selectedTicketType, handleClose);
+                raiseTicket(
+                  formValues,
+                  selectedTicketType,
+                  handleClose,
+                  formData
+                );
               }}
               variant="contained"
               sx={{ width: 200 }}

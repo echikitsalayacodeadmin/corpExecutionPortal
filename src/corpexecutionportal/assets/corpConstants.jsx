@@ -162,37 +162,217 @@ export const TicketCategoryList = [
   },
   {
     id: 3,
-    title: "Corp Admin",
-    label: "Corp Admin",
+    title: "Emergency",
+    label: "Emergency",
     imageUrl: CAI,
-    ticketType: "CORP",
+    ticketType: "EMERGENCY",
   },
   {
     id: 4,
-    title: "Corp Employee",
-    label: "Corp Employee",
+    title: "New Service Inquiry",
+    label: "New Service Inquiry",
     imageUrl: CEI,
-    ticketType: "CORP_CONSUMABLES",
+    ticketType: "NEW_SERVICE_INQUIRY",
   },
   {
     id: 5,
-    title: "Internal",
-    label: "Internal",
+    title: "Query on active/completed service",
+    label: "Query on active/completed service",
     imageUrl: INTI,
-    ticketType: "COUNSELLING_CAMP",
+    ticketType: "SERVICE_ISSUE",
   },
-  {
-    id: 6,
-    title: "Service Request",
-    label: "Service Request",
-    imageUrl: SRI,
-    ticketType: "OUTSTATION_SERVICE",
-  },
+
   {
     id: 7,
-    title: "Pharmacy",
-    label: "Pharmacy",
+    title: "Tech Internal",
+    label: "Tech Internal",
     imageUrl: PHAI,
-    ticketType: "PHARMACY",
+    ticketType: "TECH_INTERNAL",
+  },
+
+  {
+    id: 7,
+    title: "Ops-Tech",
+    label: "Ops-Tech",
+    imageUrl: PHAI,
+    ticketType: "OPS_TECH",
+  },
+
+  {
+    id: 7,
+    title: "Sales-ops",
+    label: "Sales-ops",
+    imageUrl: PHAI,
+    ticketType: "SALES_OPS",
+  },
+];
+
+export const productList = [
+  {
+    id: 1,
+    label: "Client Portal",
+    value: "Client Portal",
+  },
+  {
+    id: 1,
+    label: "Mobile app",
+    value: "Mobile app",
+  },
+
+  {
+    id: 1,
+    label: "Camp portal",
+    value: "Camp portal",
+  },
+
+  {
+    id: 1,
+    label: "Feedback portal",
+    value: "Feedback portal",
+  },
+
+  {
+    id: 1,
+    label: "Attendance portal",
+    value: "Attendance portal",
+  },
+
+  {
+    id: 1,
+    label: "Sales",
+    value: "Sales",
+  },
+
+  {
+    id: 1,
+    label: "Reporting & Delivery",
+    value: "Reporting & Delivery",
+  },
+
+  {
+    id: 1,
+    label: "MIS",
+    value: "MIS",
+  },
+  {
+    id: 1,
+    label: "Tickets",
+    value: "Tickets",
+  },
+
+  {
+    id: 1,
+    label: "Tech Reporting",
+    value: "Tech Reporting",
+  },
+  {
+    id: 1,
+    label: "Clinic",
+    value: "Clinic",
+  },
+  {
+    id: 1,
+    label: "Organalysis portal",
+    value: "Organalysis portal",
+  },
+];
+
+export const backendOwner = [
+  {
+    id: 1,
+    label: "Vardhan",
+    value: "Vardhan",
+  },
+  {
+    id: 1,
+    label: "Anurag",
+    value: "Anurag",
+  },
+
+  {
+    id: 1,
+    label: "Akash",
+    value: "Akash",
+  },
+  {
+    id: 1,
+    label: "Sabarinathan",
+    value: "Sabarinathan",
+  },
+];
+
+export const frontendOwner = [
+  {
+    id: 1,
+    label: "Akash",
+    value: "Akash",
+  },
+  {
+    id: 1,
+    label: "Ayush",
+    value: "Ayush",
+  },
+];
+
+export const ServiceList = [
+  {
+    id: 1,
+    label: "Periodic Health Checkup",
+    value: "Periodic Health Checkup",
+  },
+  {
+    id: 1,
+    label: "Pre-employment Check Up",
+    value: "Pre-employment Check Up",
+  },
+  {
+    id: 1,
+    label: "Ambulance Service",
+    value: "Ambulance Service",
+  },
+  {
+    id: 1,
+    label: "Emergency tie up",
+    value: "Emergency tie up",
+  },
+  {
+    id: 1,
+    label: "Staff/Doctors for OHC",
+    value: "Staff/Doctors for OHC",
+  },
+  {
+    id: 1,
+    label: "OHC design & construction",
+    value: "OHC design & construction",
+  },
+  {
+    id: 1,
+    label: "Medicine purchase",
+    value: "Medicine purchase",
+  },
+  {
+    id: 1,
+    label: "Insurance",
+    value: "Insurance",
+  },
+  {
+    id: 1,
+    label: "Employee Wellness Program",
+    value: "Employee Wellness Program",
+  },
+  {
+    id: 1,
+    label: "Corporate Social Responsibility",
+    value: "Corporate Social Responsibility",
+  },
+  {
+    id: 1,
+    label: "First Aid Training",
+    value: "First Aid Training",
+  },
+  {
+    id: 1,
+    label: "Awareness Sessions",
+    value: "Awareness Sessions",
   },
 ];
