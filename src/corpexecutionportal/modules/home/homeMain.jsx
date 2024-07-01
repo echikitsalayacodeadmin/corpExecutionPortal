@@ -101,6 +101,15 @@ const data = (val) => {
       xsgridwidth: 12,
       disabled: false,
     },
+    {
+      id: 11,
+      title: "Pharmacy",
+      count: val?.totalEmployees,
+      countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
+      path: "/corp/pharmacy/inventory",
+      xsgridwidth: 12,
+      disabled: false,
+    },
   ];
 };
 

@@ -73,17 +73,23 @@ export const useDisableMasterPdfCreation = (
     const empDetails = bloodErrorEmployees
       .map((emp) => `${emp.empId}`)
       .join(",");
-    reasons.push(`Employees without blood not parsed: ${empDetails}`);
+    reasons.push(
+      `Employees with Blood Toggle ON But Blood not parsed : ${empDetails}`
+    );
   }
   if (audiometryErrorEmployees.length > 0) {
     const empDetails = audiometryErrorEmployees
       .map((emp) => `${emp.empId}`)
       .join(",");
-    reasons.push(`Employees without audiometry not parsed: ${empDetails}`);
+    reasons.push(
+      `Employees with AUDIOMETRY Toggle ON But AUDIOMETRY not parsed: ${empDetails}`
+    );
   }
   if (pftErrorEmployees.length > 0) {
     const empDetails = pftErrorEmployees.map((emp) => `${emp.empId}`).join(",");
-    reasons.push(`Employees without PFT not parsed: ${empDetails}`);
+    reasons.push(
+      `Employees with PFT Toggle ON But PFT not parsed: ${empDetails}`
+    );
   }
 
   const isDisabled =

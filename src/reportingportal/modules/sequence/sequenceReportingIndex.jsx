@@ -114,9 +114,9 @@
 //     setSelectedRows(selectedRowsData);
 //   };
 
-//   useEffect(() => {
-//     setMasterData(sequenceList);
-//   }, [sequenceList]);
+// useEffect(() => {
+//   setMasterData(sequenceList);
+// }, [sequenceList]);
 
 //   const handleUpload = async () => {
 //     if (sequenceList.length > 0) {
@@ -384,6 +384,10 @@ const SequenceReportingIndex = ({
       ),
     },
   ];
+
+  useEffect(() => {
+    setMasterData(sequenceList);
+  }, [sequenceList]);
 
   const fetchCurrentSequenceList = async () => {
     setIsLoading(true);
