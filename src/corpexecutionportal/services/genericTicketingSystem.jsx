@@ -55,6 +55,35 @@ export const raiseTicket = async (
       sessionId: data.sessionType?.id,
       sessionDate: dayjs(data.date).format("YYYY-MM-DD"),
       sessionName: data.sessionType?.sessionName,
+
+      name: data.name,
+      date: dayjs(data.date).format("YYYY-MM-DD"),
+      testType: data.testType,
+      department: data.department,
+      empId: data.empId,
+      address: data.address,
+      mobile: data.mobile,
+      hrmobile: data.hrmobile,
+      package: data.packageName,
+
+      requirement: data.requirement,
+      targetDate: data.targetDate,
+
+      company: data.company,
+      task: data.task,
+      targetDate: data.targetDate,
+
+      backendOwner: data.backendOwner,
+      frontendOwner: data.frontendOwner,
+
+      empName: data.empName,
+      issue: data.issue,
+
+      service: data.service,
+      additionalDetails: data.additionalDetails,
+      preferredDate: data.preferredDate,
+
+      serviceName: data.serviceName,
     })
   );
 
