@@ -319,6 +319,37 @@ const MasterPdfMain = ({
       headerAlign: "center",
     },
     {
+      field: "stool",
+      headerName: "Stool",
+      width: 100,
+      align: "center",
+      headerAlign: "center",
+      type: "singleSelect",
+      valueOptions: ["Yes", "No"],
+      renderCell: (params) => {
+        const isClickable = params.value === "Yes" && params.row.stoolUrl;
+        return (
+          <Typography
+            sx={{
+              fontSize: "15px",
+              cursor: isClickable ? "pointer" : "auto",
+              color: isClickable ? "#127DDD" : null,
+            }}
+            onClick={() => handleCellClick(params)}
+          >
+            {params.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "stoolSampleCollected",
+      headerName: "Stool Sample Collected",
+      width: 200,
+      align: "center",
+      headerAlign: "center",
+    },
+    {
       field: "eyeTest",
       headerName: "Eye Test",
       width: 80,
@@ -342,6 +373,7 @@ const MasterPdfMain = ({
         );
       },
     },
+
     {
       field: "visionRemark",
       headerName: "Vision Remark",
@@ -694,6 +726,7 @@ const MasterPdfMain = ({
       (field === "pft" ||
         field === "audiometry" ||
         field === "bloodTest" ||
+        field === "stool" ||
         field === "eyeTest" ||
         field === "xray" ||
         field === "xrayFilm" ||

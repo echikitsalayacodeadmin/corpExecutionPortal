@@ -483,6 +483,7 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
               "gender",
               "employmentType",
               "stool",
+              "stoolSampleCollected",
               "stoolUrl",
               "stoolUrlFileName",
               "vitalsCreatedDate",

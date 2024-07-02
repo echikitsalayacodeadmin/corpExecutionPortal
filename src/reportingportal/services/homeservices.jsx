@@ -57,6 +57,11 @@ const modifyArray = (arr) => {
         item.stoolUrl !== undefined)
         ? "Yes"
         : "",
+    stoolSampleCollected: item.stoolSampleCollected
+      ? "Yes"
+      : item.stoolSampleCollected === false
+      ? "No"
+      : "",
     stoolUrl: item.stoolUrl || null,
     stoolUrlFileName:
       item.stoolUrl !== "" ||

@@ -207,8 +207,8 @@ const UploadReportMain = ({
       },
     },
     {
-      field: "stoolUrl",
-      headerName: "Stool Url",
+      field: "stool",
+      headerName: "Stool",
       width: 100,
       align: "center",
       headerAlign: "center",
@@ -229,6 +229,13 @@ const UploadReportMain = ({
           </Typography>
         );
       },
+    },
+    {
+      field: "stoolSampleCollected",
+      headerName: "Stool Sample Collected",
+      width: 200,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "bloodStatus",
@@ -928,6 +935,7 @@ const UploadReportMain = ({
     const cellValue = params.value;
     if (
       (field === "bloodTest" ||
+        field === "stool" ||
         field === "pft" ||
         field === "ecg" ||
         field === "audiometry" ||

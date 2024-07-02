@@ -63,7 +63,7 @@ import { getData } from "../assets/reportingServices";
 //     cbcUrl: item.cbcUrl,
 //     fitnessCertificateUrl: item.fitnessCertificateUrl,
 //     serumBilirubinUrl: item.serumBilirubinUrl,
-//     stoolTestUrl: item.stoolTestUrl,
+//     stoolUrl: item.stoolUrl,
 //     consolidatedReportUrl: item.consolidatedReportUrl,
 //     vaccinationCertificateUrl: item.vaccinationCertificateUrl,
 //     consolidatedReportUpload: item.consolidatedReportUpload,
