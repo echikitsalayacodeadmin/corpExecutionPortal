@@ -23,6 +23,7 @@ export const useDisableMasterPdfCreation = (
     if (item.isVitalsErrorData === true) {
       vitalsErrorEmployees.push(item);
     }
+
     // if (
     //   selectedReport.includes("BLOODTEST") &&
     //   item.bloodToggle === true
@@ -33,25 +34,26 @@ export const useDisableMasterPdfCreation = (
     // ) {
     if (
       selectedReport.includes("BLOODTEST") &&
-      item.isBloodParsed !== true &&
-      item.bloodToggle === "Yes"
+      item.isBloodParsed === false
+      // &&
+      // item.bloodTestUrl === "Yes"
     ) {
       bloodErrorEmployees.push(item);
     }
-    if (
-      selectedReport.includes("AUDIOMETRY") &&
-      item.isAudiometryParsed !== true &&
-      item.audometryToggle === "Yes"
-    ) {
-      audiometryErrorEmployees.push(item);
-    }
-    if (
-      selectedReport.includes("PFT") &&
-      item.isPftParsed !== true &&
-      item.pftToggle === "Yes"
-    ) {
-      pftErrorEmployees.push(item);
-    }
+    // if (
+    //   selectedReport.includes("AUDIOMETRY") &&
+    //   item.isAudiometryParsed !== true &&
+    //   item.audiometryUrl === "Yes"
+    // ) {
+    //   audiometryErrorEmployees.push(item);
+    // }
+    // if (
+    //   selectedReport.includes("PFT") &&
+    //   item.isPftParsed !== true &&
+    //   item.pftUrl === "Yes"
+    // ) {
+    //   pftErrorEmployees.push(item);
+    // }
     // }
   });
 
@@ -59,8 +61,8 @@ export const useDisableMasterPdfCreation = (
   const disabledEmployees = [
     ...vitalsErrorEmployees,
     ...bloodErrorEmployees,
-    ...audiometryErrorEmployees,
-    ...pftErrorEmployees,
+    // ...audiometryErrorEmployees,
+    // ...pftErrorEmployees,
   ];
 
   if (vitalsErrorEmployees.length > 0) {
@@ -74,7 +76,7 @@ export const useDisableMasterPdfCreation = (
       .map((emp) => `${emp.empId}`)
       .join(",");
     reasons.push(
-      `Employees with Blood Toggle ON But Blood not parsed : ${empDetails}`
+      `Employees with Blood Test Url Present But Blood not parsed : ${empDetails}`
     );
   }
   if (audiometryErrorEmployees.length > 0) {
@@ -82,13 +84,13 @@ export const useDisableMasterPdfCreation = (
       .map((emp) => `${emp.empId}`)
       .join(",");
     reasons.push(
-      `Employees with AUDIOMETRY Toggle ON But AUDIOMETRY not parsed: ${empDetails}`
+      `Employees with AUDIOMETRY Url Present But AUDIOMETRY not parsed: ${empDetails}`
     );
   }
   if (pftErrorEmployees.length > 0) {
     const empDetails = pftErrorEmployees.map((emp) => `${emp.empId}`).join(",");
     reasons.push(
-      `Employees with PFT Toggle ON But PFT not parsed: ${empDetails}`
+      `Employees with PFT Url Present But PFT not parsed: ${empDetails}`
     );
   }
 

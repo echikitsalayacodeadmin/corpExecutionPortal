@@ -1061,16 +1061,15 @@ const MasterPdfMain = ({
             disableRowSelectionOnClick={true}
             selectionModel={selectedRows.map((row) => row.empId)}
             onRowSelectionModelChange={handleSelectionModelChange}
-            getRowClassName={(params) => {
-              return params.row.isVitalsErrorData === true ||
-                params.row.bloodToggle === true ||
-                params.row.isBloodParsed !== true
-                ? //  ||
-                  // params.row.isPftParsed !== true ||
-                  // params.row.isAudiometryParsed !== true
-                  "error"
-                : "";
-            }}
+            // getRowClassName={(params) => {
+            //   return params.row.bloodTest === "Yes" &&
+            //     params.row.isBloodParsed !== true
+            //     ? //  ||
+            //       // params.row.isPftParsed !== true ||
+            //       // params.row.isAudiometryParsed !== true
+            //       "error"
+            //     : "";
+            // }}
             styles={{
               ".error": {
                 backgroundColor: "#FF0000",

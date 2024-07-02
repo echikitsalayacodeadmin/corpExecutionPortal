@@ -239,7 +239,11 @@ const modifyArray = (arr) => {
       item?.vitalsErrorData && Object.keys(item.vitalsErrorData).length > 0
         ? true
         : false,
-    isBloodParsed: item?.cholestrolData?.["BLOODTEST_parsed"] || null,
+    isBloodParsed: item?.cholestrolData?.["BLOODTEST_parsed"]
+      ? true
+      : item.bloodTestUrl && !item?.cholestrolData?.["BLOODTEST_parsed"]
+      ? false
+      : null,
     patientNameinBloodReport:
       item?.cholestrolData?.["BLOOD_PATIENT_NAME_REPORT"] || null,
     isPftParsed: item?.cholestrolData?.PFT_parsed || null,
