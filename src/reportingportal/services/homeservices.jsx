@@ -49,6 +49,23 @@ const modifyArray = (arr) => {
       : item.bloodToggle === false
       ? "No"
       : "",
+
+    stool:
+      item.stoolUrl &&
+      (item.stoolUrl !== "" ||
+        item.stoolUrl !== null ||
+        item.stoolUrl !== undefined)
+        ? "Yes"
+        : "",
+    stoolUrl: item.stoolUrl || null,
+    stoolUrlFileName:
+      item.stoolUrl !== "" ||
+      item.stoolUrl !== null ||
+      item.stoolUrl !== undefined
+        ? item.stoolUrl && typeof item.stoolUrl === "string"
+          ? item?.stoolUrl?.split("/").pop()
+          : ""
+        : "",
     eyeTest: item.eyeTest ? "Yes" : item.eyeTest === false ? "No" : "",
     eyeTestUrl: item.eyeTestUrl,
     eyeTestUrlFileName:

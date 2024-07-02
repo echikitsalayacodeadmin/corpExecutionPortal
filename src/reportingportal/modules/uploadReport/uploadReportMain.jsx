@@ -207,6 +207,30 @@ const UploadReportMain = ({
       },
     },
     {
+      field: "stoolUrl",
+      headerName: "Stool Url",
+      width: 100,
+      align: "center",
+      headerAlign: "center",
+      type: "singleSelect",
+      valueOptions: ["Yes", "No"],
+      renderCell: (params) => {
+        const isClickable = params.value === "Yes" && params.row.stoolUrl;
+        return (
+          <Typography
+            sx={{
+              fontSize: "15px",
+              cursor: isClickable ? "pointer" : "auto",
+              color: isClickable ? "#127DDD" : null,
+            }}
+            onClick={() => handleCellClick(params)}
+          >
+            {params.value}
+          </Typography>
+        );
+      },
+    },
+    {
       field: "bloodStatus",
       headerName: "Blood Status",
       width: 130,
@@ -563,6 +587,29 @@ const UploadReportMain = ({
         );
       },
     },
+    {
+      field: "stoolUrlFileName",
+      headerName: "Stool Url File Name",
+      width: 350,
+      align: "left",
+      headerAlign: "left",
+      renderCell: (params) => {
+        const isClickable = params.value !== "" && params.row.stoolUrl;
+        const url = params.row.stoolUrl;
+        return (
+          <Typography
+            sx={{
+              fontSize: "15px",
+              cursor: isClickable ? "pointer" : "auto",
+              color: isClickable ? "#127DDD" : null,
+            }}
+            onClick={() => window.open(url, "_blank")}
+          >
+            {params.value}
+          </Typography>
+        );
+      },
+    },
 
     {
       field: "audiometryUrlFileName",
@@ -841,6 +888,8 @@ const UploadReportMain = ({
                   setPdfUrl(params?.row?.consolidatedRUrl);
                 } else if (selectedColumns.includes("annexureUrl")) {
                   setPdfUrl(params?.row?.annexureUrl);
+                } else if (selectedColumns.includes("stoolUrl")) {
+                  setPdfUrl(params?.row?.stoolUrl);
                 }
               }}
             >
@@ -1198,6 +1247,8 @@ const UploadReportMain = ({
       ? "CONSOLIDATED_REPORT"
       : selectedColumns.includes("annexureUrl")
       ? "ANNEXURE"
+      : selectedColumns.includes("stoolUrl")
+      ? "STOOLTEST"
       : null;
     const url =
       BASE_URL +

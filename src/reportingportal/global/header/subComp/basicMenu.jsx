@@ -501,9 +501,43 @@ const BasicMenu = () => {
         },
         {
           to: "/reporting/reporting-main/upload-reports",
-          subTabTitle: "PFT",
+          subTabTitle: "Stool",
           onClick: () => {
             setSelectedCButton(22);
+            setSelectedPButton(2);
+            setShowSequenceComponent(true);
+            updateSelectedReport({
+              value: "",
+              title: "Upload Report - Stool",
+              label: "Stool",
+              enum: "STOOLTEST",
+              filterValue: "stool",
+            });
+            handleButtonClick([
+              "tokenNumber",
+              "empId",
+              "name",
+              "age",
+              "gender",
+              "employmentType",
+              "stool",
+              "stoolUrl",
+              "stoolUrlFileName",
+              "vitalsCreatedDate",
+              "uploadSingleReport",
+              "packageName",
+              "missingTests",
+              "pathPackageDetails",
+              "reportAction",
+            ]);
+          },
+          selectedCButtonSubMenu: 22,
+        },
+        {
+          to: "/reporting/reporting-main/upload-reports",
+          subTabTitle: "PFT",
+          onClick: () => {
+            setSelectedCButton(23);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -537,13 +571,13 @@ const BasicMenu = () => {
             ]);
           },
 
-          selectedCButtonSubMenu: 22,
+          selectedCButtonSubMenu: 23,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "Audiometry",
           onClick: () => {
-            setSelectedCButton(23);
+            setSelectedCButton(24);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -577,13 +611,13 @@ const BasicMenu = () => {
             ]);
           },
 
-          selectedCButtonSubMenu: 23,
+          selectedCButtonSubMenu: 24,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "ECG",
           onClick: () => {
-            setSelectedCButton(24);
+            setSelectedCButton(25);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -615,13 +649,13 @@ const BasicMenu = () => {
             ]);
           },
 
-          selectedCButtonSubMenu: 24,
+          selectedCButtonSubMenu: 25,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "Xray Film",
           onClick: () => {
-            setSelectedCButton(25);
+            setSelectedCButton(26);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -652,13 +686,13 @@ const BasicMenu = () => {
             ]);
           },
 
-          selectedCButtonSubMenu: 25,
+          selectedCButtonSubMenu: 26,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "First Aid",
           onClick: () => {
-            setSelectedCButton(26);
+            setSelectedCButton(27);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -682,13 +716,13 @@ const BasicMenu = () => {
             ]);
           },
 
-          selectedCButtonSubMenu: 26,
+          selectedCButtonSubMenu: 27,
         },
         {
           to: "/reporting/reporting-main/upload-reports/form21",
           subTabTitle: "Form 21",
           onClick: () => {
-            setSelectedCButton(27);
+            setSelectedCButton(28);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -698,13 +732,13 @@ const BasicMenu = () => {
             });
           },
 
-          selectedCButtonSubMenu: 27,
+          selectedCButtonSubMenu: 28,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "Miscellaneous",
           onClick: () => {
-            setSelectedCButton(28);
+            setSelectedCButton(29);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -721,13 +755,13 @@ const BasicMenu = () => {
               "uploadSingleReport",
             ]);
           },
-          selectedCButtonSubMenu: 28,
+          selectedCButtonSubMenu: 29,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "Consolidated Report",
           onClick: () => {
-            setSelectedCButton(29);
+            setSelectedCButton(30);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -747,13 +781,13 @@ const BasicMenu = () => {
               "reportAction",
             ]);
           },
-          selectedCButtonSubMenu: 29,
+          selectedCButtonSubMenu: 30,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "Annexture",
           onClick: () => {
-            setSelectedCButton(30);
+            setSelectedCButton(301);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -773,13 +807,13 @@ const BasicMenu = () => {
               "reportAction",
             ]);
           },
-          selectedCButtonSubMenu: 30,
+          selectedCButtonSubMenu: 301,
         },
         {
           to: "/reporting/reporting-main/upload-reports",
           subTabTitle: "TMT REPORT",
           onClick: () => {
-            setSelectedCButton(301);
+            setSelectedCButton(302);
             setSelectedPButton(2);
             setShowSequenceComponent(true);
             updateSelectedReport({
@@ -799,7 +833,7 @@ const BasicMenu = () => {
               "reportAction",
             ]);
           },
-          selectedCButtonSubMenu: 301,
+          selectedCButtonSubMenu: 302,
         },
       ],
     },
