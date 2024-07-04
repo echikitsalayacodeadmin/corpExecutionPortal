@@ -124,6 +124,18 @@ const columns = [
     width: 130,
     editable: false,
   },
+  {
+    field: "assignedToCorpId",
+    headerName: "Assigned To CorpId",
+    width: 130,
+    editable: false,
+  },
+  {
+    field: "employeeTeam",
+    headerName: "Employee Team",
+    width: 130,
+    editable: false,
+  },
 ];
 
 const RegistrationDatagrid = ({ rows = [] }) => {
