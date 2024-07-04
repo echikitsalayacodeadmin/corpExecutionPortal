@@ -62,6 +62,8 @@ const BulkUploadIndex = ({
           contractorName: item["contractorname"],
           formNo: item["formno"],
           pathPackage: item["pathpackage"],
+          assignedToCorpId: item["assignedtocorpid"],
+          employeeTeam: item["employeeteam"],
         }))
       );
     }
@@ -95,6 +97,8 @@ const BulkUploadIndex = ({
         contractorName: item.contractorName?.trim(),
         formNo: item.formNo?.trim(),
         pathPackage: item.pathPackage?.trim(),
+        assignedToCorpId: item?.assignedToCorpId?.trim(),
+        employeeTeam: item?.employeeTeam?.trim(),
       }));
 
     let payload = {
