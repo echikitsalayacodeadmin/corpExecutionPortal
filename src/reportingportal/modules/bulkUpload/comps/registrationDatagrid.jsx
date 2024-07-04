@@ -127,7 +127,7 @@ const columns = [
   {
     field: "assignedToCorpId",
     headerName: "Assigned To CorpId",
-    width: 130,
+    width: 150,
     editable: false,
   },
   {
