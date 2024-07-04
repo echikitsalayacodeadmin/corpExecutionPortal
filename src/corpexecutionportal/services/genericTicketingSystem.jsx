@@ -71,7 +71,6 @@ export const raiseTicket = async (
 
       company: data.company,
       task: data.task,
-      targetDate: data.targetDate,
 
       backendOwner: data.backendOwner,
       frontendOwner: data.frontendOwner,
