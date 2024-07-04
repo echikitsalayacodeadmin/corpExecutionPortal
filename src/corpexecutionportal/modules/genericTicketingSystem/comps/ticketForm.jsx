@@ -216,7 +216,7 @@ const TicketForm = ({
                 <TextField
                   fullWidth
                   size="small"
-                  placeholder="Enter requirement..."
+                  placeholder="Enter task..."
                   value={formValues.task || ""}
                   onChange={(e) =>
                     setFormValues({
