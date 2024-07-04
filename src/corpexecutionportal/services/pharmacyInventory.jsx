@@ -10,6 +10,8 @@ export const fetchMedicineInventory = async (setMedicineList, setIsLoading) => {
     setMedicineList([]);
   } else {
     setIsLoading(false);
-    setMedicineList(result?.data);
+    setMedicineList(
+      result?.data.map((item, index) => ({ id: index, ...item }))
+    );
   }
 };
