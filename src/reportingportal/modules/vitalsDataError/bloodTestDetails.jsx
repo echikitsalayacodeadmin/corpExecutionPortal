@@ -61,7 +61,7 @@ const BloodTestDetails = () => {
   };
   useEffect(() => {
     getTestDetails();
-  }, []);
+  }, [openEditModal]);
 
   const options = bloodData.map((item) => item.testKey);
 
