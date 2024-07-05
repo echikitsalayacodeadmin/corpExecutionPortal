@@ -140,7 +140,7 @@ const BloodTestDetails = () => {
         variant: "error",
       });
     } else {
-      enqueueSnackbar(`${response.data}`, {
+      enqueueSnackbar(`Successfully Updated`, {
         variant: "success",
       });
     }
