@@ -435,6 +435,47 @@ export const StatusListServiceIssueTicket = [
   },
 ];
 
+export const StatusListNewServiceTicket = [
+  {
+    id: 1,
+    label: "Inquiry raised",
+    value: "TICKET_RAISED",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 2,
+    label: "Quotation",
+    value: "QUTATION",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 4,
+    label: "Booking confirmed",
+    value: "BOOKING_CONFIRMED",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 4,
+    label: "Completed",
+    value: "COMPLETED",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 4,
+    label: "Cancelled",
+    value: "CANCELLED",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+];
+
 export const DevStatusList = [
   {
     id: 1,

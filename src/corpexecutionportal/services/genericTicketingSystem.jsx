@@ -83,11 +83,18 @@ export const raiseTicket = async (
       empName: data.empName,
       issue: data.issue,
 
-      service: data.service,
+      service: data.service?.value,
       additionalDetails: data.additionalDetails,
-      preferredDate: data.preferredDate,
+      preferredDate: data.preferredDate
+        ? dayjs(data.preferredDate).format("YYYY-MM-DD")
+        : null,
 
-      serviceName: data.serviceName,
+      serviceName:
+        selectedTicketType?.ticketType === "SERVICE_ISSUE"
+          ? data.serviceName
+          : selectedTicketType?.ticketType === "NEW_SERVICE_INQUIRY"
+          ? data.service?.value
+          : null,
       backendStatus:
         selectedTicketType?.ticketType === "TECH_INTERNAL" ? "PENDING" : null,
       frontendStatus:

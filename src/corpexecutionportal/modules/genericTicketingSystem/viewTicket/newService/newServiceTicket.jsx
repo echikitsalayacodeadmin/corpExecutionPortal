@@ -3,21 +3,29 @@ import { Fragment, useState } from "react";
 import TicketNumber from "../../textElements/ticketNumber";
 import CreatedBy from "../../textElements/createdBy";
 import Company from "../../textElements/company";
-import Task from "../../textElements/task";
-import TargetDate from "../../textElements/targetDate";
-import Attachment from "../../textElements/attachment";
 import StatusForm from "../../formElements/statusForm";
 import { BASE_URL } from "../../../../../assets/constants";
 import { updateData } from "../../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
-import { StatusListOpsTicket } from "../../../../assets/corpConstants";
+import { StatusListNewServiceTicket } from "../../../../assets/corpConstants";
+import ServiceName from "../../textElements/serviceName";
+import AdditionalDetails from "../../textElements/additionalDetails";
+import RemarksForm from "../../formElements/remarksForm";
+import PreferredDate from "../../textElements/preferredDate";
+import DateForm from "../../formElements/dateForm";
+import dayjs from "dayjs";
 
 const NewServiceTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
     status:
-      StatusListOpsTicket.find(
+      StatusListNewServiceTicket.find(
         (value) => value.value === data?.ticketInfo?.status
       ) || "",
+
+    remarks: data?.ticketInfo?.remarks,
+    newDate: data?.ticketInfo?.newDate
+      ? dayjs(data?.ticketInfo?.newDate)
+      : null,
   });
 
   const submitHandler = async (e) => {
@@ -29,9 +37,17 @@ const NewServiceTicket = ({ data }) => {
 
     if (ticketInfo) {
       ticketInfo["status"] = formValues.status?.value;
+      ticketInfo["remarks"] = formValues.remarks;
+      ticketInfo["newDate"] = formValues.newDate
+        ? dayjs(formValues.newDate).format("YYYY-MM-DD")
+        : null;
     } else {
       ticketInfo = {
         status: formValues.status?.value,
+        remarks: formValues.remarks,
+        newDate: formValues.newDate
+          ? dayjs(formValues.newDate).format("YYYY-MM-DD")
+          : null,
       };
     }
     const payload = {
@@ -69,18 +85,31 @@ const NewServiceTicket = ({ data }) => {
               <Company data={data} />
             </Grid>
             <Grid item lg={12}>
-              <Task data={data} />
+              <ServiceName data={data} />
             </Grid>
             <Grid item lg={12}>
-              <Attachment data={data} />
+              <DateForm formValues={formValues} setFormValues={setFormValues} />
+            </Grid>
+
+            <Grid item lg={12}>
+              <AdditionalDetails data={data} />
             </Grid>
             <Grid item lg={12}>
-              <TargetDate data={data} />
+              <PreferredDate data={data} />
             </Grid>
+
+            <Grid item lg={12}>
+              <RemarksForm
+                formValues={formValues}
+                setFormValues={setFormValues}
+              />
+            </Grid>
+
             <Grid item lg={12} display="flex" alignItems="center">
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}
+                statusList={StatusListNewServiceTicket}
               />
             </Grid>
             <Grid item lg={12} display="flex" justifyContent="center">

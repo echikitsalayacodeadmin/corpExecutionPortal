@@ -1,21 +1,21 @@
 import { Box, Stack, TextField, Typography } from "@mui/material";
 import { Fragment } from "react";
 
-const TaskForm = ({ formValues, setFormValues }) => {
+const RemarksForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Stack direction="row" spacing={2} display="flex" alignItems="center">
-        <Typography sx={{ fontWeight: 600 }}>Task:</Typography>
+        <Typography sx={{ fontWeight: 600 }}>Remarks:</Typography>
         <Box sx={{ minWidth: 400 }}>
           <TextField
             fullWidth
             size="small"
-            placeholder="Enter task..."
-            value={formValues.task || ""}
+            placeholder="Enter remark..."
+            value={formValues.remarks || ""}
             onChange={(e) =>
               setFormValues({
                 ...formValues,
-                task: e.target.value,
+                remarks: e.target.value,
               })
             }
           />
@@ -25,4 +25,4 @@ const TaskForm = ({ formValues, setFormValues }) => {
   );
 };
 
-export default TaskForm;
+export default RemarksForm;
