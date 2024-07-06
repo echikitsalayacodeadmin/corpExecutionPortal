@@ -75,9 +75,7 @@ const ViewOpsTechTicket = ({ data }) => {
             <Grid item lg={12}>
               <Task data={data} />
             </Grid>
-            <Grid item lg={12}>
-              <Attachment data={data} />
-            </Grid>
+
             <Grid item lg={12}>
               <TargetDate data={data} />
             </Grid>
@@ -86,6 +84,9 @@ const ViewOpsTechTicket = ({ data }) => {
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
+            </Grid>
+            <Grid item lg={12}>
+              <Attachment data={data} />
             </Grid>
             <Grid item lg={12} display="flex" justifyContent="center">
               <Stack display="flex" justifyContent="center">
