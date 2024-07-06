@@ -9,7 +9,11 @@ import {
 import { Fragment } from "react";
 import { StatusListOpsTicket } from "../../../assets/corpConstants";
 
-const StatusForm = ({ formValues, setFormValues }) => {
+const StatusForm = ({
+  formValues,
+  setFormValues,
+  statusList = StatusListOpsTicket,
+}) => {
   return (
     <Fragment>
       <Stack direction="row" spacing={2} display="flex" alignItems="center">
@@ -25,7 +29,7 @@ const StatusForm = ({ formValues, setFormValues }) => {
                 setFormValues({ ...formValues, status: e.target.value });
               }}
             >
-              {StatusListOpsTicket?.map((value, index) => (
+              {statusList?.map((value, index) => (
                 <MenuItem value={value} key={index}>
                   {value.label}
                 </MenuItem>
