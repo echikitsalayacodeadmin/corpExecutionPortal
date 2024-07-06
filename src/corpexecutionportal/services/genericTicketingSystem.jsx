@@ -41,7 +41,7 @@ export const raiseTicket = async (
   formData.append("userAuthId", data.userId);
   formData.append("raisedBy", data.name);
   formData.append("raisedById", data.userId);
-  formData.append("raisedByMobileNo", data.mobile);
+  formData.append("raisedByMobileNo", data.raisedByMobile);
   formData.append("ticketType", selectedTicketType?.ticketType || "");
 
   formData.append("corpId", data.company?.corpId || "");
@@ -92,7 +92,10 @@ export const raiseTicket = async (
       serviceName:
         selectedTicketType?.ticketType === "SERVICE_ISSUE"
           ? data.serviceName
-          : selectedTicketType?.ticketType === "NEW_SERVICE_INQUIRY"
+          : selectedTicketType?.ticketType === "EMERGENCY" ||
+            selectedTicketType?.ticketType === "NEW_SERVICE_INQUIRY" ||
+            selectedTicketType?.ticketType === "SERVICE_ISSUE" ||
+            selectedTicketType?.ticketType === "PRE_EMPLOYMENT"
           ? data.service?.value
           : null,
       backendStatus:

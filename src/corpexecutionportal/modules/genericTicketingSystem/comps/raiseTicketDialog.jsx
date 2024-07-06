@@ -32,7 +32,7 @@ const RaiseTicketDialog = ({
     setFormValues({
       userId: userId,
       name: name,
-      mobile: mobile,
+      raisedByMobile: mobile,
       selectedTicketType: selectedTicketType,
       sessionType: "",
       company: "",

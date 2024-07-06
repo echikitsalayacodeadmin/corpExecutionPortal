@@ -11,6 +11,16 @@ import { BASE_URL } from "../../../../../assets/constants";
 import { updateData } from "../../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
 import { StatusListOpsTicket } from "../../../../assets/corpConstants";
+import Name from "../../textElements/name";
+import EmployeeName from "../../textElements/employeeName";
+import Date from "../../textElements/date";
+import TestType from "../../textElements/testType";
+import Department from "../../textElements/department";
+import EmpId from "../../textElements/empId";
+import Address from "../../textElements/address";
+import EmployeeContactNumber from "../../textElements/employeeContactNumber";
+import HRContactNumber from "../../textElements/hrContactNumber";
+import PackageName from "../../textElements/packageName";
 
 const PreemploymentTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -59,24 +69,48 @@ const PreemploymentTicket = ({ data }) => {
       <Box>
         <form onSubmit={submitHandler}>
           <Grid container spacing={2}>
-            <Grid item lg={12}>
+            <Grid item lg={6}>
               <TicketNumber data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={6}>
               <CreatedBy data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={6}>
               <Company data={data} />
             </Grid>
-            <Grid item lg={12}>
-              <Task data={data} />
+            <Grid item lg={6}>
+              <EmpId data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <EmployeeName data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <Date data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <TestType data={data} />
+            </Grid>
+
+            <Grid item lg={6}>
+              <Department data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <Address data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <EmployeeContactNumber data={data} />
+            </Grid>
+
+            <Grid item lg={6}>
+              <HRContactNumber data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <PackageName data={data} />
             </Grid>
             <Grid item lg={12}>
               <Attachment data={data} />
             </Grid>
-            <Grid item lg={12}>
-              <TargetDate data={data} />
-            </Grid>
+
             <Grid item lg={12} display="flex" alignItems="center">
               <StatusForm
                 formValues={formValues}

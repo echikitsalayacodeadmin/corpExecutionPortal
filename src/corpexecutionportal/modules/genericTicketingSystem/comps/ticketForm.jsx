@@ -469,6 +469,47 @@ const TicketForm = ({
               <Stack spacing={2} flex={1}>
                 <Stack direction="row" spacing={1}>
                   <BookIcon fontSize="10" />
+                  <Typography sx={{ fontSize: 10 }}>Company Name</Typography>
+                </Stack>
+                <Box sx={{ minWidth: 400 }}>
+                  <FormControl fullWidth>
+                    <Select
+                      displayEmpty
+                      size="small"
+                      fullWidth
+                      value={formValues.company}
+                      label=""
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          company: e.target.value,
+                        })
+                      }
+                    >
+                      <MenuItem disabled value="">
+                        <em>Select Company...</em>
+                      </MenuItem>
+                      {companyList.map((value, index) => (
+                        <MenuItem value={value} key={index}>
+                          {value.orgName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Stack>
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Stack spacing={2} flex={1}>
+                <Stack direction="row" spacing={1}>
+                  <BookIcon fontSize="10" />
                   <Typography sx={{ fontSize: 10 }}>Employee ID</Typography>
                 </Stack>
                 <TextField
@@ -556,6 +597,47 @@ const TicketForm = ({
               <Stack spacing={2} flex={1}>
                 <Stack direction="row" spacing={1}>
                   <BookIcon fontSize="10" />
+                  <Typography sx={{ fontSize: 10 }}>Company Name</Typography>
+                </Stack>
+                <Box sx={{ minWidth: 400 }}>
+                  <FormControl fullWidth>
+                    <Select
+                      displayEmpty
+                      size="small"
+                      fullWidth
+                      value={formValues.company}
+                      label=""
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          company: e.target.value,
+                        })
+                      }
+                    >
+                      <MenuItem disabled value="">
+                        <em>Select Company...</em>
+                      </MenuItem>
+                      {companyList.map((value, index) => (
+                        <MenuItem value={value} key={index}>
+                          {value.orgName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Stack>
+            </Grid>
+
+            <Grid
+              item
+              lg={4}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Stack spacing={2} flex={1}>
+                <Stack direction="row" spacing={1}>
+                  <BookIcon fontSize="10" />
                   <Typography sx={{ fontSize: 10 }}>Service</Typography>
                 </Stack>
                 <Box sx={{ minWidth: 400 }}>
@@ -630,7 +712,7 @@ const TicketForm = ({
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label=""
-                    value={formValues.preferredDate}
+                    value={formValues.preferredDate || null}
                     onChange={(newValue) =>
                       setFormValues({ ...formValues, preferredDate: newValue })
                     }
@@ -649,6 +731,47 @@ const TicketForm = ({
       <Fragment>
         <Box sx={{ py: 5 }}>
           <Grid container spacing={2}>
+            <Grid
+              item
+              lg={4}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Stack spacing={2} flex={1}>
+                <Stack direction="row" spacing={1}>
+                  <BookIcon fontSize="10" />
+                  <Typography sx={{ fontSize: 10 }}>Company Name</Typography>
+                </Stack>
+                <Box sx={{ minWidth: 400 }}>
+                  <FormControl fullWidth>
+                    <Select
+                      displayEmpty
+                      size="small"
+                      fullWidth
+                      value={formValues.company}
+                      label=""
+                      onChange={(e) =>
+                        setFormValues({
+                          ...formValues,
+                          company: e.target.value,
+                        })
+                      }
+                    >
+                      <MenuItem disabled value="">
+                        <em>Select Company...</em>
+                      </MenuItem>
+                      {companyList.map((value, index) => (
+                        <MenuItem value={value} key={index}>
+                          {value.orgName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </Stack>
+            </Grid>
+
             <Grid
               item
               lg={6}
@@ -966,9 +1089,12 @@ const TicketForm = ({
                   size="small"
                   fullWidth
                   placeholder=""
-                  value={formValues.name || ""}
+                  value={formValues.packageName || ""}
                   onChange={(e) =>
-                    setFormValues({ ...formValues, name: e.target.value })
+                    setFormValues({
+                      ...formValues,
+                      packageName: e.target.value,
+                    })
                   }
                 />
               </Stack>
