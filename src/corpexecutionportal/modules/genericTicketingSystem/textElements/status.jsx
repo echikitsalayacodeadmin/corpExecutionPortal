@@ -7,7 +7,7 @@ const Status = ({ data }) => {
   return (
     <Fragment>
       <Stack direction="row" spacing={2}>
-        <Typography sx={{ fontWeight: 600 }}>Staus:</Typography>
+        <Typography sx={{ fontWeight: 600 }}>Status:</Typography>
         <Typography>
           {StatusListForNonFilter.find((value) => value.value === status)
             .label || ""}

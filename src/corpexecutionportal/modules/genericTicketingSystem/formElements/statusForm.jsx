@@ -17,7 +17,7 @@ const StatusForm = ({
   return (
     <Fragment>
       <Stack direction="row" spacing={2} display="flex" alignItems="center">
-        <Typography sx={{ fontWeight: 600 }}>Staus:</Typography>
+        <Typography sx={{ fontWeight: 600 }}>Status:</Typography>
         <Box sx={{ minWidth: 400 }}>
           <FormControl fullWidth>
             <Select
