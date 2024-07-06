@@ -11,6 +11,7 @@ import { StatusListEmergencyTicket } from "../../../../assets/corpConstants";
 import EmpId from "../../textElements/empId";
 import EmployeeName from "../../textElements/employeeName";
 import Issue from "../../textElements/issue";
+import TicketType from "../../textElements/ticketType";
 
 const EmergencyTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -68,6 +69,10 @@ const EmergencyTicket = ({ data }) => {
             <Grid item lg={12}>
               <Company data={data} />
             </Grid>
+            <Grid item lg={12}>
+              <TicketType data={data} />
+            </Grid>
+
             <Grid item lg={12}>
               <EmpId data={data} />
             </Grid>
