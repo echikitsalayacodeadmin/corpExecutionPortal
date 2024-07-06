@@ -77,11 +77,7 @@ const modifyArray = (arr) => {
       item.eyeTestUrl && typeof item.eyeTestUrl === "string"
         ? item?.eyeTestUrl?.split("/").pop()
         : "",
-    eyeTestToggle: item.eyeTestToggle
-      ? "Yes"
-      : item.eyeTestToggle === false
-      ? "No"
-      : "",
+    eyeToggle: item.eyeToggle ? "Yes" : item.eyeToggle === false ? "No" : "",
     visionRemark: item.visionRemark,
     xray: item.xray ? "Yes" : item.xray === false ? "No" : "",
     xrayUrl: item.xrayUrl,

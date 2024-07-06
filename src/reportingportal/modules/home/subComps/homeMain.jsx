@@ -411,7 +411,7 @@ const HomeMain = ({
       },
     },
     {
-      field: "eyeTestToggle",
+      field: "eyeToggle",
       headerName: "Eye Test Toggle",
       width: 120,
       align: "center",

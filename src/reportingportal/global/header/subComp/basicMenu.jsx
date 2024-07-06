@@ -253,7 +253,7 @@ const BasicMenu = () => {
               "gender",
               "form35",
               "eyeTest",
-              "eyeTestToggle",
+              "eyeToggle",
               "visionRemark",
               "vitalsCreatedDate",
               "reportAction",
