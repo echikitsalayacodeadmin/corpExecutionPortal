@@ -7,25 +7,32 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment } from "react";
-import { StatusListOpsTicket } from "../../../assets/corpConstants";
+import { productList } from "../../../assets/corpConstants";
 
-const StatusForm = ({ formValues, setFormValues }) => {
+const ProductForm = ({ data, formValues, setFormValues }) => {
   return (
     <Fragment>
       <Stack direction="row" spacing={2} display="flex" alignItems="center">
-        <Typography sx={{ fontWeight: 600 }}>Staus:</Typography>
+        <Typography sx={{ fontWeight: 600 }}>Product:</Typography>
         <Box sx={{ minWidth: 400 }}>
           <FormControl fullWidth>
             <Select
+              displayEmpty
               size="small"
               fullWidth
-              value={formValues.status || ""}
+              value={formValues.product || ""}
               label=""
-              onChange={(e) => {
-                setFormValues({ ...formValues, status: e.target.value });
-              }}
+              onChange={(e) =>
+                setFormValues({
+                  ...formValues,
+                  product: e.target.value,
+                })
+              }
             >
-              {StatusListOpsTicket?.map((value, index) => (
+              <MenuItem disabled value="">
+                <em>Select Product...</em>
+              </MenuItem>
+              {productList.map((value, index) => (
                 <MenuItem value={value} key={index}>
                   {value.label}
                 </MenuItem>
@@ -38,4 +45,4 @@ const StatusForm = ({ formValues, setFormValues }) => {
   );
 };
 
-export default StatusForm;
+export default ProductForm;

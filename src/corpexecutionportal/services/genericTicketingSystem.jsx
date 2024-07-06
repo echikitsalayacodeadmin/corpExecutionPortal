@@ -52,6 +52,8 @@ export const raiseTicket = async (
   formData.append(
     "ticketInfo",
     JSON.stringify({
+      corpId: data.company?.corpId,
+      status: "TICKET_RAISED",
       sessionId: data.sessionType?.id,
       sessionDate: dayjs(data.date).format("YYYY-MM-DD"),
       sessionName: data.sessionType?.sessionName,
@@ -67,13 +69,16 @@ export const raiseTicket = async (
       package: data.packageName,
 
       requirement: data.requirement,
-      targetDate: data.targetDate,
+      targetDate: data.targetDate
+        ? dayjs(data.targetDate).format("YYYY-MM-DD")
+        : null,
 
       company: data.company,
       task: data.task,
 
-      backendOwner: data.backendOwner,
-      frontendOwner: data.frontendOwner,
+      backendOwner: data.backendOwner?.value,
+      frontendOwner: data.frontendOwner?.value,
+      product: data.product?.value,
 
       empName: data.empName,
       issue: data.issue,
@@ -83,6 +88,12 @@ export const raiseTicket = async (
       preferredDate: data.preferredDate,
 
       serviceName: data.serviceName,
+      backendStatus:
+        selectedTicketType?.ticketType === "TECH_INTERNAL" ? "PENDING" : null,
+      frontendStatus:
+        selectedTicketType?.ticketType === "TECH_INTERNAL" ? "PENDING" : null,
+      overallStatus:
+        selectedTicketType?.ticketType === "TECH_INTERNAL" ? "OPEN" : null,
     })
   );
 

@@ -10,9 +10,15 @@ import StatusForm from "../../formElements/statusForm";
 import { BASE_URL } from "../../../../../assets/constants";
 import { updateData } from "../../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
+import { StatusListOpsTicket } from "../../../../assets/corpConstants";
 
 const ViewSalesOpsTicket = ({ data }) => {
-  const [formValues, setFormValues] = useState({ status: data?.status });
+  const [formValues, setFormValues] = useState({
+    status:
+      StatusListOpsTicket.find(
+        (value) => value.value === data?.ticketInfo?.status
+      ) || "",
+  });
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -22,16 +28,16 @@ const ViewSalesOpsTicket = ({ data }) => {
     let ticketInfo = data?.ticketInfo;
 
     if (ticketInfo) {
-      ticketInfo["status"] = formValues.status;
+      ticketInfo["status"] = formValues.status?.value;
     } else {
       ticketInfo = {
-        status: formValues.status,
+        status: formValues.status?.value,
       };
     }
     const payload = {
       ticketId: data?.ticketId,
       ticketInfo: ticketInfo,
-      status: formValues.status,
+      //status: formValues.status?.value,
     };
     const res = await updateData(url, payload);
     if (res.error) {
@@ -73,7 +79,6 @@ const ViewSalesOpsTicket = ({ data }) => {
             </Grid>
             <Grid item lg={12} display="flex" alignItems="center">
               <StatusForm
-                data={data}
                 formValues={formValues}
                 setFormValues={setFormValues}
               />

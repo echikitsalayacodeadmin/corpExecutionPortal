@@ -440,7 +440,7 @@ const TicketForm = ({
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
                     label=""
-                    value={formValues.targetDate}
+                    value={formValues.targetDate || ""}
                     onChange={(newValue) =>
                       setFormValues({ ...formValues, targetDate: newValue })
                     }

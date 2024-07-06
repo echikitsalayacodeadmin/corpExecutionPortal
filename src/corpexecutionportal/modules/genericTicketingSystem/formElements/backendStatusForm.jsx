@@ -7,25 +7,25 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment } from "react";
-import { StatusListOpsTicket } from "../../../assets/corpConstants";
+import { DevStatusList } from "../../../assets/corpConstants";
 
-const StatusForm = ({ formValues, setFormValues }) => {
+const BackendStatusForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Stack direction="row" spacing={2} display="flex" alignItems="center">
-        <Typography sx={{ fontWeight: 600 }}>Staus:</Typography>
+        <Typography sx={{ fontWeight: 600 }}>Backend Status:</Typography>
         <Box sx={{ minWidth: 400 }}>
           <FormControl fullWidth>
             <Select
               size="small"
               fullWidth
-              value={formValues.status || ""}
+              value={formValues.backendStatus || ""}
               label=""
               onChange={(e) => {
-                setFormValues({ ...formValues, status: e.target.value });
+                setFormValues({ ...formValues, backendStatus: e.target.value });
               }}
             >
-              {StatusListOpsTicket?.map((value, index) => (
+              {DevStatusList?.map((value, index) => (
                 <MenuItem value={value} key={index}>
                   {value.label}
                 </MenuItem>
@@ -38,4 +38,4 @@ const StatusForm = ({ formValues, setFormValues }) => {
   );
 };
 
-export default StatusForm;
+export default BackendStatusForm;

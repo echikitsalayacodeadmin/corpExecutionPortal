@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   StatusListForNonFilter,
+  StatusListOpsTicket,
   TicketCategoryList,
 } from "../../../assets/corpConstants";
 import {
@@ -43,7 +44,12 @@ const TicketCardView = ({ ticket }) => {
                     background:
                       StatusListForNonFilter.find(
                         (element) => element.value === ticket?.status
-                      )?.color || "lightgray",
+                      )?.color ||
+                      StatusListOpsTicket.find(
+                        (element) =>
+                          element.value === ticket?.ticketInfo?.status
+                      )?.color ||
+                      "lightgray",
                     borderTopLeftRadius: 10,
                     borderBottomLeftRadius: 10,
                   }}
@@ -141,7 +147,12 @@ const TicketCardView = ({ ticket }) => {
                               background:
                                 StatusListForNonFilter.find(
                                   (element) => element.value === ticket?.status
-                                )?.color || "lightgray",
+                                )?.color ||
+                                StatusListOpsTicket.find(
+                                  (element) =>
+                                    element.value === ticket?.ticketInfo?.status
+                                )?.color ||
+                                "lightgray",
                               px: 3,
                               py: 1,
                               borderRadius: 3,
@@ -156,18 +167,25 @@ const TicketCardView = ({ ticket }) => {
                           >
                             {StatusListForNonFilter.find(
                               (element) => element.value === ticket?.status
-                            )?.icon || (
-                              <NotificationsIcon
-                                fontSize="10"
-                                sx={{ color: "#fff" }}
-                              />
-                            )}
+                            )?.icon ||
+                              StatusListOpsTicket.find(
+                                (element) =>
+                                  element.value === ticket?.ticketInfo?.status
+                              )?.icon || (
+                                <NotificationsIcon
+                                  fontSize="10"
+                                  sx={{ color: "#fff" }}
+                                />
+                              )}
                             <Typography sx={{ fontSize: 14, color: "#fff" }}>
-                              {
-                                StatusListForNonFilter.find(
-                                  (element) => element.value === ticket?.status
-                                )?.label
-                              }
+                              {StatusListForNonFilter.find(
+                                (element) => element.value === ticket?.status
+                              )?.label ||
+                                StatusListOpsTicket.find(
+                                  (element) =>
+                                    element.value === ticket?.ticketInfo?.status
+                                )?.label ||
+                                ""}
                             </Typography>
                           </Box>
                         </Grid>

@@ -409,3 +409,118 @@ export const StatusListOpsTicket = [
     icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
 ];
+
+export const DevStatusList = [
+  {
+    id: 1,
+    label: "Pending",
+    value: "PENDING",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 2,
+    label: "In Progress",
+    value: "IN_PROGRESS",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 3,
+    label: "In Testing",
+    value: "IN_TESTING",
+    color: "#eab676",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 4,
+    label: "Completed",
+    value: "COMPLETED",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 5,
+    label: "Not Required",
+    value: "NOT_REQUIRED",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+];
+
+export const OverallStatusList = [
+  {
+    id: 1,
+    label: "Open",
+    value: "OPEN",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 2,
+    label: "PRD in progress",
+    value: "PRD_IN_PROGRESS",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 3,
+    label: "Design in progress",
+    value: "DESIGN_IN_PROGRESS",
+    color: "#eab676",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 4,
+    label: "Queued for development",
+    value: "QUEUED_FOR_DEVELOPMENT",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 5,
+    label: "In development",
+    value: "IN_DEVELOPMENT",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 6,
+    label: "In testing",
+    value: "IN_TESTING",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 6,
+    label: "Ready for deployment",
+    value: "READY_FOR_DEVELOPMENT",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 7,
+    label: "Deployed",
+    value: "DEPLOYED",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 8,
+    label: "Hold",
+    value: "HOLD",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 9,
+    label: "Aborted",
+    value: "ABORTED",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+];

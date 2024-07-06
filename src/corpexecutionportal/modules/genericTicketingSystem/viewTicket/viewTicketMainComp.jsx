@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import ViewHealthAwareness from "./healthAwareness/viewHealthAwareness";
 import ViewSalesOpsTicket from "./salesOps/viewSalesOpsTicket";
 import ViewOpsTechTicket from "./opsTech/viewOpsTechTicket";
+import ViewTechInternalTicket from "./techInternal/viewTechInternalTicket";
 
 const ViewTicketMainComp = ({ data }) => {
   return (
@@ -14,6 +15,8 @@ const ViewTicketMainComp = ({ data }) => {
           <ViewSalesOpsTicket data={data} />
         ) : data?.ticketType === "OPS_TECH" ? (
           <ViewOpsTechTicket data={data} />
+        ) : data?.ticketType === "TECH_INTERNAL" ? (
+          <ViewTechInternalTicket data={data} />
         ) : (
           ""
         )}
