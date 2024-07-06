@@ -21,8 +21,8 @@ const RaiseTicketDialog = ({
   setOpen,
   selectedTicketType,
   userId = localStorage.getItem("USER_ID_CORP_SALES"),
-  name = localStorage.getItem("USER_NAME_CORP_SALES"),
-  mobile = localStorage.getItem("USER_MOBILE_CORP_SALES"),
+  raisedByName = localStorage.getItem("USER_NAME_CORP_SALES"),
+  raisedByMobile = localStorage.getItem("USER_MOBILE_CORP_SALES"),
   formData = new FormData(),
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +31,8 @@ const RaiseTicketDialog = ({
     setIsLoading(false);
     setFormValues({
       userId: userId,
-      name: name,
-      raisedByMobile: mobile,
+      raisedByName: raisedByName,
+      raisedByMobile: raisedByMobile,
       selectedTicketType: selectedTicketType,
       sessionType: "",
       company: "",
@@ -42,8 +42,8 @@ const RaiseTicketDialog = ({
 
   const [formValues, setFormValues] = useState({
     userId: userId,
-    name: name,
-    mobile: mobile,
+    raisedByName: raisedByName,
+    raisedByMobile: raisedByMobile,
     selectedTicketType: selectedTicketType,
     sessionType: "",
     company: "",

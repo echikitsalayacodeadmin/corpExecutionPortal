@@ -12,6 +12,7 @@ import { updateData } from "../../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
 import { StatusListOpsTicket } from "../../../../assets/corpConstants";
 import Status from "../../textElements/status";
+import TicketType from "../../textElements/ticketType";
 
 const DefaultViewTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -68,6 +69,9 @@ const DefaultViewTicket = ({ data }) => {
             </Grid>
             <Grid item lg={12}>
               <Company data={data} />
+            </Grid>
+            <Grid item lg={12}>
+              <TicketType data={data} />
             </Grid>
             <Grid item lg={12}>
               <Task data={data} />

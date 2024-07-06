@@ -39,7 +39,7 @@ export const raiseTicket = async (
 
   console.log({ data });
   formData.append("userAuthId", data.userId);
-  formData.append("raisedBy", data.name);
+  formData.append("raisedBy", data.raisedByName);
   formData.append("raisedById", data.userId);
   formData.append("raisedByMobileNo", data.raisedByMobile);
   formData.append("ticketType", selectedTicketType?.ticketType || "");

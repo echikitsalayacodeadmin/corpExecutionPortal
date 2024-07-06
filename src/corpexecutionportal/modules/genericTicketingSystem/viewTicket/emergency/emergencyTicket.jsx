@@ -72,7 +72,6 @@ const EmergencyTicket = ({ data }) => {
             <Grid item lg={12}>
               <TicketType data={data} />
             </Grid>
-
             <Grid item lg={12}>
               <EmpId data={data} />
             </Grid>

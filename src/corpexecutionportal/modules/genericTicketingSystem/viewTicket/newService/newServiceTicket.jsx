@@ -14,6 +14,7 @@ import RemarksForm from "../../formElements/remarksForm";
 import PreferredDate from "../../textElements/preferredDate";
 import DateForm from "../../formElements/dateForm";
 import dayjs from "dayjs";
+import TicketType from "../../textElements/ticketType";
 
 const NewServiceTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -83,6 +84,9 @@ const NewServiceTicket = ({ data }) => {
             </Grid>
             <Grid item lg={12}>
               <Company data={data} />
+            </Grid>
+            <Grid item lg={12}>
+              <TicketType data={data} />
             </Grid>
             <Grid item lg={12}>
               <ServiceName data={data} />

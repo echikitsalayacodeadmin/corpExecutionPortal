@@ -23,6 +23,8 @@ import FrontendStatusForm from "../../formElements/frontendStatusForm";
 import OverallStatusForm from "../../formElements/overallStatusForm";
 import TargetDateForm from "../../formElements/targetDateForm";
 import dayjs from "dayjs";
+import Company from "../../textElements/company";
+import TicketType from "../../textElements/ticketType";
 
 const ViewTechInternalTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -123,7 +125,9 @@ const ViewTechInternalTicket = ({ data }) => {
             <Grid item lg={6}>
               <CreatedBy data={data} />
             </Grid>
-
+            <Grid item lg={6}>
+              <TicketType data={data} />
+            </Grid>
             <Grid item lg={6} display="flex" alignItems="center">
               <ProductForm
                 formValues={formValues}

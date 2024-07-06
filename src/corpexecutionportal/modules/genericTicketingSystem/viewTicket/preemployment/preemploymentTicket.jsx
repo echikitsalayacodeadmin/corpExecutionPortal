@@ -21,6 +21,7 @@ import Address from "../../textElements/address";
 import EmployeeContactNumber from "../../textElements/employeeContactNumber";
 import HRContactNumber from "../../textElements/hrContactNumber";
 import PackageName from "../../textElements/packageName";
+import TicketType from "../../textElements/ticketType";
 
 const PreemploymentTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -77,6 +78,9 @@ const PreemploymentTicket = ({ data }) => {
             </Grid>
             <Grid item lg={6}>
               <Company data={data} />
+            </Grid>
+            <Grid item lg={6}>
+              <TicketType data={data} />
             </Grid>
             <Grid item lg={6}>
               <EmpId data={data} />

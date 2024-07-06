@@ -10,6 +10,7 @@ import { enqueueSnackbar } from "notistack";
 import { StatusListServiceIssueTicket } from "../../../../assets/corpConstants";
 import ServiceName from "../../textElements/serviceName";
 import Issue from "../../textElements/issue";
+import TicketType from "../../textElements/ticketType";
 
 const ServiceIssueTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -66,6 +67,9 @@ const ServiceIssueTicket = ({ data }) => {
             </Grid>
             <Grid item lg={12}>
               <Company data={data} />
+            </Grid>
+            <Grid item lg={12}>
+              <TicketType data={data} />
             </Grid>
             <Grid item lg={12}>
               <ServiceName data={data} />
