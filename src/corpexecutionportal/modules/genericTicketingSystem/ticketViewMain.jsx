@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import MainPageLayoutWithBack from "../../global/templates/mainPageLayoutWithBack";
-import TicketView from "./comps/ticketView";
 import { useLocation, useParams } from "react-router-dom";
+import ViewTicketMainComp from "./viewTicket/viewTicketMainComp";
 
 const TicketViewMain = () => {
   const { ticketId } = useParams();
@@ -11,7 +11,7 @@ const TicketViewMain = () => {
   return (
     <Fragment>
       <MainPageLayoutWithBack title="Tickets View">
-        <TicketView data={state} />
+        <ViewTicketMainComp data={state} />
       </MainPageLayoutWithBack>
     </Fragment>
   );

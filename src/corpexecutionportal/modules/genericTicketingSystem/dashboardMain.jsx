@@ -2,8 +2,6 @@ import { Box, Grid } from "@mui/material";
 import { Fragment, useState } from "react";
 import DashboardFilters from "./comps/dashboardFilters";
 import TicketListView from "./comps/ticketListView";
-import TicketView from "./comps/ticketView";
-import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 const DashboardMain = () => {

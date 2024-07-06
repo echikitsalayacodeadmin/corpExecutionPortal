@@ -15,7 +15,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import BookIcon from "@mui/icons-material/Book";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import BackHandIcon from "@mui/icons-material/BackHand";
@@ -32,20 +31,19 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   getSessionTypeList,
   updateTicket,
-} from "../../../services/genericTicketingSystem";
+} from "../../../../services/genericTicketingSystem";
 import {
   StatusListForNonFilter,
   TicketCategoryList,
-} from "../../../assets/corpConstants";
+} from "../../../../assets/corpConstants";
 import {
   CompanyNameIcon,
-  DateIcon,
   DateIcon1,
   NumberIcon,
   TypeIcon,
-} from "../../../../assets/customIcons";
+} from "../../../../../assets/customIcons";
 
-const TicketView = ({ data }) => {
+const ViewHealthAwareness = ({ data }) => {
   const [date, setDate] = useState(
     data?.ticketInfo?.sessionDate
       ? dayjs(data?.ticketInfo?.sessionDate)
@@ -430,4 +428,4 @@ const TicketView = ({ data }) => {
   );
 };
 
-export default TicketView;
+export default ViewHealthAwareness;

@@ -376,3 +376,36 @@ export const ServiceList = [
     value: "Awareness Sessions",
   },
 ];
+
+export const StatusListOpsTicket = [
+  {
+    id: 1,
+    label: "Pending",
+    value: "TICKET_RAISED",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 2,
+    label: "Completed",
+    value: "COMPLETED",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 3,
+    label: "Hold",
+    value: "HOLD",
+    color: "#eab676",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 4,
+    label: "Cancel",
+    value: "CANCEL",
+    color: "#eab600",
+    icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+];
