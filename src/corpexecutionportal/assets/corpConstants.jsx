@@ -590,3 +590,28 @@ export const OverallStatusList = [
     icon: <RecommendIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
 ];
+
+export const StatusListEmergencyTicket = [
+  {
+    id: 1,
+    label: "Pending",
+    value: "TICKET_RAISED",
+    color: "#e2435c",
+    icon: <NotificationsIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+  {
+    id: 2,
+    label: "Informed to clinic/hospital",
+    value: "INFORMED_TO_CLINIC",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+
+  {
+    id: 3,
+    label: "Completed",
+    value: "COMPLETED",
+    color: "#3caf4a",
+    icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
+  },
+];

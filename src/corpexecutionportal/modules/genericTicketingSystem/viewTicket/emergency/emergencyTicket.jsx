@@ -3,19 +3,19 @@ import { Fragment, useState } from "react";
 import TicketNumber from "../../textElements/ticketNumber";
 import CreatedBy from "../../textElements/createdBy";
 import Company from "../../textElements/company";
-import Task from "../../textElements/task";
-import TargetDate from "../../textElements/targetDate";
-import Attachment from "../../textElements/attachment";
 import StatusForm from "../../formElements/statusForm";
 import { BASE_URL } from "../../../../../assets/constants";
 import { updateData } from "../../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
-import { StatusListOpsTicket } from "../../../../assets/corpConstants";
+import { StatusListEmergencyTicket } from "../../../../assets/corpConstants";
+import EmpId from "../../textElements/empId";
+import EmployeeName from "../../textElements/employeeName";
+import Issue from "../../textElements/issue";
 
 const EmergencyTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
     status:
-      StatusListOpsTicket.find(
+      StatusListEmergencyTicket.find(
         (value) => value.value === data?.ticketInfo?.status
       ) || "",
   });
@@ -69,18 +69,20 @@ const EmergencyTicket = ({ data }) => {
               <Company data={data} />
             </Grid>
             <Grid item lg={12}>
-              <Task data={data} />
+              <EmpId data={data} />
             </Grid>
             <Grid item lg={12}>
-              <Attachment data={data} />
+              <EmployeeName data={data} />
             </Grid>
             <Grid item lg={12}>
-              <TargetDate data={data} />
+              <Issue data={data} />
             </Grid>
+
             <Grid item lg={12} display="flex" alignItems="center">
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}
+                statusList={StatusListEmergencyTicket}
               />
             </Grid>
             <Grid item lg={12} display="flex" justifyContent="center">
