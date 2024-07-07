@@ -14,7 +14,6 @@ import { Fragment, useState } from "react";
 import useWindowDimensions from "../../../../assets/customHooks/customhooks";
 
 const Attachment = ({ data }) => {
-  let { attachmentDetails } = data;
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -30,13 +29,13 @@ const Attachment = ({ data }) => {
       <Stack direction="column" spacing={2}>
         <Typography sx={{ fontWeight: 600 }}>Attachment:</Typography>
         <Box>
-          {attachmentDetails && attachmentDetails.length > 0 && (
+          {data?.attachmentDetails && data?.attachmentDetails.length > 0 && (
             <ImageList
               sx={{ width: "100%", height: 110 }}
               cols={6}
               rowHeight={100}
             >
-              {attachmentDetails.map((item, index) => (
+              {data?.attachmentDetails.map((item, index) => (
                 <ImageListItem
                   key={index}
                   sx={{
