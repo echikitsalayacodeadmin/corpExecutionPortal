@@ -9,7 +9,7 @@ import {
 import { Fragment } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 
-const EmployeeIdForm = ({ formValues, setFormValues, label }) => {
+const AddressForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Grid container>
@@ -19,19 +19,17 @@ const EmployeeIdForm = ({ formValues, setFormValues, label }) => {
               <Stack spacing={2}>
                 <Stack direction="row" spacing={1}>
                   <PersonIcon fontSize="10" />
-                  <Typography sx={{ fontSize: 10 }}>
-                    {label ? label : "Employee ID"}
-                  </Typography>
+                  <Typography sx={{ fontSize: 10 }}>Place</Typography>
                 </Stack>
 
                 <TextField
                   size="small"
                   fullWidth
-                  value={formValues.empId || ""}
+                  value={formValues.place || ""}
                   onChange={(e) =>
-                    setFormValues({ ...formValues, empId: e.target.value })
+                    setFormValues({ ...formValues, place: e.target.value })
                   }
-                  placeholder="Enter employee ID..."
+                  placeholder="Enter place..."
                 />
               </Stack>
             </CardContent>
@@ -42,4 +40,4 @@ const EmployeeIdForm = ({ formValues, setFormValues, label }) => {
   );
 };
 
-export default EmployeeIdForm;
+export default AddressForm;

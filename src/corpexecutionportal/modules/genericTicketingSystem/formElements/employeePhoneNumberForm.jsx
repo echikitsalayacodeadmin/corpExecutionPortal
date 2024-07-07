@@ -9,7 +9,7 @@ import {
 import { Fragment } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 
-const EmployeeIdForm = ({ formValues, setFormValues, label }) => {
+const EmployeePhoneNumberForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Grid container>
@@ -20,18 +20,26 @@ const EmployeeIdForm = ({ formValues, setFormValues, label }) => {
                 <Stack direction="row" spacing={1}>
                   <PersonIcon fontSize="10" />
                   <Typography sx={{ fontSize: 10 }}>
-                    {label ? label : "Employee ID"}
+                    Employee Contact No.
                   </Typography>
                 </Stack>
 
                 <TextField
                   size="small"
                   fullWidth
-                  value={formValues.empId || ""}
-                  onChange={(e) =>
-                    setFormValues({ ...formValues, empId: e.target.value })
+                  value={formValues.mobile || ""}
+                  onChange={(e) => {
+                    if (!isNaN(e.target.value) && e.target.value.length < 11) {
+                      setFormValues({ ...formValues, mobile: e.target.value });
+                    }
+                  }}
+                  placeholder="Enter phone number..."
+                  error={formValues?.mobile && formValues.mobile?.length < 10}
+                  helperText={
+                    formValues?.mobile && formValues.mobile?.length < 10
+                      ? "Enter 10 digit mobile number."
+                      : ""
                   }
-                  placeholder="Enter employee ID..."
                 />
               </Stack>
             </CardContent>
@@ -42,4 +50,4 @@ const EmployeeIdForm = ({ formValues, setFormValues, label }) => {
   );
 };
 
-export default EmployeeIdForm;
+export default EmployeePhoneNumberForm;

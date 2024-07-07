@@ -1,151 +1,56 @@
-import {
-  Box,
-  FormControl,
-  Grid,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { Box, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Fragment } from "react";
 import BookIcon from "@mui/icons-material/Book";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import SingleUpload from "../../comps/singleUpload";
+import ChooseCompanyForm from "../../formElements/chooseCompanyForm";
+import EmployeeNameForm from "../../formElements/employeeNameForm";
+import SessionDateForm from "../../formElements/sessionDateForm";
+import ChooseTestTypeForm from "../../formElements/chooseTestTypeForm";
+import EmployeeIdForm from "../../formElements/employeeIdForm";
+import AddressForm from "../../formElements/addressForm";
+import EmployeePhoneNumberForm from "../../formElements/employeePhoneNumberForm";
+import HRPhoneNumberForm from "../../formElements/hrPhoneNumberForm";
 
 const RaisePreemploymentTicket = ({
   formValues,
   setFormValues,
-  selectedTicketType,
   formData,
+  companyList = [],
 }) => {
   return (
     <Fragment>
       <Box>
         <Grid container spacing={2}>
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>Company Name</Typography>
-              </Stack>
-              <Box sx={{ minWidth: 400 }}>
-                <FormControl fullWidth>
-                  <Select
-                    displayEmpty
-                    size="small"
-                    fullWidth
-                    value={formValues.company}
-                    label=""
-                    onChange={(e) =>
-                      setFormValues({
-                        ...formValues,
-                        company: e.target.value,
-                      })
-                    }
-                  >
-                    <MenuItem disabled value="">
-                      <em>Select Company...</em>
-                    </MenuItem>
-                    {companyList.map((value, index) => (
-                      <MenuItem value={value} key={index}>
-                        {value.orgName}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-            </Stack>
+          <Grid item lg={4}>
+            <ChooseCompanyForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+              companyList={companyList}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>Name</Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.empName || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, empName: e.target.value })
-                }
-              />
-            </Stack>
+          <Grid item lg={4}>
+            <EmployeeNameForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}> Date</Typography>
-              </Stack>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label=""
-                  value={formValues.date}
-                  onChange={(newValue) =>
-                    setFormValues({ ...formValues, date: newValue })
-                  }
-                  slotProps={{ textField: { size: "small" } }}
-                  format="LL"
-                />
-              </LocalizationProvider>
-            </Stack>
+          <Grid item lg={4}>
+            <SessionDateForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>Test Type</Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.testType || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, testType: e.target.value })
-                }
-              />
-            </Stack>
+          <Grid item lg={4}>
+            <ChooseTestTypeForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Grid item lg={4}>
             <Stack spacing={2} flex={1}>
               <Stack direction="row" spacing={1}>
                 <BookIcon fontSize="10" />
@@ -163,113 +68,36 @@ const RaisePreemploymentTicket = ({
             </Stack>
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>
-                  Employee ID or temporary ID
-                </Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.empId || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, empId: e.target.value })
-                }
-              />
-            </Stack>
+          <Grid item lg={4}>
+            <EmployeeIdForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+              label="Employee ID or temporary ID"
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>Place</Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.place || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, place: e.target.value })
-                }
-              />
-            </Stack>
+          <Grid item lg={4}>
+            <AddressForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>
-                  Employee Contact No.
-                </Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.mobile || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, mobile: e.target.value })
-                }
-              />
-            </Stack>
+          <Grid item lg={4}>
+            <EmployeePhoneNumberForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>HR Contact No.</Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.hrMobile || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, hrMobile: e.target.value })
-                }
-              />
-            </Stack>
+          <Grid item lg={4}>
+            <HRPhoneNumberForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
 
-          <Grid
-            item
-            lg={4}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Grid item lg={4}>
             <Stack spacing={2}>
               <Stack direction="row" spacing={1}>
                 <BookIcon fontSize="10" />
@@ -290,14 +118,8 @@ const RaisePreemploymentTicket = ({
             </Stack>
           </Grid>
 
-          <Grid
-            item
-            lg={2}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Stack spacing={2} flex={1}>
+          <Grid item lg={12}>
+            <Stack spacing={2} sx={{ width: 200 }}>
               <Stack direction="row" spacing={1}>
                 <BookIcon fontSize="10" />
                 <Typography sx={{ fontSize: 10 }}>Upload File</Typography>

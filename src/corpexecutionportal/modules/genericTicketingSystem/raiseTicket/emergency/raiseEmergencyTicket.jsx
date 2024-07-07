@@ -1,15 +1,5 @@
-import {
-  Box,
-  FormControl,
-  Grid,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Fragment } from "react";
-import BookIcon from "@mui/icons-material/Book";
 import ChooseCompanyForm from "../../formElements/chooseCompanyForm";
 import EmployeeIdForm from "../../formElements/employeeIdForm";
 import EmployeeNameForm from "../../formElements/employeeNameForm";

@@ -60,7 +60,7 @@ export const raiseTicket = async (
 
       name: data.name,
       date: dayjs(data.date).format("YYYY-MM-DD"),
-      testType: data.testType,
+      testType: data.testType?.value,
       department: data.department,
       empId: data.empId,
       address: data.address,
