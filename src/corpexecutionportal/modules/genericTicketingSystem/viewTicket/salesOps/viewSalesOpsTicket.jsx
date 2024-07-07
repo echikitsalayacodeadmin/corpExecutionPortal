@@ -65,14 +65,14 @@ const ViewSalesOpsTicket = ({ data }) => {
               <CommonTicketHeader data={data} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <Task data={data} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <TargetDate data={data} />
             </Grid>
-            <Grid item lg={12} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}

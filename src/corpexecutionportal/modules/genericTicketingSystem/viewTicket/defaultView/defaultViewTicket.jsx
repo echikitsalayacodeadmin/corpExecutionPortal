@@ -16,7 +16,7 @@ const DefaultViewTicket = ({ data }) => {
           <Grid item lg={12}>
             <CommonTicketHeader data={data} />
           </Grid>
-          <Grid item lg={12}>
+          <Grid item lg={4}>
             <Status data={data} />
           </Grid>
           <Grid item lg={12}>

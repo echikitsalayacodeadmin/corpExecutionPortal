@@ -1,14 +1,36 @@
-import { Stack, Typography } from "@mui/material";
+import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { Fragment } from "react";
-
+import AddLocationIcon from "@mui/icons-material/AddLocation";
 const Address = ({ data }) => {
-  let { ticketInfo } = data;
   return (
     <Fragment>
-      <Stack direction="row" spacing={2}>
-        <Typography sx={{ fontWeight: 600 }}>Address:</Typography>
-        <Typography>{ticketInfo?.place}</Typography>
-      </Stack>
+      <Grid container>
+        <Grid item lg={12}>
+          <Card variant="outlined">
+            <CardContent>
+              <Grid container spacing={1}>
+                <Grid
+                  item
+                  lg={12}
+                  display="flex"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <Stack spacing={2}>
+                    <Stack direction="row" spacing={1}>
+                      <AddLocationIcon fontSize="10" />
+                      <Typography sx={{ fontSize: 10 }}>Address</Typography>
+                    </Stack>
+                    <Typography sx={{ fontSize: 18 }}>
+                      {data.ticketInfo?.place || "n/a"}
+                    </Typography>
+                  </Stack>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

@@ -81,28 +81,28 @@ const NewServiceTicket = ({ data }) => {
               <CommonTicketHeader data={data} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <ServiceName data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <DateForm formValues={formValues} setFormValues={setFormValues} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <AdditionalDetails data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <PreferredDate data={data} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <RemarksForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={12} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}

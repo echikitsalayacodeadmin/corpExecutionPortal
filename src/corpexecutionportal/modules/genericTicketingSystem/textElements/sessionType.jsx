@@ -17,7 +17,7 @@ const SessionType = ({ data }) => {
                   justifyContent="flex-start"
                   alignItems="center"
                 >
-                  <Stack spacing={2} sx={{ height: 73 }}>
+                  <Stack spacing={2}>
                     <Stack direction="row" spacing={1}>
                       <HorizontalSplitIcon fontSize="10" />
                       <Typography sx={{ fontSize: 10 }}>

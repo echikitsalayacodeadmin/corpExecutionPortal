@@ -65,17 +65,17 @@ const EmergencyTicket = ({ data }) => {
               <CommonTicketHeader data={data} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <EmpId data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <EmployeeName data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <Issue data={data} />
             </Grid>
 
-            <Grid item lg={12} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}

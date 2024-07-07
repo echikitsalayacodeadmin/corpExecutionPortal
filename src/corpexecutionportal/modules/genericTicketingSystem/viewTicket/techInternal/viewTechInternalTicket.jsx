@@ -123,65 +123,65 @@ const ViewTechInternalTicket = ({ data }) => {
             <Grid item lg={12}>
               <CommonTicketHeader data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <CreatedBy data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <TicketType data={data} />
             </Grid>
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <ProductForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <TaskForm formValues={formValues} setFormValues={setFormValues} />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <BackendOwnerForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <FrontendOwerForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <TargetDateForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <BackendStatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <FrontendStatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <OverallStatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}
               />
             </Grid>
 
-            <Grid item lg={6} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}

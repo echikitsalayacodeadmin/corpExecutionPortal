@@ -75,37 +75,37 @@ const PreemploymentTicket = ({ data }) => {
               <CommonTicketHeader data={data} />
             </Grid>
 
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <EmpId data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <EmployeeName data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <Date data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <TestType data={data} />
             </Grid>
 
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <Department data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <Address data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <EmployeeContactNumber data={data} />
             </Grid>
 
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <HRContactNumber data={data} />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={4}>
               <PackageName data={data} />
             </Grid>
 
-            <Grid item lg={12} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}

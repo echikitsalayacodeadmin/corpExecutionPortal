@@ -64,14 +64,14 @@ const ServiceIssueTicket = ({ data }) => {
               <CommonTicketHeader data={data} />
             </Grid>
 
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <ServiceName data={data} />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={4}>
               <Issue data={data} />
             </Grid>
 
-            <Grid item lg={12} display="flex" alignItems="center">
+            <Grid item lg={4}>
               <StatusForm
                 formValues={formValues}
                 setFormValues={setFormValues}
