@@ -163,10 +163,9 @@ export const getCompanyList = async (setCompanyList) => {
 export const updateTicket = async (
   data,
   date,
-  status,
-  doctorName,
   sessionStartDate,
-  sessionEndDate
+  sessionEndDate,
+  formValues
 ) => {
   const url = BASE_URL + `org/updateTicketStatus`;
 
@@ -174,24 +173,26 @@ export const updateTicket = async (
 
   if (ticketInfo) {
     ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD");
-    ticketInfo["doctorName"] = doctorName;
+    ticketInfo["doctorName"] = formValues.doctorName;
     ticketInfo["sessionStartDate"] = dayjs(sessionStartDate); //.format("LT");
     ticketInfo["sessionEndDate"] = dayjs(sessionEndDate); //.format("LT");
+    ticketInfo["status"] = formValues.status?.value;
   } else {
     ticketInfo = {
       sessionId: "",
       sessionDate: dayjs(date).format("YYYY-MM-DD"),
       sessionName: "",
-      doctorName: doctorName,
+      doctorName: formValues.doctorName,
       sessionStartDate: sessionStartDate,
       sessionEndDate: sessionEndDate,
+      status: formValues.status?.value,
     };
   }
 
   const payload = {
     ticketId: data?.ticketId,
     ticketInfo: ticketInfo,
-    status: status?.value,
+    status: formValues.status?.value,
   };
   const res = await updateData(url, payload);
   if (res.error) {

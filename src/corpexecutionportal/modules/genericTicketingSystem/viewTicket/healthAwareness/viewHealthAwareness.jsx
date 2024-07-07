@@ -3,46 +3,28 @@ import {
   Button,
   Card,
   CardContent,
-  FormControl,
   FormControlLabel,
   FormGroup,
   Grid,
-  MenuItem,
-  Select,
   Stack,
   Switch,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import PersonIcon from "@mui/icons-material/Person";
-import BackHandIcon from "@mui/icons-material/BackHand";
-import DateRangeIcon from "@mui/icons-material/DateRange";
-import HorizontalSplitIcon from "@mui/icons-material/HorizontalSplit";
-import SplitscreenIcon from "@mui/icons-material/Splitscreen";
 import dayjs from "dayjs";
-import {
-  DatePicker,
-  LocalizationProvider,
-  TimePicker,
-} from "@mui/x-date-pickers";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   getSessionTypeList,
   updateTicket,
 } from "../../../../services/genericTicketingSystem";
-import {
-  StatusListForNonFilter,
-  TicketCategoryList,
-} from "../../../../assets/corpConstants";
-import {
-  CompanyNameIcon,
-  DateIcon1,
-  NumberIcon,
-  TypeIcon,
-} from "../../../../../assets/customIcons";
+import { StatusListForNonFilter } from "../../../../assets/corpConstants";
 import CommonTicketHeader from "../../textElements/commonTicketHeader";
+import SessionType from "../../textElements/sessionType";
+import SessionDateForm from "../../formElements/sessionDateForm";
+import StatusForm from "../../formElements/statusForm";
+import DoctorName from "../../formElements/doctorName";
 
 const ViewHealthAwareness = ({ data }) => {
   const [date, setDate] = useState(
@@ -50,14 +32,12 @@ const ViewHealthAwareness = ({ data }) => {
       ? dayjs(data?.ticketInfo?.sessionDate)
       : dayjs()
   );
-  const [status, setStatus] = useState(
-    StatusListForNonFilter.filter((value) => value.value === data.status)[0] ||
-      ""
-  );
 
-  const [doctorName, setDoctorName] = useState(
-    data?.ticketInfo?.doctorName || ""
-  );
+  const [formValues, setFormValues] = useState({
+    status:
+      StatusListForNonFilter.find((value) => value.value === data.status) || "",
+    doctorName: data?.ticketInfo?.doctorName || "",
+  });
   const [sessionStartDate, setSessionStartDate] = useState(
     data?.ticketInfo?.sessionStartDate
       ? dayjs(data?.ticketInfo?.sessionStartDate)
@@ -106,129 +86,20 @@ const ViewHealthAwareness = ({ data }) => {
             <CommonTicketHeader data={data} />
           </Grid>
           <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    lg={12}
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                  >
-                    <Stack spacing={2} sx={{ height: 73 }}>
-                      <Stack direction="row" spacing={1}>
-                        <HorizontalSplitIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Seesion Type
-                        </Typography>
-                      </Stack>
-                      <Typography sx={{ fontSize: 18 }}>
-                        {data.ticketInfo?.sessionName || "n/a"}
-                      </Typography>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
+            <SessionType data={data} />
           </Grid>
           <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    lg={12}
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                  >
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={1}>
-                        <DateRangeIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Seesion Date
-                        </Typography>
-                      </Stack>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                          label=""
-                          value={date}
-                          onChange={(newValue) => setDate(newValue)}
-                          slotProps={{
-                            textField: { size: "small", fullWidth: true },
-                          }}
-                          format="LL"
-                        />
-                      </LocalizationProvider>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
+            <SessionDateForm date={date} setDate={setDate} />
           </Grid>
           <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Grid container spacing={1}>
-                  <Grid
-                    item
-                    lg={12}
-                    display="flex"
-                    justifyContent="flex-start"
-                    alignItems="center"
-                  >
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={1}>
-                        <SplitscreenIcon fontSize="10" />
-                        <Typography sx={{ fontSize: 10 }}>
-                          Ticket Status
-                        </Typography>
-                      </Stack>
-                      <Box sx={{ minWidth: 300 }}>
-                        <FormControl fullWidth>
-                          <Select
-                            size="small"
-                            fullWidth
-                            value={status}
-                            label=""
-                            onChange={(e) => setStatus(e.target.value)}
-                          >
-                            {StatusListForNonFilter.map((value, index) => (
-                              <MenuItem value={value} key={index}>
-                                {value.label}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </FormControl>
-                      </Box>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
+            <StatusForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+              statusList={StatusListForNonFilter}
+            />
           </Grid>
           <Grid item lg={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Stack spacing={2}>
-                  <Stack direction="row" spacing={1}>
-                    <PersonIcon fontSize="10" />
-                    <Typography sx={{ fontSize: 10 }}>
-                      Doctor/Instructor name
-                    </Typography>
-                  </Stack>
-
-                  <TextField
-                    size="small"
-                    fullWidth
-                    value={doctorName}
-                    onChange={(e) => setDoctorName(e.target.value)}
-                    placeholder="Enter doctor name"
-                  />
-                </Stack>
-              </CardContent>
-            </Card>
+            <DoctorName formValues={formValues} setFormValues={setFormValues} />
           </Grid>
           <Grid item lg={4}>
             <Card variant="outlined">
@@ -317,10 +188,9 @@ const ViewHealthAwareness = ({ data }) => {
                 updateTicket(
                   data,
                   date,
-                  status,
-                  doctorName,
                   sessionStartDate,
-                  sessionEndDate
+                  sessionEndDate,
+                  formValues
                 )
               }
             >
