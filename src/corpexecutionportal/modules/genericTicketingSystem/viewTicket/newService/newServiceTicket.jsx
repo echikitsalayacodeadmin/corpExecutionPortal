@@ -15,6 +15,7 @@ import PreferredDate from "../../textElements/preferredDate";
 import DateForm from "../../formElements/dateForm";
 import dayjs from "dayjs";
 import TicketType from "../../textElements/ticketType";
+import CommonTicketHeader from "../../textElements/commonTicketHeader";
 
 const NewServiceTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -77,17 +78,9 @@ const NewServiceTicket = ({ data }) => {
         <form onSubmit={submitHandler}>
           <Grid container spacing={2}>
             <Grid item lg={12}>
-              <TicketNumber data={data} />
+              <CommonTicketHeader data={data} />
             </Grid>
-            <Grid item lg={12}>
-              <CreatedBy data={data} />
-            </Grid>
-            <Grid item lg={12}>
-              <Company data={data} />
-            </Grid>
-            <Grid item lg={12}>
-              <TicketType data={data} />
-            </Grid>
+
             <Grid item lg={12}>
               <ServiceName data={data} />
             </Grid>

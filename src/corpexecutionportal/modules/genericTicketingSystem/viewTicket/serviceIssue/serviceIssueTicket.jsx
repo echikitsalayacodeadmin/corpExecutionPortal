@@ -11,6 +11,7 @@ import { StatusListServiceIssueTicket } from "../../../../assets/corpConstants";
 import ServiceName from "../../textElements/serviceName";
 import Issue from "../../textElements/issue";
 import TicketType from "../../textElements/ticketType";
+import CommonTicketHeader from "../../textElements/commonTicketHeader";
 
 const ServiceIssueTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -60,17 +61,9 @@ const ServiceIssueTicket = ({ data }) => {
         <form onSubmit={submitHandler}>
           <Grid container spacing={2}>
             <Grid item lg={12}>
-              <TicketNumber data={data} />
+              <CommonTicketHeader data={data} />
             </Grid>
-            <Grid item lg={12}>
-              <CreatedBy data={data} />
-            </Grid>
-            <Grid item lg={12}>
-              <Company data={data} />
-            </Grid>
-            <Grid item lg={12}>
-              <TicketType data={data} />
-            </Grid>
+
             <Grid item lg={12}>
               <ServiceName data={data} />
             </Grid>

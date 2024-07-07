@@ -22,6 +22,7 @@ import EmployeeContactNumber from "../../textElements/employeeContactNumber";
 import HRContactNumber from "../../textElements/hrContactNumber";
 import PackageName from "../../textElements/packageName";
 import TicketType from "../../textElements/ticketType";
+import CommonTicketHeader from "../../textElements/commonTicketHeader";
 
 const PreemploymentTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -70,18 +71,10 @@ const PreemploymentTicket = ({ data }) => {
       <Box>
         <form onSubmit={submitHandler}>
           <Grid container spacing={2}>
-            <Grid item lg={6}>
-              <TicketNumber data={data} />
+            <Grid item lg={12}>
+              <CommonTicketHeader data={data} />
             </Grid>
-            <Grid item lg={6}>
-              <CreatedBy data={data} />
-            </Grid>
-            <Grid item lg={6}>
-              <Company data={data} />
-            </Grid>
-            <Grid item lg={6}>
-              <TicketType data={data} />
-            </Grid>
+
             <Grid item lg={6}>
               <EmpId data={data} />
             </Grid>

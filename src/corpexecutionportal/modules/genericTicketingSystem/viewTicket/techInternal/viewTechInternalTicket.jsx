@@ -25,6 +25,7 @@ import TargetDateForm from "../../formElements/targetDateForm";
 import dayjs from "dayjs";
 import Company from "../../textElements/company";
 import TicketType from "../../textElements/ticketType";
+import CommonTicketHeader from "../../textElements/commonTicketHeader";
 
 const ViewTechInternalTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -119,8 +120,8 @@ const ViewTechInternalTicket = ({ data }) => {
       <Box>
         <form onSubmit={submitHandler}>
           <Grid container spacing={2}>
-            <Grid item lg={6}>
-              <TicketNumber data={data} />
+            <Grid item lg={12}>
+              <CommonTicketHeader data={data} />
             </Grid>
             <Grid item lg={6}>
               <CreatedBy data={data} />

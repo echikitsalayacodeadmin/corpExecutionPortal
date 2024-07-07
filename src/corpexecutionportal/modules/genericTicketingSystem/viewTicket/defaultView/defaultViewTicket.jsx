@@ -6,6 +6,7 @@ import Company from "../../textElements/company";
 import Attachment from "../../textElements/attachment";
 import Status from "../../textElements/status";
 import TicketType from "../../textElements/ticketType";
+import CommonTicketHeader from "../../textElements/commonTicketHeader";
 
 const DefaultViewTicket = ({ data }) => {
   return (
@@ -13,16 +14,7 @@ const DefaultViewTicket = ({ data }) => {
       <Box>
         <Grid container spacing={2}>
           <Grid item lg={12}>
-            <TicketNumber data={data} />
-          </Grid>
-          <Grid item lg={12}>
-            <CreatedBy data={data} />
-          </Grid>
-          <Grid item lg={12}>
-            <Company data={data} />
-          </Grid>
-          <Grid item lg={12}>
-            <TicketType data={data} />
+            <CommonTicketHeader data={data} />
           </Grid>
           <Grid item lg={12}>
             <Status data={data} />
