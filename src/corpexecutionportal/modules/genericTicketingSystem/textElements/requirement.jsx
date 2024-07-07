@@ -1,7 +1,8 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { Fragment } from "react";
 import TaskIcon from "@mui/icons-material/Task";
-const Task = ({ data }) => {
+
+const Requirement = ({ data }) => {
   return (
     <Fragment>
       <Grid container>
@@ -19,10 +20,10 @@ const Task = ({ data }) => {
                   <Stack spacing={2}>
                     <Stack direction="row" spacing={1}>
                       <TaskIcon fontSize="10" />
-                      <Typography sx={{ fontSize: 10 }}>Task</Typography>
+                      <Typography sx={{ fontSize: 10 }}>Requirement</Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 18 }}>
-                      {data.ticketInfo?.task || "n/a"}
+                      {data.ticketInfo?.requirement || "n/a"}
                     </Typography>
                   </Stack>
                 </Grid>
@@ -35,4 +36,4 @@ const Task = ({ data }) => {
   );
 };
 
-export default Task;
+export default Requirement;

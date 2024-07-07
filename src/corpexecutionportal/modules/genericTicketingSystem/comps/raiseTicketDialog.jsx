@@ -15,6 +15,7 @@ import { Fragment, useState } from "react";
 import TicketForm from "./ticketForm";
 import { raiseTicket } from "../../../services/genericTicketingSystem";
 import dayjs from "dayjs";
+import RaiseTicketMainComp from "../raiseTicket/raiseTicketMainComp";
 
 const RaiseTicketDialog = ({
   open,
@@ -23,7 +24,9 @@ const RaiseTicketDialog = ({
   userId = localStorage.getItem("USER_ID_CORP_SALES"),
   raisedByName = localStorage.getItem("USER_NAME_CORP_SALES"),
   raisedByMobile = localStorage.getItem("USER_MOBILE_CORP_SALES"),
-  formData = new FormData(),
+  formData,
+  companyList,
+  sessionTypeList,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleClose = () => {
@@ -75,11 +78,13 @@ const RaiseTicketDialog = ({
                 //width: "fit-content",
               }}
             >
-              <TicketForm
+              <RaiseTicketMainComp
                 formValues={formValues}
                 setFormValues={setFormValues}
                 selectedTicketType={selectedTicketType}
                 formData={formData}
+                companyList={companyList}
+                sessionTypeList={sessionTypeList}
               />
             </Box>
           </DialogContent>

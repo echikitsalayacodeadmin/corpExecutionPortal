@@ -10,11 +10,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import RaiseTicketDialog from "./comps/raiseTicketDialog";
 import { TicketCategoryList } from "../../assets/corpConstants";
+import {
+  getCompanyList,
+  getSessionTypeList,
+} from "../../services/genericTicketingSystem";
 
 const RaiseNewTicketMain = ({
   authId = localStorage.getItem("USER_ID_CORP_SALES"),
@@ -22,6 +26,15 @@ const RaiseNewTicketMain = ({
   console.log({ authId });
   const [open, setOpen] = useState(false);
   const [selectedTicketType, setSelectedTicketType] = useState({});
+  let formData = new FormData();
+
+  const [sessionTypeList, setSessionTypeList] = useState([]);
+  const [companyList, setCompanyList] = useState([]);
+
+  useEffect(() => {
+    getSessionTypeList(setSessionTypeList);
+    getCompanyList(setCompanyList);
+  }, []);
 
   return (
     <Fragment>
@@ -103,6 +116,9 @@ const RaiseNewTicketMain = ({
         open={open}
         setOpen={setOpen}
         selectedTicketType={selectedTicketType}
+        formData={formData}
+        companyList={companyList}
+        sessionTypeList={sessionTypeList}
       />
     </Fragment>
   );

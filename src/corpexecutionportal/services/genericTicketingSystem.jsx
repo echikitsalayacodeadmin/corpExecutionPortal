@@ -162,7 +162,6 @@ export const getCompanyList = async (setCompanyList) => {
 
 export const updateTicket = async (
   data,
-  date,
   sessionStartDate,
   sessionEndDate,
   formValues
@@ -172,7 +171,9 @@ export const updateTicket = async (
   let ticketInfo = data?.ticketInfo;
 
   if (ticketInfo) {
-    ticketInfo["sessionDate"] = dayjs(date).format("YYYY-MM-DD");
+    ticketInfo["sessionDate"] = formValues.date
+      ? dayjs(formValues.date).format("YYYY-MM-DD")
+      : null;
     ticketInfo["doctorName"] = formValues.doctorName;
     ticketInfo["sessionStartDate"] = dayjs(sessionStartDate); //.format("LT");
     ticketInfo["sessionEndDate"] = dayjs(sessionEndDate); //.format("LT");
@@ -180,7 +181,9 @@ export const updateTicket = async (
   } else {
     ticketInfo = {
       sessionId: "",
-      sessionDate: dayjs(date).format("YYYY-MM-DD"),
+      sessionDate: formValues.date
+        ? dayjs(formValues.date).format("YYYY-MM-DD")
+        : null,
       sessionName: "",
       doctorName: formValues.doctorName,
       sessionStartDate: sessionStartDate,

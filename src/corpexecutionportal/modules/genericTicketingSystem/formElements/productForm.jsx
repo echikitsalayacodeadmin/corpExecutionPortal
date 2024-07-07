@@ -13,7 +13,7 @@ import { Fragment } from "react";
 import { productList } from "../../../assets/corpConstants";
 import CommentIcon from "@mui/icons-material/Comment";
 
-const ProductForm = ({ data, formValues, setFormValues }) => {
+const ProductForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Grid container>

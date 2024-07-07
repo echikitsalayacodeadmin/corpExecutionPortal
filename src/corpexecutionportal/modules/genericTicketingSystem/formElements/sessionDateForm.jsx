@@ -4,7 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Fragment } from "react";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 
-const SessionDateForm = ({ date, setDate }) => {
+const SessionDateForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Grid container>
@@ -29,8 +29,10 @@ const SessionDateForm = ({ date, setDate }) => {
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
                         label=""
-                        value={date || null}
-                        onChange={(newValue) => setDate(newValue)}
+                        value={formValues.date || null}
+                        onChange={(newValue) =>
+                          setFormValues({ ...formValues, date: newValue })
+                        }
                         slotProps={{
                           textField: { size: "small", fullWidth: true },
                         }}

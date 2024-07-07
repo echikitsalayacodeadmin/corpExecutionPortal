@@ -27,13 +27,10 @@ import StatusForm from "../../formElements/statusForm";
 import DoctorNameForm from "../../formElements/doctorNameForm";
 
 const ViewHealthAwareness = ({ data }) => {
-  const [date, setDate] = useState(
-    data?.ticketInfo?.sessionDate
-      ? dayjs(data?.ticketInfo?.sessionDate)
-      : dayjs()
-  );
-
   const [formValues, setFormValues] = useState({
+    date: data?.ticketInfo?.sessionDate
+      ? dayjs(data?.ticketInfo?.sessionDate)
+      : null,
     status:
       StatusListForNonFilter.find((value) => value.value === data.status) || "",
     doctorName: data?.ticketInfo?.doctorName || "",
@@ -89,7 +86,10 @@ const ViewHealthAwareness = ({ data }) => {
             <SessionType data={data} />
           </Grid>
           <Grid item lg={4}>
-            <SessionDateForm date={date} setDate={setDate} />
+            <SessionDateForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
           <Grid item lg={4}>
             <StatusForm
@@ -188,13 +188,7 @@ const ViewHealthAwareness = ({ data }) => {
               sx={{ width: 200 }}
               variant="contained"
               onClick={() =>
-                updateTicket(
-                  data,
-                  date,
-                  sessionStartDate,
-                  sessionEndDate,
-                  formValues
-                )
+                updateTicket(data, sessionStartDate, sessionEndDate, formValues)
               }
             >
               Save

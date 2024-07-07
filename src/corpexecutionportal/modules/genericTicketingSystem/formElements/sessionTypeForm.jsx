@@ -12,7 +12,11 @@ import {
 import { Fragment } from "react";
 import SplitscreenIcon from "@mui/icons-material/Splitscreen";
 
-const ChooseCompanyForm = ({ formValues, setFormValues, companyList = [] }) => {
+const SessionTypeForm = ({
+  formValues,
+  setFormValues,
+  sessionTypeList = [],
+}) => {
   return (
     <Fragment>
       <Grid container>
@@ -31,30 +35,30 @@ const ChooseCompanyForm = ({ formValues, setFormValues, companyList = [] }) => {
                     <Stack direction="row" spacing={1}>
                       <SplitscreenIcon fontSize="10" />
                       <Typography sx={{ fontSize: 10 }}>
-                        Company Name
+                        Session Type
                       </Typography>
                     </Stack>
-                    <Box sx={{ minWidth: 400 }}>
+                    <Box sx={{ minWidth: 500 }}>
                       <FormControl fullWidth>
                         <Select
                           displayEmpty
                           size="small"
                           fullWidth
-                          value={formValues.company}
+                          value={formValues.sessionType}
                           label=""
                           onChange={(e) =>
                             setFormValues({
                               ...formValues,
-                              company: e.target.value,
+                              sessionType: e.target.value,
                             })
                           }
                         >
                           <MenuItem disabled value="">
-                            <em>Select Company...</em>
+                            <em>Select Session Type...</em>
                           </MenuItem>
-                          {companyList.map((value, index) => (
+                          {sessionTypeList.map((value, index) => (
                             <MenuItem value={value} key={index}>
-                              {value.orgName}
+                              {value.sessionName}
                             </MenuItem>
                           ))}
                         </Select>
@@ -71,4 +75,4 @@ const ChooseCompanyForm = ({ formValues, setFormValues, companyList = [] }) => {
   );
 };
 
-export default ChooseCompanyForm;
+export default SessionTypeForm;

@@ -13,6 +13,7 @@ import { enqueueSnackbar } from "notistack";
 import { StatusListOpsTicket } from "../../../../assets/corpConstants";
 import TicketType from "../../textElements/ticketType";
 import CommonTicketHeader from "../../textElements/commonTicketHeader";
+import Requirement from "../../textElements/requirement";
 
 const ViewSalesOpsTicket = ({ data }) => {
   const [formValues, setFormValues] = useState({
@@ -66,7 +67,7 @@ const ViewSalesOpsTicket = ({ data }) => {
             </Grid>
 
             <Grid item lg={4}>
-              <Task data={data} />
+              <Requirement data={data} />
             </Grid>
 
             <Grid item lg={4}>
