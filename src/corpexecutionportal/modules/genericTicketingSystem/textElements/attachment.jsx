@@ -85,7 +85,7 @@ const Attachment = ({ data }) => {
               alt="image"
               width="100%"
               style={{
-                objectFit: "cover",
+                objectFit: "contain",
                 height: height - 200,
                 width: "100%",
                 borderRadius: 10,
