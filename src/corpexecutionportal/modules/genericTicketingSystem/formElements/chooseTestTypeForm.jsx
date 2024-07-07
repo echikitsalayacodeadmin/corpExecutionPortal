@@ -11,12 +11,7 @@ import {
 } from "@mui/material";
 import { Fragment } from "react";
 import SplitscreenIcon from "@mui/icons-material/Splitscreen";
-
-const TestTypeList = [
-  { id: 1, label: "ONROLL", value: "ONROLL" },
-  { id: 2, label: "OFFROLL", value: "OFFROLL" },
-  { id: 3, label: "PRE EMPLOYMENT", value: "PRE_EMPLOYMENT" },
-];
+import { TestTypeList } from "../../../assets/corpConstants";
 
 const ChooseTestTypeForm = ({ formValues, setFormValues }) => {
   return (

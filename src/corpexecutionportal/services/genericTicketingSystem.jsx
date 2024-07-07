@@ -63,7 +63,7 @@ export const raiseTicket = async (
       testType: data.testType?.value,
       department: data.department,
       empId: data.empId,
-      address: data.address,
+      address: data.place,
       mobile: data.mobile,
       hrmobile: data.hrmobile,
       package: data.packageName,
@@ -214,7 +214,7 @@ export const updateTicket = async (
 export const getDepartments = async (corpId, setDepartmentList) => {
   const url = BASE_URL + `org/departments?corpId=${corpId}`;
   let data = [];
-  const departments = await getData(url, "");
+  const departments = await getData(url);
   if (departments.error) {
     data = [];
   } else {
@@ -222,4 +222,18 @@ export const getDepartments = async (corpId, setDepartmentList) => {
   }
   setDepartmentList(data);
   return data;
+};
+
+export const fetchPackages = async (corpId, testType, setListOfPackage) => {
+  const url =
+    BASE_URL + `org/getPackageDetails/${corpId}?employmentType=${testType}`;
+  const packages = await getData(url);
+  if (packages.error) {
+    setListOfPackage([]);
+  } else {
+    let data = packages.data || [];
+    setListOfPackage(
+      data?.map((value) => ({ ...value, label: value?.packageName }))
+    );
+  }
 };

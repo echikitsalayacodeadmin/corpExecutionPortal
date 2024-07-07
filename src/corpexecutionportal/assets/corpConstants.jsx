@@ -615,3 +615,9 @@ export const StatusListEmergencyTicket = [
     icon: <TaskAltIcon fontSize="10" sx={{ color: "#fff" }} />,
   },
 ];
+
+export const TestTypeList = [
+  { id: 1, label: "ONROLL", value: "ONROLL" },
+  { id: 2, label: "OFFROLL", value: "OFFROLL" },
+  { id: 3, label: "PRE EMPLOYMENT", value: "PRE_EMPLOYMENT" },
+];

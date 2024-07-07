@@ -25,19 +25,19 @@ const HRPhoneNumberForm = ({ formValues, setFormValues }) => {
                 <TextField
                   size="small"
                   fullWidth
-                  value={formValues.hrMobile || ""}
+                  value={formValues.hrmobile || ""}
                   onChange={(e) => {
                     if (!isNaN(e.target.value) && e.target.value.length < 11) {
                       setFormValues({
                         ...formValues,
-                        hrMobile: e.target.value,
+                        hrmobile: e.target.value,
                       });
                     }
                   }}
                   placeholder="Enter phone number..."
-                  error={formValues?.mobile && formValues.hrMobile?.length < 10}
+                  error={formValues?.mobile && formValues.hrmobile?.length < 10}
                   helperText={
-                    formValues?.hrMobile && formValues.hrMobile?.length < 10
+                    formValues?.hrmobile && formValues.hrmobile?.length < 10
                       ? "Enter 10 digit mobile number."
                       : ""
                   }

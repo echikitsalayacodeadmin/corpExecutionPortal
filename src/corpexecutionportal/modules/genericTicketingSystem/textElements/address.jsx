@@ -22,7 +22,7 @@ const Address = ({ data }) => {
                       <Typography sx={{ fontSize: 10 }}>Address</Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 18 }}>
-                      {data.ticketInfo?.place || "n/a"}
+                      {data.ticketInfo?.address || "n/a"}
                     </Typography>
                   </Stack>
                 </Grid>

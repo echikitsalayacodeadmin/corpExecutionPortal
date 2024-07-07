@@ -1,6 +1,7 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { Fragment } from "react";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { TestTypeList } from "../../../assets/corpConstants";
 const TestType = ({ data }) => {
   return (
     <Fragment>
@@ -22,7 +23,11 @@ const TestType = ({ data }) => {
                       <Typography sx={{ fontSize: 10 }}>Test Type</Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 18 }}>
-                      {data.ticketInfo?.testType || "n/a"}
+                      {data.ticketInfo?.testType
+                        ? TestTypeList.find(
+                            (a) => a.value === data.ticketInfo?.testType
+                          ).label
+                        : "n/a"}
                     </Typography>
                   </Stack>
                 </Grid>

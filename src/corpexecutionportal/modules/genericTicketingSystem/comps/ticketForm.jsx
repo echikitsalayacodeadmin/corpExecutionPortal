@@ -1065,9 +1065,9 @@ const TicketForm = ({
                   size="small"
                   fullWidth
                   placeholder=""
-                  value={formValues.hrMobile || ""}
+                  value={formValues.hrmobile || ""}
                   onChange={(e) =>
-                    setFormValues({ ...formValues, hrMobile: e.target.value })
+                    setFormValues({ ...formValues, hrmobile: e.target.value })
                   }
                 />
               </Stack>

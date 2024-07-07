@@ -25,7 +25,7 @@ const PackageName = ({ data }) => {
                       </Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 18 }}>
-                      {data.ticketInfo?.packageName || "n/a"}
+                      {data.ticketInfo?.package || "n/a"}
                     </Typography>
                   </Stack>
                 </Grid>

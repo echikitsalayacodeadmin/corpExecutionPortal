@@ -24,7 +24,7 @@ const HRContactNumber = ({ data }) => {
                       </Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 18 }}>
-                      {data.ticketInfo?.hrMobile || "n/a"}
+                      {data.ticketInfo?.hrmobile || "n/a"}
                     </Typography>
                   </Stack>
                 </Grid>

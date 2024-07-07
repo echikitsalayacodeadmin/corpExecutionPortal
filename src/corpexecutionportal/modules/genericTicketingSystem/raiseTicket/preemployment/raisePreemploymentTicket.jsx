@@ -10,6 +10,8 @@ import EmployeeIdForm from "../../formElements/employeeIdForm";
 import AddressForm from "../../formElements/addressForm";
 import EmployeePhoneNumberForm from "../../formElements/employeePhoneNumberForm";
 import HRPhoneNumberForm from "../../formElements/hrPhoneNumberForm";
+import DepartmentFilterForm from "../../formElements/departmentFilterForm";
+import PackageFilterForm from "../../formElements/packageFilterForm";
 
 const RaisePreemploymentTicket = ({
   formValues,
@@ -51,21 +53,11 @@ const RaisePreemploymentTicket = ({
           </Grid>
 
           <Grid item lg={4}>
-            <Stack spacing={2} flex={1}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>Department</Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.department || ""}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, department: e.target.value })
-                }
-              />
-            </Stack>
+            <DepartmentFilterForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+              corpId={formValues.company?.corpId}
+            />
           </Grid>
 
           <Grid item lg={4}>
@@ -98,24 +90,12 @@ const RaisePreemploymentTicket = ({
           </Grid>
 
           <Grid item lg={4}>
-            <Stack spacing={2}>
-              <Stack direction="row" spacing={1}>
-                <BookIcon fontSize="10" />
-                <Typography sx={{ fontSize: 10 }}>Package</Typography>
-              </Stack>
-              <TextField
-                size="small"
-                fullWidth
-                placeholder=""
-                value={formValues.packageName || ""}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    packageName: e.target.value,
-                  })
-                }
-              />
-            </Stack>
+            <PackageFilterForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+              corpId={formValues.company?.corpId}
+              testType={formValues.testType?.value}
+            />
           </Grid>
 
           <Grid item lg={12}>
