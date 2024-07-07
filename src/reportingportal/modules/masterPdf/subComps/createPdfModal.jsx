@@ -457,40 +457,47 @@ const CreatePdfModal = ({
   const checkEmployeeFields = useMemo(() => {
     return () => {
       const newPresummaryReport = [];
-      allSelectedEmployees.forEach((employee) => {
-        const emptyReport = {};
-        const notEmptyReport = {};
-        selectedReport.forEach((report) => {
-          const fields = reportFieldsMap[report];
-          if (fields && fields.length > 0) {
-            const emptyFields = fields.filter(
-              (field) =>
-                employee[field] === undefined || employee[field] === null
-            );
-            const notEmptyFields = fields.filter((field) => employee[field]);
-            if (emptyFields.length > 0) {
-              emptyReport[report] = emptyFields.join(", ");
+      originalEmployeeList
+        ?.filter((item) => item.vitalsCreatedDate)
+        ?.forEach((employee) => {
+          const emptyReport = {};
+          const notEmptyReport = {};
+          selectedReport.forEach((report) => {
+            const fields = reportFieldsMap[report];
+            if (fields && fields.length > 0) {
+              const emptyFields = fields.filter(
+                (field) =>
+                  employee[field] === undefined || employee[field] === null
+              );
+              const notEmptyFields = fields.filter((field) => employee[field]);
+              if (emptyFields.length > 0) {
+                emptyReport[report] = emptyFields.join(", ");
+              }
+              if (notEmptyFields.length > 0) {
+                notEmptyReport[report] = notEmptyFields.length;
+              }
             }
-            if (notEmptyFields.length > 0) {
-              notEmptyReport[report] = notEmptyFields.length;
-            }
-          }
+          });
+          newPresummaryReport.push({
+            name: employee.name,
+            empId: employee.empId,
+            emptyReport,
+            notEmptyReport,
+          });
         });
-        newPresummaryReport.push({
-          name: employee.name,
-          empId: employee.empId,
-          emptyReport,
-          notEmptyReport,
-        });
-      });
       setPresummaryReport(newPresummaryReport);
       setOpen(true);
     };
-  }, [selectedReport, allSelectedEmployees, reportFieldsMap]);
+  }, [
+    selectedReport,
+    allSelectedEmployees,
+    reportFieldsMap,
+    originalEmployeeList,
+  ]);
 
   const { isDisabled, reasons, disabledEmployees } =
     useDisableMasterPdfCreation(
-      allSelectedEmployees,
+      originalEmployeeList,
       selectedReport,
       openDialog
     );

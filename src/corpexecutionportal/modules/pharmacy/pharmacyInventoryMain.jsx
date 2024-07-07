@@ -55,6 +55,7 @@ const PharmacyInventoryMain = ({
           nearExpiryDuration: item.nearexpiryshelflife,
           minimumUnit: item.reorderpoint,
           // medicineUsage: item.medicineusage,
+          batchFlag: item["batchflag(enable/disable)"],
           addedDate: dayjs().format("YYYY-MM-DD"),
         }))
       );

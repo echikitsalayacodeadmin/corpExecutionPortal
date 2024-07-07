@@ -102,13 +102,13 @@ const AddBulkPackage = ({ selectedEmpType, setSelectedEmpType, rows = [] }) => {
       <Box sx={{ gap: 2 }}>
         <CustomAutocomplete
           options={[
-            "AHC",
+            // "AHC",
             "ONROLL",
-            "CONTRACTOR",
+            // "CONTRACTOR",
             "PRE_EMPLOYMENT",
-            "NOT_PROVIDED",
-            "NOT_MAPPED",
-            "CSR",
+            // "NOT_PROVIDED",
+            // "NOT_MAPPED",
+            // "CSR",
           ]}
           value={selectedEmpType || null}
           onChange={(event, newValue, reason) => {

@@ -1,10 +1,10 @@
 export const useDisableMasterPdfCreation = (
-  allSelectedEmployees = [],
+  originalEmployeeList = [],
   selectedReport = [],
   openDialog
 ) => {
   // Clear reasons and disabledEmployees when openDialog is false
-  console.log({ allSelectedEmployees, selectedReport, openDialog });
+  console.log({ originalEmployeeList, selectedReport, openDialog });
 
   if (!openDialog) {
     return {
@@ -19,43 +19,45 @@ export const useDisableMasterPdfCreation = (
   const audiometryErrorEmployees = [];
   const pftErrorEmployees = [];
 
-  allSelectedEmployees.forEach((item) => {
-    if (item.isVitalsErrorData === true) {
-      vitalsErrorEmployees.push(item);
-    }
+  originalEmployeeList
+    ?.filter((item) => item.vitalsCreatedDate)
+    .forEach((item) => {
+      if (item.isVitalsErrorData === true) {
+        vitalsErrorEmployees.push(item);
+      }
 
-    // if (
-    //   selectedReport.includes("BLOODTEST") &&
-    //   item.bloodToggle === true
-    // ||
-    // (selectedReport.includes("AUDIOMETRY") &&
-    //   item.audometryToggle === true) ||
-    // (selectedReport.includes("PFT") && item.pftToggle === true)
-    // ) {
-    if (
-      selectedReport.includes("BLOODTEST") &&
-      item.isBloodParsed === false
-      // &&
-      // item.bloodTestUrl === "Yes"
-    ) {
-      bloodErrorEmployees.push(item);
-    }
-    // if (
-    //   selectedReport.includes("AUDIOMETRY") &&
-    //   item.isAudiometryParsed !== true &&
-    //   item.audiometryUrl === "Yes"
-    // ) {
-    //   audiometryErrorEmployees.push(item);
-    // }
-    // if (
-    //   selectedReport.includes("PFT") &&
-    //   item.isPftParsed !== true &&
-    //   item.pftUrl === "Yes"
-    // ) {
-    //   pftErrorEmployees.push(item);
-    // }
-    // }
-  });
+      // if (
+      //   selectedReport.includes("BLOODTEST") &&
+      //   item.bloodToggle === true
+      // ||
+      // (selectedReport.includes("AUDIOMETRY") &&
+      //   item.audometryToggle === true) ||
+      // (selectedReport.includes("PFT") && item.pftToggle === true)
+      // ) {
+      if (
+        selectedReport.includes("BLOODTEST") &&
+        item.isBloodParsed === false
+        // &&
+        // item.bloodTestUrl === "Yes"
+      ) {
+        bloodErrorEmployees.push(item);
+      }
+      // if (
+      //   selectedReport.includes("AUDIOMETRY") &&
+      //   item.isAudiometryParsed !== true &&
+      //   item.audiometryUrl === "Yes"
+      // ) {
+      //   audiometryErrorEmployees.push(item);
+      // }
+      // if (
+      //   selectedReport.includes("PFT") &&
+      //   item.isPftParsed !== true &&
+      //   item.pftUrl === "Yes"
+      // ) {
+      //   pftErrorEmployees.push(item);
+      // }
+      // }
+    });
 
   const reasons = [];
   const disabledEmployees = [
@@ -95,7 +97,7 @@ export const useDisableMasterPdfCreation = (
   }
 
   const isDisabled =
-    allSelectedEmployees.length === 0 ||
+    originalEmployeeList.length === 0 ||
     selectedReport.length === 0 ||
     disabledEmployees.length > 0;
 

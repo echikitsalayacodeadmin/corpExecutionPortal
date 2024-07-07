@@ -45,6 +45,11 @@ const columns = [
     headerName: "Minimum Unit",
     width: 150,
   },
+  {
+    field: "batchFlag",
+    headerName: "Batch Flag(Enable/Disable)",
+    width: 150,
+  },
   { field: "addedDate", headerName: "Added Date", width: 150 },
 ];
 
