@@ -123,12 +123,7 @@ const ViewTechInternalTicket = ({ data }) => {
             <Grid item lg={12}>
               <CommonTicketHeader data={data} />
             </Grid>
-            <Grid item lg={4}>
-              <CreatedBy data={data} />
-            </Grid>
-            <Grid item lg={4}>
-              <TicketType data={data} />
-            </Grid>
+
             <Grid item lg={4}>
               <ProductForm
                 formValues={formValues}

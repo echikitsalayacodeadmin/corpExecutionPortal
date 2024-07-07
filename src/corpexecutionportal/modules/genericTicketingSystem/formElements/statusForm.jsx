@@ -40,7 +40,7 @@ const StatusForm = ({
                       </Typography>
                     </Stack>
                     <Box sx={{ minWidth: 400 }}>
-                      <FormControl fullWidth>
+                      <FormControl fullWidth s={{ py: 0 }}>
                         <Select
                           size="small"
                           fullWidth

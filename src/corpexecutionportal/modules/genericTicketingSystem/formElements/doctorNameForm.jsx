@@ -9,7 +9,7 @@ import {
 import { Fragment } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 
-const DoctorName = ({ formValues, setFormValues }) => {
+const DoctorNameForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
       <Grid container>
@@ -42,4 +42,4 @@ const DoctorName = ({ formValues, setFormValues }) => {
   );
 };
 
-export default DoctorName;
+export default DoctorNameForm;

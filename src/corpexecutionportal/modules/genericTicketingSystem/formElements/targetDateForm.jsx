@@ -1,6 +1,9 @@
 import {
   Box,
+  Card,
+  CardContent,
   FormControl,
+  Grid,
   MenuItem,
   Select,
   Stack,
@@ -8,29 +11,53 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment } from "react";
-import { productList } from "../../../assets/corpConstants";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 
 const TargetDateForm = ({ formValues, setFormValues }) => {
   return (
     <Fragment>
-      <Stack direction="row" spacing={2} display="flex" alignItems="center">
-        <Typography sx={{ fontWeight: 600 }}>Target Date:</Typography>
-        <Box sx={{ minWidth: 400 }}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label=""
-              value={formValues.targetDate || null}
-              onChange={(newValue) =>
-                setFormValues({ ...formValues, targetDate: newValue })
-              }
-              slotProps={{ textField: { size: "small" } }}
-              format="LL"
-            />
-          </LocalizationProvider>
-        </Box>
-      </Stack>
+      <Grid container>
+        <Grid item lg={12}>
+          <Card variant="outlined">
+            <CardContent>
+              <Grid container spacing={1}>
+                <Grid
+                  item
+                  lg={12}
+                  display="flex"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <Stack spacing={2} flex={1}>
+                    <Stack direction="row" spacing={1}>
+                      <CalendarTodayIcon fontSize="10" />
+                      <Typography sx={{ fontSize: 10 }}>Target Date</Typography>
+                    </Stack>
+                    <Box sx={{ minWidth: 400 }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          label=""
+                          value={formValues.targetDate || null}
+                          onChange={(newValue) =>
+                            setFormValues({
+                              ...formValues,
+                              targetDate: newValue,
+                            })
+                          }
+                          slotProps={{ textField: { size: "small" } }}
+                          format="LL"
+                        />
+                      </LocalizationProvider>
+                    </Box>
+                  </Stack>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

@@ -24,7 +24,7 @@ import CommonTicketHeader from "../../textElements/commonTicketHeader";
 import SessionType from "../../textElements/sessionType";
 import SessionDateForm from "../../formElements/sessionDateForm";
 import StatusForm from "../../formElements/statusForm";
-import DoctorName from "../../formElements/doctorName";
+import DoctorNameForm from "../../formElements/doctorNameForm";
 
 const ViewHealthAwareness = ({ data }) => {
   const [date, setDate] = useState(
@@ -99,7 +99,10 @@ const ViewHealthAwareness = ({ data }) => {
             />
           </Grid>
           <Grid item lg={4}>
-            <DoctorName formValues={formValues} setFormValues={setFormValues} />
+            <DoctorNameForm
+              formValues={formValues}
+              setFormValues={setFormValues}
+            />
           </Grid>
           <Grid item lg={4}>
             <Card variant="outlined">

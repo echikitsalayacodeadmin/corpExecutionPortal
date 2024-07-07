@@ -19,7 +19,7 @@ const SessionDateForm = ({ date, setDate }) => {
                   justifyContent="flex-start"
                   alignItems="center"
                 >
-                  <Stack spacing={2}>
+                  <Stack spacing={2} flex={1}>
                     <Stack direction="row" spacing={1}>
                       <DateRangeIcon fontSize="10" />
                       <Typography sx={{ fontSize: 10 }}>
