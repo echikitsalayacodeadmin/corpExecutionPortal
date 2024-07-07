@@ -26,7 +26,7 @@ const Status = ({ data }) => {
                     <Typography sx={{ fontSize: 18 }}>
                       {StatusListForNonFilter.find(
                         (value) => value.value === data?.ticketInfo?.status
-                      ).label || ""}
+                      )?.label || ""}
                     </Typography>
                   </Stack>
                 </Grid>
