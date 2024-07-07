@@ -1,9 +1,8 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import { Fragment } from "react";
 import { StatusListForNonFilter } from "../../../assets/corpConstants";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import CommentBankIcon from "@mui/icons-material/CommentBank";
 const Status = ({ data }) => {
-  let { status } = data;
   return (
     <Fragment>
       <Grid container>
@@ -20,13 +19,17 @@ const Status = ({ data }) => {
                 >
                   <Stack spacing={2}>
                     <Stack direction="row" spacing={1}>
-                      <MoreHorizIcon fontSize="10" />
+                      <CommentBankIcon fontSize="10" />
                       <Typography sx={{ fontSize: 10 }}>Status</Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 18 }}>
                       {StatusListForNonFilter.find(
                         (value) => value.value === data?.ticketInfo?.status
-                      )?.label || ""}
+                      )?.label ||
+                        StatusListForNonFilter.find(
+                          (value) => value.value === data?.status
+                        )?.label ||
+                        ""}
                     </Typography>
                   </Stack>
                 </Grid>
