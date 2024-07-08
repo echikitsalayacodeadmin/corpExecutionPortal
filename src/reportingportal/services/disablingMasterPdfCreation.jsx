@@ -2,7 +2,8 @@ export const useDisableMasterPdfCreation = (
   // originalEmployeeList = [],
   allSelectedEmployees = [],
   selectedReport = [],
-  openDialog
+  openDialog,
+  excludeEmpIdArray = []
 ) => {
   // Clear reasons and disabledEmployees when openDialog is false
   console.log({
@@ -10,6 +11,7 @@ export const useDisableMasterPdfCreation = (
     allSelectedEmployees,
     selectedReport,
     openDialog,
+    excludeEmpIdArray,
   });
 
   if (!openDialog) {
@@ -28,6 +30,10 @@ export const useDisableMasterPdfCreation = (
   // originalEmployeeList
   //   ?.filter((item) => item.vitalsCreatedDate)
   allSelectedEmployees.forEach((item) => {
+    if (excludeEmpIdArray.includes(item.empId?.toUpperCase().trim())) {
+      return;
+    }
+
     if (item.isVitalsErrorData === true) {
       vitalsErrorEmployees.push(item);
     }
@@ -100,6 +106,19 @@ export const useDisableMasterPdfCreation = (
     reasons.push(
       `Employees with PFT Url Present But PFT not parsed: ${empDetails}`
     );
+  }
+
+  const excludedEmpNotInSelected = excludeEmpIdArray.filter(
+    (empId) =>
+      !allSelectedEmployees.some(
+        (emp) =>
+          emp.empId?.toUpperCase()?.trim() === empId?.toUpperCase()?.trim()
+      )
+  );
+
+  if (excludedEmpNotInSelected.length > 0) {
+    const empDetails = excludedEmpNotInSelected.join(",");
+    reasons.push(`Excluded Employees not in selected list: ${empDetails}`);
   }
 
   const isDisabled =

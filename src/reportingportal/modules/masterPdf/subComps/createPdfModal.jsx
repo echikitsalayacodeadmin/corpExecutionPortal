@@ -113,6 +113,28 @@ const countTotalReports = (data) => {
   return totalReports;
 };
 
+const findNotFoundEmployees = (employeeIdsString, originalEmployeeList) => {
+  // Step 1: Parse the comma-separated list into an array
+  const employeeIdArray = employeeIdsString?.split(",");
+
+  // Step 2: Extract empId values from originalEmployeeList
+  const originalEmpIds = originalEmployeeList?.map((emp) =>
+    String(emp?.empId?.toLowerCase())
+  );
+
+  // Step 3: Find employees not in the originalEmployeeList
+  const notFoundEmployeesArray = employeeIdArray.filter(
+    (id) => !originalEmpIds?.includes(id?.toLowerCase())
+  );
+
+  // Step 4: Format the not found employee IDs as a string
+  const notFoundEmployeesString = `Employee IDs Not Found: ${notFoundEmployeesArray?.join(
+    ","
+  )}`;
+
+  return notFoundEmployeesString;
+};
+
 const CreatePdfModal = ({
   employeeList,
   setEmployeeList,
@@ -495,12 +517,16 @@ const CreatePdfModal = ({
     originalEmployeeList,
   ]);
 
+  const [excludeEmpId, setExcludeEmpId] = useState("");
+  const [excludeEmpIdArray, setExcludeEmpIdArray] = useState([]);
+
   const { isDisabled, reasons, disabledEmployees } =
     useDisableMasterPdfCreation(
       // originalEmployeeList,
       allSelectedEmployees,
       selectedReport,
-      openDialog
+      openDialog,
+      excludeEmpIdArray
     );
 
   console.log({ isDisabled });
@@ -581,7 +607,7 @@ const CreatePdfModal = ({
                         fullWidth
                         value={employeesId}
                         onChange={(e) => {
-                          const value = e?.target?.value?.toUpperCase();
+                          const value = e?.target?.value?.toUpperCase().trim();
                           const uniqueValues = [
                             ...new Set(
                               value.split(",").map((item) => item.trim())
@@ -631,20 +657,36 @@ const CreatePdfModal = ({
                     label="Remove Employee Present In Sequence"
                   />
                 </Grid>
-                <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
+                <Grid item lg={2} xs={6} sx={{ display: "flex", gap: 2 }}>
                   <CustomButtonBlue
                     disabled={selectedReport.length > 0 ? false : true}
                     onClick={() => checkEmployeeFields()}
                     title="Check Report"
                   />
-                </Grid>
-                <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
                   <CustomButtonBlue
                     disabled={isDisabled}
                     onClick={() => handleGeneratePDFRequest()}
                     title="Generate Report"
                   />
                 </Grid>
+                <Grid item lg={4} xs={6} sx={{ display: "flex" }}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    label="Exclude These Employees From master Pdf Creation"
+                    value={excludeEmpId}
+                    onChange={(e) => {
+                      const value = e?.target?.value?.toUpperCase().trim();
+                      const uniqueValues = [
+                        ...new Set(value.split(",").map((item) => item.trim())),
+                      ];
+                      const uniqueValuesString = uniqueValues.join(",");
+                      setExcludeEmpId(uniqueValuesString);
+                      setExcludeEmpIdArray(uniqueValues);
+                    }}
+                  />
+                </Grid>
+
                 <Grid item lg={12} xs={6} sx={{ display: "flex" }}>
                   <Typography>
                     No of Reports Found :{" "}
@@ -652,6 +694,12 @@ const CreatePdfModal = ({
                   </Typography>
                 </Grid>
               </Grid>
+
+              <Box sx={{ gap: 3 }}>
+                <Typography>
+                  {findNotFoundEmployees(employeesId, originalEmployeeList)}
+                </Typography>
+              </Box>
 
               <Box sx={{ gap: 3 }}>
                 {reasons?.map((item, index) => (
