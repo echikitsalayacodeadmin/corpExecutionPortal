@@ -132,7 +132,7 @@ const InventoryDashboard = ({}) => {
 
   const handleUpdate = async () => {
     const url = BASE_URL + `inventory/updateProductDetails`;
-    const payload = [{ formValues }];
+    const payload = [{ ...formValues }];
     const result = await updateData(url, payload);
     if (result.error) {
       enqueueSnackbar(`${result.error.response.data.message}`, {
@@ -212,6 +212,7 @@ const InventoryDashboard = ({}) => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <TextField
+                  disabled={true}
                   label="Product Code"
                   placeholder="Product Code"
                   size="small"
@@ -330,22 +331,9 @@ const InventoryDashboard = ({}) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={4} lg={4}>
-                <TextField
-                  label="Nea Expiry Duration"
-                  placeholder="Near Expiry Duration"
-                  size="small"
-                  fullWidth
-                  value={formValues.nearExpiryDuration}
-                  onChange={(e) => {
-                    setFormValues({
-                      ...formValues,
-                      nearExpiryDuration: e.target.value,
-                    });
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={4} lg={4}>
+              {/*    
+             
+               <Grid item xs={12} sm={12} md={4} lg={4}>
                 <TextField
                   label="Dosage"
                   placeholder="Dosage"
@@ -361,6 +349,23 @@ const InventoryDashboard = ({}) => {
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
+                <TextField
+                  label="Near Expiry Duration"
+                  placeholder="Near Expiry Duration"
+                  size="small"
+                  fullWidth
+                  value={formValues.nearExpiryDuration}
+                  onChange={(e) => {
+                    setFormValues({
+                      ...formValues,
+                      nearExpiryDuration: e.target.value,
+                    });
+                  }}
+                />
+              </Grid>
+              */}
+
+              <Grid item xs={12} sm={12} md={4} lg={4}>
                 <CustomAutocomplete
                   label="Batch Flag"
                   placeholder="Batch Flag"
@@ -375,7 +380,7 @@ const InventoryDashboard = ({}) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={4} lg={4}>
+              {/* <Grid item xs={12} sm={12} md={4} lg={4}>
                 <TextField
                   label="Minimum Unit"
                   placeholder="Minimum Unit"
@@ -389,7 +394,7 @@ const InventoryDashboard = ({}) => {
                     });
                   }}
                 />
-              </Grid>
+              </Grid> */}
               <Grid
                 item
                 xs={12}
