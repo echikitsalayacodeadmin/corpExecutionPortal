@@ -49,7 +49,7 @@ const PreemploymentTicket = ({ data }) => {
     const payload = {
       ticketId: data?.ticketId,
       ticketInfo: ticketInfo,
-      //status: formValues.status?.value,
+      status: formValues.status?.value,
     };
     const res = await updateData(url, payload);
     if (res.error) {
