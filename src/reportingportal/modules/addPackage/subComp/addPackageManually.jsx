@@ -218,7 +218,7 @@ const AddPackageManually = ({
       valueOptions: [
         // "AHC",
         "ONROLL",
-        // "CONTRACTOR",
+        "CONTRACTOR",
         "PRE_EMPLOYMENT",
         // "NOT_PROVIDED",
         // "NOT_MAPPED",

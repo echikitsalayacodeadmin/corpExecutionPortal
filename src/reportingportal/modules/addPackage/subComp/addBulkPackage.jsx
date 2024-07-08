@@ -104,7 +104,7 @@ const AddBulkPackage = ({ selectedEmpType, setSelectedEmpType, rows = [] }) => {
           options={[
             // "AHC",
             "ONROLL",
-            // "CONTRACTOR",
+            "CONTRACTOR",
             "PRE_EMPLOYMENT",
             // "NOT_PROVIDED",
             // "NOT_MAPPED",
