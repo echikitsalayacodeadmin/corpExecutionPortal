@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { fetchForm21Data } from "../../../../services/uploadReportServices";
 import {
   Box,
@@ -9,8 +9,11 @@ import {
 } from "@mui/material";
 import CustomDataGridLayout from "../../../../../assets/globalDataGridLayout/customDataGridLayout";
 import RenderExpandableCells from "../../../../../assets/globalDataGridLayout/renderExpandableCells";
+import GlobalDateLayout from "../../../../../assets/globalDateLayout/globalDateLayout";
 
 const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const [form21Data, setForm21Data] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
@@ -126,6 +129,32 @@ const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
     setMedicalDateNotEmpty(event.target.checked);
   };
 
+  const filteredData = useMemo(() => {
+    return form21Data
+      .filter((item) =>
+        medicalDateNotEmpty === true ? item.medicalDate !== null : true
+      )
+      .filter((item) => {
+        const dateOfJoining = new Date(item.dateOfJoining);
+        if (fromDate && toDate) {
+          const withinDateRange =
+            dateOfJoining >= new Date(fromDate) &&
+            dateOfJoining <= new Date(toDate);
+
+          return withinDateRange;
+        } else if (fromDate) {
+          // If only fromDate is provided, filter for that specific date
+          const withinDateRange =
+            dateOfJoining >= new Date(fromDate) &&
+            dateOfJoining <= new Date(fromDate); // toDate is same as fromDate
+
+          return withinDateRange;
+        } else {
+          return true;
+        }
+      });
+  }, [form21Data, medicalDateNotEmpty, fromDate, toDate]);
+
   if (isLoading) {
     return (
       <Box
@@ -145,6 +174,28 @@ const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
     <Fragment>
       <Box sx={{ marginBlock: 2 }}>
         <Grid container>
+          <Grid
+            item
+            xs={12}
+            lg={4}
+            sx={{
+              display: "flex",
+              gap: 1,
+            }}
+          >
+            <GlobalDateLayout
+              initialDate={fromDate}
+              setDate={setFromDate}
+              label={"From Date"}
+              disableFuture={true}
+            />
+            <GlobalDateLayout
+              initialDate={toDate}
+              setDate={setToDate}
+              label={"To Date"}
+              disableFuture={true}
+            />
+          </Grid>
           <Grid item lg={12} xs={12}>
             <FormControlLabel
               control={
@@ -159,9 +210,7 @@ const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
         </Grid>
         <CustomDataGridLayout
           columns={columns}
-          rows={form21Data.filter((item) =>
-            medicalDateNotEmpty === true ? item.medicalDate !== null : true
-          )}
+          rows={filteredData}
           rowHeight={30}
           getRowId={(row) => row?.empId}
           checkboxSelection={true}
