@@ -539,6 +539,27 @@ const UploadReportMain = ({
       headerAlign: "left",
       width: 300,
     },
+    {
+      field: "bloodReportNameMatching",
+      headerName: "Blood Report Name Matching",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
+    },
+    {
+      field: "pftReportNameMatching",
+      headerName: "Pft Report Name Matching",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
+    },
+    {
+      field: "audiometryReportNameMatching",
+      headerName: "Audiometry Report Name Matching",
+      align: "left",
+      headerAlign: "left",
+      width: 300,
+    },
 
     { field: "empId", headerName: "Emp ID", width: 100 },
     {
@@ -1326,6 +1347,8 @@ const UploadReportMain = ({
         item?.empId === searchedEmployee?.empId
     ),
   });
+
+  console.log({ masterData });
 
   if (isLoading) {
     return (

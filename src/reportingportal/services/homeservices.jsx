@@ -1,6 +1,40 @@
 import { BASE_URL } from "../../assets/constants";
 import { getData } from "../assets/reportingServices";
 
+const checkReportNameMatching = (data) => {
+  const { name, cholestrolData } = data;
+
+  const cleanString = (str, prefixToRemove) =>
+    str.replace(prefixToRemove, "").trim();
+
+  // Clean and compare report names
+  const bloodReportNameMatching = cholestrolData?.BLOOD_PATIENT_NAME_REPORT
+    ? cleanString(cholestrolData?.BLOOD_PATIENT_NAME_REPORT, /MR\.|MS\./i)
+        ?.toUpperCase()
+        ?.includes(name.toUpperCase())
+    : null;
+
+  const pftReportNameMatching = cholestrolData?.PFT_PATIENT_NAME_REPORT
+    ? cleanString(cholestrolData?.PFT_PATIENT_NAME_REPORT, ":")
+        ?.toUpperCase()
+        ?.includes(name.toUpperCase())
+    : null;
+
+  const audiometryReportNameMatching =
+    cholestrolData?.AUDIOMETRY_PATIENT_NAME_REPORT
+      ? cleanString(cholestrolData?.AUDIOMETRY_PATIENT_NAME_REPORT, ":")
+          ?.toUpperCase()
+          ?.includes(name.toUpperCase())
+      : null;
+
+  return {
+    ...data,
+    bloodReportNameMatching,
+    pftReportNameMatching,
+    audiometryReportNameMatching,
+  };
+};
+
 const modifyArray = (arr) => {
   return arr.map((item, index) => ({
     reportingSno: item.reportingSno || "",
@@ -242,12 +276,17 @@ const modifyArray = (arr) => {
       : null,
     patientNameinBloodReport:
       item?.cholestrolData?.["BLOOD_PATIENT_NAME_REPORT"] || null,
+    nameMismatchInBlood:
+      item?.cholestrolData?.["BLOOD_PATIENT_NAME_REPORT"] || null,
     isPftParsed: item?.cholestrolData?.PFT_parsed || null,
     patientNameinPftReport:
       item?.cholestrolData?.["PFT_PATIENT_NAME_REPORT"] || null,
     isAudiometryParsed: item?.cholestrolData?.AUDIOMETRY_parsed || null,
     patientNameinAudiometryReport:
       item?.cholestrolData?.["AUDIOMETRY_PATIENT_NAME_REPORT"] || null,
+    bloodReportNameMatching: item.bloodReportNameMatching,
+    pftReportNameMatching: item.pftReportNameMatching,
+    audiometryReportNameMatching: item.audiometryReportNameMatching,
   }));
 };
 
@@ -268,7 +307,9 @@ export const fetchSuperMasterData = async (
   if (response.data) {
     setIsLoading(false);
 
-    setMasterData(modifyArray(response.data));
+    const temp = response.data.map(checkReportNameMatching);
+
+    setMasterData(modifyArray(temp));
     updateEmployeeList(
       modifyArray(
         response.data.filter(
