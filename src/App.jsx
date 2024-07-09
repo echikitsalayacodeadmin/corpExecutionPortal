@@ -76,6 +76,7 @@ import MismatchPackageIndex from "./reportingportal/pages/mismatchPackageIndex";
 import AddEmpPkgDefinitionReporting from "./reportingportal/pages/addEmpPkgDefinitionReporting";
 import VitalsErrorDataReporting from "./reportingportal/pages/vitalsErrorDataReporting";
 import PharmacyInventory from "./corpexecutionportal/pages/pharmacyInventory";
+import DoctorRegistionInClinics from "./corpexecutionportal/pages/doctorRegistionInClinics";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -226,6 +227,11 @@ function App() {
             />
 
             <Route path="pharmacy/inventory" element={<PharmacyInventory />} />
+
+            <Route
+              path="doctorregistration/"
+              element={<DoctorRegistionInClinics />}
+            />
           </Route>
         </Route>
 

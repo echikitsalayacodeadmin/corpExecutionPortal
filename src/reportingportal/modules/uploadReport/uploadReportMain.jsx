@@ -1293,7 +1293,10 @@ const UploadReportMain = ({
     }
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleParseTrigger = async () => {
+    setLoading(true);
     const Obj = {
       corpId: corpId,
       orgEmployeeFileType: selectedReportData?.enum,
@@ -1307,10 +1310,12 @@ const UploadReportMain = ({
       enqueueSnackbar("Successfully Triggered, It will reflect in some time", {
         variant: "success",
       });
+      setLoading(false);
     } else {
       enqueueSnackbar(`${result.error.response.data.message}`, {
         variant: "error",
       });
+      setLoading(false);
     }
   };
 
@@ -1424,7 +1429,7 @@ const UploadReportMain = ({
                 onClick={() => {
                   handleParseTrigger();
                 }}
-                title="Parse Trigger"
+                title={loading ? "Parsing..." : "Parse Trigger"}
               />
               <Typography
                 sx={{

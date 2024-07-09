@@ -506,3 +506,22 @@ export const shortenName = (employeeName, employeeId, testName) => {
 export const checkValue = (a, b) => {
   return a === b;
 };
+
+export const genderList = [
+  {
+    value: "MALE",
+    label: "MALE",
+  },
+  {
+    value: "FEMALE",
+    label: "FEMALE",
+  },
+  {
+    value: "OTHER",
+    label: "OTHER",
+  },
+  {
+    value: "DONOTDISCLOSE",
+    label: "DONOTDISCLOSE",
+  },
+];

@@ -110,6 +110,15 @@ const data = (val) => {
       xsgridwidth: 12,
       disabled: false,
     },
+    {
+      id: 12,
+      title: "Doctor Registration in Cliniq",
+      count: val?.totalEmployees,
+      countComp: <ShowCount>{`${showNumber(val?.totalEmployees)}`}</ShowCount>,
+      path: "/corp/doctorregistration/",
+      xsgridwidth: 12,
+      disabled: false,
+    },
   ];
 };
 
