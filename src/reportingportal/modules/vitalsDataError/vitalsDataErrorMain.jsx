@@ -342,6 +342,46 @@ import { getData } from "../../assets/reportingServices";
 import { BASE_URL } from "../../../assets/constants";
 import RangeTooltip from "./rangeToolTip";
 
+const processCholestrolData = (data) => {
+  // Destructure the relevant fields from data
+  const {
+    cholestrolData,
+    healthyVitalsData,
+    unhealthyVitalsData,
+    vitalsErrorData,
+  } = data;
+
+  // Create a copy of the cholestrolData object to avoid mutating the original data
+  const updatedCholestrolData = { ...cholestrolData };
+
+  // Add status keys for healthy vitals
+  Object.keys(healthyVitalsData).forEach((key) => {
+    if (updatedCholestrolData.hasOwnProperty(key)) {
+      updatedCholestrolData[`${key}Status`] = "Fit";
+    }
+  });
+
+  // Add status keys for unhealthy vitals
+  Object.keys(unhealthyVitalsData).forEach((key) => {
+    if (updatedCholestrolData.hasOwnProperty(key)) {
+      updatedCholestrolData[`${key}Status`] = "Unfit";
+    }
+  });
+
+  // Add status keys for vitals errors
+  Object.keys(vitalsErrorData).forEach((key) => {
+    if (updatedCholestrolData.hasOwnProperty(key)) {
+      updatedCholestrolData[`${key}Status`] = "Error";
+    }
+  });
+
+  // Return the updated data with the processed cholestrolData
+  return {
+    ...data,
+    cholestrolData: updatedCholestrolData,
+  };
+};
+
 const VitalsDataErrorMain = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
 }) => {
@@ -406,6 +446,7 @@ const VitalsDataErrorMain = ({
 
   const handleViewClick = (data) => {
     const flattened = flattenObject(data);
+    console.log({ flattened });
     setFlattenedData([flattened]);
     setFlattenedColumns(
       Object.keys(flattened).map((key) => ({
@@ -440,6 +481,11 @@ const VitalsDataErrorMain = ({
     setOpen(true);
   };
 
+  console.log({
+    flattenedColumns,
+    flattenedData,
+  });
+
   const columns =
     masterData.length > 0
       ? Object.keys(masterData[0]).map((key) => {
@@ -466,13 +512,17 @@ const VitalsDataErrorMain = ({
                     params.row[key] !== null &&
                     Object.keys(params.row[key]).length === 0);
 
+                console.log({ KKKK: params.row });
+
                 return (
                   !isEmpty && (
                     <CustomButtonBlue
                       disabled={isEmpty ? true : false}
                       title="View Fields"
                       onClick={() => {
-                        handleViewClick(params.row[key]);
+                        handleViewClick(
+                          processCholestrolData(params.row)?.[key]
+                        );
                         setFieldType(formatColumnName(key));
                       }}
                     />
