@@ -1,6 +1,46 @@
 import { BASE_URL } from "../../assets/constants";
 import { getData } from "../assets/reportingServices";
 
+const processCholestrolData = (data) => {
+  // Destructure the relevant fields from data
+  const {
+    cholestrolData,
+    healthyVitalsData,
+    unhealthyVitalsData,
+    vitalsErrorData,
+  } = data;
+
+  // Create a copy of the cholestrolData object to avoid mutating the original data
+  const updatedCholestrolData = { ...cholestrolData };
+
+  // Add status keys for healthy vitals
+  Object.keys(healthyVitalsData).forEach((key) => {
+    if (updatedCholestrolData.hasOwnProperty(key)) {
+      updatedCholestrolData[`${key}Status`] = "Fit";
+    }
+  });
+
+  // Add status keys for unhealthy vitals
+  Object.keys(unhealthyVitalsData).forEach((key) => {
+    if (updatedCholestrolData.hasOwnProperty(key)) {
+      updatedCholestrolData[`${key}Status`] = "Unfit";
+    }
+  });
+
+  // Add status keys for vitals errors
+  Object.keys(vitalsErrorData).forEach((key) => {
+    if (updatedCholestrolData.hasOwnProperty(key)) {
+      updatedCholestrolData[`${key}Status`] = "Error";
+    }
+  });
+
+  // Return the updated data with the processed cholestrolData
+  return {
+    ...data,
+    cholestrolData: updatedCholestrolData,
+  };
+};
+
 export const fetchVitalsDataError = async (
   corpId,
   setIsLoading,
@@ -43,7 +83,8 @@ export const fetchVitalsDataError = async (
           urineProblem: item?.cholestrolData?.["URINE_PROBLEMS"] || "",
           bloodTestUrl: item?.bloodTestUrl ? item?.bloodTestUrl : "",
         };
-      });
+      })
+      .map((item) => processCholestrolData(item));
 
     setMasterData(temp);
     updateEmployeeList(

@@ -481,10 +481,7 @@ const VitalsDataErrorMain = ({
     setOpen(true);
   };
 
-  console.log({
-    flattenedColumns,
-    flattenedData,
-  });
+  console.log({ masterData });
 
   const columns =
     masterData.length > 0
@@ -512,17 +509,13 @@ const VitalsDataErrorMain = ({
                     params.row[key] !== null &&
                     Object.keys(params.row[key]).length === 0);
 
-                console.log({ KKKK: params.row });
-
                 return (
                   !isEmpty && (
                     <CustomButtonBlue
                       disabled={isEmpty ? true : false}
                       title="View Fields"
                       onClick={() => {
-                        handleViewClick(
-                          processCholestrolData(params.row)?.[key]
-                        );
+                        handleViewClick(params.row?.[key]);
                         setFieldType(formatColumnName(key));
                       }}
                     />
