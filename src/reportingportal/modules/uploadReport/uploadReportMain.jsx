@@ -1334,6 +1334,8 @@ const UploadReportMain = ({
       ? "XRAY_FILM"
       : selectedColumns.includes("firstAidUrl")
       ? "FIRST_AID"
+      : selectedColumns.includes("fireSafetyUrl")
+      ? "FIRE_SAFETY"
       : selectedColumns.includes("tmtUrl")
       ? "TMT"
       : selectedColumns.includes("consolidatedRUrl")
