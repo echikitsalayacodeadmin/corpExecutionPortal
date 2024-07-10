@@ -1217,8 +1217,16 @@ const UploadReportMain = ({
         ? null
         : localStorage.getItem("CAMP_ID_REPORTING");
     setIsLoading(true);
+
+    const newFile = new File(
+      [file],
+      `${filteredData[0].name}_${filteredData[0].empId}.pdf`,
+      {
+        type: file.type,
+      }
+    );
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", newFile);
     const url =
       BASE_URL +
       `org/upload?empId=${params?.row?.empId}&fileType=${

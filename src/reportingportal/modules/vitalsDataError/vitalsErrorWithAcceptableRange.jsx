@@ -67,8 +67,8 @@ const VitalsErrorWithAcceptableRange = ({
           name: employee.name,
           age: employee.age,
           gender: employee.gender,
-          tokens: "", // Assuming you'll fill this in later
-          vitalsDataError: key, // Displaying each key separately
+          token: employee.token, // Assuming you'll fill this in later
+          vitalsDataError: `${key} : ${employee.vitalsErrorData[key]}`, // Displaying each key separately
           acceptableRange,
         };
       });
