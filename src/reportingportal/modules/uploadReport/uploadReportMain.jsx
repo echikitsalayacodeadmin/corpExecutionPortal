@@ -1281,7 +1281,10 @@ const UploadReportMain = ({
     const formData = new FormData();
     formData.append(
       "file",
-      selectedReportData?.enum === "FIRST_AID" ? newFile : file
+      selectedReportData?.enum === "FIRST_AID" ||
+        electedReportData?.enum === "FIRE_SAFETY"
+        ? newFile
+        : file
     );
     const url =
       BASE_URL +
