@@ -194,6 +194,23 @@ const modifyArray = (arr) => {
           ? item?.firstAidUrl?.split("/").pop()
           : ""
         : "",
+
+    fireSafety:
+      item.fireSafetyUrl &&
+      (item.fireSafetyUrl !== "" ||
+        item.fireSafetyUrl !== null ||
+        item.fireSafetyUrl !== undefined)
+        ? "Yes"
+        : "",
+    fireSafetyUrl: item.fireSafetyUrl ? item.fireSafetyUrl : null,
+    fireSafetyUrlFileName:
+      item.fireSafetyUrl !== "" ||
+      item.fireSafetyUrl !== null ||
+      item.fireSafetyUrl !== undefined
+        ? item.fireSafetyUrl && typeof item.fireSafetyUrl === "string"
+          ? item?.fireSafetyUrl?.split("/").pop()
+          : ""
+        : "",
     hwbsAllAbsent: item.hwbsAllAbsent
       ? "Yes"
       : item.hwbsAllAbsent === false

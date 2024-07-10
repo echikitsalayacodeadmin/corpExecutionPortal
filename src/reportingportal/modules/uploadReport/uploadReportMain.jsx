@@ -737,7 +737,7 @@ const UploadReportMain = ({
     {
       field: "firstAid",
       headerName: "First Aid",
-      width: 80,
+      width: 120,
       align: "center",
       headerAlign: "center",
       type: "singleSelect",
@@ -775,6 +775,53 @@ const UploadReportMain = ({
               color: isClickable ? "#127DDD" : null,
             }}
             onClick={() => window.open(params?.row?.firstAidUrl, "_blank")}
+          >
+            {params?.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "fireSafety",
+      headerName: "Fire Safety",
+      width: 120,
+      align: "center",
+      headerAlign: "center",
+      type: "singleSelect",
+      valueOptions: ["Yes", "No"],
+      renderCell: (params) => {
+        const isClickable = params.value === "Yes" && params.row.fireSafetyUrl;
+        return (
+          <Typography
+            sx={{
+              fontSize: "15px",
+              cursor: isClickable ? "pointer" : "auto",
+              color: isClickable ? "#127DDD" : null,
+            }}
+            onClick={() => handleCellClick(params)}
+          >
+            {params.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: "fireSafetyUrlFileName",
+      headerName: "Fire Safety Url File Name",
+      width: 350,
+      align: "left",
+      headerAlign: "left",
+      renderCell: (params) => {
+        const isClickable = params?.value !== "" && params?.row?.fireSafetyUrl;
+        const url = params?.row?.fireSafetyUrl;
+        return (
+          <Typography
+            sx={{
+              fontSize: "15px",
+              cursor: isClickable ? "pointer" : "auto",
+              color: isClickable ? "#127DDD" : null,
+            }}
+            onClick={() => window.open(params?.row?.fireSafetyUrl, "_blank")}
           >
             {params?.value}
           </Typography>
@@ -889,6 +936,8 @@ const UploadReportMain = ({
             params.row.audiometryUrl) ||
           (selectedColumns.includes("xrayFilm") && params.row.xrayFilmUrl) ||
           (selectedColumns.includes("firstAidUrl") && params.row.firstAidUrl) ||
+          (selectedColumns.includes("fireSafetyUrl") &&
+            params.row.fireSafetyUrl) ||
           (selectedColumns.includes("tmtUrl") && params.row.tmtUrl) ||
           (selectedColumns.includes("annexureUrl") && params.row.annexureUrl) ||
           (selectedColumns.includes("consolidatedRUrl") &&
@@ -910,6 +959,8 @@ const UploadReportMain = ({
                   setPdfUrl(params?.row?.audiometryUrl);
                 } else if (selectedColumns.includes("firstAidUrl")) {
                   setPdfUrl(params?.row?.firstAidUrl);
+                } else if (selectedColumns.includes("fireSafetyUrl")) {
+                  setPdfUrl(params?.row?.fireSafetyUrl);
                 } else if (selectedColumns.includes("tmtUrl")) {
                   setPdfUrl(params?.row?.tmtUrl);
                 } else if (selectedColumns.includes("consolidatedRUrl")) {
@@ -961,6 +1012,7 @@ const UploadReportMain = ({
         field === "ecg" ||
         field === "audiometry" ||
         field === "firstAid" ||
+        field === "fireSafety" ||
         field === "xrayFilm") &&
       cellValue === "Yes"
     ) {
@@ -1111,6 +1163,7 @@ const UploadReportMain = ({
             selectedUploadedStatus?.value === "ALL" ||
             selectedReportData?.uploadStatusField === "xrayStatus" ||
             selectedReportData?.uploadStatusField === "firstAidStatus" ||
+            selectedReportData?.uploadStatusField === "fireSafetyStatus" ||
             item[selectedReportData?.uploadStatusField] ===
               selectedUploadedStatus?.value;
           const searchFilter =

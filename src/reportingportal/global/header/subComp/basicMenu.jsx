@@ -840,6 +840,36 @@ const BasicMenu = () => {
           },
           selectedCButtonSubMenu: 302,
         },
+        {
+          to: "/reporting/reporting-main/upload-reports",
+          subTabTitle: "Fire Safety Report",
+          onClick: () => {
+            setSelectedCButton(303);
+            setSelectedPButton(2);
+            setShowSequenceComponent(true);
+            updateSelectedReport({
+              value: "",
+              title: "Upload Report - Fire Safety",
+              label: "Fire Safety",
+              uploadStatusField: "fireSafetyStatus",
+              enum: "FIRE_SAFETY",
+              filterValue: "fireSafety",
+            });
+            handleButtonClick([
+              "empId",
+              "name",
+              "age",
+              "gender",
+              "uploadSingleReport",
+              "fireSafety",
+              "fireSafetyUrl",
+              "fireSafetyUrlFileName",
+              "uploadSingleReport",
+              "reportAction",
+            ]);
+          },
+          selectedCButtonSubMenu: 303,
+        },
       ],
     },
     {
