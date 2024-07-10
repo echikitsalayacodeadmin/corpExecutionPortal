@@ -1220,13 +1220,16 @@ const UploadReportMain = ({
 
     const newFile = new File(
       [file],
-      `${filteredData[0].name}_${filteredData[0].empId}.pdf`,
+      `${filteredData[0]?.name}_${filteredData[0]?.empId}.pdf`,
       {
         type: file.type,
       }
     );
     const formData = new FormData();
-    formData.append("file", newFile);
+    formData.append(
+      "file",
+      selectedReportData?.enum === "FIRST_AID" ? newFile : file
+    );
     const url =
       BASE_URL +
       `org/upload?empId=${params?.row?.empId}&fileType=${
