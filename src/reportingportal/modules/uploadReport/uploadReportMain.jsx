@@ -1282,7 +1282,7 @@ const UploadReportMain = ({
     formData.append(
       "file",
       selectedReportData?.enum === "FIRST_AID" ||
-        electedReportData?.enum === "FIRE_SAFETY"
+        selectedReportData?.enum === "FIRE_SAFETY"
         ? newFile
         : file
     );
