@@ -135,18 +135,18 @@ const Form21Data = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
         medicalDateNotEmpty === true ? item.medicalDate !== null : true
       )
       .filter((item) => {
-        const dateOfJoining = new Date(item.dateOfJoining);
+        const medicalDate = new Date(item.medicalDate);
         if (fromDate && toDate) {
           const withinDateRange =
-            dateOfJoining >= new Date(fromDate) &&
-            dateOfJoining <= new Date(toDate);
+            medicalDate >= new Date(fromDate) &&
+            medicalDate <= new Date(toDate);
 
           return withinDateRange;
         } else if (fromDate) {
           // If only fromDate is provided, filter for that specific date
           const withinDateRange =
-            dateOfJoining >= new Date(fromDate) &&
-            dateOfJoining <= new Date(fromDate); // toDate is same as fromDate
+            medicalDate >= new Date(fromDate) &&
+            medicalDate <= new Date(fromDate); // toDate is same as fromDate
 
           return withinDateRange;
         } else {
