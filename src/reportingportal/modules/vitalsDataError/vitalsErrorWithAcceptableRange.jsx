@@ -10,14 +10,17 @@ import { getData } from "../../assets/reportingServices";
 import { fetchVitalsDataError } from "../../services/vitalsDataErrorServices";
 import { ReportingContext } from "../../global/context/context";
 import CustomDataGridLayout from "../../../assets/globalDataGridLayout/customDataGridLayout";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { formatColumnName } from "../../../assets/utils";
 import RenderExpandableCells from "../../../assets/globalDataGridLayout/renderExpandableCells";
+import GlobalDateLayout from "../../../assets/globalDateLayout/globalDateLayout";
 
 const VitalsErrorWithAcceptableRange = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
 }) => {
   const { updateEmployeeList } = useContext(ReportingContext);
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [masterData, setMasterData] = useState([]);
   const [bloodData, setBloodData] = useState([]);
@@ -67,6 +70,7 @@ const VitalsErrorWithAcceptableRange = ({
           name: employee.name,
           age: employee.age,
           gender: employee.gender,
+          vitalsCreatedDate: employee.vitalsCreatedDate,
           token: employee.token, // Assuming you'll fill this in later
           vitalsDataError: `${key} : ${employee.vitalsErrorData[key]}`, // Displaying each key separately
           acceptableRange,
@@ -101,15 +105,63 @@ const VitalsErrorWithAcceptableRange = ({
     }));
   }, [transformedData]);
 
+  const filteredData = useMemo(() => {
+    return transformedData
+      .map((item, index) => ({
+        id: index + 1,
+        ...item,
+      }))
+      .filter((item) => {
+        const vitalsCreatedDate = new Date(item.vitalsCreatedDate);
+        if (fromDate && toDate) {
+          const withinDateRange =
+            vitalsCreatedDate >= new Date(fromDate) &&
+            vitalsCreatedDate <= new Date(toDate);
+
+          return withinDateRange;
+        } else if (fromDate) {
+          // If only fromDate is provided, filter for that specific date
+          const withinDateRange =
+            vitalsCreatedDate >= new Date(fromDate) &&
+            vitalsCreatedDate <= new Date(fromDate); // toDate is same as fromDate
+
+          return withinDateRange;
+        } else {
+          return true;
+        }
+      });
+  }, [transformedData, fromDate, toDate]);
+
   return (
     <Fragment>
       <Box sx={{ marginBlock: 1 }}>
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            lg={4}
+            sx={{
+              display: "flex",
+              gap: 1,
+            }}
+          >
+            <GlobalDateLayout
+              initialDate={fromDate}
+              setDate={setFromDate}
+              label={"From Date"}
+              disableFuture={true}
+            />
+            <GlobalDateLayout
+              initialDate={toDate}
+              setDate={setToDate}
+              label={"To Date"}
+              disableFuture={true}
+            />
+          </Grid>
+        </Grid>
         <CustomDataGridLayout
           columns={columns}
-          rows={transformedData.map((item, index) => ({
-            id: index + 1,
-            ...item,
-          }))}
+          rows={filteredData}
           disableRowSelectionOnClick={true}
           disableSelectionOnClick={true}
           checkboxSelection={false}

@@ -76,6 +76,7 @@ export const fetchVitalsDataError = async (
           age: item?.age,
           gender: item?.gender,
           tokenNumber: item?.tokenNumber || "",
+          vitalsCreatedDate: item?.vitalsCreatedDate || "",
           cholestrolData: filteredCholestrolData || "",
           healthyVitalsData: item?.healthyVitalsData || "",
           unhealthyVitalsData: item?.unhealthyVitalsData || "",
