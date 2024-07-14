@@ -394,9 +394,9 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
         });
         handleButtonClick([
           "tokenNumber",
+          "empId",
           "patientNameinBloodReport",
           "isBloodParsed",
-          "empId",
           "name",
           "age",
           "gender",

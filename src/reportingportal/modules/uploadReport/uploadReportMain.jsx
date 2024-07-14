@@ -11,7 +11,9 @@ import { ReportingContext } from "../../global/context/context";
 import {
   Box,
   Button,
+  Checkbox,
   CircularProgress,
+  FormControlLabel,
   FormHelperText,
   Grid,
   IconButton,
@@ -516,7 +518,14 @@ const UploadReportMain = ({
         );
       },
     },
-
+    { field: "empId", headerName: "Emp ID", width: 100 },
+    {
+      field: "tokenNumber",
+      headerName: "Token No",
+      width: 75,
+      align: "left",
+      headerAlign: "left",
+    },
     { field: "name", headerName: "Name", width: 200 },
     {
       field: "patientNameinBloodReport",
@@ -561,19 +570,12 @@ const UploadReportMain = ({
       width: 300,
     },
 
-    { field: "empId", headerName: "Emp ID", width: 100 },
     {
       field: "age",
       headerName: "Age",
       width: 80,
     },
-    {
-      field: "tokenNumber",
-      headerName: "Token No",
-      width: 75,
-      align: "left",
-      headerAlign: "left",
-    },
+
     {
       field: "gender",
       headerName: "Gender",
@@ -1119,6 +1121,22 @@ const UploadReportMain = ({
     }
   };
 
+  const [isBloodNotMatching, setIsBloodNotMatching] = useState(false);
+
+  const handleBloodNotMatching = (event) => {
+    setIsBloodNotMatching(event.target.checked);
+  };
+  const [isPftNotMatching, setIsPftNotMatching] = useState(false);
+
+  const handlePftNotMatching = (event) => {
+    setIsPftNotMatching(event.target.checked);
+  };
+  const [isAudioNotMatching, setIsAudioNotMatching] = useState(false);
+
+  const handleAudioNotMatching = (event) => {
+    setIsAudioNotMatching(event.target.checked);
+  };
+
   const [selectedEmpIdCommaSep, setSelectedEmpIdCommaSep] = useState("");
   const [selectedTokenList, setSelectedTokenList] = React.useState("");
 
@@ -1148,6 +1166,21 @@ const UploadReportMain = ({
             : selectedTokenList
                 .split(",")
                 .includes(item?.tokenNumber?.toString());
+        })
+        .filter((item) => {
+          return isBloodNotMatching === true
+            ? item["bloodReportNameMatching"] === false
+            : true;
+        })
+        .filter((item) => {
+          return isPftNotMatching === true
+            ? item["pftReportNameMatching"] === false
+            : true;
+        })
+        .filter((item) => {
+          return isAudioNotMatching === true
+            ? item["audiometryReportNameMatching"] === false
+            : true;
         })
         ?.filter((item) => {
           const reportValueFilter =
@@ -1226,6 +1259,9 @@ const UploadReportMain = ({
     fromDate,
     toDate,
     selectedEmpIdCommaSep,
+    isBloodNotMatching,
+    isPftNotMatching,
+    isAudioNotMatching,
   ]);
 
   // useEffect(() => {
@@ -1557,6 +1593,41 @@ const UploadReportMain = ({
                   setSelectedTokenList(e.target.value);
                 }}
               />
+            </Grid>
+            <Grid item xs={12} lg={3}>
+              {selectedReportData.label === "Blood" && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isBloodNotMatching}
+                      onChange={handleBloodNotMatching}
+                    />
+                  }
+                  label="Blood Report Name Not Matching"
+                />
+              )}
+              {selectedReportData.label === "PFT" && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isPftNotMatching}
+                      onChange={handlePftNotMatching}
+                    />
+                  }
+                  label="PFT Report Name Not Matching"
+                />
+              )}
+              {selectedReportData.label === "Audiometry" && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={isAudioNotMatching}
+                      onChange={handleAudioNotMatching}
+                    />
+                  }
+                  label="Audiometry Report Name Not Matching"
+                />
+              )}
             </Grid>
           </Grid>
 
