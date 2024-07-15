@@ -31,11 +31,11 @@ const MyDocument = ({ data }) => {
       <Page size="A4" style={styles.page} wrap>
         <Header />
         <View style={{ padding: "20px" }}>
-          <Address data={data} />
+          {/* <Address data={data} />
           <Dates data={data} />
           <QuotationTitle data={data} />
           <SpocName data={data} />
-          <Paragraph1 data={data} />
+          <Paragraph1 data={data} /> */}
           <AhcSection data={data} />
           <OhcSection data={data} />
         </View>
