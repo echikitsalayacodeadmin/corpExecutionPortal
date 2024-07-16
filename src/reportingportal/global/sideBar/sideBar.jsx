@@ -329,16 +329,16 @@ const SideBar = ({ corpId = localStorage.getItem("CORP_ID_REPORTING") }) => {
               "name",
               "age",
               "gender",
-              "height",
-              "weight",
-              "bp",
-              "sugar",
+              "hepatitisDose1",
+              "hepatitisDose2",
+              "hepatitisDose3",
+              "typhoidDose1",
+              "tetanusDose1",
               "vaccinationCertificate",
               "vitalsCreatedDate",
               "reportAction",
             ]);
           },
-
           selectedCButtonSubMenu: 16,
         },
         {

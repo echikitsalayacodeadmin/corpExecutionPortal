@@ -86,6 +86,7 @@ const GetPackages = ({
           sbilirubin: item.sbilirubin,
           testCode: item.testCode,
           stoolSample: item.stoolSample,
+          vaccination: item.vaccination,
           employmentType: item.employmentType,
           campCycleId: item.campCycleId,
           conditions: item.conditions,

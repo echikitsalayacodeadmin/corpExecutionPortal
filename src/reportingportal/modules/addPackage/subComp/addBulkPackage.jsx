@@ -91,6 +91,12 @@ const AddBulkPackage = ({ selectedEmpType, setSelectedEmpType, rows = [] }) => {
       editable: false,
     },
     {
+      field: "vaccination",
+      headerName: "Vaccination",
+      width: 130,
+      editable: false,
+    },
+    {
       field: "employmentType",
       headerName: "Employment Type",
       width: 130,

@@ -50,6 +50,7 @@ const AddPackageMain = ({
           ecg: item.ecg === "TRUE" ? true : false,
           sugar: item.sugar === "TRUE" ? true : false,
           sbilirubin: item.sbilirubin === "TRUE" ? true : false,
+          vaccination: item.vaccination === "TRUE" ? true : false,
           testCode: item.testCode === "TRUE" ? true : false,
           stoolSample: item.stoolsample === "TRUE" ? true : false,
           date: dayjs().format("YYYY-MM-DD"),

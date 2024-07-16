@@ -165,7 +165,36 @@ const modifyArray = (arr) => {
       : item.physicalFitnessForm === false
       ? "No"
       : "",
-    physicalFitnessFormUrl: item.physicalFitnessFormUrl,
+    physicalFitnessFormUrl: item.physicalFitnessFormUrl
+      ? "Yes"
+      : item.physicalFitnessForm === false
+      ? "No"
+      : "",
+    hepatitisDose1: item.hepatitisDose1
+      ? "Yes"
+      : item.hepatitisDose1 === false
+      ? "No"
+      : "",
+    hepatitisDose2: item.hepatitisDose2
+      ? "Yes"
+      : item.hepatitisDose2 === false
+      ? "No"
+      : "",
+    hepatitisDose3: item.hepatitisDose3
+      ? "Yes"
+      : item.hepatitisDose3 === false
+      ? "No"
+      : "",
+    typhoidDose1: item.typhoidDose1
+      ? "Yes"
+      : item.typhoidDose1 === false
+      ? "No"
+      : "",
+    tetanusDose1: item.tetanusDose1
+      ? "Yes"
+      : item.tetanusDose1 === false
+      ? "No"
+      : "",
     vaccinationCertificate: item.vaccinationCertificate
       ? "Yes"
       : item.vaccinationCertificate === false
