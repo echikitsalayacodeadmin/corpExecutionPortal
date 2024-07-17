@@ -5,6 +5,7 @@ import VitalsDataErrorMain from "./vitalsDataErrorMain";
 import BloodTestDetails from "./bloodTestDetails";
 import { isMobile } from "react-device-detect";
 import VitalsErrorWithAcceptableRange from "./vitalsErrorWithAcceptableRange";
+import VitalsErrorDataReport from "./vitalsErrorDataReport";
 
 const VitalErrorDataMainTab = () => {
   const [value, setValue] = useState("1");
@@ -34,6 +35,7 @@ const VitalErrorDataMainTab = () => {
                   <Tab label="Vital Error Data" value="1" />
                   <Tab label="Blood Test Detail" value="2" />
                   <Tab label="VitalsErrorData With AcceptableRange" value="3" />
+                  <Tab label="Vitals Error Data Report" value="4" />
                 </TabList>
               </Box>
               <TabPanel value="1" sx={{ p: 0 }}>
@@ -44,6 +46,9 @@ const VitalErrorDataMainTab = () => {
               </TabPanel>
               <TabPanel value="3" sx={{ p: 0 }}>
                 <VitalsErrorWithAcceptableRange />
+              </TabPanel>
+              <TabPanel value="4" sx={{ p: 0 }}>
+                <VitalsErrorDataReport />
               </TabPanel>
             </TabContext>
           </Box>

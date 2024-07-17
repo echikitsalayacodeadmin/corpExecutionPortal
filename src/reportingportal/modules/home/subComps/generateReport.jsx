@@ -53,6 +53,11 @@ const GenerateReport = ({
   const { enqueueSnackbar } = useSnackbar();
   const { selectedReportData } = useContext(ReportingContext);
 
+  const [isManualDate, setIsManualDate] = useState(true);
+
+  const handleManualDate = (event) => {
+    setIsManualDate(event.target.checked);
+  };
   const [isCheckedSigned, setIsCheckedSigned] = useState(true);
 
   const handleSignedCheckbox = (event) => {
@@ -123,6 +128,7 @@ const GenerateReport = ({
         removeDate: isRemoveDate,
         campCycleId: campCycleId,
         useContractorName: useContractorName,
+        useManualDate: isManualDate,
       };
       const url = BASE_URL + "org/reporting/uploadSystemGeneratedReports";
       const result = await saveData(url, Obj);
@@ -192,20 +198,31 @@ const GenerateReport = ({
     <Fragment>
       <Box>
         <Grid container spacing={1} sx={{ marginTop: "10px" }}>
-          <Grid
-            item
-            lg={4}
-            xs={6}
-            sx={{ display: "flex", justifyContent: "space-between", gap: 3 }}
-          >
-            <GlobalDateLayout
-              label={"Select Date"}
-              setDate={setDate}
-              initialDate={date}
-              disableFuture={true}
+          <Grid item lg={2} xs={6} sx={{ display: "flex" }}>
+            <FormControlLabel
+              control={
+                <Checkbox checked={isManualDate} onChange={handleManualDate} />
+              }
+              label="Use Manual Date"
             />
           </Grid>
-          <Grid item lg={4} xs={6}>
+          {isManualDate && (
+            <Grid
+              item
+              lg={3}
+              xs={6}
+              sx={{ display: "flex", justifyContent: "space-between", gap: 3 }}
+            >
+              <GlobalDateLayout
+                label={"Select Date"}
+                setDate={setDate}
+                initialDate={date}
+                disableFuture={true}
+              />
+            </Grid>
+          )}
+
+          <Grid item lg={3} xs={6}>
             <CustomAutocomplete
               placeholder="Search Doctor"
               label={"Select Doctor"}
