@@ -165,11 +165,7 @@ const modifyArray = (arr) => {
       : item.physicalFitnessForm === false
       ? "No"
       : "",
-    physicalFitnessFormUrl: item.physicalFitnessFormUrl
-      ? "Yes"
-      : item.physicalFitnessForm === false
-      ? "No"
-      : "",
+    physicalFitnessFormUrl: item.physicalFitnessFormUrl,
     hepatitisDose1: item.hepatitisDose1
       ? "Yes"
       : item.hepatitisDose1 === false
