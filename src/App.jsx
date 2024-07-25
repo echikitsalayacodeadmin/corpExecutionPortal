@@ -77,6 +77,7 @@ import AddEmpPkgDefinitionReporting from "./reportingportal/pages/addEmpPkgDefin
 import VitalsErrorDataReporting from "./reportingportal/pages/vitalsErrorDataReporting";
 import PharmacyInventory from "./corpexecutionportal/pages/pharmacyInventory";
 import DoctorRegistionInClinics from "./corpexecutionportal/pages/doctorRegistionInClinics";
+import AccountReceivableCorpDetails from "./corpexecutionportal/pages/accountReceivableCorpDetails";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -195,6 +196,11 @@ function App() {
             <Route
               path="accountreceivable"
               element={<AccountReceivableCorp />}
+            />
+
+            <Route
+              path="accountreceivable/details/:corpId"
+              element={<AccountReceivableCorpDetails />}
             />
 
             {/* Mis */}

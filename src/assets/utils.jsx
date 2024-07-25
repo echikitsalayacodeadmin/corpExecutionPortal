@@ -525,3 +525,11 @@ export const genderList = [
     label: "DONOTDISCLOSE",
   },
 ];
+
+export const getUrlExtension = (url) => {
+  try {
+    return url.match(/^https?:\/\/.*[\\\/][^\?#]*\.([a-zA-Z0-9]+)\??#?/)[1];
+  } catch (ignored) {
+    return "";
+  }
+};

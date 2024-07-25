@@ -63,9 +63,9 @@ const data = (val) => {
       title: "ACCOUNT RECEIVABLE",
       count: val?.payment || "",
       countComp: <ShowCount>{`${showNumber(val?.payment)}`}</ShowCount>,
-      path: "/camp/accountreceivable",
+      path: "/corp/accountreceivable",
       xsgridwidth: 12,
-      disabled: true,
+      disabled: false,
     },
     {
       id: 7,

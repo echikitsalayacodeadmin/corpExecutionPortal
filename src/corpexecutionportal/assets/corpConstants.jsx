@@ -621,3 +621,9 @@ export const TestTypeList = [
   { id: 2, label: "OFFROLL", value: "OFFROLL" },
   { id: 3, label: "PRE EMPLOYMENT", value: "PRE_EMPLOYMENT" },
 ];
+
+export const PaymentStatusList = [
+  { label: "Full Payment Pending", value: "FULL_PAYMENT_PENDING" },
+  { label: "Partial Payment Received", value: "PARTIAL_PAYMENT_RECEIVED" },
+  { label: "Full Payment Received", value: "FULL_PAYMENT_RECEIVED" },
+];
