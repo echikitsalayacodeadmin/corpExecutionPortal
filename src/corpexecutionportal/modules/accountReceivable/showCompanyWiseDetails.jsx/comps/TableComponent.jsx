@@ -7,7 +7,7 @@ import { PaymentStatusList } from "../../../../assets/corpConstants";
 import { PhotoViewer } from "../../../../../assets/customPhotoViewer/photoViewer";
 import UpdateInvoiceMain from "../../addInvoice/UpdateInvoiceMain";
 
-const CustomTypographyTableCell = ({ children }) => {
+const CustomTypographyTableCell = ({ children, color = "#000" }) => {
   return (
     <Typography
       sx={{
@@ -16,7 +16,7 @@ const CustomTypographyTableCell = ({ children }) => {
         fontWeight: "400",
         fontSize: "12px",
         lineHeightt: "normal",
-        color: "#000",
+        color: color,
         textTransform: "capitalize",
       }}
     >
@@ -92,7 +92,7 @@ const TableComponent = ({ companyInvoiceData, getInvoiceDetailsByCorpId }) => {
         renderHeader: (params) => (
           <CustomTypographyTableHeader title="Service Details" />
         ),
-        width: width / 8,
+        width: width / 8 + 73,
         headerClassName: "super-app-theme--header",
         align: "left",
         headerAlign: "left",
@@ -140,7 +140,9 @@ const TableComponent = ({ companyInvoiceData, getInvoiceDetailsByCorpId }) => {
               handleClickOpen(cellValues.value);
             }}
           >
-            <CustomTypographyTableCell>View File</CustomTypographyTableCell>
+            <CustomTypographyTableCell color="#127DDD">
+              View File
+            </CustomTypographyTableCell>
           </IconButton>
         ),
       },

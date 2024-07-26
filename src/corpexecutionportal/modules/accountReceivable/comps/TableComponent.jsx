@@ -116,7 +116,7 @@ const TableComponent = ({ data }) => {
           <Grid item lg={12}>
             <Box>
               <CustomDataGridNew
-                columns={columns(width)}
+                columns={columns(width - 96)}
                 rows={data}
                 onRowClick={(params) =>
                   navigate(

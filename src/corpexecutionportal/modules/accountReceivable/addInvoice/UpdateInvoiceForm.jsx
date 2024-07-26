@@ -14,13 +14,18 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import PaymentStatusFilter from "./comps/PaymentStatusFilter";
-import { uploadFile } from "../../../assets/corpServices";
+import { updateDataFile, uploadFile } from "../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import dayjs from "dayjs";
 import { getCompanyList } from "../../../services/genericTicketingSystem";
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
+import CustomTextField from "./comps/customTextField";
+import { CustomDate } from "./comps/customDateComps";
+import SingleUpload from "./comps/singleUpload";
+import { PhotoViewer } from "../../../../assets/customPhotoViewer/photoViewer";
+import SubmitAlert from "./comps/submitAlert";
 
 const UpdateInvoiceForm = ({
   formValues,
@@ -30,6 +35,9 @@ const UpdateInvoiceForm = ({
   getInvoiceList,
   params,
 }) => {
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [disableClick, setDisableClick] = useState(false);
+
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,30 +45,30 @@ const UpdateInvoiceForm = ({
 
   const handleClose = () => {
     setOpen(false);
+    setIsEditMode(false);
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setDisableClick(true);
 
-    const url = BASE_URL + `invoice/corp/addInvoice`;
-
-    // formData.append("corpId", formValues.company?.corpId);
-    // formData.append(
-    //   "invoiceDate",
-    //   formValues.inVoiceDate
-    //     ? dayjs(formValues.inVoiceDate).format("YYYY-MM-DD")
-    //     : ""
-    // );
-    // formData.append("serviceDetails", formValues.serviceDetails);
-    formData.append("id", params.row.id);
+    const url = BASE_URL + `invoice/updateInvoice/${params.row.id}`;
+    formData.append(
+      "invoiceDate",
+      formValues.inVoiceDate
+        ? dayjs(formValues.inVoiceDate).format("YYYY-MM-DD")
+        : ""
+    );
+    formData.append("serviceDetails", formValues.serviceDetails);
     formData.append("paymentStatus", formValues.paymentStatus);
     // formData.append("addedBy", authId);
 
-    const res = await uploadFile(url, formData);
+    const res = await updateDataFile(url, formData);
     if (res.error) {
       enqueueSnackbar("Failed to create invoice!", {
         variant: "error",
       });
+      setDisableClick(false);
     } else {
       enqueueSnackbar("Successfully created invoice.", {
         variant: "success",
@@ -68,11 +76,26 @@ const UpdateInvoiceForm = ({
       handleClose();
       setFormValues({});
       getInvoiceList();
+      setDisableClick(false);
       console.log({ success: res.data });
     }
   };
 
   console.log({ params });
+
+  const [openPhoto, setOpenPhoto] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
+  const handleClickOpenPhoto = (url) => {
+    setOpenPhoto(true);
+    setImageUrl(url);
+  };
+
+  const handleClosePhtoto = () => {
+    setOpenPhoto(false);
+    setImageUrl(null);
+  };
+
+  const [isConfirm, setIsConfirm] = useState(false);
 
   return (
     <Fragment>
@@ -145,148 +168,306 @@ const UpdateInvoiceForm = ({
 
                 <DialogContent>
                   <form onSubmit={submitHandler}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "fit-content",
-                        my: 5,
-                        mx: 5,
-                      }}
-                    >
-                      <Grid container spacing={3}>
-                        <Grid item lg={12}>
-                          <Stack
-                            direction="row"
-                            spacing={2}
-                            display="flex"
-                            alignItems="center"
-                          >
-                            <Typography
-                              sx={{
-                                color: " #000",
-                                fontFamily: "Poppins",
-                                fontSize: 12,
-                                fontStyle: "normal",
-                                fontWeight: "600",
-                                lineHeight: "normal",
-                                opacity: 0.8,
-                              }}
+                    {!isConfirm ? (
+                      <Fragment>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "fit-content",
+                            my: 5,
+                            mx: 5,
+                          }}
+                        >
+                          <Grid container spacing={3}>
+                            <Grid
+                              item
+                              lg={12}
+                              display="flex"
+                              justifyContent="flex-end"
                             >
-                              Invoice File (Attachment):
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: " #000",
-                                fontFamily: "Poppins",
-                                fontSize: 12,
-                                fontStyle: "normal",
-                                fontWeight: "600",
-                                lineHeight: "normal",
-                                opacity: 0.8,
-                              }}
-                            >
-                              {params?.row?.invoiceUrl}
-                            </Typography>
-                          </Stack>
-                        </Grid>
+                              <Button
+                                size="small"
+                                variant="contained"
+                                onClick={() => setIsEditMode(!isEditMode)}
+                              >
+                                {isEditMode
+                                  ? "Cancel Editing"
+                                  : "Edit Invoice Details"}
+                              </Button>
+                            </Grid>
 
-                        <Grid item lg={12}>
-                          <Stack
-                            direction="row"
-                            spacing={2}
-                            display="flex"
-                            alignItems="center"
-                          >
-                            <Typography
-                              sx={{
-                                color: " #000",
-                                fontFamily: "Poppins",
-                                fontSize: 12,
-                                fontStyle: "normal",
-                                fontWeight: "600",
-                                lineHeight: "normal",
-                                opacity: 0.8,
-                              }}
-                            >
-                              Invoice Date:
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: " #000",
-                                fontFamily: "Poppins",
-                                fontSize: 12,
-                                fontStyle: "normal",
-                                fontWeight: "600",
-                                lineHeight: "normal",
-                                opacity: 0.8,
-                              }}
-                            >
-                              {params?.row?.invoiceDate}
-                            </Typography>
-                          </Stack>
-                        </Grid>
+                            <Grid item lg={12}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                display="flex"
+                                alignItems="center"
+                              >
+                                <Typography
+                                  sx={{
+                                    flex: 1,
+                                    color: " #000",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontStyle: "normal",
+                                    fontWeight: "600",
+                                    lineHeight: "normal",
+                                    opacity: 0.8,
+                                  }}
+                                >
+                                  Invoice File (Attachment):
+                                </Typography>
 
-                        <Grid item lg={12}>
-                          <Stack
-                            direction="row"
-                            spacing={2}
-                            display="flex"
-                            alignItems="center"
-                          >
-                            <Typography
-                              sx={{
-                                color: " #000",
-                                fontFamily: "Poppins",
-                                fontSize: 12,
-                                fontStyle: "normal",
-                                fontWeight: "600",
-                                lineHeight: "normal",
-                                opacity: 0.8,
-                              }}
-                            >
-                              Service Details:
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: " #000",
-                                fontFamily: "Poppins",
-                                fontSize: 12,
-                                fontStyle: "normal",
-                                fontWeight: "600",
-                                lineHeight: "normal",
-                                opacity: 0.8,
-                              }}
-                            >
-                              {params?.row?.serviceDetails}
-                            </Typography>
-                          </Stack>
-                        </Grid>
+                                {isEditMode ? (
+                                  <Box
+                                    component={Stack}
+                                    sx={{ flex: 4 }}
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                  >
+                                    <Box>
+                                      <SingleUpload
+                                        title="Choose File"
+                                        formData={formData}
+                                      />
+                                    </Box>
 
-                        <Grid item lg={6}>
-                          <PaymentStatusFilter
-                            formValues={formValues}
-                            setFormValues={setFormValues}
-                          />
-                        </Grid>
+                                    {formValues?.invoiceUrl ? (
+                                      <Box component={Stack}>
+                                        <img
+                                          src={formValues?.invoiceUrl}
+                                          alt="preview"
+                                          height={100}
+                                          width={100}
+                                        />
+                                      </Box>
+                                    ) : null}
+                                  </Box>
+                                ) : (
+                                  <Button
+                                    onClick={() =>
+                                      handleClickOpenPhoto(
+                                        formValues?.invoiceUrl
+                                      )
+                                    }
+                                  >
+                                    <Typography
+                                      sx={{
+                                        flex: 4,
+                                        color: "#127DDD",
+                                        fontFamily: "Poppins",
+                                        fontSize: 12,
+                                        fontStyle: "normal",
+                                        fontWeight: "600",
+                                        lineHeight: "normal",
+                                        opacity: 0.8,
+                                      }}
+                                    >
+                                      {formValues?.invoiceUrl}
+                                    </Typography>
+                                  </Button>
+                                )}
+                              </Stack>
+                            </Grid>
 
-                        <Grid
-                          item
-                          lg={12}
+                            <Grid item lg={12}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                display="flex"
+                                alignItems="center"
+                              >
+                                <Typography
+                                  sx={{
+                                    flex: 1,
+                                    color: " #000",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontStyle: "normal",
+                                    fontWeight: "600",
+                                    lineHeight: "normal",
+                                    opacity: 0.8,
+                                  }}
+                                >
+                                  Invoice Date:
+                                </Typography>
+                                {isEditMode ? (
+                                  <Box sx={{ flex: 4 }}>
+                                    <CustomDate
+                                      formValues={formValues}
+                                      setFormValues={setFormValues}
+                                      label="Invoice Date"
+                                    />
+                                  </Box>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      flex: 4,
+                                      color: " #000",
+                                      fontFamily: "Poppins",
+                                      fontSize: 12,
+                                      fontStyle: "normal",
+                                      fontWeight: "600",
+                                      lineHeight: "normal",
+                                      opacity: 0.8,
+                                    }}
+                                  >
+                                    {formValues?.inVoiceDate
+                                      ? dayjs(formValues?.inVoiceDate).format(
+                                          "LL"
+                                        )
+                                      : ""}
+                                  </Typography>
+                                )}
+                              </Stack>
+                            </Grid>
+
+                            <Grid item lg={12}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                display="flex"
+                                alignItems="center"
+                              >
+                                <Typography
+                                  sx={{
+                                    flex: 1,
+                                    color: " #000",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontStyle: "normal",
+                                    fontWeight: "600",
+                                    lineHeight: "normal",
+                                    opacity: 0.8,
+                                  }}
+                                >
+                                  Service Details:
+                                </Typography>
+
+                                {isEditMode ? (
+                                  <Box sx={{ flex: 4 }}>
+                                    <CustomTextField
+                                      required
+                                      fullWidth
+                                      size="small"
+                                      label="Service Details"
+                                      placeholder="eg : enter details..."
+                                      value={formValues.serviceDetails || ""}
+                                      onChange={(e) =>
+                                        setFormValues({
+                                          ...formValues,
+                                          serviceDetails: e.target.value,
+                                        })
+                                      }
+                                    />
+                                  </Box>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      flex: 4,
+                                      color: " #000",
+                                      fontFamily: "Poppins",
+                                      fontSize: 12,
+                                      fontStyle: "normal",
+                                      fontWeight: "600",
+                                      lineHeight: "normal",
+                                      opacity: 0.8,
+                                    }}
+                                  >
+                                    {formValues?.serviceDetails}
+                                  </Typography>
+                                )}
+                              </Stack>
+                            </Grid>
+
+                            <Grid item lg={12}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                display="flex"
+                                alignItems="center"
+                              >
+                                <Typography
+                                  sx={{
+                                    flex: 1,
+                                    color: " #000",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontStyle: "normal",
+                                    fontWeight: "600",
+                                    lineHeight: "normal",
+                                    opacity: 0.8,
+                                  }}
+                                >
+                                  Payment Status:
+                                </Typography>
+                                <Box sx={{ flex: 4 }}>
+                                  <PaymentStatusFilter
+                                    formValues={formValues}
+                                    setFormValues={setFormValues}
+                                  />
+                                </Box>
+                              </Stack>
+                            </Grid>
+
+                            <Grid
+                              item
+                              lg={12}
+                              display="flex"
+                              justifyContent="center"
+                            >
+                              {/* <SubmitAlert disableClick={disableClick} /> */}
+                              <Stack direction="row" spacing={1}>
+                                <Button
+                                  variant="contained"
+                                  size="small"
+                                  sx={{ minWidth: 140 }}
+                                  onClick={() => setIsConfirm(true)}
+                                >
+                                  Save
+                                </Button>
+                              </Stack>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Fragment>
+                    ) : (
+                      <Fragment>
+                        <Stack
+                          minHeight={200}
+                          flex={1}
                           display="flex"
                           justifyContent="center"
+                          alignItems="center"
+                          spacing={2}
                         >
-                          <Button
-                            variant="contained"
-                            size="small"
-                            sx={{ minWidth: 140 }}
-                            type="submit"
-                          >
-                            Save
-                          </Button>
-                        </Grid>
-                      </Grid>
-                    </Box>
+                          <Typography variant="button" sx={{ color: "red" }}>
+                            Do you want to confirm changes?
+                          </Typography>
+                          <Stack direction="row" spacing={1}>
+                            <Button
+                              variant="contained"
+                              size="small"
+                              sx={{ minWidth: 140 }}
+                              onClick={() => setIsConfirm(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              disabled={disableClick}
+                              variant="contained"
+                              size="small"
+                              sx={{ minWidth: 140 }}
+                              type="submit"
+                            >
+                              Confirm
+                            </Button>
+                          </Stack>
+                        </Stack>
+                      </Fragment>
+                    )}
                   </form>
                 </DialogContent>
               </Dialog>
@@ -294,6 +475,12 @@ const UpdateInvoiceForm = ({
           </Grid>
         </Grid>
       </Box>
+
+      <PhotoViewer
+        url={imageUrl}
+        open={openPhoto}
+        handleClose={handleClosePhtoto}
+      />
     </Fragment>
   );
 };
