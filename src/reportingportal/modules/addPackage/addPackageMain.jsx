@@ -104,7 +104,7 @@ const AddPackageMain = ({
                 onChange={handleChange}
                 aria-label="lab API tabs example"
               >
-                <Tab label="Get Packages" value="1" />
+                <Tab label="Get/Add Packages" value="1" />
                 {/* <Tab label="Add Package Manually" value="2" /> */}
                 <Tab label="Add Bulk Package" value="3" />
                 <Tab label="Package Name Not Found List In File" value="4" />
