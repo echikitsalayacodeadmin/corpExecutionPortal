@@ -5,6 +5,8 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 
+import { Worker } from "@react-pdf-viewer/core";
+
 const CustomPDFViewer = ({ pdfUrl }) => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
@@ -13,11 +15,13 @@ const CustomPDFViewer = ({ pdfUrl }) => {
       <Box>
         {pdfUrl ? (
           <Box sx={{ height: "70vh", width: "100%" }}>
-            <Viewer
-              fileUrl={pdfUrl}
-              plugins={[defaultLayoutPluginInstance]}
-              defaultScale={2}
-            />
+            <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js">
+              <Viewer
+                fileUrl={pdfUrl}
+                plugins={[defaultLayoutPluginInstance]}
+                defaultScale={2}
+              />
+            </Worker>
           </Box>
         ) : (
           <Box
