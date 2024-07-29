@@ -22,6 +22,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Box, Button, Typography, createSvgIcon } from "@mui/material";
 import MuiPagination from "@mui/material/Pagination";
+import { StyledDataGrid } from "./CustomStyledDatagrid";
 
 function customCheckbox(theme) {
   return {
@@ -68,7 +69,7 @@ function customCheckbox(theme) {
   };
 }
 
-const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
+const StyledDataGrid1 = styled(DataGrid)(({ theme }) => ({
   border: 0,
   color:
     theme.palette.mode === "light"
@@ -185,9 +186,9 @@ function CustomToolbar() {
 
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
+      {/* <GridToolbarColumnsButton />
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
+      <GridToolbarDensitySelector /> */}
       <Button
         {...buttonBaseProps}
         onClick={() => handleExport({ getRowsToExport: getRowsWithoutGroups })}
@@ -213,7 +214,7 @@ const CustomDataGridLayout = ({
   disableSelectionOnClick,
   disableRowSelectionOnClick,
   onCellClick,
-  rowHeight,
+  rowHeight = 40,
   columnVisibilityModel,
   onColumnVisibilityModelChange,
   checkboxSelection = true,
@@ -228,8 +229,14 @@ const CustomDataGridLayout = ({
   return (
     <React.Fragment>
       <Box
-        style={{
+        sx={{
+          flexGrow: 1,
           width: "100%",
+          minHeight: 200,
+          // height: height - adjustHeight,
+          "& .super-app-theme--header": {
+            backgroundColor: "#F5F5FF",
+          },
         }}
       >
         <StyledDataGrid

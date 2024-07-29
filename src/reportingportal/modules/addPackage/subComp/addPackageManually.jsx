@@ -225,9 +225,9 @@ const AddPackageManually = ({
       editable: true,
       type: "singleSelect",
       valueOptions: [
-        // "AHC",
-        "ONROLL",
-        "CONTRACTOR",
+        "AHC",
+        // "ONROLL",
+        // "CONTRACTOR",
         "PRE_EMPLOYMENT",
         // "NOT_PROVIDED",
         // "NOT_MAPPED",

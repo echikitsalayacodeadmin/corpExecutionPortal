@@ -3,12 +3,17 @@ import CustomAutocomplete from "../../../../assets/customAutocomplete";
 import { formatColumnName } from "../../../../assets/utils";
 import {
   Box,
+  Button,
   Checkbox,
   Dialog,
   DialogContent,
+  DialogTitle,
   FormControlLabel,
   Grid,
   IconButton,
+  Stack,
+  TextField,
+  Typography,
 } from "@mui/material";
 import CustomDataGridLayout from "../../../../assets/globalDataGridLayout/customDataGridLayout";
 import { getData, updateData } from "../../../assets/reportingServices";
@@ -17,13 +22,15 @@ import CustomButtonBlue from "../../../../assets/customButtonBlue";
 import { Edit } from "@mui/icons-material";
 import RenderExpandableCells from "../../../../assets/globalDataGridLayout/renderExpandableCells";
 import { useSnackbar } from "notistack";
+import CreateNewPackageMain from "../createNewPackage/createNewPackageMain";
+import CustomSelectNew from "../../../../assets/customSelectNew";
 
 const GetPackages = ({
   corpId = localStorage.getItem("CORP_ID_REPORTING"),
 }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [rows, setRows] = useState([]);
-  const [selectedEmpType, setSelectedEmpType] = useState(null);
+  const [selectedEmpType, setSelectedEmpType] = useState("AHC");
   const [selectedRowData, setSelectedRowData] = useState({});
   const [open, setOpen] = useState(false);
 
@@ -36,6 +43,7 @@ const GetPackages = ({
             width: key === "id" ? 50 : 170,
             align: "left",
             headerAlign: "left",
+            headerClassName: "super-app-theme--header",
             renderCell: (params) => {
               return key === "actions" ? (
                 <IconButton
@@ -116,7 +124,8 @@ const GetPackages = ({
     (key) => typeof selectedRowData[key] === "boolean"
   );
 
-  const handleUpdateEmpPackage = async () => {
+  const handleUpdateEmpPackage = async (e) => {
+    e.preventDefault();
     const url = BASE_URL + `org/update/packageDetails/${corpId}`;
 
     const result = await updateData(url, selectedRowData);
@@ -136,34 +145,46 @@ const GetPackages = ({
 
   console.log({ selectedRowData });
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Fragment>
       <Box sx={{ gap: 2 }}>
-        <CustomAutocomplete
-          options={["AHC", "ONROLL", "CONTRACTOR", "PRE_EMPLOYMENT", "CSR"]}
-          value={selectedEmpType || null}
-          onChange={(event, newValue, reason) => {
-            setSelectedEmpType(newValue);
-            if (reason === "clear") {
-              setSelectedEmpType(null);
-            }
-          }}
-          label="Select Employment Type"
-          placeholder="Select Employment Type"
-          required={true}
-          asterickColor={"red"}
-          getOptionLabel={(option) => option || null}
-        />
-        <CustomDataGridLayout
-          disableRowSelectionOnClick={true}
-          disableSelectionOnClick={true}
-          checkboxSelection={false}
-          hideFooterPagination={false}
-          rowHeight={30}
-          columns={columns}
-          rows={rows}
-          Gridheight={"65vh"}
-        />
+        <Grid container spacing={1}>
+          <Grid item lg={4}>
+            <CustomAutocomplete
+              options={["AHC", "ONROLL", "CONTRACTOR", "PRE_EMPLOYMENT", "CSR"]}
+              value={selectedEmpType || null}
+              onChange={(event, newValue, reason) => {
+                setSelectedEmpType(newValue);
+                if (reason === "clear") {
+                  setSelectedEmpType(null);
+                }
+              }}
+              label="Select Employment Type"
+              placeholder="Select Employment Type"
+              required={true}
+              asterickColor={"red"}
+              getOptionLabel={(option) => option || null}
+            />
+          </Grid>
+          <Grid item lg={8} display="flex" justifyContent="flex-end">
+            <CreateNewPackageMain />
+          </Grid>
+          <Grid item lg={12}>
+            <CustomDataGridLayout
+              disableRowSelectionOnClick={true}
+              disableSelectionOnClick={true}
+              checkboxSelection={false}
+              hideFooterPagination={false}
+              rowHeight={35}
+              columns={columns}
+              rows={rows}
+              Gridheight={"62vh"}
+            />
+          </Grid>
+        </Grid>
       </Box>
 
       <Dialog
@@ -172,36 +193,159 @@ const GetPackages = ({
         maxWidth="lg"
         fullWidth
       >
+        <DialogTitle textAlign="center" sx={{ textTransform: "capitalize" }}>
+          {selectedRowData.packageName || ""}
+        </DialogTitle>
         <DialogContent>
-          <Grid container spacing={2}>
-            {booleanFields.map((field) => (
-              <Grid item xs={12} sm={6} md={4} key={field}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedRowData[field] || false}
-                      onChange={handleCheckboxChange}
-                      name={field}
+          <Box sx={{ p: 5 }}>
+            <form onSubmit={handleUpdateEmpPackage}>
+              <Grid container spacing={2}>
+                <Grid item lg={6} xs={12}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flex={1}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Typography sx={{ flex: 1.2 }}>Package Name:</Typography>
+                    <TextField
+                      sx={{ flex: 3 }}
+                      size="small"
+                      fullWidth
+                      ///label="Packge Name"
+                      placeholder="Enter package name..."
+                      value={selectedRowData.packageName}
+                      onChange={(e) => {
+                        setSelectedRowData({
+                          ...selectedRowData,
+                          packageName: e.target.value,
+                        });
+                      }}
                     />
-                  }
-                  label={field}
-                />
-              </Grid>
-            ))}
-          </Grid>
+                  </Stack>
+                </Grid>
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mt: 5,
-            }}
-          >
-            <CustomButtonBlue
-              onClick={handleUpdateEmpPackage}
-              title={"Submit"}
-            />
+                <Grid item lg={6} xs={12}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flex={1}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Typography sx={{ flex: 1.2 }}>Employment Type:</Typography>
+                    <Box sx={{ flex: 3 }}>
+                      <CustomSelectNew
+                        formValues={selectedRowData}
+                        setFormValues={setSelectedRowData}
+                        property="employmentType"
+                        options={[
+                          { id: 1, label: "AHC", value: "AHC" },
+                          {
+                            id: 1,
+                            label: "PRE EMPLOYMENT",
+                            value: "PRE_EMPLOYMENT",
+                          },
+                        ]}
+                        placeholder="Select employment type..."
+                        width={"100%"}
+                      />
+                    </Box>
+                  </Stack>
+                </Grid>
+
+                <Grid item lg={6} xs={12}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flex={1}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Typography sx={{ flex: 1.2 }}>Employment Type:</Typography>
+
+                    <TextField
+                      sx={{ flex: 3 }}
+                      size="small"
+                      fullWidth
+                      //label="Blood Packge Name"
+                      placeholder="Enter blood package name..."
+                      value={selectedRowData.bloodPackageName}
+                      onChange={(e) => {
+                        setSelectedRowData({
+                          ...selectedRowData,
+                          bloodPackageName: e.target.value,
+                        });
+                      }}
+                    />
+                  </Stack>
+                </Grid>
+
+                <Grid item lg={6} xs={12}>
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    flex={1}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Typography sx={{ flex: 1.2 }}>Blood Detail:</Typography>
+                    <TextField
+                      sx={{ flex: 3 }}
+                      size="small"
+                      fullWidth
+                      //label="Blood Packge Details"
+                      placeholder="Enter blood details..."
+                      value={selectedRowData.pathPackageDetails}
+                      onChange={(e) => {
+                        setSelectedRowData({
+                          ...selectedRowData,
+                          pathPackageDetails: e.target.value,
+                        });
+                      }}
+                    />
+                  </Stack>
+                </Grid>
+                {booleanFields.map((field) => (
+                  <Grid item xs={12} sm={6} md={4} key={field}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={selectedRowData[field] || false}
+                          onChange={handleCheckboxChange}
+                          name={field}
+                        />
+                      }
+                      label={field}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+              <Box
+                component={Stack}
+                spacing={2}
+                direction="row"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  mt: 5,
+                }}
+              >
+                <Button variant="contained" size="small" type="submit">
+                  Submit
+                </Button>
+
+                <Button variant="contained" size="small" onClick={handleClose}>
+                  Close
+                </Button>
+              </Box>
+            </form>
           </Box>
         </DialogContent>
       </Dialog>
