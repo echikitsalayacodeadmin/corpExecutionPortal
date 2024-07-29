@@ -46,6 +46,7 @@ const UpdateInvoiceForm = ({
   const handleClose = () => {
     setOpen(false);
     setIsEditMode(false);
+    setIsConfirm(false);
   };
 
   const submitHandler = async (e) => {
@@ -61,6 +62,8 @@ const UpdateInvoiceForm = ({
     );
     formData.append("serviceDetails", formValues.serviceDetails);
     formData.append("paymentStatus", formValues.paymentStatus);
+    formData.append("totalInvoiceAmount", formValues.totalInvoiceAmount);
+    formData.append("totalReceivedAmount", formValues.totalReceivedAmount);
     // formData.append("addedBy", authId);
 
     const res = await updateDataFile(url, formData);
@@ -74,7 +77,7 @@ const UpdateInvoiceForm = ({
         variant: "success",
       });
       handleClose();
-      setFormValues({});
+      //setFormValues({});
       getInvoiceList();
       setDisableClick(false);
       console.log({ success: res.data });
@@ -377,6 +380,155 @@ const UpdateInvoiceForm = ({
                                     }}
                                   >
                                     {formValues?.serviceDetails}
+                                  </Typography>
+                                )}
+                              </Stack>
+                            </Grid>
+
+                            <Grid item lg={6}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                display="flex"
+                                alignItems="center"
+                              >
+                                <Typography
+                                  sx={{
+                                    flex: 3,
+                                    color: " #000",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontStyle: "normal",
+                                    fontWeight: "600",
+                                    lineHeight: "normal",
+                                    opacity: 0.8,
+                                  }}
+                                >
+                                  Total Invoice Amount:
+                                </Typography>
+
+                                {isEditMode ? (
+                                  <Box sx={{ flex: 4 }}>
+                                    <CustomTextField
+                                      required
+                                      fullWidth
+                                      // type="number"
+                                      size="small"
+                                      //label="Total Invoice Amount"
+                                      placeholder="eg : enter total invoice amount..."
+                                      value={
+                                        formValues.totalInvoiceAmount || ""
+                                      }
+                                      onChange={(e) => {
+                                        if (!isNaN(e.target.value)) {
+                                          setFormValues({
+                                            ...formValues,
+                                            totalInvoiceAmount: e.target.value,
+                                          });
+                                        }
+                                      }}
+                                    />
+                                  </Box>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      flex: 4,
+                                      color: " #000",
+                                      fontFamily: "Poppins",
+                                      fontSize: 12,
+                                      fontStyle: "normal",
+                                      fontWeight: "600",
+                                      lineHeight: "normal",
+                                      opacity: 0.8,
+                                    }}
+                                  >
+                                    {formValues?.totalInvoiceAmount}
+                                  </Typography>
+                                )}
+                              </Stack>
+                            </Grid>
+
+                            <Grid item lg={6}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                display="flex"
+                                alignItems="center"
+                              >
+                                <Typography
+                                  sx={{
+                                    flex: 3,
+                                    color: " #000",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontStyle: "normal",
+                                    fontWeight: "600",
+                                    lineHeight: "normal",
+                                    opacity: 0.8,
+                                  }}
+                                >
+                                  Total Received Amount:
+                                </Typography>
+
+                                {isEditMode ? (
+                                  <Box sx={{ flex: 4 }}>
+                                    <CustomTextField
+                                      // type="number"
+                                      required
+                                      fullWidth
+                                      size="small"
+                                      //label="Total Received Amount"
+                                      placeholder="eg : enter total received amount..."
+                                      value={
+                                        formValues.totalReceivedAmount || ""
+                                      }
+                                      onChange={(e) => {
+                                        if (
+                                          (!isNaN(e.target.value) &&
+                                            parseInt(e.target.value) <=
+                                              parseInt(
+                                                formValues.totalInvoiceAmount
+                                              )) ||
+                                          e.target.value === ""
+                                        ) {
+                                          setFormValues({
+                                            ...formValues,
+                                            totalReceivedAmount: e.target.value,
+                                            paymentStatus:
+                                              parseInt(
+                                                formValues.totalInvoiceAmount
+                                              ) -
+                                                parseInt(e.target.value) ===
+                                              0
+                                                ? "FULL_PAYMENT_RECEIVED"
+                                                : parseInt(e.target.value) >
+                                                    0 &&
+                                                  parseInt(
+                                                    formValues.totalInvoiceAmount
+                                                  ) -
+                                                    parseInt(e.target.value) >
+                                                    0
+                                                ? "PARTIAL_PAYMENT_RECEIVED"
+                                                : "FULL_PAYMENT_PENDING",
+                                          });
+                                        }
+                                      }}
+                                    />
+                                  </Box>
+                                ) : (
+                                  <Typography
+                                    sx={{
+                                      flex: 4,
+                                      color: " #000",
+                                      fontFamily: "Poppins",
+                                      fontSize: 12,
+                                      fontStyle: "normal",
+                                      fontWeight: "600",
+                                      lineHeight: "normal",
+                                      opacity: 0.8,
+                                    }}
+                                  >
+                                    {formValues?.totalReceivedAmount}
                                   </Typography>
                                 )}
                               </Stack>

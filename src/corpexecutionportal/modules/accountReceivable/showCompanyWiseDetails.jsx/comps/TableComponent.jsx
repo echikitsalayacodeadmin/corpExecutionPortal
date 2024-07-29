@@ -74,7 +74,7 @@ const TableComponent = ({ companyInvoiceData, getInvoiceDetailsByCorpId }) => {
             <CustomTypographyTableHeader title="Invoice Date" />
           </Box>
         ),
-        width: width / 4,
+        width: 140,
         headerClassName: "super-app-theme--header",
         align: "left",
         headerAlign: "left",
@@ -92,7 +92,39 @@ const TableComponent = ({ companyInvoiceData, getInvoiceDetailsByCorpId }) => {
         renderHeader: (params) => (
           <CustomTypographyTableHeader title="Service Details" />
         ),
-        width: width / 8 + 73,
+        width: width / 6 + 45,
+        headerClassName: "super-app-theme--header",
+        align: "left",
+        headerAlign: "left",
+        renderCell: (cellValues) => (
+          <CustomTypographyTableCell>
+            {cellValues.value}
+          </CustomTypographyTableCell>
+        ),
+      },
+      {
+        field: "totalInvoiceAmount",
+        display: "flex",
+        renderHeader: (params) => (
+          <CustomTypographyTableHeader title="Total Invoice Amount" />
+        ),
+        width: width / 8,
+        headerClassName: "super-app-theme--header",
+        align: "left",
+        headerAlign: "left",
+        renderCell: (cellValues) => (
+          <CustomTypographyTableCell>
+            {cellValues.value}
+          </CustomTypographyTableCell>
+        ),
+      },
+      {
+        field: "totalReceivedAmount",
+        display: "flex",
+        renderHeader: (params) => (
+          <CustomTypographyTableHeader title="Total Received Amount" />
+        ),
+        width: width / 8,
         headerClassName: "super-app-theme--header",
         align: "left",
         headerAlign: "left",
@@ -108,7 +140,7 @@ const TableComponent = ({ companyInvoiceData, getInvoiceDetailsByCorpId }) => {
         renderHeader: (params) => (
           <CustomTypographyTableHeader title="Payment Status" />
         ),
-        width: width / 4,
+        width: width / 8,
         headerClassName: "super-app-theme--header",
         align: "left",
         headerAlign: "left",

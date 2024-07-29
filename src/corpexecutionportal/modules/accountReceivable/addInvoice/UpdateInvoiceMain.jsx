@@ -11,6 +11,8 @@ const UpdateInvoiceMain = ({ getInvoiceList, formData, params }) => {
       : "",
     serviceDetails: params?.row?.serviceDetails || "",
     paymentStatus: params?.row?.paymentStatus || "",
+    totalInvoiceAmount: params?.row?.totalInvoiceAmount || "",
+    totalReceivedAmount: params?.row?.totalReceivedAmount || "",
   });
 
   console.log({ formValues });

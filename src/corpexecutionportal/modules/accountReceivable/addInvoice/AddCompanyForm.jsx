@@ -60,6 +60,8 @@ const AddCompanyForm = ({
     );
     formData.append("serviceDetails", formValues.serviceDetails);
     formData.append("paymentStatus", formValues.paymentStatus);
+    formData.append("totalInvoiceAmount", formValues.totalInvoiceAmount);
+    formData.append("totalReceivedAmount", formValues.totalReceivedAmount);
     formData.append("addedBy", authId);
 
     const res = await uploadFile(url, formData);
@@ -219,6 +221,64 @@ const AddCompanyForm = ({
                                 serviceDetails: e.target.value,
                               })
                             }
+                          />
+                        </Grid>
+
+                        <Grid item lg={6}>
+                          <CustomTextField
+                            required
+                            fullWidth
+                            // type="number"
+                            size="small"
+                            label="Total Invoice Amount"
+                            placeholder="eg : enter total invoice amount..."
+                            value={formValues.totalInvoiceAmount || ""}
+                            onChange={(e) => {
+                              if (!isNaN(e.target.value)) {
+                                setFormValues({
+                                  ...formValues,
+                                  totalInvoiceAmount: e.target.value,
+                                });
+                              }
+                            }}
+                          />
+                        </Grid>
+
+                        <Grid item lg={6}>
+                          <CustomTextField
+                            //type="number"
+                            required
+                            fullWidth
+                            size="small"
+                            label="Total Received Amount"
+                            placeholder="eg : enter total received amount..."
+                            value={formValues.totalReceivedAmount || ""}
+                            onChange={(e) => {
+                              if (
+                                (!isNaN(e.target.value) &&
+                                  parseInt(e.target.value) <=
+                                    parseInt(formValues.totalInvoiceAmount)) ||
+                                e.target.value === ""
+                              ) {
+                                setFormValues({
+                                  ...formValues,
+                                  totalReceivedAmount: e.target.value,
+                                  paymentStatus:
+                                    parseInt(formValues.totalInvoiceAmount) -
+                                      parseInt(e.target.value) ===
+                                    0
+                                      ? "FULL_PAYMENT_RECEIVED"
+                                      : parseInt(e.target.value) > 0 &&
+                                        parseInt(
+                                          formValues.totalInvoiceAmount
+                                        ) -
+                                          parseInt(e.target.value) >
+                                          0
+                                      ? "PARTIAL_PAYMENT_RECEIVED"
+                                      : "FULL_PAYMENT_PENDING",
+                                });
+                              }
+                            }}
                           />
                         </Grid>
 

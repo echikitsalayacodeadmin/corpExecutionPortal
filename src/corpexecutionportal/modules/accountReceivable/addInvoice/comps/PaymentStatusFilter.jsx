@@ -16,6 +16,7 @@ const PaymentStatusFilter = ({
         options={PaymentStatusList}
         label={label}
         placeholder="Status"
+        disabled={true}
       />
     </Fragment>
   );
