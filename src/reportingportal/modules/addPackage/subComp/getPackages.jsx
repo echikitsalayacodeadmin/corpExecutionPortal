@@ -154,7 +154,7 @@ const GetPackages = ({
         <Grid container spacing={1}>
           <Grid item lg={4}>
             <CustomAutocomplete
-              options={["AHC", "ONROLL", "CONTRACTOR", "PRE_EMPLOYMENT", "CSR"]}
+              options={["AHC", "PRE_EMPLOYMENT"]}
               value={selectedEmpType || null}
               onChange={(event, newValue, reason) => {
                 setSelectedEmpType(newValue);
