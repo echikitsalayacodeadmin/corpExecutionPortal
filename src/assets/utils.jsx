@@ -157,7 +157,7 @@ export const downloadCsv = (jsonData, csvname) => {
   const hiddenElement = document.createElement("a");
   hiddenElement.href = csvUrl;
   hiddenElement.target = "_blank";
-  hiddenElement.download = csvname;
+  hiddenElement.download = csvname?.replaceAll(".", "");
   hiddenElement.click();
 };
 
