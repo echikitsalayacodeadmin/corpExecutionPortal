@@ -178,6 +178,7 @@ const CreateNewPackageMain = ({
                       size="small"
                       fullWidth
                       ///label="Packge Name"
+                      required
                       placeholder="Enter package name..."
                       value={formValues.packageName}
                       onChange={(e) => {

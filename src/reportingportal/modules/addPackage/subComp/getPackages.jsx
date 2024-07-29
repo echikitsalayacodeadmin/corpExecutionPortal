@@ -214,6 +214,7 @@ const GetPackages = ({
                       sx={{ flex: 3 }}
                       size="small"
                       fullWidth
+                      required
                       ///label="Packge Name"
                       placeholder="Enter package name..."
                       value={selectedRowData.packageName}
