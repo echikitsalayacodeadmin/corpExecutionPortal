@@ -627,3 +627,9 @@ export const PaymentStatusList = [
   { label: "Partial Payment Received", value: "PARTIAL_PAYMENT_RECEIVED" },
   { label: "Full Payment Received", value: "FULL_PAYMENT_RECEIVED" },
 ];
+
+export const PaymentStatusColor = {
+  FULL_PAYMENT_RECEIVED: "green",
+  PARTIAL_PAYMENT_RECEIVED: "#FF7F7F",
+  FULL_PAYMENT_PENDING: "red",
+};

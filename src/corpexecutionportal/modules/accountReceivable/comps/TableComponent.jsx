@@ -3,42 +3,10 @@ import { Fragment } from "react";
 import useWindowDimensions from "../../../../assets/customHooks/customhooks";
 import { useNavigate } from "react-router-dom";
 import CustomDataGridNew from "../../../../assets/globalDataGridLayout/CustomDataGridNew";
-
-const CustomTypographyTableCell = ({ children }) => {
-  return (
-    <Typography
-      sx={{
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        fontSize: "12px",
-        lineHeightt: "normal",
-        color: "#000",
-        textTransform: "capitalize",
-      }}
-    >
-      {children}
-    </Typography>
-  );
-};
-const CustomTypographyTableHeader = ({ title }) => {
-  return (
-    <Typography
-      sx={{
-        fontFamily: "Poppins",
-        fontStyle: "normal",
-        fontWeight: "400",
-        fontSize: "14px",
-        lineHeightt: "normal",
-        color: "#000",
-        textTransform: "capitalize",
-        opacity: 0.6,
-      }}
-    >
-      {title}
-    </Typography>
-  );
-};
+import {
+  CustomTypographyTableCell,
+  CustomTypographyTableHeader,
+} from "../../../assets/customTypography/CustomTypography";
 
 const columns = (width) => [
   {
@@ -49,7 +17,7 @@ const columns = (width) => [
         <CustomTypographyTableHeader title="Company Name" />
       </Box>
     ),
-    width: width / 4,
+    width: (3 * width) / 8 - 30,
     headerClassName: "super-app-theme--header",
     align: "left",
     headerAlign: "left",
@@ -67,10 +35,10 @@ const columns = (width) => [
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Total Invoice" />
     ),
-    width: width / 4,
+    width: width / 8,
     headerClassName: "super-app-theme--header",
-    align: "left",
-    headerAlign: "left",
+    align: "center",
+    headerAlign: "center",
     renderCell: (cellValues) => (
       <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
     ),
@@ -81,10 +49,10 @@ const columns = (width) => [
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Payment Pending" />
     ),
-    width: width / 4,
+    width: width / 8,
     headerClassName: "super-app-theme--header",
-    align: "left",
-    headerAlign: "left",
+    align: "center",
+    headerAlign: "center",
     renderCell: (cellValues) => (
       <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
     ),
@@ -95,10 +63,40 @@ const columns = (width) => [
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Payment Received" />
     ),
-    width: width / 4,
+    width: width / 8,
     headerClassName: "super-app-theme--header",
-    align: "left",
-    headerAlign: "left",
+    align: "center",
+    headerAlign: "center",
+    renderCell: (cellValues) => (
+      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+    ),
+  },
+
+  {
+    field: "totalInvoiceAmount",
+    display: "flex",
+    renderHeader: (params) => (
+      <CustomTypographyTableHeader title="Total Invoice Amount" />
+    ),
+    width: width / 8,
+    headerClassName: "super-app-theme--header",
+    align: "center",
+    headerAlign: "center",
+    renderCell: (cellValues) => (
+      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+    ),
+  },
+
+  {
+    field: "totalReceivedAmount",
+    display: "flex",
+    renderHeader: (params) => (
+      <CustomTypographyTableHeader title="Total Received Amount" />
+    ),
+    width: width / 8 + 30,
+    headerClassName: "super-app-theme--header",
+    align: "center",
+    headerAlign: "center",
     renderCell: (cellValues) => (
       <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
     ),

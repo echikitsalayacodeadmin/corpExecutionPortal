@@ -37,6 +37,13 @@ const ChooseCompanyForm = ({ formValues, setFormValues, companyList = [] }) => {
                     <Box sx={{ minWidth: 400 }}>
                       <FormControl fullWidth>
                         <Select
+                          sx={{
+                            fontSize: 11,
+                            fontWeight: 600,
+                            color: "#000",
+                            fontFamily: "Roboto",
+                            fontStyle: "normal",
+                          }}
                           displayEmpty
                           size="small"
                           fullWidth
@@ -49,11 +56,30 @@ const ChooseCompanyForm = ({ formValues, setFormValues, companyList = [] }) => {
                             })
                           }
                         >
-                          <MenuItem disabled value="">
+                          <MenuItem
+                            value=""
+                            sx={{
+                              fontSize: 11,
+                              fontWeight: 600,
+                              color: "#000",
+                              fontFamily: "Roboto",
+                              fontStyle: "normal",
+                            }}
+                          >
                             <em>Select Company...</em>
                           </MenuItem>
                           {companyList.map((value, index) => (
-                            <MenuItem value={value} key={index}>
+                            <MenuItem
+                              value={value}
+                              key={index}
+                              sx={{
+                                fontSize: 11,
+                                fontWeight: 600,
+                                color: "#000",
+                                fontFamily: "Roboto",
+                                fontStyle: "normal",
+                              }}
+                            >
                               {value.orgName}
                             </MenuItem>
                           ))}

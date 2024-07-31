@@ -533,3 +533,11 @@ export const getUrlExtension = (url) => {
     return "";
   }
 };
+
+export const getFileNameWithExt = (name) => {
+  const lastDot = name.lastIndexOf(".");
+  const fileName = name.substring(0, lastDot);
+  const ext = name.substring(lastDot + 1);
+
+  return ext;
+};

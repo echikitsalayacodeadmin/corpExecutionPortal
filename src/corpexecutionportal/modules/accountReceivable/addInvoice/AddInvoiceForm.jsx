@@ -23,6 +23,10 @@ import { BASE_URL } from "../../../../assets/constants";
 import dayjs from "dayjs";
 import { getCompanyList } from "../../../services/genericTicketingSystem";
 import ChooseCompanyForm from "./comps/chooseCompanyForm";
+import {
+  PaymentStatusColor,
+  PaymentStatusList,
+} from "../../../assets/corpConstants";
 
 const AddInvoiceForm = ({
   label,
@@ -241,12 +245,15 @@ const AddInvoiceForm = ({
                         <Grid item lg={6}>
                           <CustomTextField
                             // type="number"
+                            onFocus={(event) => {
+                              event.target.select();
+                            }}
                             required
                             fullWidth
                             size="small"
                             label="Total Received Amount"
                             placeholder="eg : enter total received amount..."
-                            value={formValues.totalReceivedAmount || ""}
+                            value={formValues.totalReceivedAmount}
                             onChange={(e) => {
                               if (
                                 (!isNaN(e.target.value) &&
@@ -273,15 +280,32 @@ const AddInvoiceForm = ({
                                 });
                               }
                             }}
+                            helperText={
+                              formValues.paymentStatus
+                                ? `Payment Status: ${
+                                    PaymentStatusList.find(
+                                      (v) =>
+                                        v.value === formValues.paymentStatus
+                                    )?.label
+                                  }`
+                                : ""
+                            }
+                            FormHelperTextProps={{
+                              sx: {
+                                fontWeight: 600,
+                                color:
+                                  PaymentStatusColor[formValues.paymentStatus],
+                              },
+                            }}
                           />
                         </Grid>
 
-                        <Grid item lg={6}>
+                        {/* <Grid item lg={6}>
                           <PaymentStatusFilter
                             formValues={formValues}
                             setFormValues={setFormValues}
                           />
-                        </Grid>
+                        </Grid> */}
 
                         <Grid
                           item

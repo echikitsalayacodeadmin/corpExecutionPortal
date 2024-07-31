@@ -2,7 +2,10 @@ import { Fragment, useState } from "react";
 import AddInvoiceForm from "./AddInvoiceForm";
 
 const AddInvoiceMain = ({ label, getInvoiceList, formData, corpId }) => {
-  const [formValues, setFormValues] = useState({ company: { corpId: corpId } });
+  const [formValues, setFormValues] = useState({
+    company: { corpId: corpId },
+    totalReceivedAmount: 0,
+  });
 
   console.log({ formValues });
   return (

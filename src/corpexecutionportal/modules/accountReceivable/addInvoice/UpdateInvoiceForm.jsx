@@ -26,6 +26,12 @@ import { CustomDate } from "./comps/customDateComps";
 import SingleUpload from "./comps/singleUpload";
 import { PhotoViewer } from "../../../../assets/customPhotoViewer/photoViewer";
 import SubmitAlert from "./comps/submitAlert";
+import {
+  PaymentStatusColor,
+  PaymentStatusList,
+} from "../../../assets/corpConstants";
+import { getUrlExtension } from "../../../../assets/utils";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 const UpdateInvoiceForm = ({
   formValues,
@@ -238,14 +244,30 @@ const UpdateInvoiceForm = ({
                                     </Box>
 
                                     {formValues?.invoiceUrl ? (
-                                      <Box component={Stack}>
-                                        <img
-                                          src={formValues?.invoiceUrl}
-                                          alt="preview"
-                                          height={100}
-                                          width={100}
-                                        />
-                                      </Box>
+                                      <Fragment>
+                                        <Button
+                                          onClick={() =>
+                                            handleClickOpenPhoto(
+                                              formValues?.invoiceUrl
+                                            )
+                                          }
+                                        >
+                                          <Box component={Stack}>
+                                            {getUrlExtension(
+                                              formValues?.invoiceUrl
+                                            ) === "pdf" ? (
+                                              <PictureAsPdfIcon fontSize="large" />
+                                            ) : (
+                                              <img
+                                                src={formValues?.invoiceUrl}
+                                                alt="preview"
+                                                height={100}
+                                                width={100}
+                                              />
+                                            )}
+                                          </Box>
+                                        </Button>
+                                      </Fragment>
                                     ) : null}
                                   </Box>
                                 ) : (
@@ -385,7 +407,7 @@ const UpdateInvoiceForm = ({
                               </Stack>
                             </Grid>
 
-                            <Grid item lg={6}>
+                            <Grid item lg={12}>
                               <Stack
                                 direction="row"
                                 spacing={2}
@@ -394,7 +416,7 @@ const UpdateInvoiceForm = ({
                               >
                                 <Typography
                                   sx={{
-                                    flex: 3,
+                                    flex: 1,
                                     color: " #000",
                                     fontFamily: "Poppins",
                                     fontSize: 12,
@@ -410,6 +432,7 @@ const UpdateInvoiceForm = ({
                                 {isEditMode ? (
                                   <Box sx={{ flex: 4 }}>
                                     <CustomTextField
+                                      disabled
                                       required
                                       fullWidth
                                       // type="number"
@@ -448,16 +471,23 @@ const UpdateInvoiceForm = ({
                               </Stack>
                             </Grid>
 
-                            <Grid item lg={6}>
+                            <Grid
+                              item
+                              lg={12}
+                              display="flex"
+                              alignItems="center"
+                            >
                               <Stack
+                                flex={1}
                                 direction="row"
                                 spacing={2}
                                 display="flex"
                                 alignItems="center"
+                                justifyContent="center"
                               >
                                 <Typography
                                   sx={{
-                                    flex: 3,
+                                    flex: 1,
                                     color: " #000",
                                     fontFamily: "Poppins",
                                     fontSize: 12,
@@ -470,7 +500,7 @@ const UpdateInvoiceForm = ({
                                   Total Received Amount:
                                 </Typography>
 
-                                {isEditMode ? (
+                                {true ? (
                                   <Box sx={{ flex: 4 }}>
                                     <CustomTextField
                                       // type="number"
@@ -513,6 +543,26 @@ const UpdateInvoiceForm = ({
                                           });
                                         }
                                       }}
+                                      helperText={
+                                        formValues.paymentStatus
+                                          ? `Payment Status: ${
+                                              PaymentStatusList.find(
+                                                (v) =>
+                                                  v.value ===
+                                                  formValues.paymentStatus
+                                              )?.label
+                                            }`
+                                          : ""
+                                      }
+                                      FormHelperTextProps={{
+                                        sx: {
+                                          fontWeight: 600,
+                                          color:
+                                            PaymentStatusColor[
+                                              formValues.paymentStatus
+                                            ],
+                                        },
+                                      }}
                                     />
                                   </Box>
                                 ) : (
@@ -534,7 +584,7 @@ const UpdateInvoiceForm = ({
                               </Stack>
                             </Grid>
 
-                            <Grid item lg={12}>
+                            {/* <Grid item lg={12}>
                               <Stack
                                 direction="row"
                                 spacing={2}
@@ -562,7 +612,7 @@ const UpdateInvoiceForm = ({
                                   />
                                 </Box>
                               </Stack>
-                            </Grid>
+                            </Grid> */}
 
                             <Grid
                               item
