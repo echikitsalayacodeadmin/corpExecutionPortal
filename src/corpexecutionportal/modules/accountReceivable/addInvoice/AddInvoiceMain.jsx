@@ -5,6 +5,7 @@ const AddInvoiceMain = ({ label, getInvoiceList, formData, corpId }) => {
   const [formValues, setFormValues] = useState({
     company: { corpId: corpId },
     totalReceivedAmount: 0,
+    paymentStatus: "FULL_PAYMENT_PENDING",
   });
 
   console.log({ formValues });
