@@ -3,12 +3,17 @@ import { Fragment, useEffect, useState } from "react";
 import MainPageLayoutWithBack from "../../../global/templates/mainPageLayoutWithBack";
 import TableComponent from "./comps/TableComponent";
 import AddInvoiceMain from "../addInvoice/AddInvoiceMain";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { BASE_URL } from "../../../../assets/constants";
 import { getData } from "../../../assets/corpServices";
 import PaymentStatusFilter from "../addInvoice/comps/PaymentStatusFilter";
 
 const ShowInvoiceDetailsMain = () => {
+  const { state } = useLocation();
+  const { rowdata } = state;
+
+  console.log({ rowdata });
+
   let { corpId } = useParams();
   const [companyInvoiceData, setCompanyInvoiceData] = useState([]);
   const [companyInvoiceDataFiltered, setCompanyInvoiceDataFiltered] = useState(
@@ -68,7 +73,9 @@ const ShowInvoiceDetailsMain = () => {
 
   return (
     <Fragment>
-      <MainPageLayoutWithBack title="Account Receivable Details">
+      <MainPageLayoutWithBack
+        title={`Account Receivable Details- ${rowdata?.companyName}`}
+      >
         <Box>
           <Grid container spacing={1}>
             <Grid item lg={5}>

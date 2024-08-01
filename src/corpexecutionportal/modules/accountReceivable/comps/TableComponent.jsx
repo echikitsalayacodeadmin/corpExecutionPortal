@@ -58,7 +58,7 @@ const columns = (width) => [
     ),
   },
   {
-    field: "totalReceivables",
+    field: "totalReceivableAmount",
     display: "flex",
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Total Receivables" />
@@ -133,7 +133,8 @@ const TableComponent = ({ data }) => {
                 rows={data}
                 onRowClick={(params) =>
                   navigate(
-                    `/corp/accountreceivable/details/${params.row.corpId}`
+                    `/corp/accountreceivable/details/${params.row.corpId}`,
+                    { state: { rowdata: params.row } }
                   )
                 }
               />
