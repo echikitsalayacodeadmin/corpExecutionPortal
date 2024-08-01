@@ -90,10 +90,10 @@ const TableComponent = ({ companyInvoiceData, getInvoiceDetailsByCorpId }) => {
           ),
         },
         {
-          field: "totalReceivedAmount",
+          field: "totalReceivableAmount",
           display: "flex",
           renderHeader: (params) => (
-            <CustomTypographyTableHeader title="Total Received Amount" />
+            <CustomTypographyTableHeader title="Total Receivables" />
           ),
           width: width / 8,
           headerClassName: "super-app-theme--header",
