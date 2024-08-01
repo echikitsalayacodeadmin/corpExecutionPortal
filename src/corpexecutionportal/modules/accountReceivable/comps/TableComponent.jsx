@@ -17,7 +17,7 @@ const columns = (width) => [
         <CustomTypographyTableHeader title="Company Name" />
       </Box>
     ),
-    width: (3 * width) / 8 - 30,
+    width: (1 * width) / 2,
     headerClassName: "super-app-theme--header",
     align: "left",
     headerAlign: "left",
@@ -35,7 +35,7 @@ const columns = (width) => [
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Total Invoice" />
     ),
-    width: width / 8,
+    width: width / 6,
     headerClassName: "super-app-theme--header",
     align: "center",
     headerAlign: "center",
@@ -49,7 +49,7 @@ const columns = (width) => [
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Payment Pending" />
     ),
-    width: width / 8,
+    width: width / 6,
     headerClassName: "super-app-theme--header",
     align: "center",
     headerAlign: "center",
@@ -58,12 +58,12 @@ const columns = (width) => [
     ),
   },
   {
-    field: "paymentReceived",
+    field: "totalReceivables",
     display: "flex",
     renderHeader: (params) => (
-      <CustomTypographyTableHeader title="Payment Received" />
+      <CustomTypographyTableHeader title="Total Receivables" />
     ),
-    width: width / 8,
+    width: width / 6,
     headerClassName: "super-app-theme--header",
     align: "center",
     headerAlign: "center",
@@ -72,35 +72,50 @@ const columns = (width) => [
     ),
   },
 
-  {
-    field: "totalInvoiceAmount",
-    display: "flex",
-    renderHeader: (params) => (
-      <CustomTypographyTableHeader title="Total Invoice Amount" />
-    ),
-    width: width / 8,
-    headerClassName: "super-app-theme--header",
-    align: "center",
-    headerAlign: "center",
-    renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
-    ),
-  },
+  // {
+  //   field: "paymentReceived",
+  //   display: "flex",
+  //   renderHeader: (params) => (
+  //     <CustomTypographyTableHeader title="Payment Received" />
+  //   ),
+  //   width: width / 8,
+  //   headerClassName: "super-app-theme--header",
+  //   align: "center",
+  //   headerAlign: "center",
+  //   renderCell: (cellValues) => (
+  //     <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+  //   ),
+  // },
 
-  {
-    field: "totalReceivedAmount",
-    display: "flex",
-    renderHeader: (params) => (
-      <CustomTypographyTableHeader title="Total Received Amount" />
-    ),
-    width: width / 8 + 30,
-    headerClassName: "super-app-theme--header",
-    align: "center",
-    headerAlign: "center",
-    renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
-    ),
-  },
+  // {
+  //   field: "totalInvoiceAmount",
+  //   display: "flex",
+  //   renderHeader: (params) => (
+  //     <CustomTypographyTableHeader title="Total Invoice Amount" />
+  //   ),
+  //   width: width / 8,
+  //   headerClassName: "super-app-theme--header",
+  //   align: "center",
+  //   headerAlign: "center",
+  //   renderCell: (cellValues) => (
+  //     <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+  //   ),
+  // },
+
+  // {
+  //   field: "totalReceivedAmount",
+  //   display: "flex",
+  //   renderHeader: (params) => (
+  //     <CustomTypographyTableHeader title="Total Received Amount" />
+  //   ),
+  //   width: width / 8 + 30,
+  //   headerClassName: "super-app-theme--header",
+  //   align: "center",
+  //   headerAlign: "center",
+  //   renderCell: (cellValues) => (
+  //     <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+  //   ),
+  // },
 ];
 
 const TableComponent = ({ data }) => {
