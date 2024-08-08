@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack, TextField } from "@mui/material";
+import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
 import { Fragment, useState } from "react";
 import useWindowDimensions from "../../../../assets/customHooks/customhooks";
 import { useNavigate } from "react-router-dom";
@@ -7,12 +7,11 @@ import {
   CustomTypographyTableCell,
   CustomTypographyTableHeader,
 } from "../../../assets/customTypography/CustomTypography";
-import CustomSelectNew from "../../../../assets/customSelectNew";
-import AddNewStaffMain from "../addNewStaff/AddNewStaffMain";
+import dayjs from "dayjs";
 
 const columns = (width) => [
   {
-    field: "compant",
+    field: "corpName",
     display: "flex",
     renderHeader: (params) => (
       <Box sx={{ ml: 5 }}>
@@ -32,7 +31,7 @@ const columns = (width) => [
     ),
   },
   {
-    field: "staffRole",
+    field: "employeeTeam",
     display: "flex",
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Staff Role" />
@@ -60,7 +59,7 @@ const columns = (width) => [
     ),
   },
   {
-    field: "checknTime",
+    field: "checkInTimeStamp",
     display: "flex",
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Check In Time" />
@@ -70,11 +69,13 @@ const columns = (width) => [
     align: "center",
     headerAlign: "center",
     renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+      <CustomTypographyTableCell>
+        {cellValues.value ? dayjs(cellValues.value).format("LT") : ""}
+      </CustomTypographyTableCell>
     ),
   },
   {
-    field: "employee",
+    field: "userName",
     display: "flex",
     renderHeader: (params) => <CustomTypographyTableHeader title="Employee" />,
     width: width / 5,
@@ -96,16 +97,13 @@ const DashboardTableComponent = ({ data = [] }) => {
   return (
     <Fragment>
       <Box>
-        <Grid container spacing={1}>
-          <Grid item lg={12} display="flex" justifyContent="center">
-            <CustomTypographyTableHeader title=" OHC Staff Attendance Dashboard" />
-          </Grid>
+        <Grid container spacing={1} rowSpacing={3}>
           <Grid item lg={12}>
             <Box>
               <CustomDataGridNew
                 columns={columns(width - 145)}
                 rows={data}
-                adjustHeight={285}
+                adjustHeight={320}
               />
             </Box>
           </Grid>

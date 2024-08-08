@@ -9,6 +9,7 @@ import {
 } from "../../../assets/customTypography/CustomTypography";
 import CustomSelectNew from "../../../../assets/customSelectNew";
 import AddNewStaffMain from "../addNewStaff/AddNewStaffMain";
+import dayjs from "dayjs";
 
 const columns = (width) => [
   {
@@ -84,32 +85,11 @@ const DefineShiftTableComponent = ({ data = [] }) => {
       <Box>
         <Grid container spacing={1}>
           <Grid item lg={12}>
-            <Stack
-              width={"30%"}
-              direction="row"
-              spacing={1}
-              display="flex"
-              justifyContent="space-between"
-            >
-              <CustomSelectNew
-                width={"100%"}
-                placeholder="Company filter"
-                formValues={formValues}
-                setFormValues={setFormValues}
-                borderRadius={3.5}
-              />
-            </Stack>
-          </Grid>
-
-          <Grid item lg={12} display="flex" justifyContent="center">
-            <CustomTypographyTableHeader title=" ve commercial pvt ltd" />
-          </Grid>
-          <Grid item lg={12}>
             <Box>
               <CustomDataGridNew
                 columns={columns(width - 145)}
                 rows={data}
-                adjustHeight={310}
+                adjustHeight={325}
               />
             </Box>
           </Grid>

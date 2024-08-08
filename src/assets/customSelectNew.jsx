@@ -19,6 +19,8 @@ const CustomSelectNew = ({
   helperText,
   required,
   borderRadius = 3.5,
+  labelProp = "label",
+  valueProp = "value",
 }) => {
   return (
     <Box sx={{ minWidth: 120, width: width }}>
@@ -45,8 +47,8 @@ const CustomSelectNew = ({
         >
           <MenuItem value="">{placeholder}</MenuItem>
           {options.map((it, index) => (
-            <MenuItem value={it?.value} key={index}>
-              {it?.label}
+            <MenuItem value={it[valueProp]} key={index}>
+              {it[labelProp]}
             </MenuItem>
           ))}
         </Select>
