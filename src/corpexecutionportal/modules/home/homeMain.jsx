@@ -119,6 +119,24 @@ const data = (val) => {
       xsgridwidth: 12,
       disabled: false,
     },
+    {
+      id: 13,
+      title: "Staff Management",
+      count: val?.totalEmployees,
+      countComp: <ShowCount></ShowCount>,
+      path: "/corp/staffmanagement",
+      xsgridwidth: 12,
+      disabled: false,
+    },
+    {
+      id: 13,
+      title: "Attendance",
+      count: val?.totalEmployees,
+      countComp: <ShowCount></ShowCount>,
+      path: "/corp/staffattendance",
+      xsgridwidth: 12,
+      disabled: false,
+    },
   ];
 };
 

@@ -18,6 +18,7 @@ const CustomSelectNew = ({
   labelColor,
   helperText,
   required,
+  borderRadius = 3.5,
 }) => {
   return (
     <Box sx={{ minWidth: 120, width: width }}>
@@ -30,6 +31,7 @@ const CustomSelectNew = ({
           size="small"
           required={required}
           sx={{
+            borderRadius: borderRadius,
             backgroundColor: "#FFFFFF",
             width: "100%",
             color: "#00000",

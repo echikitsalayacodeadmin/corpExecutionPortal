@@ -78,6 +78,8 @@ import VitalsErrorDataReporting from "./reportingportal/pages/vitalsErrorDataRep
 import PharmacyInventory from "./corpexecutionportal/pages/pharmacyInventory";
 import DoctorRegistionInClinics from "./corpexecutionportal/pages/doctorRegistionInClinics";
 import AccountReceivableCorpDetails from "./corpexecutionportal/pages/accountReceivableCorpDetails";
+import StaffManagementIndex from "./corpexecutionportal/pages/StaffManagementIndex";
+import StaffAttendanceIndex from "./corpexecutionportal/pages/StaffAttendanceIndex";
 
 function App() {
   const [corpName, setCorpName] = useState(
@@ -208,6 +210,13 @@ function App() {
             <Route path="mis" element={<MisCorp />} />
             <Route path="tickets" element={<GenericTicketingSystemIndex />} />
             <Route path="ticketview/:ticketId" element={<TicketViewIndex />} />
+
+            {/************ Staff Management Start**********/}
+
+            <Route path="staffmanagement" element={<StaffManagementIndex />} />
+            <Route path="staffattendance" element={<StaffAttendanceIndex />} />
+
+            {/************ Staff Management End**********/}
 
             <Route path="logout" element={<LogoutCorp />} />
 
