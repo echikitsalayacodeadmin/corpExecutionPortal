@@ -31,7 +31,7 @@ const columns = (width) => [
     ),
   },
   {
-    field: "employeeTeam",
+    field: "staffRole",
     display: "flex",
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Staff Role" />
@@ -103,7 +103,7 @@ const DashboardTableComponent = ({ data = [] }) => {
               <CustomDataGridNew
                 columns={columns(width - 145)}
                 rows={data}
-                adjustHeight={320}
+                adjustHeight={325}
               />
             </Box>
           </Grid>
