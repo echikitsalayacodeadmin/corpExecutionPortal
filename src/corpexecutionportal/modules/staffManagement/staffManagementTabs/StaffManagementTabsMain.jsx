@@ -9,7 +9,7 @@ import DefineShiftMain from "../defineShift/DefineShiftMain";
 import DashboardMain from "../dashboard/DashboardMain";
 
 const StaffManagementTabsMain = () => {
-  const [value, setValue] = React.useState("3");
+  const [value, setValue] = React.useState("1");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
