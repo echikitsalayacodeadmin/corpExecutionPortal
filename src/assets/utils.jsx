@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import Papa from "papaparse";
 
 export function getCurrentDate(separator = "") {
@@ -558,4 +559,32 @@ export const replaceCharacter = (text, ch1, ch2) => {
   }
 
   return null;
+};
+
+export const checkInTimeValidation = (data) => {
+  let { checkInTimeStamp, shiftStartTime, currentTime } = data;
+
+  let result = { text: "", color: "#000" };
+
+  console.log({ data, checkInTimeStamp, shiftStartTime, currentTime });
+
+  if (checkInTimeStamp) {
+    let timeDIff = checkInTimeStamp.diff(shiftStartTime, "minutes", true);
+    console.log({ timeDIff });
+    result = {
+      text: checkInTimeStamp.format("hh:mm:A"),
+      color: timeDIff < 30 ? "green" : "red",
+    };
+  } else {
+    result = {
+      text: dayjs().isBefore(dayjs(shiftStartTime))
+        ? "Check In Pending"
+        : "Check In Delay",
+      color: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "red",
+    };
+  }
+
+  console.log({ result });
+
+  return result;
 };

@@ -17,12 +17,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import { saveData } from "../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
-import CustomTextField from "../../accountReceivable/addInvoice/comps/customTextField";
 import CustomSelectNew from "../../../../assets/customSelectNew";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import EditIcon from "@mui/icons-material/Edit";
 
 const StaffRoleList = [{ id: 1, label: "OHC Staff", value: "OHC_STAFF" }];
 
@@ -57,6 +55,8 @@ const AddNewShiftForm = ({
       corpId: corpId,
       staffRole: formValues.staffRole,
     };
+
+    console.log({ payload });
 
     const res = await saveData(url, payload);
     if (res.error) {
@@ -259,8 +259,8 @@ const AddNewShiftForm = ({
                             <Box flex={3}>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                  views={["hours", "minutes", "seconds"]}
-                                  ampm={false}
+                                  //views={["hours", "minutes", "seconds"]}
+                                  //ampm={false}
                                   //label="Controlled picker"
                                   value={formValues.shiftStartTime || null}
                                   onChange={(newValue) =>
@@ -305,8 +305,8 @@ const AddNewShiftForm = ({
                             <Box flex={3}>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                  views={["hours", "minutes", "seconds"]}
-                                  ampm={false}
+                                  //views={["hours", "minutes", "seconds"]}
+                                  //ampm={false}
                                   //label="Controlled picker"
                                   value={formValues.shiftEndTime || null}
                                   onChange={(newValue) =>

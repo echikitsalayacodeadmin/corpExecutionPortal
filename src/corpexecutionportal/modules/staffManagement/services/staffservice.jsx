@@ -1,6 +1,8 @@
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import { getData } from "../../../assets/corpServices";
+import dayjs from "dayjs";
+import { getHourAndMinuteFromTime } from "../../../../assets/utils";
 
 export const getAttendanceDetailsByDateAndCorpId = async (
   corpId,
@@ -18,6 +20,18 @@ export const getAttendanceDetailsByDateAndCorpId = async (
       variant: "error",
     });
   } else {
-    setAttendanceDetails(response.data.map((v, i) => ({ id: i + 1, ...v })));
+    setAttendanceDetails(
+      response.data.map((v, i) => ({
+        id: i + 1,
+        ...v,
+        chekInTimeObject: {
+          checkInTimeStamp: v.checkInTimeStamp ? dayjs(v.checkInTimeStamp) : "",
+          shiftStartTime: v.shiftStartTime
+            ? dayjs(getHourAndMinuteFromTime(v.shiftStartTime))
+            : "",
+          currentTime: dayjs().format("hh:mm:A"),
+        },
+      }))
+    );
   }
 };

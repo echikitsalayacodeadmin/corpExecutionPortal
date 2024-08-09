@@ -49,6 +49,7 @@ const UpdateShiftForm = ({
     //dayjs(newValue).format("h:mm:ss"),
 
     const payload = {
+      id: formValues.id,
       shiftStartTime: dayjs(formValues.shiftStartTime).format("HH:mm:ss"),
       shiftEndTime: dayjs(formValues.shiftEndTime).format("HH:mm:ss"),
       shiftName: formValues.shiftName,
@@ -74,7 +75,7 @@ const UpdateShiftForm = ({
 
   return (
     <Fragment>
-      <IconButton onClick={handleClickOpen} disabled>
+      <IconButton onClick={handleClickOpen}>
         <EditIcon />
       </IconButton>
 
@@ -249,8 +250,8 @@ const UpdateShiftForm = ({
                             <Box flex={3}>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                  views={["hours", "minutes", "seconds"]}
-                                  ampm={false}
+                                  //views={["hours", "minutes", "seconds"]}
+                                  //ampm={false}
                                   //label="Controlled picker"
                                   value={formValues.shiftStartTime || null}
                                   onChange={(newValue) =>
@@ -295,8 +296,8 @@ const UpdateShiftForm = ({
                             <Box flex={3}>
                               <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                  views={["hours", "minutes", "seconds"]}
-                                  ampm={false}
+                                  // views={["hours", "minutes", "seconds"]}
+                                  // ampm={false}
                                   //label="Controlled picker"
                                   value={formValues.shiftEndTime || null}
                                   onChange={(newValue) =>

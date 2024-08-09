@@ -8,6 +8,7 @@ import {
 } from "../../../assets/customTypography/CustomTypography";
 import dayjs from "dayjs";
 import {
+  checkInTimeValidation,
   getHourAndMinuteFromTime,
   replaceCharacter,
 } from "../../../../assets/utils";
@@ -68,7 +69,7 @@ const columns = (width) => [
     ),
   },
   {
-    field: "checkInTimeStamp",
+    field: "chekInTimeObject",
     display: "flex",
     renderHeader: (params) => (
       <CustomTypographyTableHeader title="Check In Time" />
@@ -78,8 +79,14 @@ const columns = (width) => [
     align: "center",
     headerAlign: "center",
     renderCell: (cellValues) => (
-      <CustomTypographyTableCell>
-        {cellValues.value ? dayjs(cellValues.value).format("hh:mm:A") : ""}
+      <CustomTypographyTableCell
+        color={
+          cellValues.value
+            ? checkInTimeValidation(cellValues.value).color
+            : "#000"
+        }
+      >
+        {cellValues.value ? checkInTimeValidation(cellValues.value).text : ""}
       </CustomTypographyTableCell>
     ),
   },

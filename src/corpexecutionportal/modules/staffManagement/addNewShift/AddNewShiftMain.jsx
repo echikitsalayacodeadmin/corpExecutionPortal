@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import AddNewShiftForm from "./AddNewShiftForm";
 
 const AddNewShiftMain = ({ label, corpId, companyList, getAllShifts }) => {
-  const [formValues, setFormValues] = useState({});
+  const [formValues, setFormValues] = useState({ staffRole: "OHC_STAFF" });
 
   console.log({ formValues });
   return (
