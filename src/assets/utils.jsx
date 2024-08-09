@@ -584,7 +584,7 @@ export const checkInTimeValidation = (data) => {
     console.log({ timeDIff });
     result = {
       text: checkInTimeStamp.format("hh:mm A"),
-      color: timeDIff < 30 ? "#90EE90" : "red",
+      color: timeDIff < 30 ? "green" : "red",
       fontcolor: timeDIff < 30 ? "green" : "red",
     };
   } else {
