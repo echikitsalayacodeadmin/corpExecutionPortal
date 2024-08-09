@@ -10,75 +10,82 @@ import {
 import CustomSelectNew from "../../../../assets/customSelectNew";
 import AddNewStaffMain from "../addNewStaff/AddNewStaffMain";
 import dayjs from "dayjs";
+import AddNewShiftMain from "../addNewShift/AddNewShiftMain";
+import UpdateShiftMain from "../addNewShift/UpdateShiftMain";
 
-const columns = (width) => [
-  {
-    field: "staffRole",
-    display: "flex",
-    renderHeader: (params) => (
-      <Box sx={{ ml: 5 }}>
-        <CustomTypographyTableHeader title="Staff Role" />
-      </Box>
-    ),
-    width: width / 4,
-    headerClassName: "super-app-theme--header",
-    align: "left",
-    headerAlign: "left",
-    renderCell: (cellValues) => (
-      <Box sx={{ ml: 5 }}>
-        <CustomTypographyTableCell>
-          {cellValues.value}
-        </CustomTypographyTableCell>{" "}
-      </Box>
-    ),
-  },
-  {
-    field: "shiftStartTime",
-    display: "flex",
-    renderHeader: (params) => (
-      <CustomTypographyTableHeader title="Shift Start Time" />
-    ),
-    width: width / 4,
-    headerClassName: "super-app-theme--header",
-    align: "center",
-    headerAlign: "center",
-    renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
-    ),
-  },
-  {
-    field: "shiftEndTime",
-    display: "flex",
-    renderHeader: (params) => (
-      <CustomTypographyTableHeader title="Shift End Time" />
-    ),
-    width: width / 4,
-    headerClassName: "super-app-theme--header",
-    align: "center",
-    headerAlign: "center",
-    renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
-    ),
-  },
-  {
-    field: "actions",
-    display: "flex",
-    renderHeader: (params) => <CustomTypographyTableHeader title="" />,
-    width: width / 4,
-    headerClassName: "super-app-theme--header",
-    align: "center",
-    headerAlign: "center",
-    renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
-    ),
-  },
-];
-
-const DefineShiftTableComponent = ({ data = [] }) => {
+const DefineShiftTableComponent = ({ data = [], companyList }) => {
   const { height, width } = useWindowDimensions();
   const navigate = useNavigate();
 
   const [formValues, setFormValues] = useState({});
+
+  const columns = (width) => [
+    {
+      field: "staffRole",
+      display: "flex",
+      renderHeader: (params) => (
+        <Box sx={{ ml: 5 }}>
+          <CustomTypographyTableHeader title="Staff Role" />
+        </Box>
+      ),
+      width: width / 4,
+      headerClassName: "super-app-theme--header",
+      align: "left",
+      headerAlign: "left",
+      renderCell: (cellValues) => (
+        <Box sx={{ ml: 5 }}>
+          <CustomTypographyTableCell>
+            {cellValues.value}
+          </CustomTypographyTableCell>{" "}
+        </Box>
+      ),
+    },
+    {
+      field: "shiftStartTime",
+      display: "flex",
+      renderHeader: (params) => (
+        <CustomTypographyTableHeader title="Shift Start Time" />
+      ),
+      width: width / 4,
+      headerClassName: "super-app-theme--header",
+      align: "center",
+      headerAlign: "center",
+      renderCell: (cellValues) => (
+        <CustomTypographyTableCell>
+          {cellValues.value}
+        </CustomTypographyTableCell>
+      ),
+    },
+    {
+      field: "shiftEndTime",
+      display: "flex",
+      renderHeader: (params) => (
+        <CustomTypographyTableHeader title="Shift End Time" />
+      ),
+      width: width / 4,
+      headerClassName: "super-app-theme--header",
+      align: "center",
+      headerAlign: "center",
+      renderCell: (cellValues) => (
+        <CustomTypographyTableCell>
+          {cellValues.value}
+        </CustomTypographyTableCell>
+      ),
+    },
+    {
+      field: "actions",
+      type: "actions",
+      display: "flex",
+      width: width / 4,
+      // renderHeader: (params) => <CustomTypographyTableHeader title="" />,
+      headerClassName: "super-app-theme--header",
+      // align: "left",
+      // headerAlign: "left",
+      getActions: (params) => [
+        <UpdateShiftMain params={params} companyList={companyList} />,
+      ],
+    },
+  ];
 
   return (
     <Fragment>

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Fragment, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { saveData } from "../../../assets/corpServices";
+import { saveData, updateData } from "../../../assets/corpServices";
 import { enqueueSnackbar } from "notistack";
 import { BASE_URL } from "../../../../assets/constants";
 import CustomTextField from "../../accountReceivable/addInvoice/comps/customTextField";
@@ -26,13 +26,11 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const StaffRoleList = [{ id: 1, label: "OHC Staff", value: "OHC_STAFF" }];
 
-const AddNewShiftForm = ({
-  label,
+const UpdateShiftForm = ({
+  corpId,
   formValues,
   setFormValues,
-  corpId,
   companyList,
-  getAllShifts,
 }) => {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -46,7 +44,7 @@ const AddNewShiftForm = ({
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const url = BASE_URL + `staff/corp/addshift`;
+    const url = BASE_URL + `staff/corp/updateshift/${formValues.id}`;
 
     //dayjs(newValue).format("h:mm:ss"),
 
@@ -58,7 +56,7 @@ const AddNewShiftForm = ({
       staffRole: formValues.staffRole,
     };
 
-    const res = await saveData(url, payload);
+    const res = await updateData(url, payload);
     if (res.error) {
       enqueueSnackbar("Failed to create invoice!", {
         variant: "error",
@@ -69,24 +67,16 @@ const AddNewShiftForm = ({
       });
       handleClose();
       setFormValues({});
-      getAllShifts();
+      //getAllShifts();
       console.log({ success: res.data });
     }
   };
 
   return (
     <Fragment>
-      <Box>
-        <Button
-          disabled={!corpId}
-          variant="contained"
-          size="small"
-          sx={{ textTransform: "inherit", background: "#0463FA", width: 300 }}
-          onClick={handleClickOpen}
-        >
-          {label}
-        </Button>
-      </Box>
+      <IconButton onClick={handleClickOpen}>
+        <EditIcon />
+      </IconButton>
 
       <Box>
         <Grid container spacing={1}>
@@ -138,7 +128,7 @@ const AddNewShiftForm = ({
                           lineHeight: "normal",
                         }}
                       >
-                        {label}
+                        {"Update Shift Details"}
                       </Typography>
                     </Box>
                     <Box display="flex" justifyContent="flex-end">
@@ -355,4 +345,4 @@ const AddNewShiftForm = ({
   );
 };
 
-export default AddNewShiftForm;
+export default UpdateShiftForm;

@@ -73,7 +73,10 @@ const DefineShiftMain = () => {
             </Typography>
           </Grid>
           <Grid item lg={12}>
-            <DefineShiftTableComponent data={shiftList} />
+            <DefineShiftTableComponent
+              data={shiftList}
+              companyList={companyList}
+            />
           </Grid>
         </Grid>
       </Box>
