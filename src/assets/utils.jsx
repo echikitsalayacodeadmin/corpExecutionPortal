@@ -541,3 +541,21 @@ export const getFileNameWithExt = (name) => {
 
   return ext;
 };
+
+export const getHourAndMinuteFromTime = (time) => {
+  if (time) {
+    let timeArray = time.split(":");
+    return { hour: timeArray[0], minute: timeArray[1] };
+  }
+
+  return null;
+};
+
+export const replaceCharacter = (text, ch1, ch2) => {
+  if (text) {
+    text = text.replaceAll(ch1, ch2);
+    return text?.toLowerCase();
+  }
+
+  return null;
+};

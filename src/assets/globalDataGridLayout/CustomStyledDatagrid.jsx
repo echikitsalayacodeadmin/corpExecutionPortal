@@ -35,4 +35,15 @@ export const StyledDataGrid = styled(DataGrid)(({ theme }) => ({
       },
     },
   },
+  "& ::-webkit-scrollbar": {
+    width: "3px",
+  },
+  "& ::-webkit-scrollbar-track": {
+    backgroundColor: "#f5f5f5",
+  },
+  "& ::-webkit-scrollbar-thumb": {
+    borderRadius: "10px",
+    boxShadow: "inset 0 0 6px rgba(0,0,0,.3)",
+    backgroundColor: "#f5f5f5",
+  },
 }));

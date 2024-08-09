@@ -1,13 +1,16 @@
-import { Box, Button, Grid, Stack, TextField, Typography } from "@mui/material";
-import { Fragment, useState } from "react";
+import { Box, Grid } from "@mui/material";
+import { Fragment } from "react";
 import useWindowDimensions from "../../../../assets/customHooks/customhooks";
-import { useNavigate } from "react-router-dom";
 import CustomDataGridNew from "../../../../assets/globalDataGridLayout/CustomDataGridNew";
 import {
   CustomTypographyTableCell,
   CustomTypographyTableHeader,
 } from "../../../assets/customTypography/CustomTypography";
 import dayjs from "dayjs";
+import {
+  getHourAndMinuteFromTime,
+  replaceCharacter,
+} from "../../../../assets/utils";
 
 const columns = (width) => [
   {
@@ -41,7 +44,9 @@ const columns = (width) => [
     align: "center",
     headerAlign: "center",
     renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+      <CustomTypographyTableCell>
+        {replaceCharacter(cellValues.value, "_", " ")}
+      </CustomTypographyTableCell>
     ),
   },
   {
@@ -55,7 +60,11 @@ const columns = (width) => [
     align: "center",
     headerAlign: "center",
     renderCell: (cellValues) => (
-      <CustomTypographyTableCell>{cellValues.value}</CustomTypographyTableCell>
+      <CustomTypographyTableCell>
+        {cellValues.value
+          ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format("hh:mm:A")
+          : ""}
+      </CustomTypographyTableCell>
     ),
   },
   {
@@ -70,7 +79,7 @@ const columns = (width) => [
     headerAlign: "center",
     renderCell: (cellValues) => (
       <CustomTypographyTableCell>
-        {cellValues.value ? dayjs(cellValues.value).format("LT") : ""}
+        {cellValues.value ? dayjs(cellValues.value).format("hh:mm:A") : ""}
       </CustomTypographyTableCell>
     ),
   },
@@ -90,9 +99,6 @@ const columns = (width) => [
 
 const DashboardTableComponent = ({ data = [] }) => {
   const { height, width } = useWindowDimensions();
-  const navigate = useNavigate();
-
-  const [formValues, setFormValues] = useState({});
 
   return (
     <Fragment>
@@ -101,7 +107,7 @@ const DashboardTableComponent = ({ data = [] }) => {
           <Grid item lg={12}>
             <Box>
               <CustomDataGridNew
-                columns={columns(width - 145)}
+                columns={columns(width - 147)}
                 rows={data}
                 adjustHeight={325}
               />

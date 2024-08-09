@@ -34,9 +34,9 @@ const DashboardMain = () => {
       <Box>
         <Grid container spacing={1}>
           <Grid item lg={12} display="flex" justifyContent="center">
-            <Typography variant="h5">OHC Staff Attendance Dashboard</Typography>
+            <Typography variant="h6">OHC Staff Attendance Dashboard</Typography>
           </Grid>
-          <Grid item lg={2} display="flex" justifyContent="center">
+          <Grid item lg={2}>
             <CustomDate
               formValues={formValues}
               setFormValues={setFormValues}
@@ -44,7 +44,7 @@ const DashboardMain = () => {
               height={46}
             />
           </Grid>
-          <Grid item lg={2} display="flex" justifyContent="center">
+          <Grid item lg={5}>
             <CustomSelectNew
               width={"100%"}
               placeholder="Company filter"

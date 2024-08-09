@@ -45,7 +45,7 @@ const DefineShiftMain = () => {
     <Fragment>
       <Box>
         <Grid container spacing={1}>
-          <Grid item lg={3}>
+          <Grid item lg={5}>
             <CustomSelectNew
               width={"100%"}
               placeholder="Company filter"
@@ -58,7 +58,7 @@ const DefineShiftMain = () => {
               valueProp="corpId"
             />
           </Grid>
-          <Grid item lg={9} display="flex" justifyContent="flex-end">
+          <Grid item lg={7} display="flex" justifyContent="flex-end">
             <AddNewShiftMain
               label="Add New Shift"
               corpId={formValues.corpId}
@@ -67,7 +67,7 @@ const DefineShiftMain = () => {
             />
           </Grid>
           <Grid item lg={12} display="flex" justifyContent="center">
-            <Typography variant="h5" sx={{ textTransform: "capitalize" }}>
+            <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
               {companyList.find((v) => v.corpId === formValues.corpId)
                 ?.orgName || "Select Company"}
             </Typography>

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack, TextField } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Fragment, useState } from "react";
 import useWindowDimensions from "../../../../assets/customHooks/customhooks";
 import { useNavigate } from "react-router-dom";
@@ -7,17 +7,15 @@ import {
   CustomTypographyTableCell,
   CustomTypographyTableHeader,
 } from "../../../assets/customTypography/CustomTypography";
-import CustomSelectNew from "../../../../assets/customSelectNew";
-import AddNewStaffMain from "../addNewStaff/AddNewStaffMain";
 import dayjs from "dayjs";
-import AddNewShiftMain from "../addNewShift/AddNewShiftMain";
 import UpdateShiftMain from "../addNewShift/UpdateShiftMain";
+import {
+  getHourAndMinuteFromTime,
+  replaceCharacter,
+} from "../../../../assets/utils";
 
 const DefineShiftTableComponent = ({ data = [], companyList }) => {
   const { height, width } = useWindowDimensions();
-  const navigate = useNavigate();
-
-  const [formValues, setFormValues] = useState({});
 
   const columns = (width) => [
     {
@@ -35,8 +33,8 @@ const DefineShiftTableComponent = ({ data = [], companyList }) => {
       renderCell: (cellValues) => (
         <Box sx={{ ml: 5 }}>
           <CustomTypographyTableCell>
-            {cellValues.value}
-          </CustomTypographyTableCell>{" "}
+            {replaceCharacter(cellValues.value, "_", " ")}
+          </CustomTypographyTableCell>
         </Box>
       ),
     },
@@ -52,7 +50,11 @@ const DefineShiftTableComponent = ({ data = [], companyList }) => {
       headerAlign: "center",
       renderCell: (cellValues) => (
         <CustomTypographyTableCell>
-          {cellValues.value}
+          {cellValues.value
+            ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format(
+                "hh:mm:A"
+              )
+            : ""}
         </CustomTypographyTableCell>
       ),
     },
@@ -68,7 +70,11 @@ const DefineShiftTableComponent = ({ data = [], companyList }) => {
       headerAlign: "center",
       renderCell: (cellValues) => (
         <CustomTypographyTableCell>
-          {cellValues.value}
+          {cellValues.value
+            ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format(
+                "hh:mm:A"
+              )
+            : ""}
         </CustomTypographyTableCell>
       ),
     },
