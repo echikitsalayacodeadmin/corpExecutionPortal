@@ -584,7 +584,7 @@ export const checkInTimeValidation = (data) => {
     console.log({ timeDIff });
     result = {
       text: checkInTimeStamp.format("hh:mm A"),
-      color: timeDIff < 30 ? "#90EE90" : "#FF7F7F",
+      color: timeDIff < 30 ? "#90EE90" : "red",
       fontcolor: timeDIff < 30 ? "green" : "red",
     };
   } else {
@@ -592,7 +592,7 @@ export const checkInTimeValidation = (data) => {
       text: dayjs().isBefore(dayjs(shiftStartTime))
         ? "Check In Pending"
         : "Check In Delay",
-      color: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "#FF7F7F",
+      color: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "red",
       fontcolor: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "red",
     };
   }
