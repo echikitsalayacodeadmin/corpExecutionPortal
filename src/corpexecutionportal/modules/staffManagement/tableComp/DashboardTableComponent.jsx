@@ -63,7 +63,7 @@ const columns = (width) => [
     renderCell: (cellValues) => (
       <CustomTypographyTableCell>
         {cellValues.value
-          ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format("hh:mm:A")
+          ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format("hh:mm A")
           : ""}
       </CustomTypographyTableCell>
     ),
@@ -82,7 +82,7 @@ const columns = (width) => [
       <CustomTypographyTableCell
         color={
           cellValues.value
-            ? checkInTimeValidation(cellValues.value).color
+            ? checkInTimeValidation(cellValues.value).fontcolor
             : "#000"
         }
       >

@@ -56,7 +56,7 @@ function CustomPagination(props) {
 
 const CustomDataGridNew = (params) => {
   const { height, width } = useWindowDimensions();
-  let { adjustHeight = 200 } = { ...params };
+  let { adjustHeight = 200, rowHeight = 40 } = { ...params };
 
   return (
     <Fragment>
@@ -83,7 +83,7 @@ const CustomDataGridNew = (params) => {
                   boxShadow: "0px 0px 6px 0px rgba(108, 120, 221, 0.40);",
                 }}
                 columnHeaderHeight={45}
-                rowHeight={39}
+                rowHeight={rowHeight}
                 disableRowSelectionOnClick
                 getRowClassName={(params) => `super-app-theme--Normal`}
                 pagination

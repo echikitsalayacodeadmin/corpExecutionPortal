@@ -25,13 +25,31 @@ export const getAttendanceDetailsByDateAndCorpId = async (
         id: i + 1,
         ...v,
         chekInTimeObject: {
-          checkInTimeStamp: v.checkInTimeStamp ? dayjs(v.checkInTimeStamp) : "",
-          shiftStartTime: v.shiftStartTime
-            ? dayjs(getHourAndMinuteFromTime(v.shiftStartTime))
-            : "",
+          checkInTimeStamp: v.checkInTimeStamp,
+          shiftStartTime: v.shiftStartTime,
           currentTime: dayjs().format("hh:mm:A"),
         },
       }))
     );
+  }
+};
+
+export const getAttendanceDetailsMapByDateAndCorpId = async (
+  corpId,
+  filterDate,
+  setAttendanceDetails
+) => {
+  const url =
+    BASE_URL +
+    `staff/corp/attendance/map?filterDate=${filterDate}&corpId=${corpId}`;
+  const response = await getData(url);
+
+  if (response.error) {
+    setAttendanceDetails([]);
+    enqueueSnackbar("Failed to retrieve data!", {
+      variant: "error",
+    });
+  } else {
+    setAttendanceDetails(response.data);
   }
 };

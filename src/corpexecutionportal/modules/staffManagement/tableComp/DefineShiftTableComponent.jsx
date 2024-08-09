@@ -52,7 +52,7 @@ const DefineShiftTableComponent = ({ data = [], companyList }) => {
         <CustomTypographyTableCell>
           {cellValues.value
             ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format(
-                "hh:mm:A"
+                "hh:mm A"
               )
             : ""}
         </CustomTypographyTableCell>
@@ -72,7 +72,7 @@ const DefineShiftTableComponent = ({ data = [], companyList }) => {
         <CustomTypographyTableCell>
           {cellValues.value
             ? dayjs(getHourAndMinuteFromTime(cellValues.value)).format(
-                "hh:mm:A"
+                "hh:mm A"
               )
             : ""}
         </CustomTypographyTableCell>

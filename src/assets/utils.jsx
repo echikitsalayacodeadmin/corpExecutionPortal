@@ -562,9 +562,20 @@ export const replaceCharacter = (text, ch1, ch2) => {
 };
 
 export const checkInTimeValidation = (data) => {
-  let { checkInTimeStamp, shiftStartTime, currentTime } = data;
+  let {
+    checkInTimeStamp,
+    shiftStartTime,
+    currentTime = dayjs().format("hh:mm A"),
+  } = data;
 
-  let result = { text: "", color: "#000" };
+  let result = { text: "", color: "#000", fontcolor: "#000" };
+
+  checkInTimeStamp = checkInTimeStamp
+    ? dayjs(getHourAndMinuteFromTime(checkInTimeStamp))
+    : "";
+  shiftStartTime = shiftStartTime
+    ? dayjs(getHourAndMinuteFromTime(shiftStartTime))
+    : "";
 
   console.log({ data, checkInTimeStamp, shiftStartTime, currentTime });
 
@@ -572,19 +583,30 @@ export const checkInTimeValidation = (data) => {
     let timeDIff = checkInTimeStamp.diff(shiftStartTime, "minutes", true);
     console.log({ timeDIff });
     result = {
-      text: checkInTimeStamp.format("hh:mm:A"),
-      color: timeDIff < 30 ? "green" : "red",
+      text: checkInTimeStamp.format("hh:mm A"),
+      color: timeDIff < 30 ? "#90EE90" : "#FF7F7F",
+      fontcolor: timeDIff < 30 ? "green" : "red",
     };
   } else {
     result = {
       text: dayjs().isBefore(dayjs(shiftStartTime))
         ? "Check In Pending"
         : "Check In Delay",
-      color: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "red",
+      color: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "#FF7F7F",
+      fontcolor: dayjs().isBefore(dayjs(shiftStartTime)) ? "orange" : "red",
     };
   }
 
   console.log({ result });
 
   return result;
+};
+
+const getHourAndMinuteFromTime1 = (time) => {
+  if (time) {
+    let timeArray = time.split(":");
+    return { hour: timeArray[0], minute: timeArray[1] };
+  }
+
+  return null;
 };
