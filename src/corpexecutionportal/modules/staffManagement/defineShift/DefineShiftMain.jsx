@@ -29,7 +29,7 @@ const DefineShiftMain = () => {
       setShiftList(
         res.data.map((v, i) => ({
           ...v,
-          id: i + 1,
+          //id: i + 1,
         }))
       );
     }
