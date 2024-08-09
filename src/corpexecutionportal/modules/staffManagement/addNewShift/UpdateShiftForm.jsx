@@ -74,7 +74,7 @@ const UpdateShiftForm = ({
 
   return (
     <Fragment>
-      <IconButton onClick={handleClickOpen}>
+      <IconButton onClick={handleClickOpen} disabled>
         <EditIcon />
       </IconButton>
 
